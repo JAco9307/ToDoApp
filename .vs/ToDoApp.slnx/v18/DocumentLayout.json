@@ -3,6 +3,14 @@
   "WorkspaceRootPath": "C:\\Users\\Jacob\\Documents\\ToDoApp\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{04A93E25-D989-40B8-9295-DAFCB1208FE3}|Todo.view\\Todo.view.csproj|c:\\users\\jacob\\documents\\todoapp\\todo.view\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{04A93E25-D989-40B8-9295-DAFCB1208FE3}|Todo.view\\Todo.view.csproj|solutionrelative:todo.view\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{04A93E25-D989-40B8-9295-DAFCB1208FE3}|Todo.view\\Todo.view.csproj|c:\\users\\jacob\\documents\\todoapp\\todo.view\\todo.view.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{04A93E25-D989-40B8-9295-DAFCB1208FE3}|Todo.view\\Todo.view.csproj|solutionrelative:todo.view\\todo.view.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{3A86C200-5C4C-4E59-8A07-08B2BCB7770B}|Todo.testing\\Todo.testing.csproj|c:\\users\\jacob\\documents\\todoapp\\todo.testing\\test1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{3A86C200-5C4C-4E59-8A07-08B2BCB7770B}|Todo.testing\\Todo.testing.csproj|solutionrelative:todo.testing\\test1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -13,10 +21,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{616327CC-F6E6-4852-BA0F-576BFA183647}|Todo.model\\Todo.model.csproj|c:\\users\\jacob\\documents\\todoapp\\todo.model\\class1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{616327CC-F6E6-4852-BA0F-576BFA183647}|Todo.model\\Todo.model.csproj|solutionrelative:todo.model\\class1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{04A93E25-D989-40B8-9295-DAFCB1208FE3}|Todo.view\\Todo.view.csproj|c:\\users\\jacob\\documents\\todoapp\\todo.view\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{04A93E25-D989-40B8-9295-DAFCB1208FE3}|Todo.view\\Todo.view.csproj|solutionrelative:todo.view\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{04A93E25-D989-40B8-9295-DAFCB1208FE3}|Todo.view\\Todo.view.csproj|c:\\users\\jacob\\documents\\todoapp\\todo.view\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -30,11 +34,24 @@
       "DocumentGroups": [
         {
           "DockedHeight": 184,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
+              "Title": "Todo.view",
+              "DocumentMoniker": "C:\\Users\\Jacob\\Documents\\ToDoApp\\Todo.view\\Todo.view.csproj",
+              "RelativeDocumentMoniker": "Todo.view\\Todo.view.csproj",
+              "ToolTip": "C:\\Users\\Jacob\\Documents\\ToDoApp\\Todo.view\\Todo.view.csproj",
+              "RelativeToolTip": "Todo.view\\Todo.view.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-09-28T10:57:55.166Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "Test1.cs",
               "DocumentMoniker": "C:\\Users\\Jacob\\Documents\\ToDoApp\\Todo.testing\\Test1.cs",
               "RelativeDocumentMoniker": "Todo.testing\\Test1.cs",
@@ -47,7 +64,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "Class1.cs",
               "DocumentMoniker": "C:\\Users\\Jacob\\Documents\\ToDoApp\\Todo.controller\\Class1.cs",
               "RelativeDocumentMoniker": "Todo.controller\\Class1.cs",
@@ -55,12 +72,11 @@
               "RelativeToolTip": "Todo.controller\\Class1.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-28T10:46:13.927Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-09-28T10:46:13.927Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "Class1.cs",
               "DocumentMoniker": "C:\\Users\\Jacob\\Documents\\ToDoApp\\Todo.model\\Class1.cs",
               "RelativeDocumentMoniker": "Todo.model\\Class1.cs",
@@ -68,12 +84,11 @@
               "RelativeToolTip": "Todo.model\\Class1.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-28T10:45:51.143Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-09-28T10:45:51.143Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 0,
               "Title": "MainWindow.xaml",
               "DocumentMoniker": "C:\\Users\\Jacob\\Documents\\ToDoApp\\Todo.view\\MainWindow.xaml",
               "RelativeDocumentMoniker": "Todo.view\\MainWindow.xaml",
@@ -85,7 +100,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "MainWindow.xaml.cs",
               "DocumentMoniker": "C:\\Users\\Jacob\\Documents\\ToDoApp\\Todo.view\\MainWindow.xaml.cs",
               "RelativeDocumentMoniker": "Todo.view\\MainWindow.xaml.cs",
@@ -93,8 +108,7 @@
               "RelativeToolTip": "Todo.view\\MainWindow.xaml.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-28T10:45:27.005Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-09-28T10:45:27.005Z"
             }
           ]
         },
