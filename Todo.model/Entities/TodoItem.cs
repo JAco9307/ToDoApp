@@ -1,4 +1,4 @@
-﻿namespace Todo.controller
+﻿namespace Todo.model.Entities
 {
     public class TodoItem
     {
