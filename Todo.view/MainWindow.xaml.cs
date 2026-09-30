@@ -20,5 +20,14 @@ namespace Todo.view
         {
             InitializeComponent();
         }
+
+        private void DeleteTodoClicked(object sender, RoutedEventArgs e)
+        {
+            Console.WriteLine("hi");
+        }
+        private void CreateTodoClicked(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

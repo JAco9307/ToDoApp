@@ -1,6 +1,7 @@
 ﻿using System.Configuration;
 using System.Data;
 using System.Windows;
+using System.Windows.Resources;
 
 namespace Todo.view
 {
@@ -9,6 +10,10 @@ namespace Todo.view
     /// </summary>
     public partial class App : Application
     {
+        public void UpdateActiveListView()
+        {
+
+        }
     }
 
 }
