@@ -27,7 +27,8 @@ namespace Todo.view
         }
         private void CreateTodoClicked(object sender, RoutedEventArgs e)
         {
-
+            
         }
+        
     }
 }

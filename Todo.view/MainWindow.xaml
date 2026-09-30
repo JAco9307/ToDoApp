@@ -11,7 +11,7 @@
             <Border Background="#FF252525">
                 <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" AutomationProperties.IsRowHeader="True">
                     <Label Content="ToDos:" RenderTransformOrigin="0.5,0.5" Foreground="White" />
-                    <Button Content="Create New" Margin="3,4,3,3" Foreground="White" Background="#FF424242" Click ="CreateTodoClicked" >
+                    <Button x:Name="CreateButton" Content="Create New" Margin="3,4,3,3" Foreground="White" Background="#FF424242" Click ="CreateTodoClicked" >
                      
                     </Button>
                 </StackPanel>

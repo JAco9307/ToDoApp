@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Todo.formview\Todo.formview.csproj" />
     <ProjectReference Include="..\Todo.model\Todo.model.csproj" />
     <ProjectReference Include="..\Todo.view\Todo.view.csproj" />
   </ItemGroup>
