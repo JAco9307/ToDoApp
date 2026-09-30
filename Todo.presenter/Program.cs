@@ -13,26 +13,56 @@ namespace Todo.presenter
         static void Main(string[] args)
         {
             if (!(args.Length == 0)) return;
-            Presenter p = new(); 
+            FormView view = new();
+            Presenter presenter = new(view, null);
+            presenter.StartUp();
         }
     }
-    
+
     public class Presenter: Form
     {
-        public Presenter() 
+        private ITodoView _view;
+        private int _currentListId;
+        public Presenter(ITodoView view, object? service)
         {
-            var main = new FormView();
-            main.deleteTodoButton.Click += delegate { pprint("Delete"); };
-            main.createTodoButton.Click += delegate { pprint("Create"); };
-            main.todoText.LostFocus += delegate { pprint(main.todoText.Text); };
-            main.Disposed += delegate { pprint(main.todoText.Text); };
-            System.Windows.Forms.Application.Run(main);
+            _view = view;
+            _currentListId = 0; // read from database
         }
 
-        public void pprint(string a = "hi")
+        public void StartUp()
+        {
+            
+            EventHandlerSetup(((FormView)_view));
+            System.Windows.Forms.Application.Run(((FormView)_view));
+        }
+
+        /// <summary>
+        /// Perform the event handler setup.
+        /// </summary>
+        /// <param name="main">The View object.</param>
+        private void EventHandlerSetup(FormView main)
+        {
+            main.deleteTodoButton.Click += delegate { DeleteTodo("Delete"); };
+            main.createTodoButton.Click += delegate { CreateTodo(); };
+            // temp examples: 
+            main.todoText.LostFocus += delegate { DeleteTodo(main.todoText.Text); };
+            main.Disposed += delegate { DeleteTodo(main.todoText.Text); };
+        }
+
+        public void UpdateView()
+        {
+
+        }
+
+        public void CreateTodo()
+        {
+            Console.WriteLine("Create");
+        }
+        public void DeleteTodo(string a = "hi")
         {
             Console.WriteLine(a);
         }
+
     }
 }
 

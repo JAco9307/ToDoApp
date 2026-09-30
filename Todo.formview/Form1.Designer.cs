@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormView));
             deleteTodoButton = new Button();
             flowLayout = new FlowLayoutPanel();
             headerLayout = new FlowLayoutPanel();
@@ -45,7 +46,7 @@
             deleteTodoButton.FlatStyle = FlatStyle.Popup;
             deleteTodoButton.ForeColor = SystemColors.ButtonHighlight;
             deleteTodoButton.Location = new Point(463, 3);
-            deleteTodoButton.Name = "deleteTodo";
+            deleteTodoButton.Name = "deleteTodoButton";
             deleteTodoButton.Size = new Size(75, 23);
             deleteTodoButton.TabIndex = 0;
             deleteTodoButton.Text = "Delete";
@@ -127,8 +128,10 @@
             BackColor = Color.FromArgb(64, 64, 64);
             ClientSize = new Size(800, 450);
             Controls.Add(flowLayout);
+            FormBorderStyle = FormBorderStyle.SizableToolWindow;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "FormView";
-            Text = "FormView";
+            Text = "ToDo App";
             flowLayout.ResumeLayout(false);
             flowLayout.PerformLayout();
             headerLayout.ResumeLayout(false);
