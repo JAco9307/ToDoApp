@@ -143,12 +143,12 @@
 
         #endregion
 
-        public Button deleteTodoButton;
+        private Button deleteTodoButton;
         private FlowLayoutPanel flowLayout;
         private FlowLayoutPanel flowItem;
-        public TextBox todoText;
+        private TextBox todoText;
         private FlowLayoutPanel headerLayout;
         private Label label1;
-        public Button createTodoButton;
+        private Button createTodoButton;
     }
 }
