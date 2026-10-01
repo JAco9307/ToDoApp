@@ -18,10 +18,9 @@ namespace Todo.view
         public TodoViewItem(string TodoTitle)
         {
             InitializeComponent();
-            textBox.Text = TodoTitle;
+            todoText.Text = TodoTitle;
         }
 
-        public TextBox textBox => todoText;
         public Button deleteButton => deleteTodoButton; 
         public Button editButton => editTodoButton; 
     }

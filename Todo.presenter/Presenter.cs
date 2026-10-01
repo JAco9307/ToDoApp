@@ -4,16 +4,20 @@ using System.Text;
 using System.Windows.Forms;
 using Todo.view;
 using Todo.view.Interfaces;
+using Todo.model.Interfaces;
+using Todo.model;
 
 namespace Todo.presenter
 {
     public class Presenter
     {
         private ITodoView _view;
+        private ITodoService _service;
         private int _currentListId;
-        public Presenter(ITodoView view, object? service)
+        public Presenter(ITodoView view, ITodoService service)
         {
             _view = view;
+            _service = service;
             _currentListId = 0;
         }
 
@@ -37,11 +41,14 @@ namespace Todo.presenter
 
         public void UpdateView()
         {
-            List<TodoViewItem> deleteButtons = _view.UpdateActiveViewList(null);
+            IReadOnlyList<TodoItem> TodoList = _service.GetTodoList(_currentListId);
+            List<string> TodoTitles = TodoList.Select(z => z.Title).ToList();
+            List<TodoViewItem> todoViewItems = _view.UpdateActiveViewList(TodoTitles);
 
-            for (int i = 0; i < deleteButtons.Count; i++)
+            for (int i = 0; i < todoViewItems.Count; i++)
             {
-                deleteButtons[i].deleteButton.Click += delegate { DeleteTodo("delete " + i); };
+                todoViewItems[i].deleteButton.Click += delegate { DeleteTodo(TodoList[i]);  };
+                todoViewItems[i].editButton.Click   += delegate { EditTodo(TodoList[i]);    };
             }
         }
 
@@ -55,12 +62,18 @@ namespace Todo.presenter
             if (result == DialogResult.OK)
             {
                 // update the item through ITodoServices
+                TodoItem newTodo = new(CreateTodoForm.Titlestr);
+                _service.Add(_currentListId, newTodo); 
 
                 // the following is temp code
                 Console.WriteLine(CreateTodoForm.Titlestr);
-                List<TodoViewItem> todoViewItems = _view.UpdateActiveViewList(null);
-                todoViewItems[0].deleteButton.Click += delegate { DeleteTodo("Delete me"); };
-                todoViewItems[0].editButton.Click += delegate { EditTodo(0); };
+
+                List<string> todoTitles = new List<string>();
+                todoTitles.Add(CreateTodoForm.Titlestr);
+                List<TodoViewItem> todoViewItems = _view.UpdateActiveViewList(todoTitles);
+
+                todoViewItems[0].deleteButton.Click += delegate { DeleteTodo(newTodo);  };
+                todoViewItems[0].editButton.Click += delegate   { EditTodo(newTodo);    };
             }
         }
 
@@ -68,7 +81,7 @@ namespace Todo.presenter
         /// Opens the dialog for editing a todo and resolves it
         /// </summary>
         /// <param name="todoViewItemIndex">The index (!= ID) of the todoViewItem to edit.</param>
-        private void EditTodo(int todoViewItemIndex)
+        private void EditTodo(TodoItem todoItem)
         {
             var CreateTodoForm = new EditTodoForm();
             var result = CreateTodoForm.ShowDialog();
@@ -80,9 +93,10 @@ namespace Todo.presenter
         }
 
 
-        public void DeleteTodo(string a = "hi")
+        public void DeleteTodo(TodoItem todoItem)
         {
-            Console.WriteLine(a);
+            Console.WriteLine(todoItem.Title);
+            _service.Delete(_currentListId, todoItem);
         }
 
     }

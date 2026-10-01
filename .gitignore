@@ -42,6 +42,7 @@ ScaffoldingReadMe.txt
 #VisualStudio
 .vs/
 *.user
+*.tmp
 
 # Others
 ~$*

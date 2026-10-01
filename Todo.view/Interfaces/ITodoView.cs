@@ -10,9 +10,9 @@ namespace Todo.view.Interfaces
         /// <summary>
         /// Updates the active view list.
         /// </summary>
-        /// <param name="todoList">The todo list.</param>
-        /// <returns>List of each created delete button.</returns>
-        public List<TodoViewItem> UpdateActiveViewList(object? todoList);
+        /// <param name="todoTitles">The todo list.</param>
+        /// <returns>List of each created todo view item </returns>
+        public List<TodoViewItem> UpdateActiveViewList(List<string> todoTitles);
 
 
         /// <summary>

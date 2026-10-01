@@ -27,13 +27,13 @@ namespace Todo.view
             Application.Run(this);
         }
 
-        public List<TodoViewItem> UpdateActiveViewList(object? todoList)
+        public List<TodoViewItem> UpdateActiveViewList(List<string> todoTitles)
         {
             flowLayout.Controls.Clear();
             List<TodoViewItem> controls = new();
-            
-            // foreach (TodoItem item in todoList { controls.Add(addTodo(item.Title) }
-            controls.Add(addTodo("Nothing"));
+
+            // foreach (string itemTitle in todoTitles { controls.Add(addTodo(itemTitle) }
+            controls.Add(addTodo(todoTitles[0]));
 
             return controls;
         }
