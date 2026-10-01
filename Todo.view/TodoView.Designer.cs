@@ -29,33 +29,19 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TodoView));
-            deleteTodoButton = new Button();
             flowLayout = new FlowLayoutPanel();
             headerLayout = new FlowLayoutPanel();
             label1 = new Label();
             createTodoButton = new Button();
-            flowItem = new FlowLayoutPanel();
-            todoText = new TextBox();
+            todoViewItem1 = new TodoViewItem();
             flowLayout.SuspendLayout();
             headerLayout.SuspendLayout();
-            flowItem.SuspendLayout();
             SuspendLayout();
-            // 
-            // deleteTodoButton
-            // 
-            deleteTodoButton.FlatStyle = FlatStyle.Popup;
-            deleteTodoButton.ForeColor = SystemColors.ButtonHighlight;
-            deleteTodoButton.Location = new Point(463, 3);
-            deleteTodoButton.Name = "deleteTodoButton";
-            deleteTodoButton.Size = new Size(75, 23);
-            deleteTodoButton.TabIndex = 0;
-            deleteTodoButton.Text = "Delete";
-            deleteTodoButton.UseVisualStyleBackColor = true;
             // 
             // flowLayout
             // 
             flowLayout.Controls.Add(headerLayout);
-            flowLayout.Controls.Add(flowItem);
+            flowLayout.Controls.Add(todoViewItem1);
             flowLayout.Dock = DockStyle.Left;
             flowLayout.FlowDirection = FlowDirection.TopDown;
             flowLayout.Location = new Point(0, 0);
@@ -99,27 +85,14 @@
             createTodoButton.Text = "New Todo";
             createTodoButton.UseVisualStyleBackColor = true;
             // 
-            // flowItem
+            // todoViewItem1
             // 
-            flowItem.AutoSize = true;
-            flowItem.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            flowItem.Controls.Add(todoText);
-            flowItem.Controls.Add(deleteTodoButton);
-            flowItem.Location = new Point(3, 38);
-            flowItem.Name = "flowItem";
-            flowItem.Size = new Size(541, 29);
-            flowItem.TabIndex = 2;
-            flowItem.WrapContents = false;
-            // 
-            // todoText
-            // 
-            todoText.AcceptsReturn = true;
-            todoText.Dock = DockStyle.Left;
-            todoText.Location = new Point(3, 3);
-            todoText.Name = "todoText";
-            todoText.PlaceholderText = "Todo text here";
-            todoText.Size = new Size(454, 23);
-            todoText.TabIndex = 1;
+            todoViewItem1.AutoSize = true;
+            todoViewItem1.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            todoViewItem1.Location = new Point(3, 38);
+            todoViewItem1.Name = "todoViewItem1";
+            todoViewItem1.Size = new Size(541, 29);
+            todoViewItem1.TabIndex = 4;
             // 
             // TodoView
             // 
@@ -136,19 +109,14 @@
             flowLayout.PerformLayout();
             headerLayout.ResumeLayout(false);
             headerLayout.PerformLayout();
-            flowItem.ResumeLayout(false);
-            flowItem.PerformLayout();
             ResumeLayout(false);
         }
 
         #endregion
-
-        private Button deleteTodoButton;
         private FlowLayoutPanel flowLayout;
-        private FlowLayoutPanel flowItem;
-        private TextBox todoText;
         private FlowLayoutPanel headerLayout;
         private Label label1;
         private Button createTodoButton;
+        private TodoViewItem todoViewItem1;
     }
 }

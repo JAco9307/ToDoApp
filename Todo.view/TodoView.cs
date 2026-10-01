@@ -1,5 +1,5 @@
+using Todo.view.Interfaces;
 namespace Todo.view
-
 {
     public partial class TodoView : Form, ITodoView
     {
@@ -14,7 +14,11 @@ namespace Todo.view
             newThread.SetApartmentState(ApartmentState.STA);
             newThread.Start();
 
-            List<Control> controls = [createTodoButton, deleteTodoButton, todoText];
+            List<Control> controls = [
+                createTodoButton, 
+                todoViewItem1.deleteButton, 
+                todoViewItem1.textBox
+                ];
             return controls;
         }
 
