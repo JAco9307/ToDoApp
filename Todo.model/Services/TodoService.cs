@@ -33,7 +33,7 @@ namespace Todo.model.Services
             if (listId >= _todoLists.Count)
                 throw new IndexOutOfRangeException();
 
-            _repository.Add(todoItem);
+            _repository.AddTodoItem(todoItem);
             _todoLists[listId].Add(todoItem);
         }
 
@@ -47,7 +47,7 @@ namespace Todo.model.Services
             if (listId >= _todoLists.Count)
                 throw new IndexOutOfRangeException();
 
-            _repository.Delete(todoItem.Id);
+            _repository.DeleteTodoItem(todoItem);
             _todoLists[listId].Remove(todoItem);
         }
 

@@ -8,7 +8,7 @@ namespace Todo.model.Interfaces
     public interface ITodoRepository
     {
         public TodoList GetList(int TodoListId);
-        public void Add(TodoItem item);
-        public void Delete(int TodoListId);
+        public void AddTodoItem(TodoItem todoItem);
+        public void DeleteTodoItem(TodoItem todoItem);
     }
 }
