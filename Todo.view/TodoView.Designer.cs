@@ -1,6 +1,6 @@
-﻿namespace Todo.formview
+﻿namespace Todo.view
 {
-    partial class FormView
+    partial class TodoView
     {
         /// <summary>
         ///  Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormView));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TodoView));
             deleteTodoButton = new Button();
             flowLayout = new FlowLayoutPanel();
             headerLayout = new FlowLayoutPanel();
@@ -121,7 +121,7 @@
             todoText.Size = new Size(454, 23);
             todoText.TabIndex = 1;
             // 
-            // FormView
+            // TodoView
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -130,7 +130,7 @@
             Controls.Add(flowLayout);
             FormBorderStyle = FormBorderStyle.SizableToolWindow;
             Icon = (Icon)resources.GetObject("$this.Icon");
-            Name = "FormView";
+            Name = "TodoView";
             Text = "ToDo App";
             flowLayout.ResumeLayout(false);
             flowLayout.PerformLayout();
