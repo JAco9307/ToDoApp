@@ -7,7 +7,9 @@ namespace Todo.model.Entities
 {
     public class TodoList
     {
-        private List<TodoItem> _items = new List<TodoItem>();
+        public int Id { get; private set; }
+        private readonly List<TodoItem> _items = new List<TodoItem>();
+        public IReadOnlyList<TodoItem> Items => _items;
 
         public void Add(TodoItem item)
         {
@@ -21,7 +23,10 @@ namespace Todo.model.Entities
             //if(ListItem == null)
             //    throw new KeyNotFoundException("Given item was not found in the list");
 
-            _items.Remove(item);
+            bool success = _items.Remove(item);
+
+            if(!success)
+                throw new KeyNotFoundException("Given item was not found in the list");
         }
     }
 }

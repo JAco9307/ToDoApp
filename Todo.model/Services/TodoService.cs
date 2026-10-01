@@ -8,29 +8,36 @@ namespace Todo.model.Services
 {
     public class TodoService : ITodoService
     {
-        private I
-        private readonly List<TodoList> _todoLists;
-        public IReadOnlyList<TodoList> todoLists { get; private set; }
-
-
+        private readonly List<TodoList> _todoLists = new List<TodoList>();
+        public IReadOnlyList<TodoList> todoLists => todoLists;
 
         public TodoService()
         {
 
         }
+
         public void Add(int listId, TodoItem todoItem)
         {
-            throw new NotImplementedException();
+            //default behavior in case no lists exist
+            if (_todoLists.Count == 0)
+                _todoLists.Add(new TodoList());
+
+            //if(listId >= _todoLists.Count)
+            //    throw new IndexOutOfRangeException();
+
+            _todoLists[listId].Add(todoItem);
         }
 
         public void Delete(int listId, TodoItem todoItem)
         {
-            throw new NotImplementedException();
+            _todoLists[listId].Remove(todoItem);
         }
 
         public TodoList GetTodoList(int listId)
         {
-            throw new NotImplementedException();
+            if(listId >= _todoLists.Count)
+                throw new IndexOutOfRangeException();
+            return _todoLists[listId];
         }
     }
 }
