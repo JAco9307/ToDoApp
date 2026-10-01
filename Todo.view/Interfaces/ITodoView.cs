@@ -12,7 +12,7 @@ namespace Todo.view.Interfaces
         /// </summary>
         /// <param name="todoList">The todo list.</param>
         /// <returns>List of each created delete button.</returns>
-        public List<Control> UpdateActiveViewList(object todoList);
+        public List<TodoViewItem> UpdateActiveViewList(object? todoList);
 
         /// <summary>
         /// Start the form in a thread.

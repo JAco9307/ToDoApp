@@ -10,12 +10,19 @@ namespace Todo.view
 {
     public partial class TodoViewItem : UserControl
     {
-        public TodoViewItem()
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TodoViewItem"/> class.
+        /// </summary>
+        /// <param name="TodoTitle">The todo title.</param>
+        public TodoViewItem(string TodoTitle)
         {
             InitializeComponent();
+            textBox.Text = TodoTitle;
         }
 
-        public TextBox textBox { get { return todoText; } }
-        public Button deleteButton { get { return deleteTodoButton; } }
+        public TextBox textBox => todoText;
+        public Button deleteButton => deleteTodoButton; 
+        public Button editButton => editTodoButton; 
     }
 }

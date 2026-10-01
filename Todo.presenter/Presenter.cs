@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
+using Todo.view;
 using Todo.view.Interfaces;
 
 namespace Todo.presenter
 {
-    public class Presenter : Form
+    public class Presenter
     {
         private ITodoView _view;
         private int _currentListId;
@@ -29,28 +30,44 @@ namespace Todo.presenter
         /// <param name="main">The View object.</param>
         private void EventHandlerSetup(List<Control> controls)
         {
-            controls[1].Click += delegate { DeleteTodo("Delete"); };
             controls[0].Click += delegate { CreateTodo(); };
-            // temp examples: 
-            controls[2].Disposed += delegate { DeleteTodo(controls[2].Text); };
-            controls[2].LostFocus += delegate { DeleteTodo(controls[2].Text); };
-
         }
 
         public void UpdateView()
         {
-            List<Control> deleteButtons = _view.UpdateActiveViewList(null);
+            List<TodoViewItem> deleteButtons = _view.UpdateActiveViewList(null);
 
             for (int i = 0; i < deleteButtons.Count; i++)
             {
-                deleteButtons[i].Click += delegate { DeleteTodo("delete " + i); };
+                deleteButtons[i].deleteButton.Click += delegate { DeleteTodo("delete " + i); };
             }
         }
 
         public void CreateTodo()
         {
-            Console.WriteLine("Create");
+            var CreateTodoForm = new EditTodoForm();
+            var result = CreateTodoForm.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                // all temp code, should be replaced later
+                Console.WriteLine(CreateTodoForm.Titlestr);
+                List<TodoViewItem> todoViewItems = _view.UpdateActiveViewList(null);
+                todoViewItems[0].deleteButton.Click += delegate { DeleteTodo("Delete me"); };
+                todoViewItems[0].editButton.Click += delegate { EditTodo(todoViewItems[0]); };
+            }
         }
+
+        private void EditTodo(TodoViewItem todoViewItem)
+        {
+            var CreateTodoForm = new EditTodoForm();
+            var result = CreateTodoForm.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                todoViewItem.textBox.Text = CreateTodoForm.Titlestr; // should edit the item in database instead
+                // update view after
+            }
+        }
+
         public void DeleteTodo(string a = "hi")
         {
             Console.WriteLine(a);

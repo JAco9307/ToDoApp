@@ -33,21 +33,21 @@
             headerLayout = new FlowLayoutPanel();
             label1 = new Label();
             createTodoButton = new Button();
-            todoViewItem1 = new TodoViewItem();
-            flowLayout.SuspendLayout();
             headerLayout.SuspendLayout();
             SuspendLayout();
             // 
             // flowLayout
             // 
-            flowLayout.Controls.Add(headerLayout);
-            flowLayout.Controls.Add(todoViewItem1);
-            flowLayout.Dock = DockStyle.Left;
+            flowLayout.AutoScroll = true;
+            flowLayout.AutoSize = true;
+            flowLayout.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            flowLayout.Dock = DockStyle.Fill;
             flowLayout.FlowDirection = FlowDirection.TopDown;
-            flowLayout.Location = new Point(0, 0);
+            flowLayout.Location = new Point(0, 29);
             flowLayout.Name = "flowLayout";
-            flowLayout.Size = new Size(716, 450);
+            flowLayout.Size = new Size(800, 421);
             flowLayout.TabIndex = 1;
+            flowLayout.WrapContents = false;
             // 
             // headerLayout
             // 
@@ -57,10 +57,11 @@
             headerLayout.Controls.Add(label1);
             headerLayout.Controls.Add(createTodoButton);
             headerLayout.Dock = DockStyle.Top;
-            headerLayout.Location = new Point(3, 3);
+            headerLayout.Location = new Point(0, 0);
             headerLayout.Name = "headerLayout";
-            headerLayout.Size = new Size(541, 29);
+            headerLayout.Size = new Size(800, 29);
             headerLayout.TabIndex = 3;
+            headerLayout.WrapContents = false;
             // 
             // label1
             // 
@@ -85,15 +86,6 @@
             createTodoButton.Text = "New Todo";
             createTodoButton.UseVisualStyleBackColor = true;
             // 
-            // todoViewItem1
-            // 
-            todoViewItem1.AutoSize = true;
-            todoViewItem1.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            todoViewItem1.Location = new Point(3, 38);
-            todoViewItem1.Name = "todoViewItem1";
-            todoViewItem1.Size = new Size(541, 29);
-            todoViewItem1.TabIndex = 4;
-            // 
             // TodoView
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -101,15 +93,15 @@
             BackColor = Color.FromArgb(64, 64, 64);
             ClientSize = new Size(800, 450);
             Controls.Add(flowLayout);
+            Controls.Add(headerLayout);
             FormBorderStyle = FormBorderStyle.SizableToolWindow;
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "TodoView";
             Text = "ToDo App";
-            flowLayout.ResumeLayout(false);
-            flowLayout.PerformLayout();
             headerLayout.ResumeLayout(false);
             headerLayout.PerformLayout();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -117,6 +109,5 @@
         private FlowLayoutPanel headerLayout;
         private Label label1;
         private Button createTodoButton;
-        private TodoViewItem todoViewItem1;
     }
 }

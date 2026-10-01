@@ -16,8 +16,6 @@ namespace Todo.view
 
             List<Control> controls = [
                 createTodoButton, 
-                todoViewItem1.deleteButton, 
-                todoViewItem1.textBox
                 ];
             return controls;
         }
@@ -27,9 +25,22 @@ namespace Todo.view
             Application.Run(this);
         }
 
-        public List<Control> UpdateActiveViewList(object todoList)
+        public List<TodoViewItem> UpdateActiveViewList(object? todoList)
         {
-            return new List<Control>();
+            flowLayout.Controls.Clear();
+            List<TodoViewItem> controls = new();
+            
+            // foreach (TodoItem item in todoList { controls.Add(addTodo(item.Title) }
+            controls.Add(addTodo("Nothing"));
+
+            return controls;
+        }
+
+        private TodoViewItem addTodo(string TodoTitle) // takes todoitem
+        {
+            TodoViewItem item = new TodoViewItem(TodoTitle);
+            flowLayout.Controls.Add(item);
+            return item;
         }
     }
 }
