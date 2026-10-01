@@ -32,6 +32,7 @@ namespace Todo.presenter
         private void EventHandlerSetup(List<Control> controls)
         {
             controls[0].Click += delegate { CreateTodo(); };
+
         }
 
         public void UpdateView()
@@ -77,6 +78,7 @@ namespace Todo.presenter
                 // update the item through ITodoServices
             }
         }
+
 
         public void DeleteTodo(string a = "hi")
         {

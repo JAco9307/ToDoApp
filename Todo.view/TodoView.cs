@@ -1,3 +1,4 @@
+
 using Todo.view.Interfaces;
 namespace Todo.view
 {
@@ -17,6 +18,7 @@ namespace Todo.view
             List<Control> controls = [
                 createTodoButton, 
                 ];
+
             return controls;
         }
 
@@ -41,6 +43,7 @@ namespace Todo.view
             TodoViewItem item = new TodoViewItem(TodoTitle);
             flowLayout.Controls.Add(item);
             return item;
+
         }
     }
 }

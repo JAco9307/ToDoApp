@@ -3,4 +3,5 @@
   <Project Path="Todo.presenter/Todo.presenter.csproj" Id="e9340ef9-b601-4034-97a8-5c06e4ae3c3c" />
   <Project Path="Todo.testing/Todo.testing.csproj" Id="3a86c200-5c4c-4e59-8a07-08b2bcb7770b" />
   <Project Path="Todo.view/Todo.view.csproj" Id="ba0b193a-b7e4-4d1a-8b38-98ed1c975e13" />
+
 </Solution>

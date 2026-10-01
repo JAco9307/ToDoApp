@@ -14,6 +14,7 @@ namespace Todo.view.Interfaces
         /// <returns>List of each created delete button.</returns>
         public List<TodoViewItem> UpdateActiveViewList(object? todoList);
 
+
         /// <summary>
         /// Start the form in a thread.
         /// </summary>

@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TodoView));
+
             flowLayout = new FlowLayoutPanel();
             headerLayout = new FlowLayoutPanel();
             label1 = new Label();
@@ -48,6 +49,7 @@
             flowLayout.Size = new Size(800, 421);
             flowLayout.TabIndex = 1;
             flowLayout.WrapContents = false;
+
             // 
             // headerLayout
             // 
@@ -62,6 +64,7 @@
             headerLayout.Size = new Size(800, 29);
             headerLayout.TabIndex = 3;
             headerLayout.WrapContents = false;
+
             // 
             // label1
             // 
@@ -94,6 +97,7 @@
             ClientSize = new Size(800, 450);
             Controls.Add(flowLayout);
             Controls.Add(headerLayout);
+
             FormBorderStyle = FormBorderStyle.SizableToolWindow;
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "TodoView";
