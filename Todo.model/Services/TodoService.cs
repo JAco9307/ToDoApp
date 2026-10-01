@@ -9,7 +9,7 @@ namespace Todo.model.Services
     public class TodoService : ITodoService
     {
         private readonly List<TodoList> _todoLists = new List<TodoList>();
-        public IReadOnlyList<TodoList> todoLists => todoLists;
+        public IReadOnlyList<TodoList> TodoLists => _todoLists;
 
         public TodoService()
         {
