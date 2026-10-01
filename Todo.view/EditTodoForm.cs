@@ -14,6 +14,7 @@ namespace Todo.view
         public EditTodoForm()
         {
             InitializeComponent();
+            titleTextBox.Select();
         }
         public void cancelClick(object sender, EventArgs e) 
         {
