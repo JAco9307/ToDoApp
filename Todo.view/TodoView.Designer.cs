@@ -29,39 +29,27 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TodoView));
-            deleteTodoButton = new Button();
+
             flowLayout = new FlowLayoutPanel();
             headerLayout = new FlowLayoutPanel();
             label1 = new Label();
             createTodoButton = new Button();
-            flowItem = new FlowLayoutPanel();
-            todoText = new TextBox();
-            flowLayout.SuspendLayout();
             headerLayout.SuspendLayout();
-            flowItem.SuspendLayout();
             SuspendLayout();
-            // 
-            // deleteTodoButton
-            // 
-            deleteTodoButton.FlatStyle = FlatStyle.Popup;
-            deleteTodoButton.ForeColor = SystemColors.ButtonHighlight;
-            deleteTodoButton.Location = new Point(463, 3);
-            deleteTodoButton.Name = "deleteTodoButton";
-            deleteTodoButton.Size = new Size(75, 23);
-            deleteTodoButton.TabIndex = 0;
-            deleteTodoButton.Text = "Delete";
-            deleteTodoButton.UseVisualStyleBackColor = true;
             // 
             // flowLayout
             // 
-            flowLayout.Controls.Add(headerLayout);
-            flowLayout.Controls.Add(flowItem);
-            flowLayout.Dock = DockStyle.Left;
+            flowLayout.AutoScroll = true;
+            flowLayout.AutoSize = true;
+            flowLayout.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            flowLayout.Dock = DockStyle.Fill;
             flowLayout.FlowDirection = FlowDirection.TopDown;
-            flowLayout.Location = new Point(0, 0);
+            flowLayout.Location = new Point(0, 29);
             flowLayout.Name = "flowLayout";
-            flowLayout.Size = new Size(716, 450);
+            flowLayout.Size = new Size(800, 421);
             flowLayout.TabIndex = 1;
+            flowLayout.WrapContents = false;
+
             // 
             // headerLayout
             // 
@@ -71,10 +59,12 @@
             headerLayout.Controls.Add(label1);
             headerLayout.Controls.Add(createTodoButton);
             headerLayout.Dock = DockStyle.Top;
-            headerLayout.Location = new Point(3, 3);
+            headerLayout.Location = new Point(0, 0);
             headerLayout.Name = "headerLayout";
-            headerLayout.Size = new Size(541, 29);
+            headerLayout.Size = new Size(800, 29);
             headerLayout.TabIndex = 3;
+            headerLayout.WrapContents = false;
+
             // 
             // label1
             // 
@@ -99,28 +89,6 @@
             createTodoButton.Text = "New Todo";
             createTodoButton.UseVisualStyleBackColor = true;
             // 
-            // flowItem
-            // 
-            flowItem.AutoSize = true;
-            flowItem.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            flowItem.Controls.Add(todoText);
-            flowItem.Controls.Add(deleteTodoButton);
-            flowItem.Location = new Point(3, 38);
-            flowItem.Name = "flowItem";
-            flowItem.Size = new Size(541, 29);
-            flowItem.TabIndex = 2;
-            flowItem.WrapContents = false;
-            // 
-            // todoText
-            // 
-            todoText.AcceptsReturn = true;
-            todoText.Dock = DockStyle.Left;
-            todoText.Location = new Point(3, 3);
-            todoText.Name = "todoText";
-            todoText.PlaceholderText = "Todo text here";
-            todoText.Size = new Size(454, 23);
-            todoText.TabIndex = 1;
-            // 
             // TodoView
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -128,25 +96,20 @@
             BackColor = Color.FromArgb(64, 64, 64);
             ClientSize = new Size(800, 450);
             Controls.Add(flowLayout);
+            Controls.Add(headerLayout);
+
             FormBorderStyle = FormBorderStyle.SizableToolWindow;
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "TodoView";
             Text = "ToDo App";
-            flowLayout.ResumeLayout(false);
-            flowLayout.PerformLayout();
             headerLayout.ResumeLayout(false);
             headerLayout.PerformLayout();
-            flowItem.ResumeLayout(false);
-            flowItem.PerformLayout();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
-
-        private Button deleteTodoButton;
         private FlowLayoutPanel flowLayout;
-        private FlowLayoutPanel flowItem;
-        private TextBox todoText;
         private FlowLayoutPanel headerLayout;
         private Label label1;
         private Button createTodoButton;
