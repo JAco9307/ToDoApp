@@ -17,6 +17,7 @@ public class TodoDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        
+        modelBuilder.Entity<TodoList>().HasKey(x => x.Id);
+        modelBuilder.Entity<TodoList>().HasMany(x => x.Items).WithOne().HasForeignKey(x => x.ListId).IsRequired();
     }
 }

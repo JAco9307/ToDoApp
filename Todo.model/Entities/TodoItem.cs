@@ -3,6 +3,7 @@
     public class TodoItem
     {
         public int Id { get; private set; }
+        public int ListId { get; set; }
         public string Title { get; private set; }
 
         /// <summary>
