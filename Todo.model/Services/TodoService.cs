@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using Todo.model.Entities;
 using Todo.model.Interfaces;
@@ -13,7 +14,7 @@ namespace Todo.model.Services
         private readonly List<TodoList> _todoLists = new List<TodoList>();
         public IReadOnlyList<TodoList> TodoLists => _todoLists;
 
-
+        [ExcludeFromCodeCoverage]
         public TodoService()
         {
             _repository = new TodoRepository();

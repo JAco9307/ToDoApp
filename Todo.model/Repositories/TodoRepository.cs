@@ -1,7 +1,8 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
-using Microsoft.EntityFrameworkCore;
 using Todo.model.Data;
 using Todo.model.Entities;
 using Todo.model.Interfaces;
@@ -11,7 +12,8 @@ namespace Todo.model.Repositories
     public class TodoRepository : ITodoRepository
     {
         private TodoDbContext _dbContext;
-        
+
+        [ExcludeFromCodeCoverage]
         public TodoRepository()
         {
             _dbContext = TodoDbContextFactory.Create();
