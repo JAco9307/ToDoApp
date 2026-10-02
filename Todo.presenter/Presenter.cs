@@ -11,8 +11,8 @@ namespace Todo.presenter
 {
     public class Presenter
     {
-        private ITodoView _view;
-        private ITodoService _service;
+        private readonly ITodoView _view;
+        private readonly ITodoService _service;
         private int _currentListId;
         public Presenter(ITodoView view, ITodoService service)
         {
@@ -39,6 +39,9 @@ namespace Todo.presenter
 
         }
 
+        /// <summary>
+        /// Updates the view item list and binds the delete and edit buttons.
+        /// </summary>
         public void UpdateView()
         {
             IReadOnlyList<TodoItem> TodoList = _service.GetTodoList(_currentListId);
@@ -57,21 +60,19 @@ namespace Todo.presenter
         /// </summary>
         public void CreateTodo()
         {
-            var CreateTodoForm = new EditTodoForm();
-            var result = CreateTodoForm.ShowDialog();
-            if (result == DialogResult.OK)
+            var result = _view.GetPopupResult();
+            if (result.dialogResult == DialogResult.OK)
             {
-                // update the item through ITodoServices
-                TodoItem newTodo = new(CreateTodoForm.Titlestr);
+                TodoItem newTodo = new(result.title);
                 _service.Add(_currentListId, newTodo); 
 
                 // the following is temp code
-                Console.WriteLine(CreateTodoForm.Titlestr);
+                Console.WriteLine(result.title);
 
                 List<string> todoTitles = new List<string>();
-                todoTitles.Add(CreateTodoForm.Titlestr);
+                todoTitles.Add(result.title);
                 List<TodoViewItem> todoViewItems = _view.UpdateActiveViewList(todoTitles);
-
+                if (todoViewItems.Count == 0) return;
                 todoViewItems[0].deleteButton.Click += delegate { DeleteTodo(newTodo);  };
                 todoViewItems[0].editButton.Click += delegate   { EditTodo(newTodo);    };
             }
@@ -79,6 +80,7 @@ namespace Todo.presenter
 
         /// <summary>
         /// Opens the dialog for editing a todo and resolves it
+        /// edit buttons are disabled until post mvp so this cant be called yet
         /// </summary>
         /// <param name="todoViewItemIndex">The index (!= ID) of the todoViewItem to edit.</param>
         private void EditTodo(TodoItem todoItem)
@@ -98,6 +100,5 @@ namespace Todo.presenter
             Console.WriteLine(todoItem.Title);
             _service.Delete(_currentListId, todoItem);
         }
-
     }
 }

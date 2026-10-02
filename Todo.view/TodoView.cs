@@ -32,18 +32,33 @@ namespace Todo.view
             flowLayout.Controls.Clear();
             List<TodoViewItem> controls = new();
 
-            // foreach (string itemTitle in todoTitles { controls.Add(addTodo(itemTitle) }
-            controls.Add(addTodo(todoTitles[0]));
+            foreach (string itemTitle in todoTitles) 
+            {
+                TodoViewItem newTodo = addTodo(itemTitle);
+                controls.Add(newTodo); 
+            }
 
             return controls;
         }
 
-        private TodoViewItem addTodo(string TodoTitle) // takes todoitem
+        private TodoViewItem addTodo(string TodoTitle)
         {
             TodoViewItem item = new TodoViewItem(TodoTitle);
             flowLayout.Controls.Add(item);
             return item;
-
         }
+
+        public PopupResult GetPopupResult(string currentTitle)
+        {
+            var CreateTodoForm = new EditTodoForm(currentTitle);
+            var result = CreateTodoForm.ShowDialog();
+
+            return new PopupResult
+            {
+                dialogResult = result,
+                title = CreateTodoForm.Titlestr
+            };
+        }
+
     }
 }

@@ -62,6 +62,7 @@
             // 
             // editTodoButton
             // 
+            editTodoButton.Enabled = false;
             editTodoButton.FlatStyle = FlatStyle.Popup;
             editTodoButton.ForeColor = SystemColors.ButtonHighlight;
             editTodoButton.Location = new Point(463, 3);

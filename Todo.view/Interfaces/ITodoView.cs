@@ -21,5 +21,6 @@ namespace Todo.view.Interfaces
         /// <returns>Returns relevant controls for binding</returns>
         public List<Control> StartUp();
 
+        public PopupResult GetPopupResult(string currentTitle = "");
     }
 }
