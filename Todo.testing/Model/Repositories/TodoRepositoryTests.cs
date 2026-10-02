@@ -69,7 +69,7 @@ public class TodoRepositoryTests
         TodoList todoList = new TodoList();
         dbContext.TodoLists.Add(todoList);
         dbContext.SaveChanges();
-        TodoList todoListFromDb = repository.GetList(1);
+        TodoList? todoListFromDb = repository.GetList(1);
         Assert.AreEqual(todoList,todoListFromDb);
     }
 }

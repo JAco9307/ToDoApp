@@ -24,13 +24,15 @@ namespace Todo.model.Repositories
         
         public void AddTodoItem(TodoItem item)
         {
-            TodoList todoList = _dbContext.TodoLists.FirstOrDefault();
+            TodoList? todoList = _dbContext.TodoLists.FirstOrDefault();
             if (todoList == null)
             {
                 _dbContext.TodoLists.Add(new TodoList());
                 _dbContext.SaveChanges();
                 todoList = _dbContext.TodoLists.FirstOrDefault();
             }
+            if (todoList == null)
+                throw new NullReferenceException();
 
             item.ListId = todoList.Id;
             _dbContext.TodoItems.Add(item);
@@ -43,8 +45,10 @@ namespace Todo.model.Repositories
             _dbContext.SaveChanges();
         }
 
-        public TodoList GetList(int TodoListId)
+        public TodoList? GetList(int TodoListId)
         {
+
+
             return _dbContext.TodoLists.Find(TodoListId);
         }
     }
