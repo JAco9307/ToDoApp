@@ -85,8 +85,14 @@ public class TodoListTests
     public void Remove_ShouldThrowExceptionIfTodoNotFound()
     {
         TodoList list = new TodoList();
-        TodoItem todoItem = new TodoItem("Test Title");
+        TodoItem todoItem1 = new TodoItem("Test Title");
+        TodoItem todoItem2 = new TodoItem("Second Test Title");
 
-        Assert.Throws<KeyNotFoundException>(() => list.Remove(todoItem));
+        list.Add(todoItem1);
+        list.Add(todoItem2);
+
+        list.Remove(todoItem1);
+
+        Assert.Throws<KeyNotFoundException>(() => list.Remove(todoItem1));
     }
 }

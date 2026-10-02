@@ -11,6 +11,15 @@ namespace Todo.model.Entities
         private readonly List<TodoItem> _items = new List<TodoItem>();
         public IReadOnlyList<TodoItem> Items => _items;
 
+        public TodoList()
+        {
+
+        }
+        public TodoList(int listId)
+        {
+            Id = listId;
+        }
+
         /// <summary>
         /// Adds the TodoItem to the TodoList.
         /// </summary>

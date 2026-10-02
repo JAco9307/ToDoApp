@@ -19,6 +19,11 @@ namespace Todo.model.Services
             _repository = new TodoRepository();
         }
 
+        public TodoService(ITodoRepository todoRepository)
+        {
+            _repository = todoRepository;
+        }
+
         /// <summary>
         /// Adds the TodoItem to the TodoList with the given ID. Creates a new TodoList if none exist. Throws an IndexOutOfRange exception if ID doesnt exist.
         /// </summary>
@@ -52,18 +57,26 @@ namespace Todo.model.Services
         }
 
         /// <summary>
-        /// Gets the todo list with the given ID. Throws an IndexOutOfRange exception if ID doesnt exist.
+        /// Gets the todo list with the given ID. If Id is out of range, then it check the Db, and then if still not found, then it creates a new.
         /// </summary>
         /// <param name="listId">The list id.</param>
         /// <returns>The TodoList.</returns>
         public TodoList GetTodoList(int listId)
         {
-            if(listId >= _todoLists.Count)
-                throw new IndexOutOfRangeException();
+            TodoList? list = _todoLists.FirstOrDefault(todoList => todoList.Id == listId);
+            if (list != null)
+                return list;
 
-            TodoList list = _repository.GetList(listId);
-
-            return _todoLists[listId];
+            list = _repository.GetList(listId);
+            if(list != null)
+            {
+                _todoLists.Add(list);
+                return list;
+            }
+            
+            list = new TodoList(listId);
+            _todoLists.Add(list);
+            return list;
         }
     }
 }
