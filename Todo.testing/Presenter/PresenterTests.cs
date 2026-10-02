@@ -7,7 +7,7 @@ using Todo.presenter;
 using Todo.view;
 using Todo.view.Interfaces;
 
-namespace Todo.testing
+namespace Todo.testing.Presenter
 {
     public class mockService : ITodoService
     {

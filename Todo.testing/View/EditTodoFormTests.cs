@@ -3,7 +3,7 @@ using System;
 using System.Windows.Forms;
 using Todo.view;
 
-namespace Todo.testing
+namespace Todo.testing.View
 {
     [TestClass]
     public class EditTodoFormTests
