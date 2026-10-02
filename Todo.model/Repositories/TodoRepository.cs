@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.EntityFrameworkCore;
 using Todo.model.Data;
 using Todo.model.Entities;
 using Todo.model.Interfaces;
@@ -9,10 +10,29 @@ namespace Todo.model.Repositories
 {
     public class TodoRepository : ITodoRepository
     {
-        private TodoDbContext _dbContext = TodoDbContextFactory.Create();
+        private TodoDbContext _dbContext;
+        
+        public TodoRepository()
+        {
+            _dbContext = TodoDbContextFactory.Create();
+        }
+
+        public TodoRepository(TodoDbContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
         
         public void AddTodoItem(TodoItem item)
         {
+            TodoList todoList = _dbContext.TodoLists.FirstOrDefault();
+            if (todoList == null)
+            {
+                _dbContext.TodoLists.Add(new TodoList());
+                _dbContext.SaveChanges();
+                todoList = _dbContext.TodoLists.FirstOrDefault();
+            }
+
+            item.ListId = todoList.Id;
             _dbContext.TodoItems.Add(item);
             _dbContext.SaveChanges();
         }
