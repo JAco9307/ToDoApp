@@ -62,8 +62,8 @@ namespace Todo.testing.presenter
     [TestClass]
     public class PresenterTests
     {
-        ITodoView? _view;
-        ITodoService? _service;
+        ITodoView _view;
+        ITodoService _service;
 
         [TestInitialize]
         public void Init() 
@@ -123,7 +123,7 @@ namespace Todo.testing.presenter
         {
             // Arrange
             var presenter = new Presenter(_view, _service);
-            TodoItem todoItem = default;
+            TodoItem todoItem = new("test");
 
             // Act
             presenter.DeleteTodo(todoItem);
