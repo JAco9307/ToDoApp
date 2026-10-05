@@ -32,16 +32,7 @@ namespace Todo.model.Services
         /// <param name="todoItem">The TodoItem.</param>
         public void Add(int listId, TodoItem todoItem)
         {
-            //default behavior in case no lists exist
-            if (!_todoLists.Keys.Contains(listId))
-                _todoLists.Add(listId, new TodoList());
-            
-
-            //if (listId >= _todoLists.Count)
-            //    throw new IndexOutOfRangeException();
-
             _repository.AddTodoItem(todoItem);
-            //_todoLists[listId].Add(todoItem);
         }
 
         /// <summary>
@@ -51,11 +42,7 @@ namespace Todo.model.Services
         /// <param name="todoItem">The TodoItem.</param>
         public void Delete(int listId, TodoItem todoItem)
         {
-            //if (listId >= _todoLists.Count)
-            //    throw new IndexOutOfRangeException();
-
             _repository.DeleteTodoItem(todoItem);
-            _todoLists[listId].Remove(todoItem);
         }
 
         /// <summary>
