@@ -35,11 +35,6 @@ namespace Todo.model.Entities
         /// <param name="item">The TodoItem.</param>
         public void Remove(TodoItem item)
         {
-            //TodoItem? ListItem = _items.FirstOrDefault(_item => _item.Id == item.Id);
-
-            //if(ListItem == null)
-            //    throw new KeyNotFoundException("Given item was not found in the list");
-
             bool success = _items.Remove(item);
 
             if(!success)
