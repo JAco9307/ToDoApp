@@ -29,7 +29,8 @@ namespace Todo.model.Repositories
             TodoList? todoList = _dbContext.TodoLists.FirstOrDefault();
             if (todoList == null)
             {
-                _dbContext.TodoLists.Add(new TodoList());
+                todoList = new TodoList();
+                _dbContext.TodoLists.Add(todoList);
                 _dbContext.SaveChanges();
             }
             item.ListId = todoList.Id;

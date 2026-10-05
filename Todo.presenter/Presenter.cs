@@ -29,10 +29,11 @@ namespace Todo.presenter
         {
             List<Control> controls = _view.StartUp();
             EventHandlerSetup(controls);
+            UpdateView();
 
         }
 
-        
+
         /// <summary>
         /// Perform the event handler setup.
         /// </summary>
@@ -40,7 +41,6 @@ namespace Todo.presenter
         private void EventHandlerSetup(List<Control> controls)
         {
             controls[0].Click += delegate { CreateTodo(); };
-
         }
 
         /// <summary>
@@ -68,7 +68,8 @@ namespace Todo.presenter
             if (result.dialogResult == DialogResult.OK)
             {
                 TodoItem newTodo = new(result.title);
-                _service.Add(_currentListId, newTodo); 
+                _service.Add(_currentListId, newTodo);
+                UpdateView();
             }
         }
 
