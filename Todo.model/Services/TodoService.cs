@@ -11,8 +11,8 @@ namespace Todo.model.Services
     public class TodoService : ITodoService
     {
         private ITodoRepository _repository;
-        private readonly List<TodoList> _todoLists = new List<TodoList>();
-        public IReadOnlyList<TodoList> TodoLists => _todoLists;
+        private readonly Dictionary<int, TodoList> _todoLists = new Dictionary<int, TodoList>();
+        public IReadOnlyDictionary<int, TodoList> TodoLists => _todoLists;
 
         [ExcludeFromCodeCoverage]
         public TodoService()
@@ -33,14 +33,15 @@ namespace Todo.model.Services
         public void Add(int listId, TodoItem todoItem)
         {
             //default behavior in case no lists exist
-            if (_todoLists.Count == 0)
-                _todoLists.Add(new TodoList());
+            if (!_todoLists.Keys.Contains(listId))
+                _todoLists.Add(listId, new TodoList());
+            
 
-            if (listId >= _todoLists.Count)
-                throw new IndexOutOfRangeException();
+            //if (listId >= _todoLists.Count)
+            //    throw new IndexOutOfRangeException();
 
             _repository.AddTodoItem(todoItem);
-            _todoLists[listId].Add(todoItem);
+            //_todoLists[listId].Add(todoItem);
         }
 
         /// <summary>
@@ -50,8 +51,8 @@ namespace Todo.model.Services
         /// <param name="todoItem">The TodoItem.</param>
         public void Delete(int listId, TodoItem todoItem)
         {
-            if (listId >= _todoLists.Count)
-                throw new IndexOutOfRangeException();
+            //if (listId >= _todoLists.Count)
+            //    throw new IndexOutOfRangeException();
 
             _repository.DeleteTodoItem(todoItem);
             _todoLists[listId].Remove(todoItem);
@@ -64,19 +65,18 @@ namespace Todo.model.Services
         /// <returns>The TodoList.</returns>
         public TodoList GetTodoList(int listId)
         {
-            TodoList? list = _todoLists.FirstOrDefault(todoList => todoList.Id == listId);
-            if (list != null)
-                return list;
+            if(_todoLists.ContainsKey(listId))
+                return _todoLists[listId];
 
-            list = _repository.GetList(listId);
+            TodoList? list = _repository.GetList(listId);
             if(list != null)
             {
-                _todoLists.Add(list);
+                _todoLists.Add(listId, list);
                 return list;
             }
             
             list = new TodoList(listId);
-            _todoLists.Add(list);
+            _todoLists.Add(listId, list);
             return list;
         }
     }

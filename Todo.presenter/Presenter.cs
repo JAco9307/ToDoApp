@@ -18,7 +18,7 @@ namespace Todo.presenter
         {
             _view = view;
             _service = service;
-            _currentListId = 0;
+            _currentListId = 1;
         }
 
 
