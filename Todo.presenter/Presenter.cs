@@ -5,7 +5,7 @@ using System.Windows.Forms;
 using Todo.view;
 using Todo.view.Interfaces;
 using Todo.model.Interfaces;
-using Todo.model;
+using Todo.model.Entities;
 
 namespace Todo.presenter
 {
@@ -48,7 +48,7 @@ namespace Todo.presenter
         /// </summary>
         public void UpdateView()
         {
-            IReadOnlyList<TodoItem> TodoList = _service.GetTodoList(_currentListId);
+            IReadOnlyList<TodoItem> TodoList = _service.GetTodoList(_currentListId).Items;
             List<string> TodoTitles = TodoList.Select(z => z.Title).ToList();
             List<TodoViewItem> todoViewItems = _view.UpdateActiveViewList(TodoTitles);
 
