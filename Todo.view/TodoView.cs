@@ -41,6 +41,11 @@ namespace Todo.view
             return controls;
         }
 
+        /// <summary>
+        /// Adds a <see cref="TodoViewItem"/> to the GUI.
+        /// </summary>
+        /// <param name="TodoTitle">The todo title.</param>
+        /// <returns>The todo view item that has been generated.</returns>
         private TodoViewItem addTodo(string TodoTitle)
         {
             TodoViewItem item = new TodoViewItem(TodoTitle);

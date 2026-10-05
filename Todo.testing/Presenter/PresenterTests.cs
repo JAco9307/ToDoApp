@@ -7,7 +7,7 @@ using Todo.presenter;
 using Todo.view;
 using Todo.view.Interfaces;
 
-namespace Todo.testing.Presenter
+namespace Todo.testing.presenter
 {
     public class mockService : ITodoService
     {
@@ -61,8 +61,8 @@ namespace Todo.testing.Presenter
     [TestClass]
     public class PresenterTests
     {
-        ITodoView _view;
-        ITodoService _service;
+        ITodoView? _view;
+        ITodoService? _service;
 
         [TestInitialize]
         public void Init() 

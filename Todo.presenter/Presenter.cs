@@ -21,6 +21,10 @@ namespace Todo.presenter
             _currentListId = 0;
         }
 
+
+        /// <summary>
+        /// Starts up the view and binds relevant controls.
+        /// </summary>
         public void StartUp()
         {
             List<Control> controls = _view.StartUp();
@@ -56,7 +60,7 @@ namespace Todo.presenter
         }
 
         /// <summary>
-        /// Opens the dialog for creating a new todo and resolves it
+        /// Opens the dialog for creating a new todo and sets up the todo item afterwards
         /// </summary>
         public void CreateTodo()
         {
@@ -65,16 +69,6 @@ namespace Todo.presenter
             {
                 TodoItem newTodo = new(result.title);
                 _service.Add(_currentListId, newTodo); 
-
-                // the following is temp code
-                Console.WriteLine(result.title);
-
-                List<string> todoTitles = new List<string>();
-                todoTitles.Add(result.title);
-                List<TodoViewItem> todoViewItems = _view.UpdateActiveViewList(todoTitles);
-                if (todoViewItems.Count == 0) return;
-                todoViewItems[0].deleteButton.Click += delegate { DeleteTodo(newTodo);  };
-                todoViewItems[0].editButton.Click += delegate   { EditTodo(newTodo);    };
             }
         }
 
@@ -95,9 +89,12 @@ namespace Todo.presenter
         }
 
 
+        /// <summary>
+        /// Deletes a todoItem .
+        /// </summary>
+        /// <param name="todoItem">The todo item.</param>
         public void DeleteTodo(TodoItem todoItem)
         {
-            Console.WriteLine(todoItem.Title);
             _service.Delete(_currentListId, todoItem);
         }
     }
