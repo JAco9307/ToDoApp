@@ -31,10 +31,11 @@ namespace Todo.view
         {
             flowLayout.Controls.Clear();
             List<TodoViewItem> controls = new();
-
+            int i = 0;
             foreach (string itemTitle in todoTitles) 
             {
                 TodoViewItem newTodo = addTodo(itemTitle);
+                newTodo.id = i++;
                 controls.Add(newTodo); 
             }
 
