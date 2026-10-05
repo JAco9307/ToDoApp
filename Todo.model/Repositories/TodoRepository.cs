@@ -46,9 +46,9 @@ namespace Todo.model.Repositories
 
         public TodoList? GetList(int TodoListId)
         {
-
-
-            return _dbContext.TodoLists.Find(TodoListId);
+            return _dbContext.TodoLists
+                .Include(list => list.Items)
+                .FirstOrDefault(list => list.Id == TodoListId);
         }
     }
 }
