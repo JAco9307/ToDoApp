@@ -2,6 +2,7 @@
 using System;
 using System.Windows.Forms;
 using Todo.model;
+using Todo.model.Entities;
 using Todo.model.Interfaces;
 using Todo.presenter;
 using Todo.view;
@@ -25,10 +26,10 @@ namespace Todo.testing.presenter
             calledDelete = true;
         }
 
-        public IReadOnlyList<TodoItem> GetTodoList(int listId)
+        public TodoList GetTodoList(int listId)
         {
             calledGetList = true;
-            return new List<TodoItem>();
+            return new TodoList();
         }
     }
 
