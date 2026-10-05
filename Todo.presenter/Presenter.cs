@@ -52,10 +52,10 @@ namespace Todo.presenter
             List<string> TodoTitles = TodoList.Select(z => z.Title).ToList();
             List<TodoViewItem> todoViewItems = _view.UpdateActiveViewList(TodoTitles);
 
-            for (int i = 0; i < todoViewItems.Count; i++)
-            {
-                todoViewItems[i].deleteButton.Click += delegate { DeleteTodo(TodoList[i]);  };
-                todoViewItems[i].editButton.Click   += delegate { EditTodo(TodoList[i]);    };
+            foreach(TodoViewItem item in todoViewItems) {
+            
+                item.deleteButton.Click += delegate { DeleteTodo(TodoList[item.id]);  };
+                item.editButton.Click   += delegate { EditTodo(TodoList[item.id]);    };
             }
         }
 
@@ -97,6 +97,7 @@ namespace Todo.presenter
         public void DeleteTodo(TodoItem todoItem)
         {
             _service.Delete(_currentListId, todoItem);
+            UpdateView();
         }
     }
 }

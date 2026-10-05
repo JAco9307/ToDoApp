@@ -21,6 +21,7 @@ namespace Todo.view
             todoText.Text = TodoTitle;
         }
 
+        public int id;
         public Button deleteButton => deleteTodoButton; 
         public Button editButton => editTodoButton; 
     }
