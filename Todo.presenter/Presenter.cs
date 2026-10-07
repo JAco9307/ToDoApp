@@ -49,7 +49,7 @@ namespace Todo.presenter
         public void UpdateView()
         {
             IReadOnlyList<TodoItem> TodoList = _service.GetTodoList(_currentListId).Items;
-            List<string> TodoTitles = TodoList.Select(z => z.Title).ToList();
+            List<string> TodoTitles = TodoList.Select(todoItem => todoItem.Title).ToList();
             List<TodoViewItem> todoViewItems = _view.UpdateActiveViewList(TodoTitles);
 
             foreach(TodoViewItem item in todoViewItems) {

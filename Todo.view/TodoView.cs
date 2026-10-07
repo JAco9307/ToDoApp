@@ -4,6 +4,7 @@ namespace Todo.view
 {
     public partial class TodoView : Form, ITodoView
     {
+        private Thread guiThread;
         public TodoView()
         {
             InitializeComponent();
@@ -11,9 +12,9 @@ namespace Todo.view
 
         public List<Control> StartUp()
         {
-            var newThread = new Thread(FormThread);
-            newThread.SetApartmentState(ApartmentState.STA);
-            newThread.Start();
+            guiThread = new Thread(FormThread);
+            guiThread.SetApartmentState(ApartmentState.STA);
+            guiThread.Start();
 
             List<Control> controls = [
                 createTodoButton, 
@@ -50,7 +51,7 @@ namespace Todo.view
         private TodoViewItem addTodo(string TodoTitle)
         {
             TodoViewItem item = new TodoViewItem(TodoTitle);
-            flowLayout.Controls.Add(item);
+            Invoke(() => flowLayout.Controls.Add(item));
             return item;
         }
 
