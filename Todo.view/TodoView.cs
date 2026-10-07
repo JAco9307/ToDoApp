@@ -4,6 +4,7 @@ namespace Todo.view
 {
     public partial class TodoView : Form, ITodoView
     {
+        private Thread guiThread;
         public TodoView()
         {
             InitializeComponent();
@@ -11,9 +12,9 @@ namespace Todo.view
 
         public List<Control> StartUp()
         {
-            var newThread = new Thread(FormThread);
-            newThread.SetApartmentState(ApartmentState.STA);
-            newThread.Start();
+            guiThread = new Thread(FormThread);
+            guiThread.SetApartmentState(ApartmentState.STA);
+            guiThread.Start();
 
             List<Control> controls = [
                 createTodoButton, 
@@ -27,23 +28,44 @@ namespace Todo.view
             Application.Run(this);
         }
 
-        public List<TodoViewItem> UpdateActiveViewList(object? todoList)
+        public List<TodoViewItem> UpdateActiveViewList(List<string> todoTitles)
         {
             flowLayout.Controls.Clear();
             List<TodoViewItem> controls = new();
-            
-            // foreach (TodoItem item in todoList { controls.Add(addTodo(item.Title) }
-            controls.Add(addTodo("Nothing"));
+            int i = 0;
+            foreach (string itemTitle in todoTitles) 
+            {
+                TodoViewItem newTodo = addTodo(itemTitle);
+                newTodo.id = i++;
+                controls.Add(newTodo); 
+            }
 
             return controls;
         }
 
-        private TodoViewItem addTodo(string TodoTitle) // takes todoitem
+        /// <summary>
+        /// Adds a <see cref="TodoViewItem"/> to the GUI.
+        /// </summary>
+        /// <param name="TodoTitle">The todo title.</param>
+        /// <returns>The todo view item that has been generated.</returns>
+        private TodoViewItem addTodo(string TodoTitle)
         {
             TodoViewItem item = new TodoViewItem(TodoTitle);
-            flowLayout.Controls.Add(item);
+            Invoke(() => flowLayout.Controls.Add(item));
             return item;
-
         }
+
+        public PopupResult ShowEditTodoDialog(string currentTitle)
+        {
+            var CreateTodoForm = new EditTodoForm(currentTitle);
+            var result = CreateTodoForm.ShowDialog();
+
+            return new PopupResult
+            {
+                dialogResult = result,
+                title = CreateTodoForm.Titlestr
+            };
+        }
+
     }
 }

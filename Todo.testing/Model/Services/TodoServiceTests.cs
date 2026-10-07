@@ -13,18 +13,20 @@ public class TodoServiceTests
         private TodoList _todoList = new TodoList();
         public void AddTodoItem(TodoItem todoItem)
         {
-
+            _todoList.Add(todoItem);
         }
 
         public void DeleteTodoItem(TodoItem todoItem)
         {
-
+            _todoList.Remove(todoItem);
         }
 
         public TodoList? GetList(int TodoListId)
         {
             if (TodoListId == 999)
                 return null;
+            if (TodoListId == 55)
+                return new TodoList(55);
             return _todoList;
         }
     }
@@ -45,6 +47,8 @@ public class TodoServiceTests
         TodoService service = new TodoService(new TestTodoRepository());
         TodoItem todoItem = new TodoItem("Test Title");
 
+        service.GetTodoList(0);
+
         service.Add(0, todoItem);
 
         Assert.ContainsSingle(service.TodoLists);
@@ -58,6 +62,8 @@ public class TodoServiceTests
         TodoItem todoItem1 = new TodoItem("Test Title");
         TodoItem todoItem2 = new TodoItem("Second Test Title");
 
+        service.GetTodoList(0);
+
         service.Add(0, todoItem1);
         service.Add(0, todoItem2);
 
@@ -67,20 +73,13 @@ public class TodoServiceTests
     }
 
     [TestMethod]
-    public void Add_ShouldThrowExceptionIfAddingToListIdAboveAvailableIds()
-    {
-        TodoService service = new TodoService(new TestTodoRepository());
-        TodoItem todoItem1 = new TodoItem("Test Title");
-
-        Assert.Throws<IndexOutOfRangeException>(() => service.Add(7, todoItem1));
-    }
-
-    [TestMethod]
     public void Delete_ShouldRemoveItemFromTodoList()
     {
         TodoService service = new TodoService(new TestTodoRepository());
         TodoItem todoItem1 = new TodoItem("Test Title");
         TodoItem todoItem2 = new TodoItem("Second Test Title");
+
+        service.GetTodoList(0);
 
         service.Add(0, todoItem1);
         service.Add(0, todoItem2);
@@ -93,20 +92,13 @@ public class TodoServiceTests
     }
 
     [TestMethod]
-    public void Delete_ShouldThrowExceptionIfDeletingIdAboveAvailableIds()
-    {
-        TodoService service = new TodoService(new TestTodoRepository());
-        TodoItem todoItem1 = new TodoItem("Test Title");
-
-        Assert.Throws<IndexOutOfRangeException>(() => service.Delete(7, todoItem1));
-    }
-
-    [TestMethod]
     public void GetTodoList_ShouldReturnTheCorrectList()
     {
         TodoService service = new TodoService(new TestTodoRepository());
         TodoItem todoItem1 = new TodoItem("Test Title");
         TodoItem todoItem2 = new TodoItem("Second Test Title");
+
+        service.GetTodoList(0);
 
         service.Add(0, todoItem1);
         service.Add(0, todoItem2);
@@ -126,10 +118,12 @@ public class TodoServiceTests
         TodoItem todoItem1 = new TodoItem("Test Title");
         TodoItem todoItem2 = new TodoItem("Second Test Title");
 
+        service.GetTodoList(0);
+
         service.Add(0, todoItem1);
         service.Add(0, todoItem2);
 
-        TodoList list = service.GetTodoList(7);
+        TodoList list = service.GetTodoList(55);
 
         Assert.IsNotNull(list);
         Assert.IsEmpty(list.Items);

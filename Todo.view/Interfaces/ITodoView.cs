@@ -10,10 +10,9 @@ namespace Todo.view.Interfaces
         /// <summary>
         /// Updates the active view list.
         /// </summary>
-        /// <param name="todoList">The todo list.</param>
-        /// <returns>List of each created delete button.</returns>
-        public List<TodoViewItem> UpdateActiveViewList(object? todoList);
-
+        /// <param name="todoTitles">The todo list.</param>
+        /// <returns>List of each created todo view item </returns>
+        public List<TodoViewItem> UpdateActiveViewList(List<string> todoTitles);
 
         /// <summary>
         /// Start the form in a thread.
@@ -21,5 +20,11 @@ namespace Todo.view.Interfaces
         /// <returns>Returns relevant controls for binding</returns>
         public List<Control> StartUp();
 
+        /// <summary>
+        /// Opens a popup prompt for creating todo.
+        /// </summary>
+        /// <param name="currentTitle">The current title of the todo.</param>
+        /// <returns>The popup input value.</returns>
+        public PopupResult ShowEditTodoDialog(string currentTitle = "");
     }
 }
