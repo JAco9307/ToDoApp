@@ -33,6 +33,8 @@
             titleLabel = new Label();
             titleTextBox = new TextBox();
             groupBox1 = new GroupBox();
+            comboBox1 = new ComboBox();
+            statusLabel = new Label();
             groupBox1.SuspendLayout();
             SuspendLayout();
             // 
@@ -40,7 +42,7 @@
             // 
             saveButton.FlatStyle = FlatStyle.Flat;
             saveButton.ForeColor = SystemColors.ButtonHighlight;
-            saveButton.Location = new Point(28, 95);
+            saveButton.Location = new Point(28, 118);
             saveButton.Name = "saveButton";
             saveButton.Size = new Size(75, 23);
             saveButton.TabIndex = 0;
@@ -52,7 +54,7 @@
             // 
             cancelButton.FlatStyle = FlatStyle.Flat;
             cancelButton.ForeColor = SystemColors.ButtonHighlight;
-            cancelButton.Location = new Point(250, 95);
+            cancelButton.Location = new Point(250, 118);
             cancelButton.Name = "cancelButton";
             cancelButton.Size = new Size(75, 23);
             cancelButton.TabIndex = 1;
@@ -79,6 +81,8 @@
             // 
             // groupBox1
             // 
+            groupBox1.Controls.Add(statusLabel);
+            groupBox1.Controls.Add(comboBox1);
             groupBox1.Controls.Add(saveButton);
             groupBox1.Controls.Add(titleLabel);
             groupBox1.Controls.Add(titleTextBox);
@@ -87,9 +91,28 @@
             groupBox1.FlatStyle = FlatStyle.Popup;
             groupBox1.Location = new Point(0, 0);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(364, 141);
+            groupBox1.Size = new Size(364, 165);
             groupBox1.TabIndex = 4;
             groupBox1.TabStop = false;
+            // 
+            // comboBox1
+            // 
+            comboBox1.FormattingEnabled = true;
+            comboBox1.Items.AddRange(new object[] { "Not Started", "In Progress", "Complete" });
+            comboBox1.Location = new Point(93, 74);
+            comboBox1.Name = "comboBox1";
+            comboBox1.Size = new Size(121, 23);
+            comboBox1.TabIndex = 4;
+            // 
+            // statusLabel
+            // 
+            statusLabel.AutoSize = true;
+            statusLabel.ForeColor = SystemColors.ButtonHighlight;
+            statusLabel.Location = new Point(28, 77);
+            statusLabel.Name = "statusLabel";
+            statusLabel.Size = new Size(42, 15);
+            statusLabel.TabIndex = 5;
+            statusLabel.Text = "Status:";
             // 
             // EditTodoForm
             // 
@@ -98,7 +121,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(64, 64, 64);
             CancelButton = cancelButton;
-            ClientSize = new Size(364, 141);
+            ClientSize = new Size(364, 165);
             ControlBox = false;
             Controls.Add(groupBox1);
             FormBorderStyle = FormBorderStyle.None;
@@ -120,5 +143,7 @@
         private Label titleLabel;
         private TextBox titleTextBox;
         private GroupBox groupBox1;
+        private Label statusLabel;
+        private ComboBox comboBox1;
     }
 }

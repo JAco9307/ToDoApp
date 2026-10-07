@@ -131,5 +131,17 @@ namespace Todo.testing.presenter
             // Assert
             Assert.IsTrue(((mockService)_service).calledDelete);
         }
+
+        [TestMethod]
+        public void CycleStatus_StateUnderTest_()
+        {
+            var presenter = new Presenter(_view, _service);
+            TodoItem todoItem = new("test");
+
+            presenter.CycleStatus(todoItem);
+            Assert.AreEqual("In Progress", todoItem.Status);
+            presenter.CycleStatus(todoItem);
+            Assert.AreEqual("Complete", todoItem.Status);
+        }
     }
 }

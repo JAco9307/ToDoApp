@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
+using Todo.model.Entities;
+using Todo.model.Interfaces;
+using Todo.model.Migrations;
 using Todo.view;
 using Todo.view.Interfaces;
-using Todo.model.Interfaces;
-using Todo.model.Entities;
 
 namespace Todo.presenter
 {
@@ -14,6 +15,7 @@ namespace Todo.presenter
         private readonly ITodoView _view;
         private readonly ITodoService _service;
         private int _currentListId;
+        private StatusList? statusOptions;
         public Presenter(ITodoView view, ITodoService service)
         {
             _view = view;
@@ -29,6 +31,7 @@ namespace Todo.presenter
         {
             List<Control> controls = _view.StartUp();
             EventHandlerSetup(controls);
+            statusOptions = _service.GetStatusOptions();
             UpdateView();
 
         }
@@ -55,12 +58,13 @@ namespace Todo.presenter
             foreach(TodoViewItem item in todoViewItems) {
             
                 item.Delete += delegate { DeleteTodo(TodoList[item.id]);  };
-                item.editButton.Click   += delegate { EditTodo(TodoList[item.id]);    };
+                item.editButton.Click += delegate { EditTodo(TodoList[item.id]); };
+                item.CycleStatus.Click += delegate { CycleStatus(TodoList[item.id], item); };
             }
         }
 
         /// <summary>
-        /// Opens the dialog for creating a new todo and sets up the todo item afterwards
+        /// Opens the dialog for creating a new todo and sets up the <see cref="TodoItem"/> afterwards
         /// </summary>
         public void CreateTodo()
         {
@@ -91,13 +95,31 @@ namespace Todo.presenter
 
 
         /// <summary>
-        /// Deletes a todoItem .
+        /// Deletes a <see cref="TodoItem"/> .
         /// </summary>
         /// <param name="todoItem">The todo item.</param>
         public void DeleteTodo(TodoItem todoItem)
         {
             _service.Delete(_currentListId, todoItem);
             UpdateView();
+        }
+
+        /// <summary>
+        /// Updates the status of a <see cref="TodoItem"/>.
+        /// </summary>
+        /// <param name="todoItem">The todo item.</param>
+        /// <param name="status">The status.</param>
+        public void UpdateStatus(TodoItem todoItem, string status)
+        {
+            todoItem.SetTodoStatus(status);
+        }
+
+        public void CycleStatus(TodoItem todoItem, TodoViewItem sender)
+        {
+            if (statusOptions == null) return;
+            int index = statusOptions.options.FindIndex(status => status == todoItem.Status);
+            todoItem.SetTodoStatus(statusOptions.options[(index+1) % statusOptions.options.Count]);
+            sender.Status = todoItem.Status;
         }
     }
 }

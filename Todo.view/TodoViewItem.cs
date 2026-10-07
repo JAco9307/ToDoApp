@@ -13,6 +13,17 @@ namespace Todo.view
     public partial class TodoViewItem : UserControl
     {
         public event EventHandler? Delete = default;
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string Status
+        {
+            get { return _status; }
+            set {
+                _status = value; 
+                CycleStatus.Text = value; 
+            } 
+        }
+        private string _status;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="TodoViewItem"/> class.
         /// </summary>
@@ -36,5 +47,6 @@ namespace Todo.view
         }
 
         public Button editButton => editTodoButton;
+        public Button CycleStatus => StatusButton;
     }
 }

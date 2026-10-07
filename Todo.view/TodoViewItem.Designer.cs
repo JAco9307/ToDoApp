@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             flowItem = new FlowLayoutPanel();
+            StatusButton = new Button();
             todoText = new TextBox();
             editTodoButton = new Button();
             deleteTodoButton = new Button();
@@ -39,27 +40,36 @@
             // 
             flowItem.AutoSize = true;
             flowItem.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            flowItem.Controls.Add(StatusButton);
             flowItem.Controls.Add(todoText);
             flowItem.Controls.Add(editTodoButton);
             flowItem.Controls.Add(deleteTodoButton);
             flowItem.Dock = DockStyle.Fill;
             flowItem.Location = new Point(0, 0);
-            flowItem.Margin = new Padding(3, 4, 3, 4);
             flowItem.Name = "flowItem";
-            flowItem.Size = new Size(708, 39);
+            flowItem.Size = new Size(710, 29);
             flowItem.TabIndex = 3;
             flowItem.WrapContents = false;
+            // 
+            // StatusButton
+            // 
+            StatusButton.Location = new Point(3, 2);
+            StatusButton.Margin = new Padding(3, 2, 3, 2);
+            StatusButton.Name = "StatusButton";
+            StatusButton.Size = new Size(82, 22);
+            StatusButton.TabIndex = 3;
+            StatusButton.Text = "Status here";
+            StatusButton.UseVisualStyleBackColor = true;
             // 
             // todoText
             // 
             todoText.AcceptsReturn = true;
             todoText.Dock = DockStyle.Left;
-            todoText.Location = new Point(3, 4);
-            todoText.Margin = new Padding(3, 4, 3, 4);
+            todoText.Location = new Point(91, 3);
             todoText.Name = "todoText";
             todoText.PlaceholderText = "Todo text here";
             todoText.ReadOnly = true;
-            todoText.Size = new Size(518, 27);
+            todoText.Size = new Size(454, 23);
             todoText.TabIndex = 1;
             // 
             // editTodoButton
@@ -67,10 +77,9 @@
             editTodoButton.Enabled = false;
             editTodoButton.FlatStyle = FlatStyle.Popup;
             editTodoButton.ForeColor = SystemColors.ButtonHighlight;
-            editTodoButton.Location = new Point(527, 4);
-            editTodoButton.Margin = new Padding(3, 4, 3, 4);
+            editTodoButton.Location = new Point(551, 3);
             editTodoButton.Name = "editTodoButton";
-            editTodoButton.Size = new Size(86, 31);
+            editTodoButton.Size = new Size(75, 23);
             editTodoButton.TabIndex = 0;
             editTodoButton.Text = "Edit";
             editTodoButton.UseVisualStyleBackColor = true;
@@ -79,10 +88,9 @@
             // 
             deleteTodoButton.FlatStyle = FlatStyle.Popup;
             deleteTodoButton.ForeColor = SystemColors.ButtonHighlight;
-            deleteTodoButton.Location = new Point(619, 4);
-            deleteTodoButton.Margin = new Padding(3, 4, 3, 4);
+            deleteTodoButton.Location = new Point(632, 3);
             deleteTodoButton.Name = "deleteTodoButton";
-            deleteTodoButton.Size = new Size(86, 31);
+            deleteTodoButton.Size = new Size(75, 23);
             deleteTodoButton.TabIndex = 2;
             deleteTodoButton.Text = "Delete";
             deleteTodoButton.UseVisualStyleBackColor = true;
@@ -90,14 +98,13 @@
             // 
             // TodoViewItem
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoSize = true;
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
             Controls.Add(flowItem);
-            Margin = new Padding(3, 4, 3, 4);
             Name = "TodoViewItem";
-            Size = new Size(708, 39);
+            Size = new Size(710, 29);
             flowItem.ResumeLayout(false);
             flowItem.PerformLayout();
             ResumeLayout(false);
@@ -110,5 +117,6 @@
         private TextBox todoText;
         private Button editTodoButton;
         private Button deleteTodoButton;
+        private Button StatusButton;
     }
 }

@@ -4,7 +4,7 @@ namespace Todo.view
 {
     public partial class TodoView : Form, ITodoView
     {
-        private Thread guiThread;
+        private Thread? guiThread;
         public TodoView()
         {
             InitializeComponent();

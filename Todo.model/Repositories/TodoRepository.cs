@@ -6,12 +6,18 @@ using System.Text;
 using Todo.model.Data;
 using Todo.model.Entities;
 using Todo.model.Interfaces;
+using Todo.model.Migrations;
 
 namespace Todo.model.Repositories
 {
     public class TodoRepository : ITodoRepository
     {
         private TodoDbContext _dbContext;
+        private readonly List<string> default_status = [ 
+            "Not Started",
+            "In Progress",
+            "Completed"
+            ];
 
         [ExcludeFromCodeCoverage]
         public TodoRepository()
@@ -49,6 +55,12 @@ namespace Todo.model.Repositories
             return _dbContext.TodoLists
                 .Include(list => list.Items)
                 .FirstOrDefault(list => list.Id == TodoListId);
+        }
+
+        public StatusList? GetStatusOptions()
+        {
+            return _dbContext.TodoStatusOptions
+                .FirstOrDefault();
         }
     }
 }

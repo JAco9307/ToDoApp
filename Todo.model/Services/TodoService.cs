@@ -66,5 +66,13 @@ namespace Todo.model.Services
             _todoLists.Add(listId, list);
             return list;
         }
+
+        public StatusList GetStatusOptions()
+        {
+            StatusList Options = new();
+            StatusList? list = _repository.GetStatusOptions();
+            if (list == null) return (new StatusList());
+            return list;
+        }
     }
 }
