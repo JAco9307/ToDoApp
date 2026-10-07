@@ -54,7 +54,7 @@ namespace Todo.presenter
 
             foreach(TodoViewItem item in todoViewItems) {
             
-                item.delete += delegate { DeleteTodo(TodoList[item.id]);  };
+                item.Delete += delegate { DeleteTodo(TodoList[item.id]);  };
                 item.editButton.Click   += delegate { EditTodo(TodoList[item.id]);    };
             }
         }
@@ -64,7 +64,7 @@ namespace Todo.presenter
         /// </summary>
         public void CreateTodo()
         {
-            var result = _view.GetPopupResult();
+            var result = _view.ShowEditTodoDialog();
             if (result.dialogResult == DialogResult.OK)
             {
                 TodoItem newTodo = new(result.title);
@@ -77,7 +77,7 @@ namespace Todo.presenter
         /// Opens the dialog for editing a todo and resolves it
         /// edit buttons are disabled until post mvp so this cant be called yet
         /// </summary>
-        /// <param name="todoViewItemIndex">The index (!= ID) of the todoViewItem to edit.</param>
+        /// <param name="todoItem">The todoViewItem to edit.</param>
         private void EditTodo(TodoItem todoItem)
         {
             var CreateTodoForm = new EditTodoForm();

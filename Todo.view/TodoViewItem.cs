@@ -5,13 +5,14 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+
 using System.Windows;
 
 namespace Todo.view
 {
     public partial class TodoViewItem : UserControl
     {
-        public event EventHandler delete = default;
+        public event EventHandler? Delete = default;
         /// <summary>
         /// Initializes a new instance of the <see cref="TodoViewItem"/> class.
         /// </summary>
@@ -26,11 +27,11 @@ namespace Todo.view
 
         private void deleteTodoButton_Click(object sender, EventArgs e)
         {
-            DialogResult confirmResult = MessageBox.Show("Are you sure to delete this item ??", "Confirm Delete!!", MessageBoxButtons.YesNo);
+            DialogResult confirmResult = MessageBox.Show("Are you sure to delete this item?", "Confirm Delete", MessageBoxButtons.YesNo);
 
-            if (confirmResult == DialogResult.Yes)
+            if (Delete != null && confirmResult == DialogResult.Yes)
             {
-                delete(this, new EventArgs());
+                Delete(this, new EventArgs());
             }
         }
 

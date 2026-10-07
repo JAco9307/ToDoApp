@@ -38,7 +38,7 @@ namespace Todo.testing.presenter
         public bool calledStartup = false;
         public bool calledUpdate = false;
 
-        public PopupResult GetPopupResult(string currentTitle = "")
+        public PopupResult ShowEditTodoDialog(string currentTitle = "")
         {
             return new PopupResult {
                 title = "bazinga",
