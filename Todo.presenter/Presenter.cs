@@ -54,7 +54,7 @@ namespace Todo.presenter
 
             foreach(TodoViewItem item in todoViewItems) {
             
-                item.deleteButton.Click += delegate { DeleteTodo(TodoList[item.id]);  };
+                item.delete += delegate { DeleteTodo(TodoList[item.id]);  };
                 item.editButton.Click   += delegate { EditTodo(TodoList[item.id]);    };
             }
         }

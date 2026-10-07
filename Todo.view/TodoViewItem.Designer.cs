@@ -86,6 +86,7 @@
             deleteTodoButton.TabIndex = 2;
             deleteTodoButton.Text = "Delete";
             deleteTodoButton.UseVisualStyleBackColor = true;
+            deleteTodoButton.Click += deleteTodoButton_Click;
             // 
             // TodoViewItem
             // 
