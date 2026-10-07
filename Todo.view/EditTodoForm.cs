@@ -10,10 +10,12 @@ namespace Todo.view
 {
     public partial class EditTodoForm : Form
     {
-        public string Titlestr = "";
-        public EditTodoForm()
+        public string Titlestr;
+        public EditTodoForm(string titlestr = "")
         {
             InitializeComponent();
+            Titlestr = titlestr;
+            titleTextBox.Text = Titlestr;
             titleTextBox.Select();
         }
         public void cancelClick(object sender, EventArgs e) 

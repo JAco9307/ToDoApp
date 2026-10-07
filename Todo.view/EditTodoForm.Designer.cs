@@ -72,6 +72,7 @@
             // titleTextBox
             // 
             titleTextBox.Location = new Point(93, 45);
+            titleTextBox.MaxLength = 40;
             titleTextBox.Name = "titleTextBox";
             titleTextBox.Size = new Size(232, 23);
             titleTextBox.TabIndex = 3;
