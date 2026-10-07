@@ -1,7 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Windows.Forms;
-using Todo.model;
+﻿using System.Windows.Forms;
 using Todo.model.Entities;
 using Todo.model.Interfaces;
 using Todo.presenter;
@@ -19,6 +16,10 @@ namespace Todo.testing.presenter
         public void Add(int listId, TodoItem todoItem)
         {
             calledAdd = true;
+        }
+
+        public void UpdateTodoItem(TodoItem todoItem)
+        {
         }
 
         public void Delete(int listId, TodoItem todoItem)

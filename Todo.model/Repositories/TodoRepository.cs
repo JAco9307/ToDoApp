@@ -55,6 +55,14 @@ namespace Todo.model.Repositories
             _dbContext.TodoItems.Remove(todoItem);
             _dbContext.SaveChanges();
         }
+        /// <summary>
+        /// Updates a TodoItem in the database
+        /// </summary>
+        /// <param name="todoItem"></param>
+        public void UpdateTodoItem(TodoItem todoItem)
+        {
+            _dbContext.SaveChanges();
+        }
 
         /// <summary>
         /// Gets a TodoList with a given Id

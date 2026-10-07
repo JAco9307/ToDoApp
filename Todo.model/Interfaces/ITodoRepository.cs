@@ -7,5 +7,6 @@ namespace Todo.model.Interfaces
         public TodoList? GetList(int TodoListId);
         public void AddTodoItem(TodoItem todoItem);
         public void DeleteTodoItem(TodoItem todoItem);
+        void UpdateTodoItem(TodoItem todoItem);
     }
 }
