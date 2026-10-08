@@ -65,12 +65,17 @@ namespace Todo.model.Repositories
         }
 
         /// <summary>
-        /// Gets a TodoList with a given Id
+        /// Gets a TodoList with a given Id, Creates a new list if none exist
         /// </summary>
         /// <param name="TodoListId">Id of the TodoList</param>
         /// <returns>The TodoList</returns>
         public TodoList? GetList(int TodoListId)
         {
+            if (!_dbContext.TodoLists.Any())
+            {
+                _dbContext.TodoLists.Add(new TodoList());
+                _dbContext.SaveChanges();
+            }
             return _dbContext.TodoLists
                 .Include(list => list.Items)
                 .FirstOrDefault(list => list.Id == TodoListId);
