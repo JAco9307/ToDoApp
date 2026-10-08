@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Options;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
@@ -6,6 +7,7 @@ using Todo.model.Entities;
 using Todo.model.Interfaces;
 using Todo.model.Migrations;
 using Todo.view;
+using Todo.view.Entities;
 using Todo.view.Interfaces;
 
 namespace Todo.presenter
@@ -44,6 +46,7 @@ namespace Todo.presenter
         private void EventHandlerSetup(List<Control> controls)
         {
             controls[0].Click += delegate { CreateTodo(); };
+            controls[1].Click += delegate { UpdateOptions(); };
         }
 
         /// <summary>
@@ -60,8 +63,10 @@ namespace Todo.presenter
             foreach(TodoViewItem item in todoViewItems) {
                 item.Delete += delegate { DeleteTodo(TodoList[item.id]);  };
                 item.TodoLabel.Click += delegate { EditTodo(TodoList[item.id]); };
+                item.CycleStatus.Click += delegate { CycleStatus(TodoList[item.id], item); };
             }
         }
+
 
         /// <summary>
         /// Opens the dialog for creating a new todo and sets up the <see cref="TodoItem"/> afterwards
@@ -86,12 +91,12 @@ namespace Todo.presenter
         private void EditTodo(TodoItem todoItem)
         {
             if (statusOptions == null) throw new NullReferenceException();
-            EditTodoForm createTodoForm = new EditTodoForm(statusOptions.options, todoItem.Title);
+            EditTodoForm createTodoForm = new EditTodoForm(statusOptions.options, todoItem.Title, todoItem.Status);
             DialogResult result = createTodoForm.ShowDialog();
             if (result == DialogResult.OK)
             {
-                Console.WriteLine(createTodoForm.Titlestr);
                 todoItem.SetTodoTitle(createTodoForm.Titlestr);
+                todoItem.SetTodoStatus(createTodoForm.Status);
                 _service.UpdateTodoItem(todoItem);
                 UpdateView();
             }
@@ -118,13 +123,21 @@ namespace Todo.presenter
             todoItem.SetTodoStatus(status);
         }
 
+        public void UpdateOptions()
+        {
+            if (statusOptions == null) throw new NullReferenceException();
+            TodoOptions newOptions = _view.ShowOptionsMenu(new TodoOptions {Status = statusOptions.options});
+            statusOptions.options = newOptions.Status;
+            _service.UpdateStatusOptions(statusOptions);
+        }
+
         public void CycleStatus(TodoItem todoItem, TodoViewItem sender)
         {
             if (statusOptions == null) return;
             int index = statusOptions.options.FindIndex(status => status == todoItem.Status);
             todoItem.SetTodoStatus(statusOptions.options[(index+1) % statusOptions.options.Count]);
             sender.Status = todoItem.Status;
-            //Edit todo item here
+            _service.UpdateTodoItem(todoItem);
         }
     }
 }

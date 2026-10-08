@@ -33,6 +33,11 @@ public class TodoServiceTests
                 return new TodoList(55);
             return _todoList;
         }
+
+        public StatusList? GetStatusOptions()
+        {
+            throw new NotImplementedException();
+        }
     }
 
     [TestMethod]

@@ -79,5 +79,9 @@ namespace Todo.model.Services
             if (list == null) return (new StatusList());
             return list;
         }
+        public void UpdateStatusOptions(StatusList options)
+        {
+            _repository.UpdateStatusOptions(options);
+        }
     }
 }

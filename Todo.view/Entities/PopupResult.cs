@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Todo.view
+namespace Todo.view.Entities
 {
     public struct PopupResult
     {

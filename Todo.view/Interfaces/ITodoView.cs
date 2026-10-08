@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Todo.view.Entities;
 
 namespace Todo.view.Interfaces
 {
@@ -26,5 +27,7 @@ namespace Todo.view.Interfaces
         /// <param name="currentTitle">The current title of the todo.</param>
         /// <returns>The popup input value.</returns>
         public PopupResult ShowEditTodoDialog(List<string> statusOptions, string currentTitle = "");
+
+        public TodoOptions ShowOptionsMenu(TodoOptions currentOptions);
     }
 }

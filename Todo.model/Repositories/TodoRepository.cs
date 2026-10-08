@@ -67,7 +67,7 @@ namespace Todo.model.Repositories
         /// <param name="todoItem"></param>
         public void UpdateTodoItem(TodoItem todoItem)
         {
-            _dbContext.SaveChanges();
+            _dbContext.SaveChanges(); // why pass todoItem ?
         }
 
         /// <summary>
@@ -84,8 +84,14 @@ namespace Todo.model.Repositories
 
         public StatusList? GetStatusOptions()
         {
-            return _dbContext.TodoStatusOptions
-                .FirstOrDefault();
+            if (!_dbContext.TodoStatusOptions.Any())
+                _dbContext.TodoStatusOptions.Add(new StatusList());
+            return _dbContext.TodoStatusOptions.FirstOrDefault();
         }
-    }
+
+        public void UpdateStatusOptions(StatusList statusOptions)
+        {
+            _dbContext.SaveChanges();
+        }
+    }   
 }

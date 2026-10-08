@@ -5,14 +5,18 @@ using Todo.view;
 
 namespace Todo.testing.View
 {
+
     [TestClass]
     public class EditTodoFormTests
     {
+        private List<string> options = ["Not Started",
+                    "In Progress",
+                    "Completed"];
         [TestMethod]
         public void cancelClick_StateUnderTest_ExpectedBehavior()
         {
             // Arrange
-            var editTodoForm = new EditTodoForm("a");
+            var editTodoForm = new EditTodoForm(options,"a");
             object sender = new();
             EventArgs e = new();
 
@@ -27,7 +31,7 @@ namespace Todo.testing.View
         [TestMethod]
         public void saveClick_StateUnderTest_ExpectedBehavior()
         {
-            var editTodoForm = new EditTodoForm("a");
+            var editTodoForm = new EditTodoForm(options, "a");
             object sender = new();
             EventArgs e = new();
 

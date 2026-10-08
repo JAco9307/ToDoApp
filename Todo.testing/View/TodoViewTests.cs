@@ -28,10 +28,10 @@ namespace Todo.testing.View
             // Arrange
             var todoView = new TodoView();
             List<string> todoTitles = ["Test","test2"];
+            List<string> todoStatus = ["Test","test2"];
 
             // Act
-            var result = todoView.UpdateActiveViewList(
-                todoTitles);
+            var result = todoView.UpdateActiveViewList(todoTitles,todoStatus);
 
             // Assert
             Assert.IsNotEmpty(result);

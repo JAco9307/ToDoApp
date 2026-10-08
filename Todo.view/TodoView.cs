@@ -1,4 +1,5 @@
 
+using Todo.view.Entities;
 using Todo.view.Interfaces;
 namespace Todo.view
 {
@@ -18,6 +19,7 @@ namespace Todo.view
 
             List<Control> controls = [
                 createTodoButton, 
+                optionsButton
                 ];
 
             return controls;
@@ -63,10 +65,18 @@ namespace Todo.view
             {
                 dialogResult = result,
                 title = CreateTodoForm.Titlestr,
-                status = CreateTodoForm.Status
-                
+                status = CreateTodoForm.Status  
             };
         }
 
+        public TodoOptions ShowOptionsMenu(TodoOptions currentOptions)
+        {
+            var OptionsForm = new OptionsForm(currentOptions);
+            DialogResult result = OptionsForm.ShowDialog();
+            if (result == DialogResult.OK)
+                return OptionsForm.OutputOptions;
+            else
+                return currentOptions;
+        }
     }
 }
