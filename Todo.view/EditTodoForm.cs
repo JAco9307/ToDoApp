@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
-
-namespace Todo.view
+﻿namespace Todo.view
 {
     public partial class EditTodoForm : Form
     {
         public string Titlestr;
+
+        public event EventHandler? Delete = default;
         public EditTodoForm(string titlestr = "")
         {
             InitializeComponent();
@@ -20,14 +14,24 @@ namespace Todo.view
         }
         public void cancelClick(object sender, EventArgs e) 
         {
-            this.DialogResult = DialogResult.Cancel;
-            this.Close();
+            DialogResult = DialogResult.Cancel;
+            Close();
         }
         public void saveClick(object sender, EventArgs e) 
         {
             Titlestr = titleTextBox.Text;
-            this.DialogResult = DialogResult.OK;
-            this.Close();
+            DialogResult = DialogResult.OK;
+            Close();
+        }
+
+        private void DeleteButton_Click(object sender, EventArgs e)
+        {
+            DialogResult confirmResult = MessageBox.Show("Are you sure to delete this item?", "Confirm Delete", MessageBoxButtons.YesNo);
+            if (Delete != null && confirmResult == DialogResult.Yes)
+            {
+                Delete(this, new EventArgs());
+            }
+            Close();
         }
     }
 }

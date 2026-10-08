@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 using Todo.view;
 using Todo.view.Interfaces;
 using Todo.model.Interfaces;
@@ -30,7 +27,6 @@ namespace Todo.presenter
             List<Control> controls = _view.StartUp();
             EventHandlerSetup(controls);
             UpdateView();
-
         }
 
 
@@ -53,9 +49,7 @@ namespace Todo.presenter
             List<TodoViewItem> todoViewItems = _view.UpdateActiveViewList(TodoTitles);
 
             foreach(TodoViewItem item in todoViewItems) {
-            
-                item.Delete += delegate { DeleteTodo(TodoList[item.id]);  };
-                item.editButton.Click   += delegate { EditTodo(TodoList[item.id]);    };
+                item.TodoLabel.Click += delegate { EditTodo(TodoList[item.id]); };
             }
         }
 
@@ -64,7 +58,7 @@ namespace Todo.presenter
         /// </summary>
         public void CreateTodo()
         {
-            var result = _view.ShowEditTodoDialog();
+            PopupResult result = _view.ShowEditTodoDialog();
             if (result.dialogResult == DialogResult.OK)
             {
                 TodoItem newTodo = new(result.title);
@@ -74,18 +68,19 @@ namespace Todo.presenter
         }
 
         /// <summary>
-        /// Opens the dialog for editing a todo and resolves it
-        /// edit buttons are disabled until post mvp so this cant be called yet
+        /// Opens the dialog for editing a todo
         /// </summary>
         /// <param name="todoItem">The todoViewItem to edit.</param>
         private void EditTodo(TodoItem todoItem)
         {
-            var CreateTodoForm = new EditTodoForm();
-            var result = CreateTodoForm.ShowDialog();
+            EditTodoForm createTodoForm = new EditTodoForm(todoItem.Title);
+            createTodoForm.Delete += delegate { DeleteTodo(todoItem); };
+            DialogResult result = createTodoForm.ShowDialog();
             if (result == DialogResult.OK)
             {
-                Console.WriteLine(CreateTodoForm.Titlestr);
-                // update the item through ITodoServices
+                todoItem.SetTodoTitle(createTodoForm.Titlestr);
+                _service.UpdateTodoItem(todoItem);
+                UpdateView();
             }
         }
 

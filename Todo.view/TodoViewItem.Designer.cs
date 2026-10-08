@@ -22,93 +22,57 @@
 
         #region Component Designer generated code
 
-        /// <summary> 
-        /// Required method for Designer support - do not modify 
+        /// <summary>
+        /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent()
         {
-            flowItem = new FlowLayoutPanel();
-            todoText = new TextBox();
-            editTodoButton = new Button();
-            deleteTodoButton = new Button();
+            flowItem = new System.Windows.Forms.FlowLayoutPanel();
+            todoLabel = new System.Windows.Forms.Label();
             flowItem.SuspendLayout();
             SuspendLayout();
             // 
             // flowItem
             // 
             flowItem.AutoSize = true;
-            flowItem.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            flowItem.Controls.Add(todoText);
-            flowItem.Controls.Add(editTodoButton);
-            flowItem.Controls.Add(deleteTodoButton);
-            flowItem.Dock = DockStyle.Fill;
-            flowItem.Location = new Point(0, 0);
-            flowItem.Margin = new Padding(3, 4, 3, 4);
+            flowItem.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            flowItem.Controls.Add(todoLabel);
+            flowItem.Dock = System.Windows.Forms.DockStyle.Fill;
+            flowItem.Location = new System.Drawing.Point(0, 0);
+            flowItem.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             flowItem.Name = "flowItem";
-            flowItem.Size = new Size(708, 39);
+            flowItem.Size = new System.Drawing.Size(524, 24);
             flowItem.TabIndex = 3;
             flowItem.WrapContents = false;
             // 
-            // todoText
+            // todoLabel
             // 
-            todoText.AcceptsReturn = true;
-            todoText.Dock = DockStyle.Left;
-            todoText.Location = new Point(3, 4);
-            todoText.Margin = new Padding(3, 4, 3, 4);
-            todoText.Name = "todoText";
-            todoText.PlaceholderText = "Todo text here";
-            todoText.ReadOnly = true;
-            todoText.Size = new Size(518, 27);
-            todoText.TabIndex = 1;
-            // 
-            // editTodoButton
-            // 
-            editTodoButton.Enabled = false;
-            editTodoButton.FlatStyle = FlatStyle.Popup;
-            editTodoButton.ForeColor = SystemColors.ButtonHighlight;
-            editTodoButton.Location = new Point(527, 4);
-            editTodoButton.Margin = new Padding(3, 4, 3, 4);
-            editTodoButton.Name = "editTodoButton";
-            editTodoButton.Size = new Size(86, 31);
-            editTodoButton.TabIndex = 0;
-            editTodoButton.Text = "Edit";
-            editTodoButton.UseVisualStyleBackColor = true;
-            // 
-            // deleteTodoButton
-            // 
-            deleteTodoButton.FlatStyle = FlatStyle.Popup;
-            deleteTodoButton.ForeColor = SystemColors.ButtonHighlight;
-            deleteTodoButton.Location = new Point(619, 4);
-            deleteTodoButton.Margin = new Padding(3, 4, 3, 4);
-            deleteTodoButton.Name = "deleteTodoButton";
-            deleteTodoButton.Size = new Size(86, 31);
-            deleteTodoButton.TabIndex = 2;
-            deleteTodoButton.Text = "Delete";
-            deleteTodoButton.UseVisualStyleBackColor = true;
-            deleteTodoButton.Click += deleteTodoButton_Click;
+            todoLabel.BackColor = System.Drawing.Color.White;
+            todoLabel.Location = new System.Drawing.Point(3, 0);
+            todoLabel.Name = "todoLabel";
+            todoLabel.Size = new System.Drawing.Size(518, 24);
+            todoLabel.TabIndex = 3;
+            todoLabel.Text = "svend";
             // 
             // TodoViewItem
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
-            AutoScaleMode = AutoScaleMode.Font;
+            AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             AutoSize = true;
-            AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             Controls.Add(flowItem);
-            Margin = new Padding(3, 4, 3, 4);
-            Name = "TodoViewItem";
-            Size = new Size(708, 39);
+            Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            Size = new System.Drawing.Size(524, 24);
             flowItem.ResumeLayout(false);
-            flowItem.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
 
+        private System.Windows.Forms.Label todoLabel;
+
         #endregion
 
-        private FlowLayoutPanel flowItem;
-        private TextBox todoText;
-        private Button editTodoButton;
-        private Button deleteTodoButton;
+        private System.Windows.Forms.FlowLayoutPanel flowItem;
     }
 }
