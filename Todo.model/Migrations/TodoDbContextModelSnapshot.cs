@@ -47,6 +47,23 @@ namespace Todo.model.Migrations
                     b.ToTable("TodoLists");
                 });
 
+            modelBuilder.Entity("Todo.model.Entities.TodoTag", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Color")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TodoTags");
+                });
+
             modelBuilder.Entity("Todo.model.Entities.TodoItem", b =>
                 {
                     b.HasOne("Todo.model.Entities.TodoList", null)
@@ -54,6 +71,20 @@ namespace Todo.model.Migrations
                         .HasForeignKey("ListId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Todo.model.Entities.TodoTag", b =>
+                {
+                    b.HasOne("Todo.model.Entities.TodoItem", null)
+                        .WithMany("Tags")
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Todo.model.Entities.TodoItem", b =>
+                {
+                    b.Navigation("Tags");
                 });
 
             modelBuilder.Entity("Todo.model.Entities.TodoList", b =>

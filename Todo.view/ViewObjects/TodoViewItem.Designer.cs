@@ -44,9 +44,9 @@
             flowItem.Controls.Add(deleteTodoButton);
             flowItem.Dock = DockStyle.Fill;
             flowItem.Location = new Point(0, 0);
-            flowItem.Margin = new Padding(3, 4, 3, 4);
+            flowItem.Margin = new Padding(4, 5, 4, 5);
             flowItem.Name = "flowItem";
-            flowItem.Size = new Size(708, 39);
+            flowItem.Size = new Size(886, 49);
             flowItem.TabIndex = 3;
             flowItem.WrapContents = false;
             // 
@@ -54,12 +54,12 @@
             // 
             todoText.AcceptsReturn = true;
             todoText.Dock = DockStyle.Left;
-            todoText.Location = new Point(3, 4);
-            todoText.Margin = new Padding(3, 4, 3, 4);
+            todoText.Location = new Point(4, 5);
+            todoText.Margin = new Padding(4, 5, 4, 5);
             todoText.Name = "todoText";
             todoText.PlaceholderText = "Todo text here";
             todoText.ReadOnly = true;
-            todoText.Size = new Size(518, 27);
+            todoText.Size = new Size(646, 31);
             todoText.TabIndex = 1;
             // 
             // editTodoButton
@@ -67,37 +67,38 @@
             editTodoButton.Enabled = false;
             editTodoButton.FlatStyle = FlatStyle.Popup;
             editTodoButton.ForeColor = SystemColors.ButtonHighlight;
-            editTodoButton.Location = new Point(527, 4);
-            editTodoButton.Margin = new Padding(3, 4, 3, 4);
+            editTodoButton.Location = new Point(658, 5);
+            editTodoButton.Margin = new Padding(4, 5, 4, 5);
             editTodoButton.Name = "editTodoButton";
-            editTodoButton.Size = new Size(86, 31);
+            editTodoButton.Size = new Size(108, 39);
             editTodoButton.TabIndex = 0;
             editTodoButton.Text = "Edit";
             editTodoButton.UseVisualStyleBackColor = true;
             // 
             // deleteTodoButton
             // 
+            deleteTodoButton.BackColor = Color.Maroon;
             deleteTodoButton.FlatStyle = FlatStyle.Popup;
             deleteTodoButton.ForeColor = SystemColors.ButtonHighlight;
-            deleteTodoButton.Location = new Point(619, 4);
-            deleteTodoButton.Margin = new Padding(3, 4, 3, 4);
+            deleteTodoButton.Location = new Point(774, 5);
+            deleteTodoButton.Margin = new Padding(4, 5, 4, 5);
             deleteTodoButton.Name = "deleteTodoButton";
-            deleteTodoButton.Size = new Size(86, 31);
+            deleteTodoButton.Size = new Size(108, 39);
             deleteTodoButton.TabIndex = 2;
             deleteTodoButton.Text = "Delete";
-            deleteTodoButton.UseVisualStyleBackColor = true;
+            deleteTodoButton.UseVisualStyleBackColor = false;
             deleteTodoButton.Click += deleteTodoButton_Click;
             // 
             // TodoViewItem
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoSize = true;
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
             Controls.Add(flowItem);
-            Margin = new Padding(3, 4, 3, 4);
+            Margin = new Padding(4, 5, 4, 5);
             Name = "TodoViewItem";
-            Size = new Size(708, 39);
+            Size = new Size(886, 49);
             flowItem.ResumeLayout(false);
             flowItem.PerformLayout();
             ResumeLayout(false);
