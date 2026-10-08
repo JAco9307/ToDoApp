@@ -27,7 +27,6 @@ namespace Todo.presenter
             List<Control> controls = _view.StartUp();
             EventHandlerSetup(controls);
             UpdateView();
-
         }
 
 
@@ -50,7 +49,6 @@ namespace Todo.presenter
             List<TodoViewItem> todoViewItems = _view.UpdateActiveViewList(TodoTitles);
 
             foreach(TodoViewItem item in todoViewItems) {
-                item.Delete += delegate { DeleteTodo(TodoList[item.id]);  };
                 item.TodoLabel.Click += delegate { EditTodo(TodoList[item.id]); };
             }
         }
@@ -60,7 +58,7 @@ namespace Todo.presenter
         /// </summary>
         public void CreateTodo()
         {
-            var result = _view.ShowEditTodoDialog();
+            PopupResult result = _view.ShowEditTodoDialog();
             if (result.dialogResult == DialogResult.OK)
             {
                 TodoItem newTodo = new(result.title);
@@ -76,10 +74,10 @@ namespace Todo.presenter
         private void EditTodo(TodoItem todoItem)
         {
             EditTodoForm createTodoForm = new EditTodoForm(todoItem.Title);
+            createTodoForm.Delete += delegate { DeleteTodo(todoItem); };
             DialogResult result = createTodoForm.ShowDialog();
             if (result == DialogResult.OK)
             {
-                Console.WriteLine(createTodoForm.Titlestr);
                 todoItem.SetTodoTitle(createTodoForm.Titlestr);
                 _service.UpdateTodoItem(todoItem);
                 UpdateView();

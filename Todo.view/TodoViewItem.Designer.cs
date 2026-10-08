@@ -30,7 +30,6 @@
         {
             flowItem = new System.Windows.Forms.FlowLayoutPanel();
             todoLabel = new System.Windows.Forms.Label();
-            deleteTodoButton = new System.Windows.Forms.Button();
             flowItem.SuspendLayout();
             SuspendLayout();
             // 
@@ -39,12 +38,11 @@
             flowItem.AutoSize = true;
             flowItem.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             flowItem.Controls.Add(todoLabel);
-            flowItem.Controls.Add(deleteTodoButton);
             flowItem.Dock = System.Windows.Forms.DockStyle.Fill;
             flowItem.Location = new System.Drawing.Point(0, 0);
             flowItem.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             flowItem.Name = "flowItem";
-            flowItem.Size = new System.Drawing.Size(616, 39);
+            flowItem.Size = new System.Drawing.Size(524, 24);
             flowItem.TabIndex = 3;
             flowItem.WrapContents = false;
             // 
@@ -57,19 +55,6 @@
             todoLabel.TabIndex = 3;
             todoLabel.Text = "svend";
             // 
-            // deleteTodoButton
-            // 
-            deleteTodoButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            deleteTodoButton.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            deleteTodoButton.Location = new System.Drawing.Point(527, 4);
-            deleteTodoButton.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            deleteTodoButton.Name = "deleteTodoButton";
-            deleteTodoButton.Size = new System.Drawing.Size(86, 31);
-            deleteTodoButton.TabIndex = 2;
-            deleteTodoButton.Text = "Delete";
-            deleteTodoButton.UseVisualStyleBackColor = true;
-            deleteTodoButton.Click += deleteTodoButton_Click;
-            // 
             // TodoViewItem
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -78,7 +63,7 @@
             AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             Controls.Add(flowItem);
             Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            Size = new System.Drawing.Size(616, 39);
+            Size = new System.Drawing.Size(524, 24);
             flowItem.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
@@ -89,6 +74,5 @@
         #endregion
 
         private System.Windows.Forms.FlowLayoutPanel flowItem;
-        private System.Windows.Forms.Button deleteTodoButton;
     }
 }
