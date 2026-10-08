@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 using Todo.view;
 using Todo.view.Interfaces;
 using Todo.model.Interfaces;
@@ -53,9 +50,8 @@ namespace Todo.presenter
             List<TodoViewItem> todoViewItems = _view.UpdateActiveViewList(TodoTitles);
 
             foreach(TodoViewItem item in todoViewItems) {
-            
                 item.Delete += delegate { DeleteTodo(TodoList[item.id]);  };
-                item.editButton.Click   += delegate { EditTodo(TodoList[item.id]);    };
+                item.TodoLabel.Click += delegate { EditTodo(TodoList[item.id]); };
             }
         }
 
@@ -74,18 +70,19 @@ namespace Todo.presenter
         }
 
         /// <summary>
-        /// Opens the dialog for editing a todo and resolves it
-        /// edit buttons are disabled until post mvp so this cant be called yet
+        /// Opens the dialog for editing a todo
         /// </summary>
         /// <param name="todoItem">The todoViewItem to edit.</param>
         private void EditTodo(TodoItem todoItem)
         {
-            var CreateTodoForm = new EditTodoForm();
-            var result = CreateTodoForm.ShowDialog();
+            EditTodoForm createTodoForm = new EditTodoForm(todoItem.Title);
+            DialogResult result = createTodoForm.ShowDialog();
             if (result == DialogResult.OK)
             {
-                Console.WriteLine(CreateTodoForm.Titlestr);
-                // update the item through ITodoServices
+                Console.WriteLine(createTodoForm.Titlestr);
+                todoItem.SetTodoTitle(createTodoForm.Titlestr);
+                _service.UpdateTodoItem(todoItem);
+                UpdateView();
             }
         }
 

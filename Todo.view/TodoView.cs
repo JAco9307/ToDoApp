@@ -57,8 +57,8 @@ namespace Todo.view
 
         public PopupResult ShowEditTodoDialog(string currentTitle)
         {
-            var CreateTodoForm = new EditTodoForm(currentTitle);
-            var result = CreateTodoForm.ShowDialog();
+            EditTodoForm CreateTodoForm = new EditTodoForm(currentTitle);
+            DialogResult result = CreateTodoForm.ShowDialog();
 
             return new PopupResult
             {

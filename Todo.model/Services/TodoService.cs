@@ -31,6 +31,14 @@ namespace Todo.model.Services
         {
             _repository.AddTodoItem(todoItem);
         }
+        /// <summary>
+        /// Updates a TodoItem with new values
+        /// </summary>
+        /// <param name="todoItem"></param>
+        public void UpdateTodoItem(TodoItem todoItem)
+        {
+            _repository.UpdateTodoItem(todoItem);
+        }
 
         /// <summary>
         /// Deletes the TodoItem from the TodoList with the given ID. Throws an IndexOutOfRange exception if ID doesnt exist.
