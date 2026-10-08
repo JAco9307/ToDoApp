@@ -28,15 +28,14 @@ namespace Todo.view
             Application.Run(this);
         }
 
-        public List<TodoViewItem> UpdateActiveViewList(List<string> todoTitles)
+        public List<TodoViewItem> UpdateActiveViewList(List<string> todoTitles, List<string> todoStatus)
         {
             flowLayout.Controls.Clear();
             List<TodoViewItem> controls = new();
-            int i = 0;
-            foreach (string itemTitle in todoTitles) 
+            for(int i = 0; i < todoTitles.Count; i++)
             {
-                TodoViewItem newTodo = addTodo(itemTitle);
-                newTodo.id = i++;
+                TodoViewItem newTodo = addTodo(todoTitles[i], todoStatus[i]);
+                newTodo.id = i;
                 controls.Add(newTodo); 
             }
 
@@ -48,22 +47,24 @@ namespace Todo.view
         /// </summary>
         /// <param name="TodoTitle">The todo title.</param>
         /// <returns>The todo view item that has been generated.</returns>
-        private TodoViewItem addTodo(string TodoTitle)
+        private TodoViewItem addTodo(string TodoTitle, string Status)
         {
-            TodoViewItem item = new TodoViewItem(TodoTitle);
+            TodoViewItem item = new TodoViewItem(TodoTitle, Status);
             Invoke(() => flowLayout.Controls.Add(item));
             return item;
         }
 
-        public PopupResult ShowEditTodoDialog(string currentTitle)
+        public PopupResult ShowEditTodoDialog(List<string> statusOptions, string currentTitle)
         {
-            var CreateTodoForm = new EditTodoForm(currentTitle);
+            var CreateTodoForm = new EditTodoForm(statusOptions,currentTitle);
             var result = CreateTodoForm.ShowDialog();
 
             return new PopupResult
             {
                 dialogResult = result,
-                title = CreateTodoForm.Titlestr
+                title = CreateTodoForm.Titlestr,
+                status = CreateTodoForm.Status
+                
             };
         }
 

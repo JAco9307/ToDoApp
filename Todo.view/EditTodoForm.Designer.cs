@@ -33,8 +33,8 @@
             titleLabel = new Label();
             titleTextBox = new TextBox();
             groupBox1 = new GroupBox();
-            comboBox1 = new ComboBox();
             statusLabel = new Label();
+            comboBox1 = new ComboBox();
             groupBox1.SuspendLayout();
             SuspendLayout();
             // 
@@ -95,15 +95,6 @@
             groupBox1.TabIndex = 4;
             groupBox1.TabStop = false;
             // 
-            // comboBox1
-            // 
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Items.AddRange(new object[] { "Not Started", "In Progress", "Complete" });
-            comboBox1.Location = new Point(93, 74);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(121, 23);
-            comboBox1.TabIndex = 4;
-            // 
             // statusLabel
             // 
             statusLabel.AutoSize = true;
@@ -113,6 +104,14 @@
             statusLabel.Size = new Size(42, 15);
             statusLabel.TabIndex = 5;
             statusLabel.Text = "Status:";
+            // 
+            // comboBox1
+            // 
+            comboBox1.FormattingEnabled = true;
+            comboBox1.Location = new Point(93, 74);
+            comboBox1.Name = "comboBox1";
+            comboBox1.Size = new Size(121, 23);
+            comboBox1.TabIndex = 4;
             // 
             // EditTodoForm
             // 

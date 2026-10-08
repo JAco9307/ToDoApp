@@ -51,14 +51,16 @@ namespace Todo.presenter
         /// </summary>
         public void UpdateView()
         {
+            if (statusOptions == null) throw new NullReferenceException();
             IReadOnlyList<TodoItem> TodoList = _service.GetTodoList(_currentListId).Items;
             List<string> TodoTitles = TodoList.Select(todoItem => todoItem.Title).ToList();
-            List<TodoViewItem> todoViewItems = _view.UpdateActiveViewList(TodoTitles);
+            List<string> TodoStatus = TodoList.Select(todoItem => todoItem.Status).ToList();
+            List<TodoViewItem> todoViewItems = _view.UpdateActiveViewList(TodoTitles, TodoStatus);
 
             foreach(TodoViewItem item in todoViewItems) {
             
                 item.Delete += delegate { DeleteTodo(TodoList[item.id]);  };
-                item.editButton.Click += delegate { EditTodo(TodoList[item.id]); };
+                //item.editButton.Click += delegate { EditTodo(TodoList[item.id]); };
                 item.CycleStatus.Click += delegate { CycleStatus(TodoList[item.id], item); };
             }
         }
@@ -68,15 +70,17 @@ namespace Todo.presenter
         /// </summary>
         public void CreateTodo()
         {
-            var result = _view.ShowEditTodoDialog();
+            if (statusOptions == null) throw new NullReferenceException();
+            var result = _view.ShowEditTodoDialog(statusOptions.options);
             if (result.dialogResult == DialogResult.OK)
             {
                 TodoItem newTodo = new(result.title);
+                newTodo.SetTodoStatus(result.status);
                 _service.Add(_currentListId, newTodo);
                 UpdateView();
             }
         }
-
+        /*
         /// <summary>
         /// Opens the dialog for editing a todo and resolves it
         /// edit buttons are disabled until post mvp so this cant be called yet
@@ -92,7 +96,7 @@ namespace Todo.presenter
                 // update the item through ITodoServices
             }
         }
-
+        */
 
         /// <summary>
         /// Deletes a <see cref="TodoItem"/> .
@@ -120,6 +124,7 @@ namespace Todo.presenter
             int index = statusOptions.options.FindIndex(status => status == todoItem.Status);
             todoItem.SetTodoStatus(statusOptions.options[(index+1) % statusOptions.options.Count]);
             sender.Status = todoItem.Status;
+            //Edit todo item here
         }
     }
 }

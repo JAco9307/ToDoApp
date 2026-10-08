@@ -8,5 +8,6 @@ namespace Todo.view
     {
         public DialogResult dialogResult;
         public string title;
+        public string status;
     }
 }
