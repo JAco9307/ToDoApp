@@ -14,18 +14,18 @@ namespace Todo.view
     {
         public string? Titlestr;
         public string Status;
-        public EditTodoForm(List<string> statusOptions, TodoData todoData)
+        public EditTodoForm(ContextData context, TodoData todoData)
         {
             InitializeComponent();
             Titlestr = todoData.title;
 
             titleTextBox.Text = Titlestr;
             titleTextBox.Select();
-            statusComboBox.Items.AddRange(statusOptions.ToArray());
-            if (todoData.status == "")
+            statusComboBox.Items.AddRange(context.StatusOptions.ToArray());
+            if (todoData.status == null)
             {
-                statusComboBox.SelectedItem = statusOptions[0];
-                Status = statusOptions[0];
+                statusComboBox.SelectedItem = context.StatusOptions[0];
+                Status = context.StatusOptions[0];
             }
             else
             {

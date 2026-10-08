@@ -51,6 +51,7 @@ namespace Todo.view
             return controls;
         }
 
+
         /// <summary>
         /// Adds a <see cref="TodoViewItem"/> to the GUI.
         /// </summary>
@@ -63,13 +64,13 @@ namespace Todo.view
             return item;
         }
 
-        public TodoData ShowEditTodoDialog(List<string> statusOptions, TodoData? currentData)
+        public TodoData ShowEditTodoDialog(ContextData context, TodoData? currentData)
         {
             if (currentData == null)
             {
                 currentData = new TodoData();
             }
-            var CreateTodoForm = new EditTodoForm(statusOptions, (TodoData)currentData);
+            var CreateTodoForm = new EditTodoForm(context, (TodoData)currentData);
             DialogResult result = CreateTodoForm.ShowDialog();
 
             return new TodoData

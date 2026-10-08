@@ -74,7 +74,7 @@ namespace Todo.presenter
         public void CreateTodo()
         {
             if (statusOptions == null) throw new NullReferenceException();
-            var result = _view.ShowEditTodoDialog(statusOptions.options);
+            var result = _view.ShowEditTodoDialog(GetContext());
             if (result.title != null)
             {
                 TodoItem newTodo = new(result.title);
@@ -92,7 +92,7 @@ namespace Todo.presenter
         {
             if (statusOptions == null) throw new NullReferenceException();
             TodoData todoData = ToData(todoItem);
-            TodoData result = _view.ShowEditTodoDialog(statusOptions.options, todoData);
+            TodoData result = _view.ShowEditTodoDialog(GetContext(), todoData);
             if (result.title != null)
             {
                 todoItem.SetTodoTitle(result.title);
@@ -159,6 +159,15 @@ namespace Todo.presenter
             {
                 title = todoItem.Title,
                 status = todoItem.Status
+            };
+        }
+
+        public ContextData GetContext()
+        {
+            if (statusOptions == null) throw new NullReferenceException();
+            return new ContextData
+            {
+                StatusOptions = statusOptions.options
             };
         }
     }

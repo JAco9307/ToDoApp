@@ -50,12 +50,11 @@ namespace Todo.testing.presenter
         public bool calledStartup = false;
         public bool calledUpdate = false;
 
-        public TodoData ShowEditTodoDialog(List<string> statusOptions, string currentTitle = "")
+        public TodoData ShowEditTodoDialog(ContextData context, TodoData? currentData = null)
         {
             return new TodoData
             {
                 title = "bazinga",
-                dialogResult = DialogResult.OK
             };
         }
 
