@@ -5,37 +5,39 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using Todo.view.Entities;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Todo.view
 {
     public partial class EditTodoForm : Form
     {
-        public string Titlestr;
+        public string? Titlestr;
         public string Status;
-        public EditTodoForm(List<string> statusOptions, string titlestr = "", string selectedStatus = "")
+        public EditTodoForm(List<string> statusOptions, TodoData todoData)
         {
             InitializeComponent();
-            Titlestr = titlestr;
+            Titlestr = todoData.title;
+
             titleTextBox.Text = Titlestr;
             titleTextBox.Select();
             statusComboBox.Items.AddRange(statusOptions.ToArray());
-            if (selectedStatus == "")
+            if (todoData.status == "")
             {
                 statusComboBox.SelectedItem = statusOptions[0];
                 Status = statusOptions[0];
             }
             else
             {
-                statusComboBox.SelectedItem = selectedStatus;
-                Status = selectedStatus;
+                statusComboBox.SelectedItem = todoData.status;
+                Status = todoData.status;
             }
 
 
         }
         public void cancelClick(object sender, EventArgs e)
         {
-            this.DialogResult = DialogResult.Cancel;
+            Titlestr = null;
             this.Close();
         }
         public void saveClick(object sender, EventArgs e)
@@ -44,7 +46,6 @@ namespace Todo.view
             if (titleTextBox.Text == "") return;
             Titlestr = titleTextBox.Text;
             Status = statusComboBox.Text;
-            this.DialogResult = DialogResult.OK;
             this.Close();
         }
     }

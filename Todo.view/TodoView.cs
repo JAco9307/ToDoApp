@@ -1,6 +1,7 @@
 
 using Todo.view.Entities;
 using Todo.view.Interfaces;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 namespace Todo.view
 {
     public partial class TodoView : Form, ITodoView
@@ -30,6 +31,12 @@ namespace Todo.view
             Application.Run(this);
         }
 
+        /// <summary>
+        /// Updates the active view list.
+        /// </summary>
+        /// <param name="todoTitles">The todo titles.</param>
+        /// <param name="todoStatus">The todo status.</param>
+        /// <returns>The list result.</returns>
         public List<TodoViewItem> UpdateActiveViewList(List<string> todoTitles, List<string> todoStatus)
         {
             flowLayout.Controls.Clear();
@@ -56,19 +63,27 @@ namespace Todo.view
             return item;
         }
 
-        public PopupResult ShowEditTodoDialog(List<string> statusOptions, string currentTitle)
+        public TodoData ShowEditTodoDialog(List<string> statusOptions, TodoData? currentData)
         {
-            var CreateTodoForm = new EditTodoForm(statusOptions,currentTitle);
+            if (currentData == null)
+            {
+                currentData = new TodoData();
+            }
+            var CreateTodoForm = new EditTodoForm(statusOptions, (TodoData)currentData);
             DialogResult result = CreateTodoForm.ShowDialog();
 
-            return new PopupResult
+            return new TodoData
             {
-                dialogResult = result,
                 title = CreateTodoForm.Titlestr,
                 status = CreateTodoForm.Status  
             };
         }
 
+        /// <summary>
+        /// Opens the options form and recieves the data in it afterwards.
+        /// </summary>
+        /// <param name="currentOptions">The current options.</param>
+        /// <returns>The options set when saving.</returns>
         public TodoOptions ShowOptionsMenu(TodoOptions currentOptions)
         {
             var OptionsForm = new OptionsForm(currentOptions);

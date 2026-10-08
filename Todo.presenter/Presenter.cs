@@ -17,7 +17,7 @@ namespace Todo.presenter
         private readonly ITodoView _view;
         private readonly ITodoService _service;
         private int _currentListId;
-        private StatusList? statusOptions;
+        public StatusList? statusOptions;
         public Presenter(ITodoView view, ITodoService service)
         {
             _view = view;
@@ -75,7 +75,7 @@ namespace Todo.presenter
         {
             if (statusOptions == null) throw new NullReferenceException();
             var result = _view.ShowEditTodoDialog(statusOptions.options);
-            if (result.dialogResult == DialogResult.OK)
+            if (result.title != null)
             {
                 TodoItem newTodo = new(result.title);
                 newTodo.SetTodoStatus(result.status);
@@ -91,12 +91,12 @@ namespace Todo.presenter
         private void EditTodo(TodoItem todoItem)
         {
             if (statusOptions == null) throw new NullReferenceException();
-            EditTodoForm createTodoForm = new EditTodoForm(statusOptions.options, todoItem.Title, todoItem.Status);
-            DialogResult result = createTodoForm.ShowDialog();
-            if (result == DialogResult.OK)
+            TodoData todoData = ToData(todoItem);
+            TodoData result = _view.ShowEditTodoDialog(statusOptions.options, todoData);
+            if (result.title != null)
             {
-                todoItem.SetTodoTitle(createTodoForm.Titlestr);
-                todoItem.SetTodoStatus(createTodoForm.Status);
+                todoItem.SetTodoTitle(result.title);
+                todoItem.SetTodoStatus(result.status);
                 _service.UpdateTodoItem(todoItem);
                 UpdateView();
             }
@@ -123,14 +123,22 @@ namespace Todo.presenter
             todoItem.SetTodoStatus(status);
         }
 
+        /// <summary>
+        /// Opens the options menu and updates the options.
+        /// </summary>
         public void UpdateOptions()
         {
-            if (statusOptions == null) throw new NullReferenceException();
+            if (statusOptions == null) return;
             TodoOptions newOptions = _view.ShowOptionsMenu(new TodoOptions {Status = statusOptions.options});
             statusOptions.options = newOptions.Status;
             _service.UpdateStatusOptions(statusOptions);
         }
 
+        /// <summary>
+        /// Cycles the status on the todo item.
+        /// </summary>
+        /// <param name="todoItem">The todo item.</param>
+        /// <param name="sender">The sender.</param>
         public void CycleStatus(TodoItem todoItem, TodoViewItem sender)
         {
             if (statusOptions == null) return;
@@ -138,6 +146,20 @@ namespace Todo.presenter
             todoItem.SetTodoStatus(statusOptions.options[(index+1) % statusOptions.options.Count]);
             sender.Status = todoItem.Status;
             _service.UpdateTodoItem(todoItem);
+        }
+
+        /// <summary>
+        /// Converts <see cref="TodoItem"> to <see cref="TodoData"/>.
+        /// </summary>
+        /// <param name="todoItem">The todo item.</param>
+        /// <returns>The todo data.</returns>
+        public static TodoData ToData(TodoItem todoItem)
+        {
+            return new TodoData
+            {
+                title = todoItem.Title,
+                status = todoItem.Status
+            };
         }
     }
 }

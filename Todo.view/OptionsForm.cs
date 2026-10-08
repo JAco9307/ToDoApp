@@ -7,13 +7,19 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using Todo.view.Entities;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Todo.view
 {
     public partial class OptionsForm : Form
     {
         public TodoOptions OutputOptions;
+        public TextBox statusTextBox => statusOptionsTextBox;
+
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="OptionsForm"/> class.
+        /// </summary>
+        /// <param name="currentOptions">The current options.</param>
         public OptionsForm(TodoOptions currentOptions)
         {
             InitializeComponent();
@@ -26,6 +32,13 @@ namespace Todo.view
             this.DialogResult = DialogResult.Cancel;
             this.Close();
         }
+
+
+        /// <summary>
+        /// Parses the options and closes the dialog.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The event.</param>
         public void saveClick(object sender, EventArgs e)
         {
             if (statusOptionsTextBox.Text == "") return;

@@ -26,7 +26,7 @@ namespace Todo.view.Interfaces
         /// </summary>
         /// <param name="currentTitle">The current title of the todo.</param>
         /// <returns>The popup input value.</returns>
-        public PopupResult ShowEditTodoDialog(List<string> statusOptions, string currentTitle = "");
+        public TodoData ShowEditTodoDialog(List<string> statusOptions, TodoData? currentData = null);
 
         public TodoOptions ShowOptionsMenu(TodoOptions currentOptions);
     }

@@ -10,11 +10,6 @@ namespace Todo.model.Repositories
     public class TodoRepository : ITodoRepository
     {
         private TodoDbContext _dbContext;
-        private readonly List<string> default_status = [ 
-            "Not Started",
-            "In Progress",
-            "Completed"
-            ];
 
         /// <summary>
         /// Initializes a new instance of the TodoRepository
@@ -65,9 +60,9 @@ namespace Todo.model.Repositories
         /// Updates a TodoItem in the database
         /// </summary>
         /// <param name="todoItem"></param>
-        public void UpdateTodoItem(TodoItem todoItem)
+        public void UpdateDB()
         {
-            _dbContext.SaveChanges(); // why pass todoItem ?
+            _dbContext.SaveChanges();
         }
 
         /// <summary>
@@ -82,6 +77,10 @@ namespace Todo.model.Repositories
                 .FirstOrDefault(list => list.Id == TodoListId);
         }
 
+        /// <summary>
+        /// Gets the status options, if none exists makes a new default entry.
+        /// </summary>
+        /// <returns>The status list result.</returns>
         public StatusList? GetStatusOptions()
         {
             if (!_dbContext.TodoStatusOptions.Any())
@@ -89,9 +88,5 @@ namespace Todo.model.Repositories
             return _dbContext.TodoStatusOptions.FirstOrDefault();
         }
 
-        public void UpdateStatusOptions(StatusList statusOptions)
-        {
-            _dbContext.SaveChanges();
-        }
     }   
 }

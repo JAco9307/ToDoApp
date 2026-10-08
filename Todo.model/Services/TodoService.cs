@@ -37,7 +37,7 @@ namespace Todo.model.Services
         /// <param name="todoItem"></param>
         public void UpdateTodoItem(TodoItem todoItem)
         {
-            _repository.UpdateTodoItem(todoItem);
+            _repository.UpdateDB();
         }
 
         /// <summary>
@@ -81,7 +81,7 @@ namespace Todo.model.Services
         }
         public void UpdateStatusOptions(StatusList options)
         {
-            _repository.UpdateStatusOptions(options);
+            _repository.UpdateDB();
         }
     }
 }

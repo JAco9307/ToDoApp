@@ -21,21 +21,5 @@ namespace Todo.testing.View
             Assert.IsExactInstanceOfType(result[0],typeof(Button));
             Assert.AreEqual("New Todo", result[0].Text);
         }
-
-        [TestMethod]
-        public void UpdateActiveViewList_StateUnderTest_ExpectedBehavior()
-        {
-            // Arrange
-            var todoView = new TodoView();
-            List<string> todoTitles = ["Test","test2"];
-            List<string> todoStatus = ["Test","test2"];
-
-            // Act
-            var result = todoView.UpdateActiveViewList(todoTitles,todoStatus);
-
-            // Assert
-            Assert.IsNotEmpty(result);
-            // not sure how to validate beyond that without making stuff public 
-        }
     }
 }

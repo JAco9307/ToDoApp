@@ -21,7 +21,7 @@ public class TodoServiceTests
             _todoList.Remove(todoItem);
         }
 
-        public void UpdateTodoItem(TodoItem todoItem)
+        public void UpdateDB()
         {
         }
 
@@ -35,6 +35,11 @@ public class TodoServiceTests
         }
 
         public StatusList? GetStatusOptions()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateStatusOptions(StatusList statusOptions)
         {
             throw new NotImplementedException();
         }

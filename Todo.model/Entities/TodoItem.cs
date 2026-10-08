@@ -12,7 +12,7 @@
         /// </summary>
         /// <param name="title">The title.</param>
         /// <param name="Status">The status.</param>
-        public TodoItem(string title, string status = "Not started")
+        public TodoItem(string title, string status = "Not Started")
         {
             Title = title;
             Status = status;
