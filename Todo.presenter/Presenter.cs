@@ -58,10 +58,8 @@ namespace Todo.presenter
             List<TodoViewItem> todoViewItems = _view.UpdateActiveViewList(TodoTitles, TodoStatus);
 
             foreach(TodoViewItem item in todoViewItems) {
-            
                 item.Delete += delegate { DeleteTodo(TodoList[item.id]);  };
-                //item.editButton.Click += delegate { EditTodo(TodoList[item.id]); };
-                item.CycleStatus.Click += delegate { CycleStatus(TodoList[item.id], item); };
+                item.TodoLabel.Click += delegate { EditTodo(TodoList[item.id]); };
             }
         }
 
@@ -80,23 +78,25 @@ namespace Todo.presenter
                 UpdateView();
             }
         }
-        /*
+        
         /// <summary>
-        /// Opens the dialog for editing a todo and resolves it
-        /// edit buttons are disabled until post mvp so this cant be called yet
+        /// Opens the dialog for editing a todo
         /// </summary>
         /// <param name="todoItem">The todoViewItem to edit.</param>
         private void EditTodo(TodoItem todoItem)
         {
-            var CreateTodoForm = new EditTodoForm();
-            var result = CreateTodoForm.ShowDialog();
+            if (statusOptions == null) throw new NullReferenceException();
+            EditTodoForm createTodoForm = new EditTodoForm(statusOptions.options, todoItem.Title);
+            DialogResult result = createTodoForm.ShowDialog();
             if (result == DialogResult.OK)
             {
-                Console.WriteLine(CreateTodoForm.Titlestr);
-                // update the item through ITodoServices
+                Console.WriteLine(createTodoForm.Titlestr);
+                todoItem.SetTodoTitle(createTodoForm.Titlestr);
+                _service.UpdateTodoItem(todoItem);
+                UpdateView();
             }
         }
-        */
+        
 
         /// <summary>
         /// Deletes a <see cref="TodoItem"/> .

@@ -6,6 +6,10 @@ namespace Todo.model.Data;
 
 public class TodoDbContextFactory : IDesignTimeDbContextFactory<TodoDbContext>
 {
+    /// <summary>
+    /// Creates a TodoDbContext with default parameters
+    /// </summary>
+    /// <returns>A TodoDbContext</returns>
     [ExcludeFromCodeCoverage]
     public static TodoDbContext Create()
     {
@@ -15,6 +19,11 @@ public class TodoDbContextFactory : IDesignTimeDbContextFactory<TodoDbContext>
         return new TodoDbContext(options);
     }
 
+    /// <summary>
+    /// Creates a TodoDbContext with default parameters as the arguments are not currently parsed
+    /// </summary>
+    /// <param name="args">String array of arguments</param>
+    /// <returns>A TodoDbContext</returns>
     [ExcludeFromCodeCoverage]
     public TodoDbContext CreateDbContext(string[] args)
     {

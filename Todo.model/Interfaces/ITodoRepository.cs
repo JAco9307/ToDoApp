@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Todo.model.Entities;
+﻿using Todo.model.Entities;
 
 namespace Todo.model.Interfaces
 {
@@ -11,5 +8,7 @@ namespace Todo.model.Interfaces
         public void AddTodoItem(TodoItem todoItem);
         public void DeleteTodoItem(TodoItem todoItem);
         public StatusList? GetStatusOptions();
+        void UpdateTodoItem(TodoItem todoItem);
+
     }
 }

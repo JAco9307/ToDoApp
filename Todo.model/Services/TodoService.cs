@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Text;
+﻿using System.Diagnostics.CodeAnalysis;
 using Todo.model.Entities;
 using Todo.model.Interfaces;
 using Todo.model.Repositories;
@@ -33,6 +30,14 @@ namespace Todo.model.Services
         public void Add(int listId, TodoItem todoItem)
         {
             _repository.AddTodoItem(todoItem);
+        }
+        /// <summary>
+        /// Updates a TodoItem with new values
+        /// </summary>
+        /// <param name="todoItem"></param>
+        public void UpdateTodoItem(TodoItem todoItem)
+        {
+            _repository.UpdateTodoItem(todoItem);
         }
 
         /// <summary>
