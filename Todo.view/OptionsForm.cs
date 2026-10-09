@@ -7,14 +7,15 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using Todo.view.Entities;
+using Todo.view.Interfaces;
+using Todo.view.OptionsItems;
 
 namespace Todo.view
 {
     public partial class OptionsForm : Form
     {
         public TodoOptions OutputOptions;
-        public TextBox statusTextBox => statusOptionsTextBox;
-
+        List<IOption> OptionItems;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OptionsForm"/> class.
@@ -24,7 +25,15 @@ namespace Todo.view
         {
             InitializeComponent();
             OutputOptions = currentOptions;
-            statusOptionsTextBox.Text = string.Join(",", currentOptions.Status);
+            OptionItems = new List<IOption>
+            {
+                new StatusOptions(currentOptions)
+            };
+            foreach (IOption OptionItem in OptionItems)
+            {
+                flowLayoutPanel.Controls.Add((Control)OptionItem);
+            }
+                      
         }
 
         public void cancelClick(object sender, EventArgs e)
@@ -41,19 +50,10 @@ namespace Todo.view
         /// <param name="e">The event.</param>
         public void saveClick(object sender, EventArgs e)
         {
-            if (statusOptionsTextBox.Text == "") return;
-            try
+            foreach (IOption option in OptionItems) 
             {
-                string status = statusOptionsTextBox.Text;
-                List<string> result = status.Split(new char[] { ',' }).ToList();
-                OutputOptions.Status = result;
+                OutputOptions = option.Save(OutputOptions);
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Cannot parse status options\n" + ex.ToString(), "Error", MessageBoxButtons.OK);
-                return;
-            }
-
             DialogResult = DialogResult.OK;
             Close();
         }
