@@ -83,5 +83,15 @@ namespace Todo.model.Services
         {
             _repository.UpdateDb();
         }
+
+        public List<string> GetListNames()
+        {
+            List<string> output = _repository.GetListNames();
+            foreach(var list in _todoLists)
+            {
+                output.Add(list.Value.Title);
+            }
+            return output;
+        }
     }
 }

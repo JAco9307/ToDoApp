@@ -6,13 +6,16 @@
         private readonly List<TodoItem> _items = new List<TodoItem>();
         public IReadOnlyList<TodoItem> Items => _items;
 
+        public string Title { get; set; }
+        
         public TodoList()
         {
-
+            Title = "New List";
         }
         public TodoList(int listId)
         {
             Id = listId;
+            Title = "New List";
         }
 
         /// <summary>

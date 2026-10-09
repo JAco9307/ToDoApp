@@ -76,6 +76,16 @@ namespace Todo.model.Repositories
         }
 
         /// <summary>
+        /// Gets all TodoLists
+        /// </summary>
+        /// <returns>The TodoLists</returns>
+        public List<string> GetListNames()
+        {
+            return _dbContext.TodoLists
+                .Select(list => list.Title).ToList();
+        }
+
+        /// <summary>
         /// Gets the status options, if none exists makes a new default entry.
         /// </summary>
         /// <returns>The status list result.</returns>

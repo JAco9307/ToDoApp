@@ -5,7 +5,6 @@ using System.Text;
 using System.Windows.Forms;
 using Todo.model.Entities;
 using Todo.model.Interfaces;
-using Todo.model.Migrations;
 using Todo.view;
 using Todo.view.Entities;
 using Todo.view.Interfaces;
@@ -34,6 +33,7 @@ namespace Todo.presenter
             List<Control> controls = _view.StartUp();
             EventHandlerSetup(controls);
             statusOptions = _service.GetStatusOptions();
+            UpdateLists(null);
             UpdateView();
 
         }
@@ -47,6 +47,7 @@ namespace Todo.presenter
         {
             controls[0].Click += delegate { CreateTodo(); };
             controls[1].Click += delegate { UpdateOptions(); };
+            controls[2].TextChanged += delegate { UpdateSelectedList(controls[2].Text); };
         }
 
         /// <summary>
@@ -132,6 +133,7 @@ namespace Todo.presenter
             TodoOptions newOptions = _view.ShowOptionsMenu(new TodoOptions {Status = statusOptions.options});
             statusOptions.options = newOptions.Status;
             _service.UpdateStatusOptions(statusOptions);
+            UpdateLists(null);
         }
 
         /// <summary>
@@ -146,6 +148,20 @@ namespace Todo.presenter
             todoItem.SetTodoStatus(statusOptions.options[(index+1) % statusOptions.options.Count]);
             sender.Status = todoItem.Status;
             _service.UpdateTodoItem(todoItem);
+        }
+
+        public void UpdateLists(string? SelectedList)
+        {
+            var ListTitles = _service.GetListNames();
+            if (SelectedList == null) 
+                SelectedList = ListTitles[_currentListId-1];
+            _view.UpdateLists(ListTitles, SelectedList);
+        }
+
+        private void UpdateSelectedList(string Title)
+        {
+            var ListTitles = _service.GetListNames();
+            _currentListId = ListTitles.FindIndex(list => list == Title) + 1;
         }
 
         /// <summary>

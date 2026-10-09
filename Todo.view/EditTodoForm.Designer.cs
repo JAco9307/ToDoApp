@@ -107,6 +107,7 @@
             // 
             // statusComboBox
             // 
+            statusComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             statusComboBox.FormattingEnabled = true;
             statusComboBox.Location = new Point(93, 74);
             statusComboBox.Name = "statusComboBox";

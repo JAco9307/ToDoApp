@@ -1,6 +1,7 @@
+
+using System.Web;
 using Todo.view.Entities;
 using Todo.view.Interfaces;
-
 namespace Todo.view
 {
     public partial class TodoView : Form, ITodoView
@@ -19,7 +20,8 @@ namespace Todo.view
 
             List<Control> controls = [
                 createTodoButton, 
-                optionsButton
+                optionsButton,
+                listComboBox
                 ];
 
             return controls;
@@ -92,6 +94,15 @@ namespace Todo.view
                 return OptionsForm.OutputOptions;
             else
                 return currentOptions;
+        }
+
+        public void UpdateLists(List<string> strings, string selectList)
+        {
+            Invoke(() => { 
+                listComboBox.Items.Clear();
+                listComboBox.Items.AddRange(strings.ToArray());
+                listComboBox.SelectedItem = selectList;
+            });
         }
     }
 }
