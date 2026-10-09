@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-
-using System.Web;
-=======
->>>>>>> main
 using Todo.view.Entities;
 using Todo.view.Interfaces;
 

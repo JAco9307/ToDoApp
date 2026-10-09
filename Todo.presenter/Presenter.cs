@@ -5,10 +5,6 @@ using System.Text;
 using System.Windows.Forms;
 using Todo.model.Entities;
 using Todo.model.Interfaces;
-<<<<<<< HEAD
-=======
-using Todo.model.Migrations;
->>>>>>> main
 using Todo.view;
 using Todo.view.Entities;
 using Todo.view.Interfaces;
@@ -37,10 +33,8 @@ namespace Todo.presenter
             List<Control> controls = _view.StartUp();
             EventHandlerSetup(controls);
             statusOptions = _service.GetStatusOptions();
-<<<<<<< HEAD
             UpdateLists(null);
-=======
->>>>>>> main
+
             UpdateView();
 
         }
@@ -54,10 +48,8 @@ namespace Todo.presenter
         {
             controls[0].Click += delegate { CreateTodo(); };
             controls[1].Click += delegate { UpdateOptions(); };
-<<<<<<< HEAD
             controls[2].TextChanged += delegate { UpdateSelectedList(controls[2].Text); };
-=======
->>>>>>> main
+
         }
 
         /// <summary>
@@ -143,10 +135,8 @@ namespace Todo.presenter
             TodoOptions newOptions = _view.ShowOptionsMenu(new TodoOptions {Status = statusOptions.options});
             statusOptions.options = newOptions.Status;
             _service.UpdateStatusOptions(statusOptions);
-<<<<<<< HEAD
             UpdateLists(null);
-=======
->>>>>>> main
+
         }
 
         /// <summary>
@@ -163,7 +153,6 @@ namespace Todo.presenter
             _service.UpdateTodoItem(todoItem);
         }
 
-<<<<<<< HEAD
         public void UpdateLists(string? SelectedList)
         {
             var ListTitles = _service.GetListNames();
@@ -178,8 +167,6 @@ namespace Todo.presenter
             _currentListId = ListTitles.FindIndex(list => list == Title) + 1;
         }
 
-=======
->>>>>>> main
         /// <summary>
         /// Converts <see cref="TodoItem"> to <see cref="TodoData"/>.
         /// </summary>
