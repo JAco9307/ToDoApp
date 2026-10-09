@@ -86,10 +86,19 @@ namespace Todo.model.Services
 
         public List<string> GetListNames()
         {
+            _repository.UpdateDb();
             List<string> output = _repository.GetListNames();
-            foreach(var list in _todoLists)
+            if (output.Count == 0 && _todoLists.Count == 0)
             {
-                output.Add(list.Value.Title);
+                TodoList list = new TodoList(1);
+                _todoLists.Add(1, list);
+                output.Add(list.Title);
+                
+            }
+            if (output.Count == 0 && _todoLists.Count != 0) //not sure why this check is nessesary but it is
+            {
+                output.Add(_todoLists[1].Title);
+
             }
             return output;
         }
