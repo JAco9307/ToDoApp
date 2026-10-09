@@ -11,7 +11,10 @@ namespace Todo.view.Entities
     public struct TodoOptions
     {
         public List<string> Status;
+<<<<<<< HEAD
         public List<string> ListNames;
+=======
+>>>>>>> main
 
     }
 }

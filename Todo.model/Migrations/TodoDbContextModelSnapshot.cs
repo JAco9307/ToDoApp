@@ -52,7 +52,7 @@ namespace Todo.model.Migrations
 
                     b.HasIndex("ListId");
 
-                    b.ToTable("TodoItems");
+                    b.ToTable("TodoItems", (string)null);
                 });
 
             modelBuilder.Entity("Todo.model.Entities.TodoList", b =>
@@ -67,7 +67,7 @@ namespace Todo.model.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TodoLists");
+                    b.ToTable("TodoLists", (string)null);
                 });
 
             modelBuilder.Entity("Todo.model.Entities.TodoItem", b =>

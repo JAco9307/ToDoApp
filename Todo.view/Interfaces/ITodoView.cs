@@ -29,8 +29,11 @@ namespace Todo.view.Interfaces
         public TodoData ShowEditTodoDialog(ContextData context, TodoData? currentData = null);
 
         public TodoOptions ShowOptionsMenu(TodoOptions currentOptions);
+<<<<<<< HEAD
 
         public void UpdateLists(List<string> lists, string selectList);
 
+=======
+>>>>>>> main
     }
 }
