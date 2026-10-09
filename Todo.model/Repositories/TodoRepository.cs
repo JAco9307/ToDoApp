@@ -27,14 +27,15 @@ namespace Todo.model.Repositories
         {
             _dbContext = dbContext;
         }
-        
+
         /// <summary>
         /// Adds a TodoItem to the database and saves it
         /// </summary>
         /// <param name="item">The TodoItem to add</param>
-        public void AddTodoItem(TodoItem item)
+        /// <param name="listId">The id of list to add the item to</param>
+        public void AddTodoItem(TodoItem item, int listId)
         {
-            TodoList? todoList = _dbContext.TodoLists.FirstOrDefault();
+            TodoList? todoList = _dbContext.TodoLists.FirstOrDefault(list => list.Id == listId);
             if (todoList == null)
             {
                 todoList = new TodoList();
@@ -43,6 +44,18 @@ namespace Todo.model.Repositories
             }
             item.ListId = todoList.Id;
             _dbContext.TodoItems.Add(item);
+            _dbContext.SaveChanges();
+        }
+
+        public void AddList(string Title)
+        {
+            TodoList newlist = new TodoList { Title = Title };
+            _dbContext.TodoLists.Add(newlist);
+            _dbContext.SaveChanges();
+        }
+        public void DeleteList(TodoList list)
+        {
+            _dbContext.TodoLists.Remove(list);
             _dbContext.SaveChanges();
         }
 
@@ -88,6 +101,11 @@ namespace Todo.model.Repositories
         {
             return _dbContext.TodoLists
                 .Select(list => list.Title).ToList();
+        }
+
+        public List<TodoList> GetLists()
+        {
+            return _dbContext.TodoLists.ToList();
         }
 
         /// <summary>

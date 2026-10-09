@@ -99,7 +99,7 @@ namespace Todo.presenter
             {
                 todoItem.SetTodoTitle(result.title);
                 todoItem.SetTodoStatus(result.status);
-                _service.UpdateTodoItem(todoItem);
+                _service.UpdateDb();
                 UpdateView();
             }
         }
@@ -131,11 +131,28 @@ namespace Todo.presenter
         public void UpdateOptions()
         {
             if (statusOptions == null) return;
-            TodoOptions newOptions = _view.ShowOptionsMenu(new TodoOptions {Status = statusOptions.options});
-            statusOptions.options = newOptions.Status;
-            _service.UpdateStatusOptions(statusOptions);
-            UpdateLists(null);
+            List<string> currentListNames = _service.GetListNames();
 
+            TodoOptions newOptions = _view.ShowOptionsMenu(new TodoOptions {
+                Status = statusOptions.options,
+                ListNames = currentListNames
+            });
+
+            statusOptions.options = newOptions.Status;
+            _service.UpdateDb();
+
+            var diflist = newOptions.ListNames.Where(name => currentListNames.All(name2 => name2 != name));
+            var diflist2 = currentListNames.Where(name => newOptions.ListNames.All(name2 => name2 != name));
+            foreach (string Title in diflist) 
+            { 
+                _service.AddList(Title);
+            }
+            foreach (string Title in diflist2)
+            {
+                _service.DeleteList(Title);
+            }
+            
+            UpdateLists(null);
         }
 
         /// <summary>
@@ -149,7 +166,7 @@ namespace Todo.presenter
             int index = statusOptions.options.FindIndex(status => status == todoItem.Status);
             todoItem.SetTodoStatus(statusOptions.options[(index+1) % statusOptions.options.Count]);
             sender.Status = todoItem.Status;
-            _service.UpdateTodoItem(todoItem);
+            _service.UpdateDb();
         }
 
         public void UpdateLists(string? SelectedList)

@@ -27,7 +27,8 @@ namespace Todo.view
             OutputOptions = currentOptions;
             OptionItems = new List<IOption>
             {
-                new StatusOptions(currentOptions)
+                new StatusOptions(currentOptions),
+                new ListNameOptions(currentOptions)
             };
             foreach (IOption OptionItem in OptionItems)
             {

@@ -8,18 +8,25 @@ namespace Todo.model.Services
     public class TodoService : ITodoService
     {
         private ITodoRepository _repository;
-        private readonly Dictionary<int, TodoList> _todoLists = new Dictionary<int, TodoList>();
-        public IReadOnlyDictionary<int, TodoList> TodoLists => _todoLists;
+        private readonly List<TodoList> _todoLists = new List<TodoList>();
+        public IReadOnlyList<TodoList> TodoLists => _todoLists;
 
         [ExcludeFromCodeCoverage]
         public TodoService()
         {
             _repository = new TodoRepository();
+            var lists = _repository.GetLists();
+            foreach (var list in lists)
+                _todoLists.Add(list);
         }
 
         public TodoService(ITodoRepository todoRepository)
         {
             _repository = todoRepository;
+            var lists = _repository.GetLists();
+            foreach(var list in lists)
+                _todoLists.Add(list);
+            
         }
 
         /// <summary>
@@ -29,13 +36,13 @@ namespace Todo.model.Services
         /// <param name="todoItem">The TodoItem.</param>
         public void Add(int listId, TodoItem todoItem)
         {
-            _repository.AddTodoItem(todoItem);
+            _repository.AddTodoItem(todoItem,listId);
         }
         /// <summary>
         /// Updates a TodoItem with new values
         /// </summary>
         /// <param name="todoItem"></param>
-        public void UpdateTodoItem(TodoItem todoItem)
+        public void UpdateDb()
         {
             _repository.UpdateDb();
         }
@@ -57,19 +64,31 @@ namespace Todo.model.Services
         /// <returns>The TodoList.</returns>
         public TodoList GetTodoList(int listId)
         {
-            if(_todoLists.ContainsKey(listId))
-                return _todoLists[listId];
+            if(_todoLists.FindIndex(List => List.Id == listId) != -1)
+                return _todoLists.Find(list => list.Id == listId);
 
             TodoList? list = _repository.GetList(listId);
             if(list != null)
             {
-                _todoLists.Add(listId, list);
+                _todoLists.Add(list);
                 return list;
             }
             
             list = new TodoList(listId);
-            _todoLists.Add(listId, list);
+            _todoLists.Add(list);
             return list;
+        }
+
+        public void AddList(string Title) 
+        { 
+            _repository.AddList(Title);
+        }
+        public void DeleteList(string Title)
+        {
+            var list = _todoLists.FirstOrDefault(list => list.Title == Title);
+            if (list == null) return;
+            _repository.DeleteList(list);
+            _todoLists.Remove(list);
         }
 
         public StatusList GetStatusOptions()
@@ -79,10 +98,6 @@ namespace Todo.model.Services
             if (list == null) return (new StatusList());
             return list;
         }
-        public void UpdateStatusOptions(StatusList options)
-        {
-            _repository.UpdateDb();
-        }
 
         public List<string> GetListNames()
         {
@@ -91,14 +106,13 @@ namespace Todo.model.Services
             if (output.Count == 0 && _todoLists.Count == 0)
             {
                 TodoList list = new TodoList(1);
-                _todoLists.Add(1, list);
+                _todoLists.Add(list);
                 output.Add(list.Title);
                 
             }
             if (output.Count == 0 && _todoLists.Count != 0) //not sure why this check is nessesary but it is
             {
-                output.Add(_todoLists[1].Title);
-
+                output.Add(_todoLists[0].Title);
             }
             return output;
         }
