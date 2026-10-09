@@ -21,7 +21,7 @@ public class TodoServiceTests
             _todoList.Remove(todoItem);
         }
 
-        public void UpdateDB()
+        public void UpdateDb()
         {
         }
 

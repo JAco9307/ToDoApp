@@ -86,7 +86,7 @@ public class TodoRepositoryTests
         
         repository.AddTodoItem(todoItem);
         todoItem.SetTodoTitle("Changed");
-        repository.UpdateDB();
+        repository.UpdateDb();
         Assert.AreEqual("Changed", dbContext.TodoItems.Find(todoItem.Id).Title);
     }
 }

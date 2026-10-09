@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using Todo.model.Data;
 using Todo.model.Entities;
 using Todo.model.Interfaces;
-using Todo.model.Migrations;
 
 namespace Todo.model.Repositories
 {
@@ -57,10 +56,9 @@ namespace Todo.model.Repositories
             _dbContext.SaveChanges();
         }
         /// <summary>
-        /// Updates a TodoItem in the database
+        /// Updates all entities with unsaved changes to the database
         /// </summary>
-        /// <param name="todoItem"></param>
-        public void UpdateDB()
+        public void UpdateDb()
         {
             _dbContext.SaveChanges();
         }

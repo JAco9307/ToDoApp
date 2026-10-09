@@ -50,7 +50,7 @@ namespace Todo.view
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
+                MessageBox.Show("Cannot parse status options\n" + ex.ToString(), "Error", MessageBoxButtons.OK);
                 return;
             }
 

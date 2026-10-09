@@ -1,7 +1,6 @@
-
 using Todo.view.Entities;
 using Todo.view.Interfaces;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+
 namespace Todo.view
 {
     public partial class TodoView : Form, ITodoView

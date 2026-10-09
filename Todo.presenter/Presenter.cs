@@ -91,7 +91,7 @@ namespace Todo.presenter
         private void EditTodo(TodoItem todoItem)
         {
             if (statusOptions == null) throw new NullReferenceException();
-            TodoData todoData = ToData(todoItem);
+            TodoData todoData = ItemToData(todoItem);
             TodoData result = _view.ShowEditTodoDialog(GetContext(), todoData);
             if (result.title != null)
             {
@@ -153,7 +153,7 @@ namespace Todo.presenter
         /// </summary>
         /// <param name="todoItem">The todo item.</param>
         /// <returns>The todo data.</returns>
-        public static TodoData ToData(TodoItem todoItem)
+        public static TodoData ItemToData(TodoItem todoItem)
         {
             return new TodoData
             {

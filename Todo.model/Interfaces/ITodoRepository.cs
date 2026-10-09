@@ -8,7 +8,7 @@ namespace Todo.model.Interfaces
         public void AddTodoItem(TodoItem todoItem);
         public void DeleteTodoItem(TodoItem todoItem);
         public StatusList? GetStatusOptions();
-        void UpdateDB();
+        public void UpdateDb();
 
     }
 }

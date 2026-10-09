@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System.Net.NetworkInformation;
 using Todo.model.Entities;
 
 namespace Todo.model.Data;
