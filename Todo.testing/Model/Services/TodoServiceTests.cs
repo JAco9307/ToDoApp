@@ -21,6 +21,10 @@ public class TodoServiceTests
             _todoList.Remove(todoItem);
         }
 
+        public void UpdateDb()
+        {
+        }
+
         public TodoList? GetList(int TodoListId)
         {
             if (TodoListId == 999)
@@ -28,6 +32,16 @@ public class TodoServiceTests
             if (TodoListId == 55)
                 return new TodoList(55);
             return _todoList;
+        }
+
+        public StatusList? GetStatusOptions()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateStatusOptions(StatusList statusOptions)
+        {
+            throw new NotImplementedException();
         }
     }
 

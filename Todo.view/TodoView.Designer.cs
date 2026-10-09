@@ -29,11 +29,11 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TodoView));
-
             flowLayout = new FlowLayoutPanel();
             headerLayout = new FlowLayoutPanel();
             label1 = new Label();
             createTodoButton = new Button();
+            optionsButton = new Button();
             headerLayout.SuspendLayout();
             SuspendLayout();
             // 
@@ -49,7 +49,6 @@
             flowLayout.Size = new Size(800, 421);
             flowLayout.TabIndex = 1;
             flowLayout.WrapContents = false;
-
             // 
             // headerLayout
             // 
@@ -58,13 +57,13 @@
             headerLayout.BackColor = Color.DimGray;
             headerLayout.Controls.Add(label1);
             headerLayout.Controls.Add(createTodoButton);
+            headerLayout.Controls.Add(optionsButton);
             headerLayout.Dock = DockStyle.Top;
             headerLayout.Location = new Point(0, 0);
             headerLayout.Name = "headerLayout";
             headerLayout.Size = new Size(800, 29);
             headerLayout.TabIndex = 3;
             headerLayout.WrapContents = false;
-
             // 
             // label1
             // 
@@ -89,6 +88,17 @@
             createTodoButton.Text = "New Todo";
             createTodoButton.UseVisualStyleBackColor = true;
             // 
+            // optionsButton
+            // 
+            optionsButton.FlatStyle = FlatStyle.Popup;
+            optionsButton.ForeColor = SystemColors.ButtonHighlight;
+            optionsButton.Location = new Point(132, 3);
+            optionsButton.Name = "optionsButton";
+            optionsButton.Size = new Size(75, 23);
+            optionsButton.TabIndex = 2;
+            optionsButton.Text = "Options";
+            optionsButton.UseVisualStyleBackColor = true;
+            // 
             // TodoView
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -97,7 +107,6 @@
             ClientSize = new Size(800, 450);
             Controls.Add(flowLayout);
             Controls.Add(headerLayout);
-
             FormBorderStyle = FormBorderStyle.SizableToolWindow;
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "TodoView";
@@ -113,5 +122,6 @@
         private FlowLayoutPanel headerLayout;
         private Label label1;
         private Button createTodoButton;
+        private Button optionsButton;
     }
 }

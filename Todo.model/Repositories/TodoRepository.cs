@@ -55,6 +55,13 @@ namespace Todo.model.Repositories
             _dbContext.TodoItems.Remove(todoItem);
             _dbContext.SaveChanges();
         }
+        /// <summary>
+        /// Updates all entities with unsaved changes to the database
+        /// </summary>
+        public void UpdateDb()
+        {
+            _dbContext.SaveChanges();
+        }
 
         /// <summary>
         /// Gets a TodoList with a given Id, Creates a new list if none exist
@@ -72,5 +79,17 @@ namespace Todo.model.Repositories
                 .Include(list => list.Items)
                 .FirstOrDefault(list => list.Id == TodoListId);
         }
-    }
+
+        /// <summary>
+        /// Gets the status options, if none exists makes a new default entry.
+        /// </summary>
+        /// <returns>The status list result.</returns>
+        public StatusList? GetStatusOptions()
+        {
+            if (!_dbContext.TodoStatusOptions.Any())
+                _dbContext.TodoStatusOptions.Add(new StatusList());
+            return _dbContext.TodoStatusOptions.FirstOrDefault();
+        }
+
+    }   
 }

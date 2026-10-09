@@ -72,4 +72,21 @@ public class TodoRepositoryTests
         TodoList? todoListFromDb = repository.GetList(1);
         Assert.AreEqual(todoList,todoListFromDb);
     }
+
+    [TestMethod]
+    public void ChangeTodoItem()
+    {
+        SqliteConnection connection = PrepareConnection();
+        TodoDbContext dbContext = prepareContext(connection);
+
+        connection.Open();
+        dbContext.Database.EnsureCreated();
+        ITodoRepository repository = new TodoRepository(dbContext);
+        TodoItem todoItem = new TodoItem("item");
+        
+        repository.AddTodoItem(todoItem);
+        todoItem.SetTodoTitle("Changed");
+        repository.UpdateDb();
+        Assert.AreEqual("Changed", dbContext.TodoItems.Find(todoItem.Id).Title);
+    }
 }

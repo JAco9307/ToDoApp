@@ -1,30 +1,38 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
-
-using System.Windows;
+﻿using System.ComponentModel;
 
 namespace Todo.view
 {
     public partial class TodoViewItem : UserControl
     {
+        public int id;
+        public Label TodoLabel => todoLabel;
         public event EventHandler? Delete = default;
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string Status
+        {
+            get { return _status; }
+            set {
+                _status = value; 
+                CycleStatus.Text = value; 
+            } 
+        }
+        private string _status;
+
+
         /// <summary>
         /// Initializes a new instance of the <see cref="TodoViewItem"/> class.
         /// </summary>
         /// <param name="TodoTitle">The todo title.</param>
-        public TodoViewItem(string TodoTitle)
+        public TodoViewItem(string TodoTitle, string Status)
         {
             InitializeComponent();
-            todoText.Text = TodoTitle;
+
+            _status = Status;
+            CycleStatus.Text = Status;
+            todoLabel.Text = TodoTitle;
+
         }
-
-        public int id;
-
+        
         private void deleteTodoButton_Click(object sender, EventArgs e)
         {
             DialogResult confirmResult = MessageBox.Show("Are you sure to delete this item?", "Confirm Delete", MessageBoxButtons.YesNo);
@@ -34,7 +42,8 @@ namespace Todo.view
                 Delete(this, new EventArgs());
             }
         }
+        
+        public Button CycleStatus => StatusButton;
 
-        public Button editButton => editTodoButton;
     }
 }
