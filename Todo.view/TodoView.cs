@@ -1,6 +1,6 @@
-
 using Todo.view.Entities;
 using Todo.view.Interfaces;
+
 namespace Todo.view
 {
     public partial class TodoView : Form, ITodoView
@@ -19,6 +19,7 @@ namespace Todo.view
 
             List<Control> controls = [
                 createTodoButton, 
+                optionsButton
                 ];
 
             return controls;
@@ -29,45 +30,68 @@ namespace Todo.view
             Application.Run(this);
         }
 
-        public List<TodoViewItem> UpdateActiveViewList(List<string> todoTitles)
+        /// <summary>
+        /// Updates the active view list.
+        /// </summary>
+        /// <param name="todoTitles">The todo titles.</param>
+        /// <param name="todoStatus">The todo status.</param>
+        /// <returns>The list result.</returns>
+        public List<TodoViewItem> UpdateActiveViewList(List<string> todoTitles, List<string> todoStatus)
         {
             flowLayout.Controls.Clear();
             List<TodoViewItem> controls = new();
-            int i = 0;
-            foreach (string itemTitle in todoTitles) 
+            for(int i = 0; i < todoTitles.Count; i++)
             {
-                TodoViewItem newTodo = addTodo(itemTitle);
-                newTodo.id = i++;
+                TodoViewItem newTodo = addTodo(todoTitles[i], todoStatus[i]);
+                newTodo.id = i;
                 controls.Add(newTodo); 
             }
 
             return controls;
         }
 
+
         /// <summary>
         /// Adds a <see cref="TodoViewItem"/> to the GUI.
         /// </summary>
         /// <param name="TodoTitle">The todo title.</param>
         /// <returns>The todo view item that has been generated.</returns>
-        private TodoViewItem addTodo(string TodoTitle)
+        private TodoViewItem addTodo(string TodoTitle, string Status)
         {
-            TodoViewItem item = new TodoViewItem(TodoTitle);
+            TodoViewItem item = new TodoViewItem(TodoTitle, Status);
             Invoke(() => flowLayout.Controls.Add(item));
             return item;
         }
 
-        public PopupResult ShowEditTodoDialog(string currentTitle)
+        public TodoData ShowEditTodoDialog(ContextData context, TodoData? currentData)
         {
-            ContextData todoParameters = new ContextData(currentTitle, new List<(string, Color)>(), new List<(string, Color)>());
-            EditTodoForm createTodoForm = new EditTodoForm(todoParameters);
-            DialogResult result = createTodoForm.ShowDialog();
-
-            return new PopupResult
+            if (currentData == null)
             {
-                dialogResult = result,
-                title = createTodoForm.Titlestr
+                currentData = new TodoData();
+            }
+            var CreateTodoForm = new EditTodoForm(context, (TodoData)currentData);
+            DialogResult result = CreateTodoForm.ShowDialog();
+
+            return new TodoData
+            {
+                Title = CreateTodoForm.Titlestr,
+                Status = CreateTodoForm.Status  
             };
         }
 
+        /// <summary>
+        /// Opens the options form and recieves the data in it afterwards.
+        /// </summary>
+        /// <param name="currentOptions">The current options.</param>
+        /// <returns>The options set when saving.</returns>
+        public TodoOptions ShowOptionsMenu(TodoOptions currentOptions)
+        {
+            var OptionsForm = new OptionsForm(currentOptions);
+            DialogResult result = OptionsForm.ShowDialog();
+            if (result == DialogResult.OK)
+                return OptionsForm.OutputOptions;
+            else
+                return currentOptions;
+        }
     }
 }

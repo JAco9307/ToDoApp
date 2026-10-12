@@ -16,6 +16,21 @@ namespace Todo.model.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "10.0.12");
 
+            modelBuilder.Entity("Todo.model.Entities.StatusList", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("options")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TodoStatusOptions", (string)null);
+                });
+
             modelBuilder.Entity("Todo.model.Entities.TodoItem", b =>
                 {
                     b.Property<int>("Id")
@@ -25,6 +40,10 @@ namespace Todo.model.Migrations
                     b.Property<int>("ListId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -33,7 +52,7 @@ namespace Todo.model.Migrations
 
                     b.HasIndex("ListId");
 
-                    b.ToTable("TodoItems");
+                    b.ToTable("TodoItems", (string)null);
                 });
 
             modelBuilder.Entity("Todo.model.Entities.TodoList", b =>
@@ -44,7 +63,7 @@ namespace Todo.model.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TodoLists");
+                    b.ToTable("TodoLists", (string)null);
                 });
 
             modelBuilder.Entity("Todo.model.Entities.TodoTag", b =>

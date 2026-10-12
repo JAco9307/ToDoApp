@@ -32,19 +32,21 @@
             cancelButton = new Button();
             titleLabel = new Label();
             titleTextBox = new TextBox();
+            CenterBox = new GroupBox();
             groupBox1 = new GroupBox();
-            flowLayoutPanel1 = new FlowLayoutPanel();
+            statusLabel = new Label();
+            statusComboBox = new ComboBox();
             label1 = new Label();
             TodoTagsComboBox = new ComboBox();
-            groupBox1.SuspendLayout();
+            flowLayoutPanel1 = new FlowLayoutPanel();
+            CenterBox.SuspendLayout();
             SuspendLayout();
             // 
             // saveButton
             // 
             saveButton.FlatStyle = FlatStyle.Flat;
             saveButton.ForeColor = SystemColors.ButtonHighlight;
-            saveButton.Location = new Point(40, 238);
-            saveButton.Margin = new Padding(4, 5, 4, 5);
+            saveButton.Location = new Point(28, 118);
             saveButton.Name = "saveButton";
             saveButton.Size = new Size(107, 38);
             saveButton.TabIndex = 0;
@@ -56,8 +58,7 @@
             // 
             cancelButton.FlatStyle = FlatStyle.Flat;
             cancelButton.ForeColor = SystemColors.ButtonHighlight;
-            cancelButton.Location = new Point(356, 238);
-            cancelButton.Margin = new Padding(4, 5, 4, 5);
+            cancelButton.Location = new Point(250, 118);
             cancelButton.Name = "cancelButton";
             cancelButton.Size = new Size(107, 38);
             cancelButton.TabIndex = 1;
@@ -83,6 +84,40 @@
             titleTextBox.Name = "titleTextBox";
             titleTextBox.Size = new Size(330, 31);
             titleTextBox.TabIndex = 3;
+            // 
+            // CenterBox
+            // 
+            CenterBox.Controls.Add(statusLabel);
+            CenterBox.Controls.Add(statusComboBox);
+            CenterBox.Controls.Add(saveButton);
+            CenterBox.Controls.Add(titleLabel);
+            CenterBox.Controls.Add(titleTextBox);
+            CenterBox.Controls.Add(cancelButton);
+            CenterBox.Dock = DockStyle.Fill;
+            CenterBox.FlatStyle = FlatStyle.Popup;
+            CenterBox.Location = new Point(0, 0);
+            CenterBox.Name = "CenterBox";
+            CenterBox.Size = new Size(364, 165);
+            CenterBox.TabIndex = 4;
+            CenterBox.TabStop = false;
+            // 
+            // statusLabel
+            // 
+            statusLabel.AutoSize = true;
+            statusLabel.ForeColor = SystemColors.ButtonHighlight;
+            statusLabel.Location = new Point(28, 77);
+            statusLabel.Name = "statusLabel";
+            statusLabel.Size = new Size(42, 15);
+            statusLabel.TabIndex = 5;
+            statusLabel.Text = "Status:";
+            // 
+            // statusComboBox
+            // 
+            statusComboBox.FormattingEnabled = true;
+            statusComboBox.Location = new Point(93, 74);
+            statusComboBox.Name = "statusComboBox";
+            statusComboBox.Size = new Size(121, 23);
+            statusComboBox.TabIndex = 4;
             // 
             // groupBox1
             // 
@@ -137,9 +172,9 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(64, 64, 64);
             CancelButton = cancelButton;
-            ClientSize = new Size(520, 313);
+            ClientSize = new Size(364, 165);
             ControlBox = false;
-            Controls.Add(groupBox1);
+            Controls.Add(CenterBox);
             FormBorderStyle = FormBorderStyle.None;
             Margin = new Padding(4, 5, 4, 5);
             MaximizeBox = false;
@@ -149,8 +184,8 @@
             StartPosition = FormStartPosition.CenterParent;
             Text = "New Todo";
             TopMost = true;
-            groupBox1.ResumeLayout(false);
-            groupBox1.PerformLayout();
+            CenterBox.ResumeLayout(false);
+            CenterBox.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -159,7 +194,10 @@
         private Button cancelButton;
         private Label titleLabel;
         private TextBox titleTextBox;
+        private GroupBox CenterBox;
         private GroupBox groupBox1;
+        private Label statusLabel;
+        private ComboBox statusComboBox;
         private Label label1;
         private ComboBox TodoTagsComboBox;
         private FlowLayoutPanel flowLayoutPanel1;

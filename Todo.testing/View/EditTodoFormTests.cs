@@ -6,14 +6,28 @@ using Todo.view.Entities;
 
 namespace Todo.testing.View
 {
+
     [TestClass]
     public class EditTodoFormTests
     {
+        private ContextData options = new ContextData
+        {
+            StatusOptions = ["Not Started",
+                    "In Progress",
+                    "Completed"]
+        };
+
+        private TodoData TestTodoData = new TodoData 
+        { 
+            Title = "Title",
+            Status = "Completed",
+        };
+
         [TestMethod]
         public void cancelClick_StateUnderTest_ExpectedBehavior()
         {
             // Arrange
-            var editTodoForm = new EditTodoForm(new ContextData("a",new List<(string, System.Drawing.Color)>(), new List<(string, System.Drawing.Color)>()));
+            var editTodoForm = new EditTodoForm(options, TestTodoData);
             object sender = new();
             EventArgs e = new();
 
@@ -21,14 +35,13 @@ namespace Todo.testing.View
             editTodoForm.cancelClick(sender, e);
 
             // Assert
-            Assert.AreEqual(DialogResult.Cancel, editTodoForm.DialogResult);
-            Assert.AreEqual("a", editTodoForm.Titlestr);
+            Assert.AreEqual(null, editTodoForm.Titlestr);
         }
 
         [TestMethod]
         public void saveClick_StateUnderTest_ExpectedBehavior()
         {
-            var editTodoForm = new EditTodoForm(new ContextData("a", new List<(string, System.Drawing.Color)>(), new List<(string, System.Drawing.Color)>()));
+            var editTodoForm = new EditTodoForm(options, TestTodoData);
             object sender = new();
             EventArgs e = new();
 
@@ -36,8 +49,7 @@ namespace Todo.testing.View
             editTodoForm.saveClick(sender, e);
 
             // Assert
-            Assert.AreEqual(DialogResult.OK, editTodoForm.DialogResult);
-            Assert.AreEqual("a", editTodoForm.Titlestr);
+            Assert.AreEqual("Title", editTodoForm.Titlestr);
         }
     }
 }

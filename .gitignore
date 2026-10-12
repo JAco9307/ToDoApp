@@ -43,6 +43,7 @@ ScaffoldingReadMe.txt
 .vs/
 *.user
 *.tmp
+todo.sqlite-*
 
 # Others
 ~$*

@@ -8,6 +8,8 @@ namespace Todo.model.Interfaces
         public void AddTodoItem(TodoItem todoItem);
         public void DeleteTodoItem(TodoItem todoItem);
         public List<TodoTag>? GetAllTags();
-        void UpdateTodoItem(TodoItem todoItem);
+        public StatusList? GetStatusOptions();
+        public void UpdateDb();
+
     }
 }

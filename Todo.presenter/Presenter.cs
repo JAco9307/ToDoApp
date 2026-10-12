@@ -1,10 +1,9 @@
 ﻿using System.Windows.Forms;
-using Todo.view;
-using Todo.view.Interfaces;
-using Todo.model.Interfaces;
 using Todo.model.Entities;
+using Todo.model.Interfaces;
+using Todo.view;
 using Todo.view.Entities;
-using System.Drawing;
+using Todo.view.Interfaces;
 
 namespace Todo.presenter
 {
@@ -13,6 +12,7 @@ namespace Todo.presenter
         private readonly ITodoView _view;
         private readonly ITodoService _service;
         private int _currentListId;
+        public StatusList? statusOptions;
         public Presenter(ITodoView view, ITodoService service)
         {
             _view = view;
@@ -28,6 +28,7 @@ namespace Todo.presenter
         {
             List<Control> controls = _view.StartUp();
             EventHandlerSetup(controls);
+            statusOptions = _service.GetStatusOptions();
             UpdateView();
 
         }
@@ -40,6 +41,7 @@ namespace Todo.presenter
         private void EventHandlerSetup(List<Control> controls)
         {
             controls[0].Click += delegate { CreateTodo(); };
+            controls[1].Click += delegate { UpdateOptions(); };
         }
 
         /// <summary>
@@ -47,45 +49,61 @@ namespace Todo.presenter
         /// </summary>
         public void UpdateView()
         {
+            if (statusOptions == null) throw new NullReferenceException();
             IReadOnlyList<TodoItem> TodoList = _service.GetTodoList(_currentListId).Items;
             List<string> TodoTitles = TodoList.Select(todoItem => todoItem.Title).ToList();
-            List<TodoViewItem> todoViewItems = _view.UpdateActiveViewList(TodoTitles);
+            List<string> TodoStatus = TodoList.Select(todoItem => todoItem.Status).ToList();
+            List<TodoViewItem> todoViewItems = _view.UpdateActiveViewList(TodoTitles, TodoStatus);
 
             foreach(TodoViewItem item in todoViewItems) {
                 item.Delete += delegate { DeleteTodo(TodoList[item.id]);  };
                 item.TodoLabel.Click += delegate { EditTodo(TodoList[item.id]); };
+                item.CycleStatus.Click += delegate { CycleStatus(TodoList[item.id], item); };
             }
         }
 
+
         /// <summary>
-        /// Opens the dialog for creating a new todo and sets up the todo item afterwards
+        /// Opens the dialog for creating a new todo and sets up the <see cref="TodoItem"/> afterwards
         /// </summary>
         public void CreateTodo()
         {
-            var result = _view.ShowEditTodoDialog();
-            if (result.dialogResult == DialogResult.OK)
+            if (statusOptions == null) throw new NullReferenceException();
+            var result = _view.ShowEditTodoDialog(GetContext());
+            if (result.Title != null)
             {
-                TodoItem newTodo = new(result.title);
+                TodoItem newTodo = new(result.Title);
+                newTodo.SetTodoStatus(result.Status);
                 _service.Add(_currentListId, newTodo);
                 UpdateView();
             }
         }
-
+        
         /// <summary>
         /// Opens the dialog for editing a todo
         /// </summary>
         /// <param name="todoItem">The todoViewItem to edit.</param>
         private void EditTodo(TodoItem todoItem)
         {
-            List<TodoTag> allTags = _service.GetAllTags();
-            ContextData contextData = new ContextData(todoItem.Title, todoItem.Tags.Select(tag => (tag.Title, tag.Color)).ToList(), allTags.Select(tag => (tag.Title, tag.Color)).ToList());
-            EditTodoForm createTodoForm = new EditTodoForm(contextData);
-            DialogResult result = createTodoForm.ShowDialog();
-            if (result == DialogResult.OK)
-            {
-                todoItem.SetTodoTitle(createTodoForm.Titlestr);
+            //Fix to be proper. 
+            //Main
+            if (statusOptions == null) throw new NullReferenceException();
 
-                List<TodoTag> newTags = allTags.Where(tag => HasMatchingTitle(createTodoForm, tag)).ToList();
+            List<TodoTag> allTags = _service.GetAllTags();
+
+            TodoData todoData = ItemToData(todoItem);
+
+            ContextData context = GetContext();
+            context.AllTags = allTags.Select(tag => (tag.Title, tag.Color)).ToList();
+
+            TodoData result = _view.ShowEditTodoDialog(context, todoData);
+
+            if (result.Title != null)
+            {
+                todoItem.SetTodoTitle(result.Title);
+                todoItem.SetTodoStatus(result.Status);
+
+                List<TodoTag> newTags = allTags.Where(tag => HasMatchingTitle(result, tag)).ToList();
                 todoItem.setTags(newTags);
 
                 _service.UpdateTodoItem(todoItem);
@@ -93,21 +111,81 @@ namespace Todo.presenter
             }
         }
 
-        private static bool HasMatchingTitle(EditTodoForm createTodoForm, TodoTag tag)
+        private static bool HasMatchingTitle(TodoData todoData, TodoTag tag)
         {
-            return createTodoForm.CurrentTags.Any(newTag => newTag.Item1 == tag.Title);
+            return todoData.CurrentTags.Any(newTag => newTag.Item1 == tag.Title);
         }
-
+        
 
 
         /// <summary>
-        /// Deletes a todoItem .
+        /// Deletes a <see cref="TodoItem"/> .
         /// </summary>
         /// <param name="todoItem">The todo item.</param>
         public void DeleteTodo(TodoItem todoItem)
         {
             _service.Delete(_currentListId, todoItem);
             UpdateView();
+        }
+
+        /// <summary>
+        /// Updates the status of a <see cref="TodoItem"/>.
+        /// </summary>
+        /// <param name="todoItem">The todo item.</param>
+        /// <param name="status">The status.</param>
+        public void UpdateStatus(TodoItem todoItem, string status)
+        {
+            todoItem.SetTodoStatus(status);
+        }
+
+        /// <summary>
+        /// Opens the options menu and updates the options.
+        /// </summary>
+        public void UpdateOptions()
+        {
+            if (statusOptions == null) return;
+            TodoOptions newOptions = _view.ShowOptionsMenu(new TodoOptions {Status = statusOptions.options});
+            statusOptions.options = newOptions.Status;
+            _service.UpdateStatusOptions(statusOptions);
+        }
+
+        /// <summary>
+        /// Cycles the status on the todo item.
+        /// </summary>
+        /// <param name="todoItem">The todo item.</param>
+        /// <param name="sender">The sender.</param>
+        public void CycleStatus(TodoItem todoItem, TodoViewItem sender)
+        {
+            if (statusOptions == null) return;
+            int index = statusOptions.options.FindIndex(status => status == todoItem.Status);
+            todoItem.SetTodoStatus(statusOptions.options[(index+1) % statusOptions.options.Count]);
+            sender.Status = todoItem.Status;
+            _service.UpdateTodoItem(todoItem);
+        }
+
+        /// <summary>
+        /// Converts <see cref="TodoItem"> to <see cref="TodoData"/>.
+        /// </summary>
+        /// <param name="todoItem">The todo item.</param>
+        /// <returns>The todo data.</returns>
+        public static TodoData ItemToData(TodoItem todoItem)
+        {
+            return new TodoData
+            {
+                Title = todoItem.Title,
+                Status = todoItem.Status,
+                CurrentTags = todoItem.Tags.Select(tag => (tag.Title, tag.Color)).ToList()
+            };
+        }
+
+        public ContextData GetContext()
+        {
+            if (statusOptions == null) throw new NullReferenceException();
+            return new ContextData
+            {
+                StatusOptions = statusOptions.options
+                
+            };
         }
     }
 }

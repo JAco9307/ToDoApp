@@ -5,15 +5,18 @@
         public int Id { get; private set; }
         public int ListId { get; set; }
         public string Title { get; private set; }
+        public string Status { get; private set; }
         public List<TodoTag> Tags {  get; private set; } = new List<TodoTag>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TodoItem"/> class.
         /// </summary>
         /// <param name="title">The title.</param>
-        public TodoItem(string title)
+        /// <param name="Status">The status.</param>
+        public TodoItem(string title, string status = "Not Started")
         {
             Title = title;
+            Status = status;
         }
 
         /// <summary>
@@ -28,6 +31,11 @@
         public void setTags(List<TodoTag> tags)
         {
             Tags = tags;
+        }
+
+        public void SetTodoStatus(string status)
+        {
+            Status = status;
         }
     }
 }
