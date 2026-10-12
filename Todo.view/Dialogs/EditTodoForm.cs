@@ -2,46 +2,47 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using Todo.view.Entities;
+using Todo.view.Interfaces;
+using Todo.view.EditItems;
 
 namespace Todo.view
 {
     public partial class EditTodoForm : Form
     {
-        public string? Titlestr;
-        public string Status;
-        public EditTodoForm(ContextData context, TodoData todoData)
+        public TodoData todoData;
+        private List<ITodoPropertyEdit> EditItems;
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EditTodoForm"/> class.
+        /// </summary>
+        /// <param name="_context">The current context.</param>
+        /// <param name="_todoData">The current todo data.</param>
+        public EditTodoForm(ContextData _context, TodoData _todoData)
         {
             InitializeComponent();
-            Titlestr = todoData.title;
-
-            titleTextBox.Text = Titlestr;
-            titleTextBox.Select();
-            statusComboBox.Items.AddRange(context.StatusOptions.ToArray());
-            if (todoData.status == null)
+            EditItems = new List<ITodoPropertyEdit>
             {
-                statusComboBox.SelectedItem = context.StatusOptions[0];
-                Status = context.StatusOptions[0];
-            }
-            else
+                new TitleEdit(_todoData),
+                new StatusEdit(_todoData,_context)
+            };
+            foreach (ITodoPropertyEdit EditItem in EditItems)
             {
-                statusComboBox.SelectedItem = todoData.status;
-                Status = todoData.status;
+                flowLayoutPanel.Controls.Add((Control)EditItem);
             }
 
 
         }
         public void cancelClick(object sender, EventArgs e)
         {
-            Titlestr = null;
-            this.Close();
+            Close();
         }
+
         public void saveClick(object sender, EventArgs e)
         {
-            if (statusComboBox.SelectedItem == null) return;
-            if (titleTextBox.Text == "") return;
-            Titlestr = titleTextBox.Text;
-            Status = statusComboBox.Text;
-            this.Close();
+            foreach (ITodoPropertyEdit EditItem in EditItems)
+            {
+                todoData = EditItem.UpdateData(todoData);
+            }
+            Close();
         }
     }
 }

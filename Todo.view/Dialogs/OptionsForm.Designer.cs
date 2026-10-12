@@ -47,7 +47,7 @@
             saveButton.ForeColor = SystemColors.ButtonHighlight;
             saveButton.Location = new Point(0, 0);
             saveButton.Name = "saveButton";
-            saveButton.Size = new Size(309, 32);
+            saveButton.Size = new Size(244, 32);
             saveButton.TabIndex = 0;
             saveButton.Text = "Save";
             saveButton.UseVisualStyleBackColor = true;
@@ -60,7 +60,7 @@
             cancelButton.ForeColor = SystemColors.ButtonHighlight;
             cancelButton.Location = new Point(0, 0);
             cancelButton.Name = "cancelButton";
-            cancelButton.Size = new Size(313, 32);
+            cancelButton.Size = new Size(246, 32);
             cancelButton.TabIndex = 1;
             cancelButton.Text = "Cancel";
             cancelButton.UseVisualStyleBackColor = true;
@@ -84,7 +84,7 @@
             flowLayoutPanel.FlowDirection = FlowDirection.TopDown;
             flowLayoutPanel.Location = new Point(3, 19);
             flowLayoutPanel.Name = "flowLayoutPanel";
-            flowLayoutPanel.Size = new Size(626, 240);
+            flowLayoutPanel.Size = new Size(494, 240);
             flowLayoutPanel.TabIndex = 2;
             flowLayoutPanel.WrapContents = false;
             // 
@@ -102,8 +102,8 @@
             // splitContainer.Panel2
             // 
             splitContainer.Panel2.Controls.Add(cancelButton);
-            splitContainer.Size = new Size(626, 32);
-            splitContainer.SplitterDistance = 309;
+            splitContainer.Size = new Size(494, 32);
+            splitContainer.SplitterDistance = 244;
             splitContainer.TabIndex = 3;
             // 
             // OptionsForm

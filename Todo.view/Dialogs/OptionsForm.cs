@@ -15,7 +15,7 @@ namespace Todo.view
     public partial class OptionsForm : Form
     {
         public TodoOptions OutputOptions;
-        List<IOption> OptionItems;
+        public List<IOption> OptionItems;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OptionsForm"/> class.
