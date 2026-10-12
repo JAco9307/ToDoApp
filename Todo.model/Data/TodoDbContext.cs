@@ -10,7 +10,7 @@ public class TodoDbContext : DbContext
     public DbSet<TodoItem> TodoItems { get; set; }
     public DbSet<TodoList> TodoLists { get; set; }
     public DbSet<TodoTag> TodoTags { get; set; }
-    
+
     /// <summary>
     /// Initializes a new instance of the <see cref="TodoDbContext"/> class
     /// </summary>
@@ -31,7 +31,13 @@ public class TodoDbContext : DbContext
         //Specifies one-to-many relationship between TodoList and TodoItem
         modelBuilder.Entity<TodoList>().HasMany(todoList => todoList.Items).WithOne().HasForeignKey(todoItem => todoItem.ListId).IsRequired();
 
-        modelBuilder.Entity<TodoItem>().HasMany(todoItem => todoItem.Tags).WithOne().HasForeignKey(todoTag => todoTag.Id).IsRequired();
+        modelBuilder.Entity<TodoItem>().HasMany(todoItem => todoItem.Tags).WithMany();
         modelBuilder.Entity<TodoTag>().Property(tag => tag.Color).HasConversion(color => color.ToArgb(), value => Color.FromArgb(value));
+
+        modelBuilder.Entity<TodoTag>().HasData(
+                new { Id = -1, Title = "Urgent", Color = Color.Red },
+                new { Id = -2, Title = "Important", Color = Color.Yellow },
+                new { Id = -3, Title = "Other", Color = Color.Blue }
+         );
     }
 }

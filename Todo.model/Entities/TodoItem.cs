@@ -25,14 +25,9 @@
             Title = title;
         }
 
-        public void addTag(TodoTag todoTag)
+        public void setTags(List<TodoTag> tags)
         {
-            Tags.Add(todoTag);
-        }
-
-        public void removeTag(TodoTag todoTag)
-        {
-            Tags.Remove(todoTag);
+            Tags = tags;
         }
     }
 }

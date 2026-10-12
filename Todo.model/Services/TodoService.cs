@@ -71,5 +71,10 @@ namespace Todo.model.Services
             _todoLists.Add(listId, list);
             return list;
         }
+
+        public List<TodoTag> GetAllTags()
+        {
+            return _repository.GetAllTags() ?? new List<TodoTag>();
+        }
     }
 }

@@ -33,6 +33,9 @@
             titleLabel = new Label();
             titleTextBox = new TextBox();
             groupBox1 = new GroupBox();
+            flowLayoutPanel1 = new FlowLayoutPanel();
+            label1 = new Label();
+            TodoTagsComboBox = new ComboBox();
             groupBox1.SuspendLayout();
             SuspendLayout();
             // 
@@ -40,9 +43,10 @@
             // 
             saveButton.FlatStyle = FlatStyle.Flat;
             saveButton.ForeColor = SystemColors.ButtonHighlight;
-            saveButton.Location = new Point(28, 95);
+            saveButton.Location = new Point(40, 238);
+            saveButton.Margin = new Padding(4, 5, 4, 5);
             saveButton.Name = "saveButton";
-            saveButton.Size = new Size(75, 23);
+            saveButton.Size = new Size(107, 38);
             saveButton.TabIndex = 0;
             saveButton.Text = "Save";
             saveButton.UseVisualStyleBackColor = true;
@@ -52,9 +56,10 @@
             // 
             cancelButton.FlatStyle = FlatStyle.Flat;
             cancelButton.ForeColor = SystemColors.ButtonHighlight;
-            cancelButton.Location = new Point(250, 95);
+            cancelButton.Location = new Point(356, 238);
+            cancelButton.Margin = new Padding(4, 5, 4, 5);
             cancelButton.Name = "cancelButton";
-            cancelButton.Size = new Size(75, 23);
+            cancelButton.Size = new Size(107, 38);
             cancelButton.TabIndex = 1;
             cancelButton.Text = "Cancel";
             cancelButton.UseVisualStyleBackColor = true;
@@ -63,22 +68,27 @@
             // 
             titleLabel.AutoSize = true;
             titleLabel.ForeColor = SystemColors.ButtonHighlight;
-            titleLabel.Location = new Point(28, 48);
+            titleLabel.Location = new Point(40, 58);
+            titleLabel.Margin = new Padding(4, 0, 4, 0);
             titleLabel.Name = "titleLabel";
-            titleLabel.Size = new Size(59, 15);
+            titleLabel.Size = new Size(90, 25);
             titleLabel.TabIndex = 2;
             titleLabel.Text = "Todo text:";
             // 
             // titleTextBox
             // 
-            titleTextBox.Location = new Point(93, 45);
+            titleTextBox.Location = new Point(133, 53);
+            titleTextBox.Margin = new Padding(4, 5, 4, 5);
             titleTextBox.MaxLength = 40;
             titleTextBox.Name = "titleTextBox";
-            titleTextBox.Size = new Size(232, 23);
+            titleTextBox.Size = new Size(330, 31);
             titleTextBox.TabIndex = 3;
             // 
             // groupBox1
             // 
+            groupBox1.Controls.Add(flowLayoutPanel1);
+            groupBox1.Controls.Add(label1);
+            groupBox1.Controls.Add(TodoTagsComboBox);
             groupBox1.Controls.Add(saveButton);
             groupBox1.Controls.Add(titleLabel);
             groupBox1.Controls.Add(titleTextBox);
@@ -86,22 +96,52 @@
             groupBox1.Dock = DockStyle.Fill;
             groupBox1.FlatStyle = FlatStyle.Popup;
             groupBox1.Location = new Point(0, 0);
+            groupBox1.Margin = new Padding(4, 5, 4, 5);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(364, 141);
+            groupBox1.Padding = new Padding(4, 5, 4, 5);
+            groupBox1.Size = new Size(520, 313);
             groupBox1.TabIndex = 4;
             groupBox1.TabStop = false;
+            // 
+            // flowLayoutPanel1
+            // 
+            flowLayoutPanel1.Location = new Point(40, 133);
+            flowLayoutPanel1.Name = "flowLayoutPanel1";
+            flowLayoutPanel1.Size = new Size(423, 82);
+            flowLayoutPanel1.TabIndex = 6;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.ForeColor = SystemColors.ButtonHighlight;
+            label1.Location = new Point(40, 97);
+            label1.Margin = new Padding(4, 0, 4, 0);
+            label1.Name = "label1";
+            label1.Size = new Size(51, 25);
+            label1.TabIndex = 5;
+            label1.Text = "Tags:";
+            // 
+            // TodoTagsComboBox
+            // 
+            TodoTagsComboBox.FormattingEnabled = true;
+            TodoTagsComboBox.Location = new Point(134, 94);
+            TodoTagsComboBox.Name = "TodoTagsComboBox";
+            TodoTagsComboBox.Size = new Size(182, 33);
+            TodoTagsComboBox.TabIndex = 4;
+            TodoTagsComboBox.SelectionChangeCommitted += TagsComboBoxSelectionChanged;
             // 
             // EditTodoForm
             // 
             AcceptButton = saveButton;
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(64, 64, 64);
             CancelButton = cancelButton;
-            ClientSize = new Size(364, 141);
+            ClientSize = new Size(520, 313);
             ControlBox = false;
             Controls.Add(groupBox1);
             FormBorderStyle = FormBorderStyle.None;
+            Margin = new Padding(4, 5, 4, 5);
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "EditTodoForm";
@@ -120,5 +160,8 @@
         private Label titleLabel;
         private TextBox titleTextBox;
         private GroupBox groupBox1;
+        private Label label1;
+        private ComboBox TodoTagsComboBox;
+        private FlowLayoutPanel flowLayoutPanel1;
     }
 }

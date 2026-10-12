@@ -75,5 +75,10 @@ namespace Todo.model.Repositories
                 .Include(list => list.Items)
                 .FirstOrDefault(list => list.Id == TodoListId);
         }
+
+        public List<TodoTag>? GetAllTags()
+        {
+            return _dbContext.TodoTags.ToList();
+        }
     }
 }

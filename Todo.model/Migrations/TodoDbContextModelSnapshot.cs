@@ -50,6 +50,7 @@ namespace Todo.model.Migrations
             modelBuilder.Entity("Todo.model.Entities.TodoTag", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("Color")
@@ -62,6 +63,41 @@ namespace Todo.model.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("TodoTags");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = -1,
+                            Color = -65536,
+                            Title = "Urgent"
+                        },
+                        new
+                        {
+                            Id = -2,
+                            Color = -256,
+                            Title = "Important"
+                        },
+                        new
+                        {
+                            Id = -3,
+                            Color = -16776961,
+                            Title = "Other"
+                        });
+                });
+
+            modelBuilder.Entity("TodoItemTodoTag", b =>
+                {
+                    b.Property<int>("TagsId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("TodoItemId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("TagsId", "TodoItemId");
+
+                    b.HasIndex("TodoItemId");
+
+                    b.ToTable("TodoItemTodoTag");
                 });
 
             modelBuilder.Entity("Todo.model.Entities.TodoItem", b =>
@@ -73,18 +109,19 @@ namespace Todo.model.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Todo.model.Entities.TodoTag", b =>
+            modelBuilder.Entity("TodoItemTodoTag", b =>
                 {
-                    b.HasOne("Todo.model.Entities.TodoItem", null)
-                        .WithMany("Tags")
-                        .HasForeignKey("Id")
+                    b.HasOne("Todo.model.Entities.TodoTag", null)
+                        .WithMany()
+                        .HasForeignKey("TagsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
 
-            modelBuilder.Entity("Todo.model.Entities.TodoItem", b =>
-                {
-                    b.Navigation("Tags");
+                    b.HasOne("Todo.model.Entities.TodoItem", null)
+                        .WithMany()
+                        .HasForeignKey("TodoItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Todo.model.Entities.TodoList", b =>

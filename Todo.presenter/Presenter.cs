@@ -3,6 +3,8 @@ using Todo.view;
 using Todo.view.Interfaces;
 using Todo.model.Interfaces;
 using Todo.model.Entities;
+using Todo.view.Entities;
+using System.Drawing;
 
 namespace Todo.presenter
 {
@@ -75,16 +77,27 @@ namespace Todo.presenter
         /// <param name="todoItem">The todoViewItem to edit.</param>
         private void EditTodo(TodoItem todoItem)
         {
-            EditTodoForm createTodoForm = new EditTodoForm(todoItem.Title);
+            List<TodoTag> allTags = _service.GetAllTags();
+            ContextData contextData = new ContextData(todoItem.Title, todoItem.Tags.Select(tag => (tag.Title, tag.Color)).ToList(), allTags.Select(tag => (tag.Title, tag.Color)).ToList());
+            EditTodoForm createTodoForm = new EditTodoForm(contextData);
             DialogResult result = createTodoForm.ShowDialog();
             if (result == DialogResult.OK)
             {
-                Console.WriteLine(createTodoForm.Titlestr);
                 todoItem.SetTodoTitle(createTodoForm.Titlestr);
+
+                List<TodoTag> newTags = allTags.Where(tag => HasMatchingTitle(createTodoForm, tag)).ToList();
+                todoItem.setTags(newTags);
+
                 _service.UpdateTodoItem(todoItem);
                 UpdateView();
             }
         }
+
+        private static bool HasMatchingTitle(EditTodoForm createTodoForm, TodoTag tag)
+        {
+            return createTodoForm.CurrentTags.Any(newTag => newTag.Item1 == tag.Title);
+        }
+
 
 
         /// <summary>

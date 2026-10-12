@@ -2,6 +2,7 @@
 using System;
 using System.Windows.Forms;
 using Todo.view;
+using Todo.view.Entities;
 
 namespace Todo.testing.View
 {
@@ -12,7 +13,7 @@ namespace Todo.testing.View
         public void cancelClick_StateUnderTest_ExpectedBehavior()
         {
             // Arrange
-            var editTodoForm = new EditTodoForm("a");
+            var editTodoForm = new EditTodoForm(new ContextData("a",new List<(string, System.Drawing.Color)>(), new List<(string, System.Drawing.Color)>()));
             object sender = new();
             EventArgs e = new();
 
@@ -27,7 +28,7 @@ namespace Todo.testing.View
         [TestMethod]
         public void saveClick_StateUnderTest_ExpectedBehavior()
         {
-            var editTodoForm = new EditTodoForm("a");
+            var editTodoForm = new EditTodoForm(new ContextData("a", new List<(string, System.Drawing.Color)>(), new List<(string, System.Drawing.Color)>()));
             object sender = new();
             EventArgs e = new();
 

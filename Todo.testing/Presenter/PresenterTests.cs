@@ -32,6 +32,11 @@ namespace Todo.testing.presenter
             calledGetList = true;
             return new TodoList();
         }
+
+        public List<TodoTag> GetAllTags()
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class mockView : ITodoView
@@ -63,8 +68,8 @@ namespace Todo.testing.presenter
     [TestClass]
     public class PresenterTests
     {
-        ITodoView _view;
-        ITodoService _service;
+        ITodoView _view = new mockView();
+        ITodoService _service = new mockService();
 
         [TestInitialize]
         public void Init() 

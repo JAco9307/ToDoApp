@@ -28,43 +28,46 @@
         /// </summary>
         private void InitializeComponent()
         {
-            flowItem = new System.Windows.Forms.FlowLayoutPanel();
-            todoLabel = new System.Windows.Forms.Label();
-            deleteTodoButton = new System.Windows.Forms.Button();
+            flowItem = new FlowLayoutPanel();
+            todoLabel = new Label();
+            deleteTodoButton = new Button();
             flowItem.SuspendLayout();
             SuspendLayout();
             // 
             // flowItem
             // 
             flowItem.AutoSize = true;
-            flowItem.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            flowItem.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             flowItem.Controls.Add(todoLabel);
             flowItem.Controls.Add(deleteTodoButton);
-            flowItem.Dock = System.Windows.Forms.DockStyle.Fill;
-            flowItem.Location = new System.Drawing.Point(0, 0);
-            flowItem.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            flowItem.Dock = DockStyle.Fill;
+            flowItem.Location = new Point(0, 0);
+            flowItem.Margin = new Padding(4, 7, 4, 7);
             flowItem.Name = "flowItem";
-            flowItem.Size = new System.Drawing.Size(616, 39);
+            flowItem.Size = new Size(879, 66);
             flowItem.TabIndex = 3;
             flowItem.WrapContents = false;
             // 
             // todoLabel
             // 
-            todoLabel.BackColor = System.Drawing.Color.White;
-            todoLabel.Location = new System.Drawing.Point(3, 0);
+            todoLabel.Anchor = AnchorStyles.None;
+            todoLabel.BackColor = Color.White;
+            todoLabel.Location = new Point(4, 13);
+            todoLabel.Margin = new Padding(4, 0, 4, 0);
             todoLabel.Name = "todoLabel";
-            todoLabel.Size = new System.Drawing.Size(518, 24);
+            todoLabel.Size = new Size(740, 40);
             todoLabel.TabIndex = 3;
             todoLabel.Text = "svend";
             // 
             // deleteTodoButton
             // 
-            deleteTodoButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            deleteTodoButton.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            deleteTodoButton.Location = new System.Drawing.Point(527, 4);
-            deleteTodoButton.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            deleteTodoButton.BackColor = Color.Maroon;
+            deleteTodoButton.FlatStyle = FlatStyle.Popup;
+            deleteTodoButton.ForeColor = SystemColors.ButtonHighlight;
+            deleteTodoButton.Location = new Point(752, 7);
+            deleteTodoButton.Margin = new Padding(4, 7, 4, 7);
             deleteTodoButton.Name = "deleteTodoButton";
-            deleteTodoButton.Size = new System.Drawing.Size(86, 31);
+            deleteTodoButton.Size = new Size(123, 52);
             deleteTodoButton.TabIndex = 2;
             deleteTodoButton.Text = "Delete";
             deleteTodoButton.UseVisualStyleBackColor = false;
@@ -72,13 +75,14 @@
             // 
             // TodoViewItem
             // 
-            AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleMode = AutoScaleMode.Font;
             AutoSize = true;
-            AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            AutoSizeMode = AutoSizeMode.GrowAndShrink;
             Controls.Add(flowItem);
-            Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            Size = new System.Drawing.Size(616, 39);
+            Margin = new Padding(4, 7, 4, 7);
+            Name = "TodoViewItem";
+            Size = new Size(879, 66);
             flowItem.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();

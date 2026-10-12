@@ -1,10 +1,11 @@
 
+using Todo.view.Entities;
 using Todo.view.Interfaces;
 namespace Todo.view
 {
     public partial class TodoView : Form, ITodoView
     {
-        private Thread guiThread;
+        private Thread? guiThread;
         public TodoView()
         {
             InitializeComponent();
@@ -57,13 +58,14 @@ namespace Todo.view
 
         public PopupResult ShowEditTodoDialog(string currentTitle)
         {
-            EditTodoForm CreateTodoForm = new EditTodoForm(currentTitle);
-            DialogResult result = CreateTodoForm.ShowDialog();
+            ContextData todoParameters = new ContextData(currentTitle, new List<(string, Color)>(), new List<(string, Color)>());
+            EditTodoForm createTodoForm = new EditTodoForm(todoParameters);
+            DialogResult result = createTodoForm.ShowDialog();
 
             return new PopupResult
             {
                 dialogResult = result,
-                title = CreateTodoForm.Titlestr
+                title = createTodoForm.Titlestr
             };
         }
 
