@@ -6,6 +6,7 @@ namespace Todo.view
     public partial class TodoView : Form, ITodoView
     {
         private Thread? guiThread;
+        public event EventHandler? Delete = default;
         public TodoView()
         {
             InitializeComponent();
@@ -16,7 +17,7 @@ namespace Todo.view
             guiThread = new Thread(FormThread);
             guiThread.SetApartmentState(ApartmentState.STA);
             guiThread.Start();
-
+            Delete = default;
             List<Control> controls = [
                 createTodoButton, 
                 optionsButton
@@ -49,8 +50,7 @@ namespace Todo.view
 
             return controls;
         }
-
-
+        
         /// <summary>
         /// Adds a <see cref="TodoViewItem"/> to the GUI.
         /// </summary>
@@ -62,6 +62,7 @@ namespace Todo.view
             Invoke(() => flowLayout.Controls.Add(item));
             return item;
         }
+        
         /// <summary>
         /// Shows an dialog window to create or edit a TodoItem
         /// </summary>
@@ -69,13 +70,13 @@ namespace Todo.view
         /// <returns></returns>
         public TodoData ShowEditTodoDialog(ContextData context, TodoData? currentData)
         {
-            EditTodoForm CreateTodoForm = new EditTodoForm(currentTitle);
-            DialogResult result = CreateTodoForm.ShowDialog();
             if (currentData == null)
             {
                 currentData = new TodoData();
             }
-            var CreateTodoForm = new EditTodoForm(context, (TodoData)currentData);
+            
+            var CreateTodoForm = new EditTodoForm(context, (TodoData)currentData, Delete);
+            //CreateTodoForm.Delete += delegate { DeleteTodo(); };
             DialogResult result = CreateTodoForm.ShowDialog();
 
             return new TodoData
@@ -83,6 +84,11 @@ namespace Todo.view
                 title = CreateTodoForm.Titlestr,
                 status = CreateTodoForm.Status  
             };
+        }
+
+        public void DeleteTodo()
+        {
+            Delete.Invoke(this,new EventArgs());
         }
 
         /// <summary>

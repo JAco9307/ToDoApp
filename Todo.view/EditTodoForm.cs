@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
 using Todo.view.Entities;
 
 namespace Todo.view
@@ -11,11 +8,11 @@ namespace Todo.view
         public string Status;
         public event EventHandler? Delete = default;
         
-        public EditTodoForm(ContextData context, TodoData todoData)
+        public EditTodoForm(ContextData context, TodoData todoData, EventHandler? deleteHandler)
         {
             InitializeComponent();
             Titlestr = todoData.title;
-
+            Delete += delegate { deleteHandler(this, new EventArgs()); };
             titleTextBox.Text = Titlestr;
             titleTextBox.Select();
             statusComboBox.Items.AddRange(context.StatusOptions.ToArray());
