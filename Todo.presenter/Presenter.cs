@@ -181,6 +181,7 @@ namespace Todo.presenter
         {
             var ListTitles = _service.GetListNames();
             _currentListId = ListTitles.FindIndex(list => list == Title) + 1;
+            UpdateView();
         }
 
         /// <summary>
