@@ -34,6 +34,7 @@
             headerLayout = new FlowLayoutPanel();
             label1 = new Label();
             createTodoButton = new Button();
+            optionsButton = new Button();
             headerLayout.SuspendLayout();
             SuspendLayout();
             // 
@@ -58,6 +59,7 @@
             headerLayout.BackColor = Color.DimGray;
             headerLayout.Controls.Add(label1);
             headerLayout.Controls.Add(createTodoButton);
+            headerLayout.Controls.Add(optionsButton);
             headerLayout.Dock = DockStyle.Top;
             headerLayout.Location = new Point(0, 0);
             headerLayout.Name = "headerLayout";
@@ -89,6 +91,17 @@
             createTodoButton.Text = "New Todo";
             createTodoButton.UseVisualStyleBackColor = true;
             // 
+            // optionsButton
+            // 
+            optionsButton.FlatStyle = FlatStyle.Popup;
+            optionsButton.ForeColor = SystemColors.ButtonHighlight;
+            optionsButton.Location = new Point(132, 3);
+            optionsButton.Name = "optionsButton";
+            optionsButton.Size = new Size(75, 23);
+            optionsButton.TabIndex = 2;
+            optionsButton.Text = "Options";
+            optionsButton.UseVisualStyleBackColor = true;
+            // 
             // TodoView
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -113,5 +126,6 @@
         private FlowLayoutPanel headerLayout;
         private Label label1;
         private Button createTodoButton;
+        private Button optionsButton;
     }
 }

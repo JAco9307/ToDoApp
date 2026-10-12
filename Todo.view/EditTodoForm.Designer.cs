@@ -32,16 +32,18 @@
             cancelButton = new System.Windows.Forms.Button();
             titleLabel = new System.Windows.Forms.Label();
             titleTextBox = new System.Windows.Forms.TextBox();
-            groupBox1 = new System.Windows.Forms.GroupBox();
+            CenterBox = new System.Windows.Forms.GroupBox();
+            statusLabel = new System.Windows.Forms.Label();
+            statusComboBox = new System.Windows.Forms.ComboBox();
             deleteButton = new System.Windows.Forms.Button();
-            groupBox1.SuspendLayout();
+            CenterBox.SuspendLayout();
             SuspendLayout();
             // 
             // saveButton
             // 
             saveButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             saveButton.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            saveButton.Location = new System.Drawing.Point(28, 95);
+            saveButton.Location = new System.Drawing.Point(28, 102);
             saveButton.Name = "saveButton";
             saveButton.Size = new System.Drawing.Size(75, 23);
             saveButton.TabIndex = 0;
@@ -54,7 +56,7 @@
             cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             cancelButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             cancelButton.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            cancelButton.Location = new System.Drawing.Point(250, 95);
+            cancelButton.Location = new System.Drawing.Point(250, 102);
             cancelButton.Name = "cancelButton";
             cancelButton.Size = new System.Drawing.Size(75, 23);
             cancelButton.TabIndex = 1;
@@ -79,27 +81,47 @@
             titleTextBox.Size = new System.Drawing.Size(232, 23);
             titleTextBox.TabIndex = 3;
             // 
-            // groupBox1
+            // CenterBox
             // 
-            groupBox1.Controls.Add(deleteButton);
-            groupBox1.Controls.Add(saveButton);
-            groupBox1.Controls.Add(titleLabel);
-            groupBox1.Controls.Add(titleTextBox);
-            groupBox1.Controls.Add(cancelButton);
-            groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            groupBox1.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            groupBox1.Location = new System.Drawing.Point(0, 0);
-            groupBox1.Name = "groupBox1";
-            groupBox1.Size = new System.Drawing.Size(364, 141);
-            groupBox1.TabIndex = 4;
-            groupBox1.TabStop = false;
+            CenterBox.Controls.Add(statusLabel);
+            CenterBox.Controls.Add(statusComboBox);
+            CenterBox.Controls.Add(deleteButton);
+            CenterBox.Controls.Add(saveButton);
+            CenterBox.Controls.Add(titleLabel);
+            CenterBox.Controls.Add(titleTextBox);
+            CenterBox.Controls.Add(cancelButton);
+            CenterBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            CenterBox.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            CenterBox.Location = new System.Drawing.Point(0, 0);
+            CenterBox.Name = "CenterBox";
+            CenterBox.Size = new System.Drawing.Size(364, 141);
+            CenterBox.TabIndex = 4;
+            CenterBox.TabStop = false;
+            // 
+            // statusLabel
+            // 
+            statusLabel.AutoSize = true;
+            statusLabel.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            statusLabel.Location = new System.Drawing.Point(28, 77);
+            statusLabel.Name = "statusLabel";
+            statusLabel.Size = new System.Drawing.Size(42, 15);
+            statusLabel.TabIndex = 5;
+            statusLabel.Text = "Status:";
+            // 
+            // statusComboBox
+            // 
+            statusComboBox.FormattingEnabled = true;
+            statusComboBox.Location = new System.Drawing.Point(93, 74);
+            statusComboBox.Name = "statusComboBox";
+            statusComboBox.Size = new System.Drawing.Size(121, 23);
+            statusComboBox.TabIndex = 4;
             // 
             // deleteButton
             // 
             deleteButton.BackColor = System.Drawing.Color.DarkRed;
             deleteButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             deleteButton.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            deleteButton.Location = new System.Drawing.Point(138, 95);
+            deleteButton.Location = new System.Drawing.Point(138, 102);
             deleteButton.Name = "deleteButton";
             deleteButton.Size = new System.Drawing.Size(75, 23);
             deleteButton.TabIndex = 4;
@@ -116,7 +138,7 @@
             CancelButton = cancelButton;
             ClientSize = new System.Drawing.Size(364, 141);
             ControlBox = false;
-            Controls.Add(groupBox1);
+            Controls.Add(CenterBox);
             FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             MaximizeBox = false;
             MinimizeBox = false;
@@ -124,18 +146,20 @@
             StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             Text = "New Todo";
             TopMost = true;
-            groupBox1.ResumeLayout(false);
-            groupBox1.PerformLayout();
+            CenterBox.ResumeLayout(false);
+            CenterBox.PerformLayout();
             ResumeLayout(false);
         }
 
         private System.Windows.Forms.Button deleteButton;
 
         #endregion
-        private Button saveButton;
-        private Button cancelButton;
+        private System.Windows.Forms.Button saveButton;
+        private System.Windows.Forms.Button cancelButton;
         private Label titleLabel;
         private TextBox titleTextBox;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private GroupBox CenterBox;
+        private Label statusLabel;
+        private ComboBox statusComboBox;
     }
 }
