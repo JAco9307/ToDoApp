@@ -3,6 +3,7 @@ using Todo.model.Entities;
 using Todo.model.Interfaces;
 using Todo.presenter;
 using Todo.view;
+using Todo.view.Entities;
 using Todo.view.Interfaces;
 
 namespace Todo.testing.presenter
@@ -32,6 +33,16 @@ namespace Todo.testing.presenter
             calledGetList = true;
             return new TodoList();
         }
+
+        public StatusList GetStatusOptions()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateStatusOptions(StatusList options)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class mockView : ITodoView
@@ -39,12 +50,17 @@ namespace Todo.testing.presenter
         public bool calledStartup = false;
         public bool calledUpdate = false;
 
-        public PopupResult ShowEditTodoDialog(string currentTitle = "")
+        public TodoData ShowEditTodoDialog(ContextData context, TodoData? currentData = null)
         {
-            return new PopupResult {
+            return new TodoData
+            {
                 title = "bazinga",
-                dialogResult = DialogResult.OK
             };
+        }
+
+        public TodoOptions ShowOptionsMenu(TodoOptions currentOptions)
+        {
+            throw new NotImplementedException();
         }
 
         public List<Control> StartUp()
@@ -53,7 +69,8 @@ namespace Todo.testing.presenter
             return new List<Control>();
         }
 
-        public List<TodoViewItem> UpdateActiveViewList(List<string> todoTitles)
+
+        public List<TodoViewItem> UpdateActiveViewList(List<string> todoTitles, List<string> todoStatus)
         {
             calledUpdate = true;
             return new List<TodoViewItem>();
@@ -96,7 +113,7 @@ namespace Todo.testing.presenter
         {
             // Arrange
             var presenter = new Presenter(_view, _service);
-
+            presenter.statusOptions = new();
 
             presenter.UpdateView();
 
@@ -111,6 +128,7 @@ namespace Todo.testing.presenter
         {
             // Arrange
             var presenter = new Presenter(_view, _service);
+            presenter.statusOptions = new();
 
 
             presenter.CreateTodo();
@@ -125,12 +143,28 @@ namespace Todo.testing.presenter
             // Arrange
             var presenter = new Presenter(_view, _service);
             TodoItem todoItem = new("test");
+            presenter.statusOptions = new();
 
             // Act
             presenter.DeleteTodo(todoItem);
 
             // Assert
             Assert.IsTrue(((mockService)_service).calledDelete);
+        }
+
+        [TestMethod]
+        public void CycleStatus_StateUnderTest_()
+        {
+            var presenter = new Presenter(_view, _service);
+            presenter.statusOptions = new();
+            TodoItem todoItem = new("test");
+            TodoViewItem item = new("test","Not Started");
+
+            Assert.AreEqual("Not Started", todoItem.Status);
+            presenter.CycleStatus(todoItem, item);
+            Assert.AreEqual("In Progress", todoItem.Status);
+            presenter.CycleStatus(todoItem, item);
+            Assert.AreEqual("Completed", todoItem.Status);
         }
     }
 }

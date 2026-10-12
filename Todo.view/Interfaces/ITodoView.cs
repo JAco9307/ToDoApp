@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Todo.view.Entities;
 
 namespace Todo.view.Interfaces
 {
@@ -12,7 +13,7 @@ namespace Todo.view.Interfaces
         /// </summary>
         /// <param name="todoTitles">The todo list.</param>
         /// <returns>List of each created todo view item </returns>
-        public List<TodoViewItem> UpdateActiveViewList(List<string> todoTitles);
+        public List<TodoViewItem> UpdateActiveViewList(List<string> todoTitles, List<string> todoStatus);
 
         /// <summary>
         /// Start the form in a thread.
@@ -25,6 +26,8 @@ namespace Todo.view.Interfaces
         /// </summary>
         /// <param name="currentTitle">The current title of the todo.</param>
         /// <returns>The popup input value.</returns>
-        public PopupResult ShowEditTodoDialog(string currentTitle = "");
+        public TodoData ShowEditTodoDialog(ContextData context, TodoData? currentData = null);
+
+        public TodoOptions ShowOptionsMenu(TodoOptions currentOptions);
     }
 }

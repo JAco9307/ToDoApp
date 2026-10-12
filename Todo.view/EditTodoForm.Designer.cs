@@ -41,9 +41,9 @@
             // 
             // saveButton
             // 
-            saveButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            saveButton.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            saveButton.Location = new System.Drawing.Point(28, 102);
+            saveButton.FlatStyle = FlatStyle.Flat;
+            saveButton.ForeColor = SystemColors.ButtonHighlight;
+            saveButton.Location = new Point(28, 118);
             saveButton.Name = "saveButton";
             saveButton.Size = new System.Drawing.Size(75, 23);
             saveButton.TabIndex = 0;
@@ -52,11 +52,11 @@
             saveButton.Click += saveClick;
             // 
             // cancelButton
-            // 
+            //
             cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            cancelButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            cancelButton.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            cancelButton.Location = new System.Drawing.Point(250, 102);
+            cancelButton.FlatStyle = FlatStyle.Flat;
+            cancelButton.ForeColor = SystemColors.ButtonHighlight;
+            cancelButton.Location = new Point(250, 118);
             cancelButton.Name = "cancelButton";
             cancelButton.Size = new System.Drawing.Size(75, 23);
             cancelButton.TabIndex = 1;

@@ -57,6 +57,7 @@
             StatusButton.TabIndex = 3;
             StatusButton.Text = "Status here";
             StatusButton.UseVisualStyleBackColor = true;
+
             // 
             // todoLabel
             // 
