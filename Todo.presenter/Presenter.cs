@@ -68,15 +68,9 @@ namespace Todo.presenter
         /// </summary>
         public void CreateTodo()
         {
-            if (statusOptions == null) throw new NullReferenceException();
-            var result = _view.ShowEditTodoDialog(GetContext());
-            if (result.Title != null)
-            {
-                TodoItem newTodo = new(result.Title);
-                newTodo.SetTodoStatus(result.Status);
-                _service.Add(_currentListId, newTodo);
-                UpdateView();
-            }
+            TodoItem newTodo = HandleEditPopUp(null);
+            _service.Add(_currentListId, newTodo);
+            UpdateView();
         }
         
         /// <summary>
@@ -85,8 +79,17 @@ namespace Todo.presenter
         /// <param name="todoItem">The todoViewItem to edit.</param>
         private void EditTodo(TodoItem todoItem)
         {
-            //Fix to be proper. 
-            //Main
+            TodoItem newTodo = HandleEditPopUp(todoItem);
+            _service.UpdateTodoItem(newTodo);
+            UpdateView();
+        }
+
+        private TodoItem HandleEditPopUp(TodoItem? todoItem)
+        {
+            if (todoItem == null)
+                todoItem = new TodoItem("");
+
+
             if (statusOptions == null) throw new NullReferenceException();
 
             List<TodoTag> allTags = _service.GetAllTags();
@@ -105,10 +108,10 @@ namespace Todo.presenter
 
                 List<TodoTag> newTags = allTags.Where(tag => HasMatchingTitle(result, tag)).ToList();
                 todoItem.setTags(newTags);
-
-                _service.UpdateTodoItem(todoItem);
-                UpdateView();
             }
+
+
+            return todoItem;
         }
 
         private static bool HasMatchingTitle(TodoData todoData, TodoTag tag)
