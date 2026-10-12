@@ -87,6 +87,7 @@
             createTodoButton.Name = "createTodoButton";
             createTodoButton.Size = new Size(75, 23);
             createTodoButton.TabIndex = 1;
+            createTodoButton.TabStop = false;
             createTodoButton.Text = "New Todo";
             createTodoButton.UseVisualStyleBackColor = true;
             // 
@@ -98,6 +99,7 @@
             optionsButton.Name = "optionsButton";
             optionsButton.Size = new Size(75, 23);
             optionsButton.TabIndex = 2;
+            optionsButton.TabStop = false;
             optionsButton.Text = "Options";
             optionsButton.UseVisualStyleBackColor = true;
             // 
@@ -110,6 +112,7 @@
             listComboBox.Name = "listComboBox";
             listComboBox.Size = new Size(185, 23);
             listComboBox.TabIndex = 3;
+            listComboBox.TabStop = false;
             // 
             // TodoView
             // 

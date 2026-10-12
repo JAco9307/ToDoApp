@@ -53,6 +53,8 @@
             statusOptionsTextBox.Name = "statusOptionsTextBox";
             statusOptionsTextBox.Size = new Size(355, 51);
             statusOptionsTextBox.TabIndex = 5;
+            statusOptionsTextBox.TabStop = false;
+
             // 
             // flowLayoutPanel
             // 

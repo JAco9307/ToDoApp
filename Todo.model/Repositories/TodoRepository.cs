@@ -38,20 +38,20 @@ namespace Todo.model.Repositories
             TodoList? todoList = _dbContext.TodoLists.FirstOrDefault(list => list.Id == listId);
             if (todoList == null)
             {
-                todoList = new TodoList();
-                _dbContext.TodoLists.Add(todoList);
-                _dbContext.SaveChanges();
+                todoList = AddList("New List");
+                item.ListId = todoList.Id;
             }
             item.ListId = todoList.Id;
             _dbContext.TodoItems.Add(item);
             _dbContext.SaveChanges();
         }
 
-        public void AddList(string Title)
+        public TodoList AddList(string Title)
         {
             TodoList newlist = new TodoList { Title = Title };
             _dbContext.TodoLists.Add(newlist);
             _dbContext.SaveChanges();
+            return newlist;
         }
         public void DeleteList(TodoList list)
         {
@@ -105,7 +105,9 @@ namespace Todo.model.Repositories
 
         public List<TodoList> GetLists()
         {
-            return _dbContext.TodoLists.ToList();
+            return _dbContext.TodoLists 
+                .Include(list => list.Items)
+                .ToList();
         }
 
         /// <summary>

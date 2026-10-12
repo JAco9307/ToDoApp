@@ -69,6 +69,7 @@
             statusComboBox.Name = "statusComboBox";
             statusComboBox.Size = new Size(121, 23);
             statusComboBox.TabIndex = 6;
+            statusComboBox.TabStop = false;
             // 
             // StatusEdit
             // 

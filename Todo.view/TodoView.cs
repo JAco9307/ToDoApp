@@ -39,7 +39,7 @@ namespace Todo.view
         /// <returns>The list result.</returns>
         public List<TodoViewItem> UpdateActiveViewList(List<string> todoTitles, List<string> todoStatus)
         {
-            flowLayout.Controls.Clear();
+            Invoke(()=> flowLayout.Controls.Clear());
             List<TodoViewItem> controls = new();
             for(int i = 0; i < todoTitles.Count; i++)
             {

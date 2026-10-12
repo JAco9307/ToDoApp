@@ -64,10 +64,11 @@ namespace Todo.model.Services
         /// <returns>The TodoList.</returns>
         public TodoList GetTodoList(int listId)
         {
-            if(_todoLists.FindIndex(List => List.Id == listId) != -1)
-                return _todoLists.Find(list => list.Id == listId);
+            TodoList? list = _todoLists.Find(list => list.Id == listId);
+            if (list != null)
+                return list;
 
-            TodoList? list = _repository.GetList(listId);
+            list = _repository.GetList(listId);
             if(list != null)
             {
                 _todoLists.Add(list);

@@ -59,6 +59,7 @@
             StatusButton.TabIndex = 3;
             StatusButton.Text = "Status here";
             StatusButton.UseVisualStyleBackColor = true;
+            StatusButton.TabStop = false;
             // 
             // todoLabel
             // 
@@ -81,6 +82,7 @@
             deleteTodoButton.Text = "Delete";
             deleteTodoButton.UseVisualStyleBackColor = true;
             deleteTodoButton.Click += deleteTodoButton_Click;
+            deleteTodoButton.TabStop = false;
             // 
             // TodoViewItem
             // 

@@ -69,6 +69,7 @@
             titleTextBox.Name = "titleTextBox";
             titleTextBox.Size = new Size(230, 25);
             titleTextBox.TabIndex = 5;
+            titleTextBox.TabStop = false;
             // 
             // TitleEdit
             // 
