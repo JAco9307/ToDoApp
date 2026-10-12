@@ -5,7 +5,7 @@ using Todo.view.Entities;
 
 namespace Todo.view.Interfaces
 {
-    public interface ITodoPropertyEdit
+    public interface ITodoPropertyEdit // maybe think of better name some time
     {
         /// <summary>
         /// Updates the Todo item data.

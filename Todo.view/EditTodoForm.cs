@@ -11,6 +11,11 @@ namespace Todo.view
     {
         public TodoData todoData;
         private List<ITodoPropertyEdit> EditItems;
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EditTodoForm"/> class.
+        /// </summary>
+        /// <param name="_context">The current context.</param>
+        /// <param name="_todoData">The current todo data.</param>
         public EditTodoForm(ContextData _context, TodoData _todoData)
         {
             InitializeComponent();
@@ -30,6 +35,7 @@ namespace Todo.view
         {
             Close();
         }
+
         public void saveClick(object sender, EventArgs e)
         {
             foreach (ITodoPropertyEdit EditItem in EditItems)
