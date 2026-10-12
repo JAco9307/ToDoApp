@@ -48,7 +48,7 @@
             flowLayoutPanel.Dock = DockStyle.Fill;
             flowLayoutPanel.Location = new Point(0, 0);
             flowLayoutPanel.Name = "flowLayoutPanel";
-            flowLayoutPanel.Size = new Size(501, 70);
+            flowLayoutPanel.Size = new Size(454, 70);
             flowLayoutPanel.TabIndex = 7;
             flowLayoutPanel.WrapContents = false;
             // 
@@ -69,40 +69,42 @@
             // 
             listBox.FormattingEnabled = true;
             listBox.Location = new Point(109, 3);
-            listBox.MultiColumn = true;
             listBox.Name = "listBox";
-            listBox.Size = new Size(208, 64);
+            listBox.ScrollAlwaysVisible = true;
+            listBox.Size = new Size(161, 64);
             listBox.TabIndex = 5;
             // 
             // addButton
             // 
             addButton.AutoSize = true;
             addButton.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            addButton.BackColor = Color.FromArgb(64, 64, 64);
             addButton.Dock = DockStyle.Fill;
             addButton.FlatStyle = FlatStyle.Flat;
             addButton.ForeColor = SystemColors.ButtonHighlight;
-            addButton.Location = new Point(323, 3);
+            addButton.Location = new Point(276, 3);
             addButton.Name = "addButton";
             addButton.Size = new Size(86, 64);
             addButton.TabIndex = 6;
             addButton.Text = "Add New list";
-            addButton.UseVisualStyleBackColor = true;
-            addButton.Click += this.addButton_Click;
+            addButton.UseVisualStyleBackColor = false;
+            addButton.Click += addButton_Click;
             // 
             // removeButton
             // 
             removeButton.AutoSize = true;
             removeButton.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            removeButton.BackColor = Color.FromArgb(192, 0, 0);
             removeButton.Dock = DockStyle.Fill;
             removeButton.FlatStyle = FlatStyle.Flat;
             removeButton.ForeColor = SystemColors.ButtonHighlight;
-            removeButton.Location = new Point(415, 3);
+            removeButton.Location = new Point(368, 3);
             removeButton.Name = "removeButton";
             removeButton.Size = new Size(83, 64);
             removeButton.TabIndex = 7;
             removeButton.Text = "Remove List";
-            removeButton.UseVisualStyleBackColor = true;
-            removeButton.Click += this.removeButton_Click;
+            removeButton.UseVisualStyleBackColor = false;
+            removeButton.Click += removeButton_Click;
             // 
             // ListNameOptions
             // 
@@ -112,7 +114,7 @@
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
             Controls.Add(flowLayoutPanel);
             Name = "ListNameOptions";
-            Size = new Size(501, 70);
+            Size = new Size(454, 70);
             flowLayoutPanel.ResumeLayout(false);
             flowLayoutPanel.PerformLayout();
             ResumeLayout(false);

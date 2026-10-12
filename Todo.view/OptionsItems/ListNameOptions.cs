@@ -40,10 +40,19 @@ namespace Todo.view.OptionsItems
 
         private void addButton_Click(object sender, EventArgs e)
         {
-            var result = new TextInputDialog("List name:");
-            if (result.ShowDialog() == DialogResult.OK)
+            var inputDialog = new TextInputDialog("List name:");
+            var result = inputDialog.ShowDialog();
+            if (listBox.Items.Cast<string>().ToList().Contains(inputDialog.text))
             {
-                listBox.Items.Add(result.text);
+                MessageBox.Show(
+                "A list with this name already exists",
+                "Cannot complete action",
+                MessageBoxButtons.OK);
+                return;
+            }
+            if (result == DialogResult.OK)
+            {
+                listBox.Items.Add(inputDialog.text);
             }
         }
     }
