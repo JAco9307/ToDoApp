@@ -5,17 +5,20 @@
         public int Id { get; private set; }
         public int ListId { get; set; }
         public string Title { get; private set; }
+        public string Description { get; private set; }
         public string Status { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TodoItem"/> class.
         /// </summary>
         /// <param name="title">The title.</param>
+        /// <param name="description">The description</param>
         /// <param name="Status">The status.</param>
-        public TodoItem(string title, string status = "Not Started")
+        public TodoItem(string title, string description= "", string status = "Not Started")
         {
             Title = title;
             Status = status;
+            Description = description;
         }
 
         /// <summary>
@@ -30,6 +33,11 @@
         public void SetTodoStatus(string status)
         {
             Status = status;
+        }
+
+        public void setDescription(string description)
+        {
+            Description = description;
         }
     }
 }

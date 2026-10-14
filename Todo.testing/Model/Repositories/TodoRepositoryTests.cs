@@ -35,7 +35,7 @@ public class TodoRepositoryTests
         TodoItem todoItem = new TodoItem("this is a todo item");
         repository.AddTodoItem(todoItem);
 
-        TodoItem? savedTodoItem = dbContext.TodoItems.SingleOrDefault(x => x.Title == "this is a todo item");
+        TodoItem? savedTodoItem = dbContext.TodoItems.SingleOrDefault(todoItem => todoItem.Title == "this is a todo item");
         Assert.AreEqual(todoItem, savedTodoItem);
     }
     
@@ -52,7 +52,7 @@ public class TodoRepositoryTests
         TodoItem todoItem = new TodoItem("this is a todo item");
         repository.AddTodoItem(todoItem);
         repository.DeleteTodoItem(todoItem);
-        TodoItem? savedTodoItem = dbContext.TodoItems.SingleOrDefault(x => x.Title == "this is a todo item");
+        TodoItem? savedTodoItem = dbContext.TodoItems.SingleOrDefault(todoItem => todoItem.Title == "this is a todo item");
         Assert.IsNull(savedTodoItem);
     }
     
@@ -88,5 +88,24 @@ public class TodoRepositoryTests
         todoItem.SetTodoTitle("Changed");
         repository.UpdateDb();
         Assert.AreEqual("Changed", dbContext.TodoItems.Find(todoItem.Id).Title);
+    }
+    
+    [TestMethod]
+    public void AddTodoItemWithDescriptionTest()
+    {
+        SqliteConnection connection = PrepareConnection();
+        TodoDbContext dbContext = prepareContext(connection);
+
+        connection.Open();
+        dbContext.Database.EnsureCreated();
+        ITodoRepository repository = new TodoRepository(dbContext);
+
+        string TitleString = new("this is a todo item");
+        string DescString = new("This is a description");
+        TodoItem todoItem = new TodoItem(TitleString,DescString);
+        repository.AddTodoItem(todoItem);
+        
+        TodoItem savedTodoItem = dbContext.TodoItems.Find(1)!;
+        Assert.AreEqual(savedTodoItem.Description, DescString);
     }
 }

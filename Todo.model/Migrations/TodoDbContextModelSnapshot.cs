@@ -28,7 +28,7 @@ namespace Todo.model.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TodoStatusOptions", (string)null);
+                    b.ToTable("TodoStatusOptions");
                 });
 
             modelBuilder.Entity("Todo.model.Entities.TodoItem", b =>
@@ -36,6 +36,10 @@ namespace Todo.model.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("ListId")
                         .HasColumnType("INTEGER");
@@ -52,7 +56,7 @@ namespace Todo.model.Migrations
 
                     b.HasIndex("ListId");
 
-                    b.ToTable("TodoItems", (string)null);
+                    b.ToTable("TodoItems");
                 });
 
             modelBuilder.Entity("Todo.model.Entities.TodoList", b =>
@@ -63,7 +67,7 @@ namespace Todo.model.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TodoLists", (string)null);
+                    b.ToTable("TodoLists");
                 });
 
             modelBuilder.Entity("Todo.model.Entities.TodoItem", b =>
