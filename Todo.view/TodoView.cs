@@ -75,6 +75,7 @@ namespace Todo.view
             return new TodoData
             {
                 title = CreateTodoForm.Titlestr,
+                description = CreateTodoForm.Description,
                 status = CreateTodoForm.Status  
             };
         }
