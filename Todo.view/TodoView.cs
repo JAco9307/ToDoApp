@@ -72,12 +72,7 @@ namespace Todo.view
             EditTodoForm CreateTodoForm = new EditTodoForm(context, (TodoData)currentData);
             DialogResult result = CreateTodoForm.ShowDialog();
 
-            return new TodoData
-            {
-                title = CreateTodoForm.Titlestr,
-                description = CreateTodoForm.Description,
-                status = CreateTodoForm.Status  
-            };
+            return CreateTodoForm.todoData;
         }
 
         /// <summary>
