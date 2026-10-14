@@ -44,6 +44,6 @@ namespace Todo.view
         }
         
         public Button CycleStatus => StatusButton;
-
+        
     }
 }

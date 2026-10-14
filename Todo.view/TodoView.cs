@@ -1,5 +1,6 @@
 using Todo.view.Entities;
 using Todo.view.Interfaces;
+using System.Collections.Generic;
 
 namespace Todo.view
 {
@@ -46,7 +47,8 @@ namespace Todo.view
                 newTodo.id = i;
                 controls.Add(newTodo); 
             }
-
+            controls = controls.OrderBy(todoviewitem => todoviewitem.TodoLabel.Text).ToList();
+            Invoke(() => flowLayout.Controls.AddRange(controls.ToArray()));
             return controls;
         }
 
@@ -59,7 +61,7 @@ namespace Todo.view
         private TodoViewItem addTodo(string TodoTitle, string Status)
         {
             TodoViewItem item = new TodoViewItem(TodoTitle, Status);
-            Invoke(() => flowLayout.Controls.Add(item));
+            //Invoke(() => flowLayout.Controls.Add(item));
             return item;
         }
 
