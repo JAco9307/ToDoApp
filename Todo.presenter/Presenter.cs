@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System.Drawing;
+using System.Windows.Forms;
 using Todo.model.Entities;
 using Todo.model.Interfaces;
 using Todo.view;
@@ -147,9 +148,29 @@ namespace Todo.presenter
         public void UpdateOptions()
         {
             if (statusOptions == null) return;
-            TodoOptions newOptions = _view.ShowOptionsMenu(new TodoOptions {Status = statusOptions.options});
+            List<TodoTag> allTags = _service.GetAllTags();
+            List<TodoTag> addedTags = new List<TodoTag>();
+            List<TodoTag> removedTags = new List<TodoTag>();
+            TodoOptions newOptions = _view.ShowOptionsMenu(new TodoOptions {Status = statusOptions.options, Tags = allTags.Select(tag => (tag.Title, tag.Color)).ToList()});
             statusOptions.options = newOptions.Status;
             _service.UpdateStatusOptions(statusOptions);
+
+            foreach (TodoTag tag in allTags)
+            {
+                if(newOptions.Tags.Any(optionsTag => optionsTag.Item1 == tag.Title))
+                {
+                    newOptions.Tags.Remove(newOptions.Tags.FirstOrDefault(optionsTag => optionsTag.Item1 == tag.Title));
+                    continue;
+                }
+                removedTags.Add(tag);
+            }
+            foreach((string title, Color color) tag in newOptions.Tags)
+            {
+                addedTags.Add(new TodoTag(tag.title, tag.color));
+            }
+
+            _service.AddTagOptions(addedTags);
+            _service.RemoveTagOptions(removedTags);
         }
 
         /// <summary>

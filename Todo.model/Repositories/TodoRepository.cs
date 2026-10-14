@@ -96,5 +96,17 @@ namespace Todo.model.Repositories
         {
             return _dbContext.TodoTags.ToList();
         }
+
+        public void AddTagOptions(List<TodoTag> newTags)
+        {
+            _dbContext.TodoTags.AddRange(newTags);
+            _dbContext.SaveChanges();
+        }
+
+        public void RemoveTagOptions(List<TodoTag> tags)
+        {
+            _dbContext.TodoTags.RemoveRange(tags);
+            _dbContext.SaveChanges();
+        }
     }
 }

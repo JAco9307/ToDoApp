@@ -36,21 +36,23 @@
             // 
             ViewTagText.Anchor = AnchorStyles.None;
             ViewTagText.AutoSize = true;
-            ViewTagText.Location = new Point(5, 4);
+            ViewTagText.Location = new Point(3, 4);
             ViewTagText.Name = "ViewTagText";
             ViewTagText.Size = new Size(59, 25);
             ViewTagText.TabIndex = 0;
             ViewTagText.Text = "label1";
+            ViewTagText.Click += ViewTagText_Click;
             // 
             // ExitLabel
             // 
             ExitLabel.Anchor = AnchorStyles.Right;
             ExitLabel.AutoSize = true;
-            ExitLabel.Location = new Point(124, 5);
+            ExitLabel.Location = new Point(78, 4);
             ExitLabel.Name = "ExitLabel";
             ExitLabel.Size = new Size(23, 25);
             ExitLabel.TabIndex = 1;
             ExitLabel.Text = "X";
+            ExitLabel.Click += ExitLabel_Click;
             // 
             // TodoViewTag
             // 
@@ -59,7 +61,8 @@
             Controls.Add(ExitLabel);
             Controls.Add(ViewTagText);
             Name = "TodoViewTag";
-            Size = new Size(151, 34);
+            Size = new Size(104, 34);
+            MouseClick += TodoViewTag_MouseClick;
             ResumeLayout(false);
             PerformLayout();
         }

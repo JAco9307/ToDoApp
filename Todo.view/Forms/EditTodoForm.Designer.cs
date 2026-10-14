@@ -33,13 +33,14 @@
             titleLabel = new Label();
             titleTextBox = new TextBox();
             CenterBox = new GroupBox();
-            groupBox1 = new GroupBox();
             statusLabel = new Label();
             statusComboBox = new ComboBox();
+            groupBox1 = new GroupBox();
+            flowLayoutPanel1 = new FlowLayoutPanel();
             label1 = new Label();
             TodoTagsComboBox = new ComboBox();
-            flowLayoutPanel1 = new FlowLayoutPanel();
             CenterBox.SuspendLayout();
+            groupBox1.SuspendLayout();
             SuspendLayout();
             // 
             // saveButton
@@ -69,7 +70,7 @@
             // 
             titleLabel.AutoSize = true;
             titleLabel.ForeColor = SystemColors.ButtonHighlight;
-            titleLabel.Location = new Point(40, 58);
+            titleLabel.Location = new Point(41, 60);
             titleLabel.Margin = new Padding(4, 0, 4, 0);
             titleLabel.Name = "titleLabel";
             titleLabel.Size = new Size(90, 25);
@@ -89,10 +90,6 @@
             // 
             CenterBox.Controls.Add(statusLabel);
             CenterBox.Controls.Add(statusComboBox);
-            CenterBox.Controls.Add(saveButton);
-            CenterBox.Controls.Add(titleLabel);
-            CenterBox.Controls.Add(titleTextBox);
-            CenterBox.Controls.Add(cancelButton);
             CenterBox.Dock = DockStyle.Fill;
             CenterBox.FlatStyle = FlatStyle.Popup;
             CenterBox.Location = new Point(0, 0);
@@ -107,7 +104,7 @@
             statusLabel.ForeColor = SystemColors.ButtonHighlight;
             statusLabel.Location = new Point(28, 77);
             statusLabel.Name = "statusLabel";
-            statusLabel.Size = new Size(42, 15);
+            statusLabel.Size = new Size(64, 25);
             statusLabel.TabIndex = 5;
             statusLabel.Text = "Status:";
             // 
@@ -116,7 +113,7 @@
             statusComboBox.FormattingEnabled = true;
             statusComboBox.Location = new Point(93, 74);
             statusComboBox.Name = "statusComboBox";
-            statusComboBox.Size = new Size(121, 23);
+            statusComboBox.Size = new Size(121, 33);
             statusComboBox.TabIndex = 4;
             // 
             // groupBox1
@@ -149,7 +146,7 @@
             // 
             label1.AutoSize = true;
             label1.ForeColor = SystemColors.ButtonHighlight;
-            label1.Location = new Point(40, 97);
+            label1.Location = new Point(41, 99);
             label1.Margin = new Padding(4, 0, 4, 0);
             label1.Name = "label1";
             label1.Size = new Size(51, 25);
@@ -170,6 +167,7 @@
             AcceptButton = saveButton;
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
+            AutoValidate = AutoValidate.EnablePreventFocusChange;
             BackColor = Color.FromArgb(64, 64, 64);
             CancelButton = cancelButton;
             ClientSize = new Size(364, 165);
@@ -183,9 +181,10 @@
             SizeGripStyle = SizeGripStyle.Hide;
             StartPosition = FormStartPosition.CenterParent;
             Text = "New Todo";
-            TopMost = true;
             CenterBox.ResumeLayout(false);
             CenterBox.PerformLayout();
+            groupBox1.ResumeLayout(false);
+            groupBox1.PerformLayout();
             ResumeLayout(false);
         }
 

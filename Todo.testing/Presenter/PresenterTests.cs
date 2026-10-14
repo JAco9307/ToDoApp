@@ -49,6 +49,21 @@ namespace Todo.testing.presenter
         {
             throw new NotImplementedException();
         }
+
+        public void UpdateTagOptions(List<TodoTag> tags)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddTagOptions(List<TodoTag> newTags)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveTagOptions(List<TodoTag> newTags)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class mockView : ITodoView

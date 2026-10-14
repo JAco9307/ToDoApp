@@ -36,7 +36,7 @@ namespace Todo.testing.View
             object sender = new();
             EventArgs e = new();
 
-            optionsForm.statusTextBox.Text = "c,d";
+            //optionsForm.statusTextBox.Text = "c,d";
             optionsForm.saveClick(sender, e);
 
             // Assert

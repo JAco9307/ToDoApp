@@ -88,5 +88,15 @@ namespace Todo.model.Services
         {
             return _repository.GetAllTags() ?? new List<TodoTag>();
         }
+
+        public void AddTagOptions(List<TodoTag> newTags)
+        {
+            _repository.AddTagOptions(newTags);
+        }
+
+        public void RemoveTagOptions(List<TodoTag> newTags)
+        {
+            _repository.RemoveTagOptions(newTags);
+        }
     }
 }
