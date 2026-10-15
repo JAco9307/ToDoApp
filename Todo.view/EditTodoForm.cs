@@ -41,5 +41,15 @@ namespace Todo.view
             }
             Close();
         }
+
+        private void DeleteButton_Click(object sender, EventArgs e)
+        {
+            DialogResult confirmResult = MessageBox.Show("Are you sure to delete this item?", "Confirm Delete", MessageBoxButtons.YesNo);
+            if (confirmResult == DialogResult.Yes)
+            {
+                todoData.ToBeDeleted = true;
+                Close();
+            }
+        }
     }
 }
