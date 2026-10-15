@@ -75,7 +75,6 @@ namespace Todo.view
             }
             
             var CreateTodoForm = new EditTodoForm(context, (TodoData)currentData);
-            //CreateTodoForm.Delete += delegate { DeleteTodo(); };
             DialogResult result = CreateTodoForm.ShowDialog();
 
             return CreateTodoForm.todoData;
