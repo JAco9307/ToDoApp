@@ -51,8 +51,7 @@ namespace Todo.view
             Invoke(() => flowLayout.Controls.AddRange(controls.ToArray()));
             return controls;
         }
-
-
+        
         /// <summary>
         /// Adds a <see cref="TodoViewItem"/> to the GUI.
         /// </summary>
@@ -64,17 +63,24 @@ namespace Todo.view
             //Invoke(() => flowLayout.Controls.Add(item));
             return item;
         }
-
+        
+        /// <summary>
+        /// Shows an dialog window to create or edit a TodoItem
+        /// </summary>
+        /// <param name="currentTitle">Title to be filled out if editing and existing item</param>
+        /// <returns></returns>
         public TodoData ShowEditTodoDialog(ContextData context, TodoData? currentData)
         {
             if (currentData == null)
             {
                 currentData = new TodoData();
             }
+            
             var CreateTodoForm = new EditTodoForm(context, (TodoData)currentData);
             DialogResult result = CreateTodoForm.ShowDialog();
 
             return CreateTodoForm.todoData;
+
         }
 
         /// <summary>

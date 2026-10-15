@@ -1,4 +1,4 @@
-﻿using System.ComponentModel;
+using System.ComponentModel;
 
 namespace Todo.view
 {
@@ -6,7 +6,6 @@ namespace Todo.view
     {
         public int id;
         public Label TodoLabel => todoLabel;
-        public event EventHandler? Delete = default;
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public string Status
         {
@@ -30,19 +29,8 @@ namespace Todo.view
             _status = Status;
             CycleStatus.Text = Status;
             todoLabel.Text = TodoTitle;
-
         }
-        
-        private void deleteTodoButton_Click(object sender, EventArgs e)
-        {
-            DialogResult confirmResult = MessageBox.Show("Are you sure to delete this item?", "Confirm Delete", MessageBoxButtons.YesNo);
-
-            if (Delete != null && confirmResult == DialogResult.Yes)
-            {
-                Delete(this, new EventArgs());
-            }
-        }
-        
+                
         public Button CycleStatus => StatusButton;
 
         public static int CompareByTitle(TodoViewItem item1, TodoViewItem item2)

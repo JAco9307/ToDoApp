@@ -1,6 +1,3 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
 using Todo.view.Entities;
 using Todo.view.Interfaces;
 using Todo.view.EditItems;
@@ -43,6 +40,16 @@ namespace Todo.view
                 todoData = EditItem.UpdateData(todoData);
             }
             Close();
+        }
+
+        private void DeleteButton_Click(object sender, EventArgs e)
+        {
+            DialogResult confirmResult = MessageBox.Show("Are you sure to delete this item?", "Confirm Delete", MessageBoxButtons.YesNo);
+            if (confirmResult == DialogResult.Yes)
+            {
+                todoData.ToBeDeleted = true;
+                Close();
+            }
         }
     }
 }
