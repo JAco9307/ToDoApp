@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             SaveButton = new Button();
-            CancelButton = new Button();
+            CancelFormButton = new Button();
             label1 = new Label();
             label2 = new Label();
             textBox1 = new TextBox();
@@ -47,15 +47,15 @@
             SaveButton.UseVisualStyleBackColor = true;
             SaveButton.Click += SaveButton_Click;
             // 
-            // CancelButton
+            // CancelFormButton
             // 
-            CancelButton.Location = new Point(561, 471);
-            CancelButton.Name = "CancelButton";
-            CancelButton.Size = new Size(112, 34);
-            CancelButton.TabIndex = 1;
-            CancelButton.Text = "Cancel";
-            CancelButton.UseVisualStyleBackColor = true;
-            CancelButton.Click += CancelButton_Click;
+            CancelFormButton.Location = new Point(561, 471);
+            CancelFormButton.Name = "CancelFormButton";
+            CancelFormButton.Size = new Size(112, 34);
+            CancelFormButton.TabIndex = 1;
+            CancelFormButton.Text = "Cancel";
+            CancelFormButton.UseVisualStyleBackColor = true;
+            CancelFormButton.Click += CancelButton_Click;
             // 
             // label1
             // 
@@ -112,7 +112,7 @@
             Controls.Add(textBox1);
             Controls.Add(label2);
             Controls.Add(label1);
-            Controls.Add(CancelButton);
+            Controls.Add(CancelFormButton);
             Controls.Add(SaveButton);
             FormBorderStyle = FormBorderStyle.FixedDialog;
             MaximizeBox = false;
@@ -130,7 +130,7 @@
         #endregion
 
         private Button SaveButton;
-        private Button CancelButton;
+        private Button CancelFormButton;
         private Label label1;
         private Label label2;
         private TextBox textBox1;

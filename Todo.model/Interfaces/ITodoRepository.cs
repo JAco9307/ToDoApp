@@ -12,6 +12,5 @@ namespace Todo.model.Interfaces
         public void RemoveTagOptions(List<TodoTag> newTags);
         public StatusList? GetStatusOptions();
         public void UpdateDb();
-
     }
 }

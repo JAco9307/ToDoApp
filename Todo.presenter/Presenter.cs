@@ -31,7 +31,6 @@ namespace Todo.presenter
             EventHandlerSetup(controls);
             statusOptions = _service.GetStatusOptions();
             UpdateView();
-
         }
 
 
@@ -57,8 +56,7 @@ namespace Todo.presenter
             List<TodoViewItem> todoViewItems = _view.UpdateActiveViewList(TodoTitles, TodoStatus);
 
             foreach(TodoViewItem item in todoViewItems) {
-                item.Delete += delegate { DeleteTodo(TodoList[item.id]);  };
-                item.TodoLabel.Click += delegate { EditTodo(TodoList[item.id]); };
+                item.TodoLabel.Click += delegate { EditTodo(TodoList[item.id], item.id); };
                 item.CycleStatus.Click += delegate { CycleStatus(TodoList[item.id], item); };
             }
         }
@@ -69,7 +67,9 @@ namespace Todo.presenter
         /// </summary>
         public void CreateTodo()
         {
-            TodoItem newTodo = HandleEditPopUp(null);
+            TodoItem? newTodo = HandleEditPopUp(null);
+            if (newTodo == null)
+                return;
             _service.Add(_currentListId, newTodo);
             UpdateView();
         }
@@ -78,14 +78,16 @@ namespace Todo.presenter
         /// Opens the dialog for editing a todo
         /// </summary>
         /// <param name="todoItem">The todoViewItem to edit.</param>
-        private void EditTodo(TodoItem todoItem)
+        private void EditTodo(TodoItem todoItem, int ViewItemId)
         {
-            TodoItem newTodo = HandleEditPopUp(todoItem);
+            TodoItem? newTodo = HandleEditPopUp(todoItem);
+            if (newTodo == null)
+                return;
             _service.UpdateTodoItem(newTodo);
             UpdateView();
         }
 
-        private TodoItem HandleEditPopUp(TodoItem? todoItem)
+        private TodoItem? HandleEditPopUp(TodoItem? todoItem)
         {
             if (todoItem == null)
                 todoItem = new TodoItem("");
@@ -101,15 +103,22 @@ namespace Todo.presenter
             context.AllTags = allTags.Select(tag => (tag.Title, tag.Color)).ToList();
 
             TodoData result = _view.ShowEditTodoDialog(context, todoData);
+            if (result.ToBeDeleted)
+            {
+                DeleteTodo(todoItem);
+                UpdateView();
+                return null;
+            }
 
-            if (result.title != null)
+    if (result.title != null)
             {
                 todoItem.SetTodoTitle(result.title);
                 todoItem.SetTodoStatus(result.status);
 
                 List<TodoTag> newTags = allTags.Where(tag => HasMatchingTitle(result, tag)).ToList();
                 todoItem.setTags(newTags);
-            }
+                todoItem.SetDescription(result.description);
+    }
 
             return todoItem;
         }
@@ -202,8 +211,9 @@ namespace Todo.presenter
             return new TodoData
             {
                 title = todoItem.Title,
-                status = todoItem.Status,
                 CurrentTags = todoItem.Tags.Select(tag => (tag.Title, tag.Color)).ToList(),
+                description = todoItem.Description,
+                status = todoItem.Status
             };
         }
 

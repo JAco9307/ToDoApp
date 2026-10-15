@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Todo.view.Entities
+﻿namespace Todo.view.Entities
 {
  
     /// <summary>
@@ -11,7 +7,11 @@ namespace Todo.view.Entities
     public struct TodoData
     {
         public string? title;
+        public string? description;
         public string status;
+
+        public bool ToBeDeleted;
+
         public List<(string, Color)> CurrentTags;
     }
 }
