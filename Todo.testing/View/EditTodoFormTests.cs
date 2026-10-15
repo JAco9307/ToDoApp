@@ -35,7 +35,7 @@ namespace Todo.testing.View
             editTodoForm.cancelClick(sender, e);
 
             // Assert
-            Assert.AreEqual(null, editTodoForm.Titlestr);
+            Assert.AreEqual(null, editTodoForm.todoData.title);
         }
 
         [TestMethod]
@@ -49,7 +49,7 @@ namespace Todo.testing.View
             editTodoForm.saveClick(sender, e);
 
             // Assert
-            Assert.AreEqual("Title", editTodoForm.Titlestr);
+            Assert.AreEqual("Title", editTodoForm.todoData.title);
         }
     }
 }

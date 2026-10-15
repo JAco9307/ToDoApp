@@ -30,26 +30,25 @@
         {
             saveButton = new Button();
             cancelButton = new Button();
-            titleLabel = new Label();
-            titleTextBox = new TextBox();
             CenterBox = new GroupBox();
-            statusLabel = new Label();
-            statusComboBox = new ComboBox();
-            groupBox1 = new GroupBox();
-            flowLayoutPanel1 = new FlowLayoutPanel();
-            label1 = new Label();
-            TodoTagsComboBox = new ComboBox();
+            splitContainer = new SplitContainer();
+            flowLayoutPanel = new FlowLayoutPanel();
             CenterBox.SuspendLayout();
-            groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)splitContainer).BeginInit();
+            splitContainer.Panel1.SuspendLayout();
+            splitContainer.Panel2.SuspendLayout();
+            splitContainer.SuspendLayout();
             SuspendLayout();
             // 
             // saveButton
             // 
+            saveButton.AutoSize = true;
+            saveButton.Dock = DockStyle.Fill;
             saveButton.FlatStyle = FlatStyle.Flat;
             saveButton.ForeColor = SystemColors.ButtonHighlight;
-            saveButton.Location = new Point(28, 118);
+            saveButton.Location = new Point(0, 0);
             saveButton.Name = "saveButton";
-            saveButton.Size = new Size(107, 38);
+            saveButton.Size = new Size(177, 30);
             saveButton.TabIndex = 0;
             saveButton.Text = "Save";
             saveButton.UseVisualStyleBackColor = true;
@@ -57,64 +56,53 @@
             // 
             // cancelButton
             // 
+            cancelButton.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            cancelButton.Dock = DockStyle.Fill;
             cancelButton.FlatStyle = FlatStyle.Flat;
             cancelButton.ForeColor = SystemColors.ButtonHighlight;
-            cancelButton.Location = new Point(250, 118);
+            cancelButton.Location = new Point(0, 0);
             cancelButton.Name = "cancelButton";
-            cancelButton.Size = new Size(107, 38);
+            cancelButton.Size = new Size(173, 30);
             cancelButton.TabIndex = 1;
             cancelButton.Text = "Cancel";
             cancelButton.UseVisualStyleBackColor = true;
             // 
-            // titleLabel
-            // 
-            titleLabel.AutoSize = true;
-            titleLabel.ForeColor = SystemColors.ButtonHighlight;
-            titleLabel.Location = new Point(41, 60);
-            titleLabel.Margin = new Padding(4, 0, 4, 0);
-            titleLabel.Name = "titleLabel";
-            titleLabel.Size = new Size(90, 25);
-            titleLabel.TabIndex = 2;
-            titleLabel.Text = "Todo text:";
-            // 
-            // titleTextBox
-            // 
-            titleTextBox.Location = new Point(133, 53);
-            titleTextBox.Margin = new Padding(4, 5, 4, 5);
-            titleTextBox.MaxLength = 40;
-            titleTextBox.Name = "titleTextBox";
-            titleTextBox.Size = new Size(330, 31);
-            titleTextBox.TabIndex = 3;
-            // 
             // CenterBox
             // 
-            CenterBox.Controls.Add(statusLabel);
-            CenterBox.Controls.Add(statusComboBox);
+            CenterBox.Controls.Add(flowLayoutPanel);
+            CenterBox.Controls.Add(splitContainer);
             CenterBox.Dock = DockStyle.Fill;
             CenterBox.FlatStyle = FlatStyle.Popup;
             CenterBox.Location = new Point(0, 0);
             CenterBox.Name = "CenterBox";
-            CenterBox.Size = new Size(364, 165);
+            CenterBox.Size = new Size(360, 165);
             CenterBox.TabIndex = 4;
             CenterBox.TabStop = false;
             // 
-            // statusLabel
+            // splitContainer
             // 
-            statusLabel.AutoSize = true;
-            statusLabel.ForeColor = SystemColors.ButtonHighlight;
-            statusLabel.Location = new Point(28, 77);
-            statusLabel.Name = "statusLabel";
-            statusLabel.Size = new Size(64, 25);
-            statusLabel.TabIndex = 5;
-            statusLabel.Text = "Status:";
+            splitContainer.Dock = DockStyle.Bottom;
+            splitContainer.Location = new Point(3, 132);
+            splitContainer.Name = "splitContainer";
             // 
-            // statusComboBox
+            // splitContainer.Panel1
             // 
-            statusComboBox.FormattingEnabled = true;
-            statusComboBox.Location = new Point(93, 74);
-            statusComboBox.Name = "statusComboBox";
-            statusComboBox.Size = new Size(121, 33);
-            statusComboBox.TabIndex = 4;
+            splitContainer.Panel1.Controls.Add(saveButton);
+            // 
+            // splitContainer.Panel2
+            // 
+            splitContainer.Panel2.Controls.Add(cancelButton);
+            splitContainer.Size = new Size(354, 30);
+            splitContainer.SplitterDistance = 177;
+            splitContainer.TabIndex = 2;
+            // 
+            // flowLayoutPanel
+            // 
+            flowLayoutPanel.Dock = DockStyle.Fill;
+            flowLayoutPanel.Location = new Point(3, 19);
+            flowLayoutPanel.Name = "flowLayoutPanel";
+            flowLayoutPanel.Size = new Size(354, 113);
+            flowLayoutPanel.TabIndex = 3;
             // 
             // groupBox1
             // 
@@ -170,7 +158,7 @@
             AutoValidate = AutoValidate.EnablePreventFocusChange;
             BackColor = Color.FromArgb(64, 64, 64);
             CancelButton = cancelButton;
-            ClientSize = new Size(364, 165);
+            ClientSize = new Size(360, 165);
             ControlBox = false;
             Controls.Add(CenterBox);
             FormBorderStyle = FormBorderStyle.None;
@@ -182,23 +170,19 @@
             StartPosition = FormStartPosition.CenterParent;
             Text = "New Todo";
             CenterBox.ResumeLayout(false);
-            CenterBox.PerformLayout();
-            groupBox1.ResumeLayout(false);
-            groupBox1.PerformLayout();
+            splitContainer.Panel1.ResumeLayout(false);
+            splitContainer.Panel1.PerformLayout();
+            splitContainer.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)splitContainer).EndInit();
+            splitContainer.ResumeLayout(false);
             ResumeLayout(false);
         }
 
         #endregion
         private Button saveButton;
         private Button cancelButton;
-        private Label titleLabel;
-        private TextBox titleTextBox;
         private GroupBox CenterBox;
-        private GroupBox groupBox1;
-        private Label statusLabel;
-        private ComboBox statusComboBox;
-        private Label label1;
-        private ComboBox TodoTagsComboBox;
-        private FlowLayoutPanel flowLayoutPanel1;
+        private SplitContainer splitContainer;
+        private FlowLayoutPanel flowLayoutPanel;
     }
 }
