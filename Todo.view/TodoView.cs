@@ -55,10 +55,11 @@ namespace Todo.view
             {
                 case 0:
                     controls.Sort(TodoViewItem.CompareByTitle);
+                    if (SortOrderCheckBox.Checked) controls.Reverse();
                     break;
                 case 1:
                     controls.Sort(TodoViewItem.CompareByTitle);
-                    controls.Reverse();
+                    if (SortOrderCheckBox.Checked) controls.Reverse();
                     break;
             }
             Invoke(() => flowLayout.Controls.AddRange(controls.ToArray()));
