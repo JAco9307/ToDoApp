@@ -20,7 +20,8 @@ namespace Todo.view
             {
                 new TitleEdit(_todoData),
                 new StatusEdit(_todoData,_context),
-                new DescriptionEdit(_todoData)
+                new DescriptionEdit(_todoData),
+                new TagsEdit(_todoData,_context)
             };
             foreach (ITodoPropertyEdit EditItem in EditItems)
             {

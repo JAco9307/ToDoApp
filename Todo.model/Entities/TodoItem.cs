@@ -7,6 +7,7 @@
         public string Title { get; private set; }
         public string Description { get; private set; }
         public string Status { get; private set; }
+        public List<TodoTag> Tags {  get; private set; } = new List<TodoTag>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TodoItem"/> class.
@@ -28,6 +29,11 @@
         public void SetTodoTitle(string title)
         {
             Title = title;
+        }
+
+        public void setTags(List<TodoTag> tags)
+        {
+            Tags = tags;
         }
 
         public void SetTodoStatus(string status)

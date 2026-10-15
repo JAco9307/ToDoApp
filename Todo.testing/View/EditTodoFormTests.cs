@@ -35,7 +35,7 @@ namespace Todo.testing.View
             editTodoForm.cancelClick(sender, e);
 
             // Assert
-            Assert.AreEqual(null, editTodoForm.todoData.title);
+            Assert.IsNull(editTodoForm.todoData.title);
         }
 
         [TestMethod]

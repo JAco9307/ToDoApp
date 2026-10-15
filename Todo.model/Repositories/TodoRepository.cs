@@ -77,6 +77,7 @@ namespace Todo.model.Repositories
             }
             return _dbContext.TodoLists
                 .Include(list => list.Items)
+                .ThenInclude(item => item.Tags)
                 .FirstOrDefault(list => list.Id == TodoListId);
         }
 
@@ -91,5 +92,22 @@ namespace Todo.model.Repositories
             return _dbContext.TodoStatusOptions.FirstOrDefault();
         }
 
-    }   
+
+        public List<TodoTag>? GetAllTags()
+        {
+            return _dbContext.TodoTags.ToList();
+        }
+
+        public void AddTagOptions(List<TodoTag> newTags)
+        {
+            _dbContext.TodoTags.AddRange(newTags);
+            _dbContext.SaveChanges();
+        }
+
+        public void RemoveTagOptions(List<TodoTag> tags)
+        {
+            _dbContext.TodoTags.RemoveRange(tags);
+            _dbContext.SaveChanges();
+        }
+    }
 }

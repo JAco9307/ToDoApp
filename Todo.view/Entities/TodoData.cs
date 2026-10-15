@@ -7,10 +7,11 @@
     public struct TodoData
     {
         public string? title;
-        public string? description;
+        public string description;
         public string status;
 
         public bool ToBeDeleted;
 
+        public List<(string, Color)> CurrentTags;
     }
 }
