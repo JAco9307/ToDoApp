@@ -105,7 +105,6 @@
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ControlDarkDark;
-            CancelButton = CancelButton;
             ClientSize = new Size(1038, 589);
             ControlBox = false;
             Controls.Add(PickColorButton);
@@ -115,6 +114,7 @@
             Controls.Add(label1);
             Controls.Add(CancelButton);
             Controls.Add(SaveButton);
+            FormBorderStyle = FormBorderStyle.FixedDialog;
             MaximizeBox = false;
             MdiChildrenMinimizedAnchorBottom = false;
             MinimizeBox = false;
