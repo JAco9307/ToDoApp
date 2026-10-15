@@ -102,10 +102,10 @@ namespace Todo.presenter
 
             TodoData result = _view.ShowEditTodoDialog(context, todoData);
 
-            if (result.Title != null)
+            if (result.title != null)
             {
-                todoItem.SetTodoTitle(result.Title);
-                todoItem.SetTodoStatus(result.Status);
+                todoItem.SetTodoTitle(result.title);
+                todoItem.SetTodoStatus(result.status);
 
                 List<TodoTag> newTags = allTags.Where(tag => HasMatchingTitle(result, tag)).ToList();
                 todoItem.setTags(newTags);
@@ -196,8 +196,8 @@ namespace Todo.presenter
         {
             return new TodoData
             {
-                Title = todoItem.Title,
-                Status = todoItem.Status,
+                title = todoItem.Title,
+                status = todoItem.Status,
                 CurrentTags = todoItem.Tags.Select(tag => (tag.Title, tag.Color)).ToList()
             };
         }

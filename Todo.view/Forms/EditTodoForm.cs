@@ -22,16 +22,13 @@ namespace Todo.view
             EditItems = new List<ITodoPropertyEdit>
             {
                 new TitleEdit(_todoData),
-                new StatusEdit(_todoData,_context)
+                new StatusEdit(_todoData,_context),
+                new TagsEdit(_todoData,_context)
             };
             foreach (ITodoPropertyEdit EditItem in EditItems)
             {
                 flowLayoutPanel.Controls.Add((Control)EditItem);
             }
-
-
-            TodoTagsComboBox.Items.AddRange(AllTags.Select(x => x.Item1).ToArray());
-
         }
         public void cancelClick(object sender, EventArgs e)
         {
@@ -45,20 +42,6 @@ namespace Todo.view
                 todoData = EditItem.UpdateData(todoData);
             }
             Close();
-        }
-
-        public void TagsComboBoxSelectionChanged(object sender, EventArgs e)
-        {
-            if(CurrentTags == null)
-                throw new NullReferenceException();
-
-            if (TodoTagsComboBox.SelectedItem is not string)
-                return;
-
-            CurrentTags.Add(AllTags.FirstOrDefault(tag => tag.Item1 == (string)TodoTagsComboBox.SelectedItem));
-            TodoTagsComboBox.Items.Remove(TodoTagsComboBox.SelectedItem.ToString());
-
-
         }
     }
 }

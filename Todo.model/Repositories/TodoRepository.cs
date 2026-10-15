@@ -77,6 +77,7 @@ namespace Todo.model.Repositories
             }
             return _dbContext.TodoLists
                 .Include(list => list.Items)
+                .ThenInclude(item => item.Tags)
                 .FirstOrDefault(list => list.Id == TodoListId);
         }
 

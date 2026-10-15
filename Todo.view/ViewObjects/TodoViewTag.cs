@@ -11,6 +11,7 @@ namespace Todo.view.ViewObjects
 {
     public partial class TodoViewTag : UserControl
     {
+        public event EventHandler? Delete;
         public TodoViewTag(string title, Color color)
         {
             InitializeComponent();
@@ -38,6 +39,7 @@ namespace Todo.view.ViewObjects
                 return;
 
             if (this.Parent == null) return;
+            Delete?.Invoke(this, new EventArgs());
             this.Parent.Controls.Remove(this);
         }
         private void UpdateTag()

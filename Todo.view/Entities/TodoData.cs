@@ -10,8 +10,8 @@ namespace Todo.view.Entities
     /// </summary>
     public struct TodoData
     {
-        public string? Title;
-        public string Status;
+        public string? title;
+        public string status;
         public List<(string, Color)> CurrentTags;
     }
 }

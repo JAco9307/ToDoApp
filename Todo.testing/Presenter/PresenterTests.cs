@@ -75,7 +75,7 @@ namespace Todo.testing.presenter
         {
             return new TodoData
             {
-                Title = "bazinga",
+                title = "bazinga",
             };
         }
 

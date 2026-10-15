@@ -31,8 +31,8 @@
             saveButton = new Button();
             cancelButton = new Button();
             CenterBox = new GroupBox();
-            splitContainer = new SplitContainer();
             flowLayoutPanel = new FlowLayoutPanel();
+            splitContainer = new SplitContainer();
             CenterBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)splitContainer).BeginInit();
             splitContainer.Panel1.SuspendLayout();
@@ -47,8 +47,9 @@
             saveButton.FlatStyle = FlatStyle.Flat;
             saveButton.ForeColor = SystemColors.ButtonHighlight;
             saveButton.Location = new Point(0, 0);
+            saveButton.Margin = new Padding(4, 5, 4, 5);
             saveButton.Name = "saveButton";
-            saveButton.Size = new Size(177, 30);
+            saveButton.Size = new Size(253, 50);
             saveButton.TabIndex = 0;
             saveButton.Text = "Save";
             saveButton.UseVisualStyleBackColor = true;
@@ -61,11 +62,13 @@
             cancelButton.FlatStyle = FlatStyle.Flat;
             cancelButton.ForeColor = SystemColors.ButtonHighlight;
             cancelButton.Location = new Point(0, 0);
+            cancelButton.Margin = new Padding(4, 5, 4, 5);
             cancelButton.Name = "cancelButton";
-            cancelButton.Size = new Size(173, 30);
+            cancelButton.Size = new Size(247, 50);
             cancelButton.TabIndex = 1;
             cancelButton.Text = "Cancel";
             cancelButton.UseVisualStyleBackColor = true;
+            cancelButton.Click += cancelClick;
             // 
             // CenterBox
             // 
@@ -74,15 +77,27 @@
             CenterBox.Dock = DockStyle.Fill;
             CenterBox.FlatStyle = FlatStyle.Popup;
             CenterBox.Location = new Point(0, 0);
+            CenterBox.Margin = new Padding(4, 5, 4, 5);
             CenterBox.Name = "CenterBox";
-            CenterBox.Size = new Size(360, 165);
+            CenterBox.Padding = new Padding(4, 5, 4, 5);
+            CenterBox.Size = new Size(514, 501);
             CenterBox.TabIndex = 4;
             CenterBox.TabStop = false;
+            // 
+            // flowLayoutPanel
+            // 
+            flowLayoutPanel.Dock = DockStyle.Fill;
+            flowLayoutPanel.Location = new Point(4, 29);
+            flowLayoutPanel.Margin = new Padding(4, 5, 4, 5);
+            flowLayoutPanel.Name = "flowLayoutPanel";
+            flowLayoutPanel.Size = new Size(506, 417);
+            flowLayoutPanel.TabIndex = 3;
             // 
             // splitContainer
             // 
             splitContainer.Dock = DockStyle.Bottom;
-            splitContainer.Location = new Point(3, 132);
+            splitContainer.Location = new Point(4, 446);
+            splitContainer.Margin = new Padding(4, 5, 4, 5);
             splitContainer.Name = "splitContainer";
             // 
             // splitContainer.Panel1
@@ -92,73 +107,19 @@
             // splitContainer.Panel2
             // 
             splitContainer.Panel2.Controls.Add(cancelButton);
-            splitContainer.Size = new Size(354, 30);
-            splitContainer.SplitterDistance = 177;
+            splitContainer.Size = new Size(506, 50);
+            splitContainer.SplitterDistance = 253;
+            splitContainer.SplitterWidth = 6;
             splitContainer.TabIndex = 2;
-            // 
-            // flowLayoutPanel
-            // 
-            flowLayoutPanel.Dock = DockStyle.Fill;
-            flowLayoutPanel.Location = new Point(3, 19);
-            flowLayoutPanel.Name = "flowLayoutPanel";
-            flowLayoutPanel.Size = new Size(354, 113);
-            flowLayoutPanel.TabIndex = 3;
-            // 
-            // groupBox1
-            // 
-            groupBox1.Controls.Add(flowLayoutPanel1);
-            groupBox1.Controls.Add(label1);
-            groupBox1.Controls.Add(TodoTagsComboBox);
-            groupBox1.Controls.Add(saveButton);
-            groupBox1.Controls.Add(titleLabel);
-            groupBox1.Controls.Add(titleTextBox);
-            groupBox1.Controls.Add(cancelButton);
-            groupBox1.Dock = DockStyle.Fill;
-            groupBox1.FlatStyle = FlatStyle.Popup;
-            groupBox1.Location = new Point(0, 0);
-            groupBox1.Margin = new Padding(4, 5, 4, 5);
-            groupBox1.Name = "groupBox1";
-            groupBox1.Padding = new Padding(4, 5, 4, 5);
-            groupBox1.Size = new Size(520, 313);
-            groupBox1.TabIndex = 4;
-            groupBox1.TabStop = false;
-            // 
-            // flowLayoutPanel1
-            // 
-            flowLayoutPanel1.Location = new Point(40, 133);
-            flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Size = new Size(423, 82);
-            flowLayoutPanel1.TabIndex = 6;
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.ForeColor = SystemColors.ButtonHighlight;
-            label1.Location = new Point(41, 99);
-            label1.Margin = new Padding(4, 0, 4, 0);
-            label1.Name = "label1";
-            label1.Size = new Size(51, 25);
-            label1.TabIndex = 5;
-            label1.Text = "Tags:";
-            // 
-            // TodoTagsComboBox
-            // 
-            TodoTagsComboBox.FormattingEnabled = true;
-            TodoTagsComboBox.Location = new Point(134, 94);
-            TodoTagsComboBox.Name = "TodoTagsComboBox";
-            TodoTagsComboBox.Size = new Size(182, 33);
-            TodoTagsComboBox.TabIndex = 4;
-            TodoTagsComboBox.SelectionChangeCommitted += TagsComboBoxSelectionChanged;
             // 
             // EditTodoForm
             // 
             AcceptButton = saveButton;
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            AutoValidate = AutoValidate.EnablePreventFocusChange;
             BackColor = Color.FromArgb(64, 64, 64);
             CancelButton = cancelButton;
-            ClientSize = new Size(360, 165);
+            ClientSize = new Size(514, 501);
             ControlBox = false;
             Controls.Add(CenterBox);
             FormBorderStyle = FormBorderStyle.None;
@@ -169,6 +130,7 @@
             SizeGripStyle = SizeGripStyle.Hide;
             StartPosition = FormStartPosition.CenterParent;
             Text = "New Todo";
+            TopMost = true;
             CenterBox.ResumeLayout(false);
             splitContainer.Panel1.ResumeLayout(false);
             splitContainer.Panel1.PerformLayout();
