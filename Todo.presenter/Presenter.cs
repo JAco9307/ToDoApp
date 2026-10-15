@@ -97,7 +97,7 @@ namespace Todo.presenter
             {
                 todoItem.SetTodoTitle(result.title);
                 todoItem.SetTodoStatus(result.status);
-                todoItem.setDescription(result.description);
+                todoItem.SetDescription(result.description);
                 _service.UpdateTodoItem(todoItem);
                 UpdateView();
             }

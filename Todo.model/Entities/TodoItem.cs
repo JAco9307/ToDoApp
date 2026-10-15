@@ -35,7 +35,7 @@
             Status = status;
         }
 
-        public void setDescription(string description)
+        public void SetDescription(string description)
         {
             Description = description;
         }
