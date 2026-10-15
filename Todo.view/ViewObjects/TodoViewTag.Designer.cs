@@ -52,7 +52,7 @@
             ExitLabel.Size = new Size(23, 25);
             ExitLabel.TabIndex = 1;
             ExitLabel.Text = "X";
-            ExitLabel.Click += ExitLabel_Click;
+            ExitLabel.Click += DeleteButton_Click;
             // 
             // TodoViewTag
             // 

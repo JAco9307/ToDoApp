@@ -53,7 +53,7 @@ namespace Todo.view.EditItems
             if (AddTagsComboBox.SelectedItem is not string)
                 return;
 
-            (string title, Color color) tag = AllTags.FirstOrDefault(tag => tag.Item1 == AddTagsComboBox.SelectedItem.ToString());
+            (string title, Color color) tag = AllTags.First(tag => tag.Item1 == AddTagsComboBox.SelectedItem.ToString());
             TodoViewTag viewTag = new TodoViewTag(tag.title, tag.color);
 
             CurrentTagsFlowLayout.Controls.Add(viewTag);

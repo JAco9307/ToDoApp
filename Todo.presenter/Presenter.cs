@@ -111,7 +111,6 @@ namespace Todo.presenter
                 todoItem.setTags(newTags);
             }
 
-
             return todoItem;
         }
 
@@ -148,11 +147,17 @@ namespace Todo.presenter
         public void UpdateOptions()
         {
             if (statusOptions == null) return;
+
             List<TodoTag> allTags = _service.GetAllTags();
             List<TodoTag> addedTags = new List<TodoTag>();
             List<TodoTag> removedTags = new List<TodoTag>();
-            TodoOptions newOptions = _view.ShowOptionsMenu(new TodoOptions {Status = statusOptions.options, Tags = allTags.Select(tag => (tag.Title, tag.Color)).ToList()});
+
+            List<(string title, Color color)> tags = allTags.Select(tag => (tag.Title, tag.Color)).ToList();
+
+            TodoOptions newOptions = _view.ShowOptionsMenu(new TodoOptions {Status = statusOptions.options, Tags = tags});
+
             statusOptions.options = newOptions.Status;
+
             _service.UpdateStatusOptions(statusOptions);
 
             foreach (TodoTag tag in allTags)
@@ -198,7 +203,7 @@ namespace Todo.presenter
             {
                 title = todoItem.Title,
                 status = todoItem.Status,
-                CurrentTags = todoItem.Tags.Select(tag => (tag.Title, tag.Color)).ToList()
+                CurrentTags = todoItem.Tags.Select(tag => (tag.Title, tag.Color)).ToList(),
             };
         }
 
@@ -207,8 +212,7 @@ namespace Todo.presenter
             if (statusOptions == null) throw new NullReferenceException();
             return new ContextData
             {
-                StatusOptions = statusOptions.options
-                
+                StatusOptions = statusOptions.options,
             };
         }
     }
