@@ -12,5 +12,8 @@ namespace Todo.view.Entities
     {
         public string? title;
         public string status;
+
+        public bool ToBeDeleted;
+
     }
 }

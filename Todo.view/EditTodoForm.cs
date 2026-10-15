@@ -4,42 +4,37 @@ namespace Todo.view
 {
     public partial class EditTodoForm : Form
     {
-        public string? Titlestr;
-        public string Status;
+        public TodoData Result;
         public event EventHandler? Delete = default;
         
-        public EditTodoForm(ContextData context, TodoData todoData, EventHandler? deleteHandler)
+        public EditTodoForm(ContextData context, TodoData todoData)
         {
             InitializeComponent();
-            Titlestr = todoData.title;
-            Delete += delegate { deleteHandler(this, new EventArgs()); };
-            titleTextBox.Text = Titlestr;
+            titleTextBox.Text = todoData.title;
             titleTextBox.Select();
             statusComboBox.Items.AddRange(context.StatusOptions.ToArray());
             if (todoData.status == null)
             {
                 statusComboBox.SelectedItem = context.StatusOptions[0];
-                Status = context.StatusOptions[0];
             }
             else
             {
                 statusComboBox.SelectedItem = todoData.status;
-                Status = todoData.status;
             }
 
 
         }
         public void cancelClick(object sender, EventArgs e)
         {
-            Titlestr = null;
+            Result.title = null;
             this.Close();
         }
         public void saveClick(object sender, EventArgs e)
         {
             if (statusComboBox.SelectedItem == null) return;
             if (titleTextBox.Text == "") return;
-            Titlestr = titleTextBox.Text;
-            Status = statusComboBox.Text;
+            Result.title = titleTextBox.Text;
+            Result.status = statusComboBox.Text;
             DialogResult = DialogResult.OK;
             Close();
         }
@@ -47,11 +42,11 @@ namespace Todo.view
         private void DeleteButton_Click(object sender, EventArgs e)
         {
             DialogResult confirmResult = MessageBox.Show("Are you sure to delete this item?", "Confirm Delete", MessageBoxButtons.YesNo);
-            if (Delete != null && confirmResult == DialogResult.Yes)
+            if (confirmResult == DialogResult.Yes)
             {
-                Delete(this, new EventArgs());
+                Result.ToBeDeleted = true;
+                Close();
             }
-            Close();
         }
     }
 }

@@ -6,7 +6,6 @@ namespace Todo.view
     public partial class TodoView : Form, ITodoView
     {
         private Thread? guiThread;
-        public event EventHandler? Delete = default;
         public TodoView()
         {
             InitializeComponent();
@@ -17,7 +16,7 @@ namespace Todo.view
             guiThread = new Thread(FormThread);
             guiThread.SetApartmentState(ApartmentState.STA);
             guiThread.Start();
-            Delete = default;
+
             List<Control> controls = [
                 createTodoButton, 
                 optionsButton
@@ -75,20 +74,11 @@ namespace Todo.view
                 currentData = new TodoData();
             }
             
-            var CreateTodoForm = new EditTodoForm(context, (TodoData)currentData, Delete);
+            var CreateTodoForm = new EditTodoForm(context, (TodoData)currentData);
             //CreateTodoForm.Delete += delegate { DeleteTodo(); };
             DialogResult result = CreateTodoForm.ShowDialog();
 
-            return new TodoData
-            {
-                title = CreateTodoForm.Titlestr,
-                status = CreateTodoForm.Status  
-            };
-        }
-
-        public void DeleteTodo()
-        {
-            Delete.Invoke(this,new EventArgs());
+            return CreateTodoForm.Result;
         }
 
         /// <summary>
