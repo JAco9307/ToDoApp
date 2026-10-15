@@ -47,7 +47,7 @@ namespace Todo.view
                 newTodo.id = i;
                 controls.Add(newTodo); 
             }
-            controls = controls.OrderBy(todoviewitem => todoviewitem.TodoLabel.Text).ToList();
+            controls.Sort(TodoViewItem.CompareByTitle);
             Invoke(() => flowLayout.Controls.AddRange(controls.ToArray()));
             return controls;
         }

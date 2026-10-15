@@ -44,6 +44,10 @@ namespace Todo.view
         }
         
         public Button CycleStatus => StatusButton;
-        
+
+        public static int CompareByTitle(TodoViewItem item1, TodoViewItem item2)
+        {
+            return item1.TodoLabel.Text.CompareTo(item2.todoLabel.Text);
+        }
     }
 }
