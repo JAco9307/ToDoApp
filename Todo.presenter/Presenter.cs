@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -35,7 +35,6 @@ namespace Todo.presenter
             EventHandlerSetup(controls);
             statusOptions = _service.GetStatusOptions();
             UpdateView();
-
         }
 
 
@@ -61,8 +60,7 @@ namespace Todo.presenter
             List<TodoViewItem> todoViewItems = _view.UpdateActiveViewList(TodoTitles, TodoStatus);
 
             foreach(TodoViewItem item in todoViewItems) {
-                item.Delete += delegate { DeleteTodo(TodoList[item.id]);  };
-                item.TodoLabel.Click += delegate { EditTodo(TodoList[item.id]); };
+                item.TodoLabel.Click += delegate { EditTodo(TodoList[item.id], item.id); };
                 item.CycleStatus.Click += delegate { CycleStatus(TodoList[item.id], item); };
             }
         }
@@ -88,11 +86,18 @@ namespace Todo.presenter
         /// Opens the dialog for editing a todo
         /// </summary>
         /// <param name="todoItem">The todoViewItem to edit.</param>
-        private void EditTodo(TodoItem todoItem)
+        private void EditTodo(TodoItem todoItem, int ViewItemId)
         {
             if (statusOptions == null) throw new NullReferenceException();
             TodoData todoData = ItemToData(todoItem);
             TodoData result = _view.ShowEditTodoDialog(GetContext(), todoData);
+            if (result.ToBeDeleted)
+            {
+                DeleteTodo(todoItem);
+                UpdateView();
+                return;
+            }
+            
             if (result.title != null)
             {
                 todoItem.SetTodoTitle(result.title);
