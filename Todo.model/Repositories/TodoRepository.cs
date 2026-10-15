@@ -83,14 +83,26 @@ namespace Todo.model.Repositories
         /// <returns>The TodoList</returns>
         public TodoList? GetList(int TodoListId)
         {
+            NewListIfNone();
+            return _dbContext.TodoLists
+                .Include(list => list.Items)
+                .FirstOrDefault(list => list.Id == TodoListId);
+        }
+        public TodoList? GetList(string TodoListTitle)
+        {
+            NewListIfNone();
+            return _dbContext.TodoLists
+                .Include(list => list.Items)
+                .FirstOrDefault(list => list.Title == TodoListTitle);
+        }
+
+        private void NewListIfNone()
+        {
             if (!_dbContext.TodoLists.Any())
             {
                 _dbContext.TodoLists.Add(new TodoList());
                 _dbContext.SaveChanges();
             }
-            return _dbContext.TodoLists
-                .Include(list => list.Items)
-                .FirstOrDefault(list => list.Id == TodoListId);
         }
 
         /// <summary>
@@ -111,9 +123,9 @@ namespace Todo.model.Repositories
         }
 
         /// <summary>
-        /// Gets the status options, if none exists makes a new default entry.
+        /// Gets the Status options, if none exists makes a new default entry.
         /// </summary>
-        /// <returns>The status list result.</returns>
+        /// <returns>The Status list result.</returns>
         public StatusList? GetStatusOptions()
         {
             if (!_dbContext.TodoStatusOptions.Any())

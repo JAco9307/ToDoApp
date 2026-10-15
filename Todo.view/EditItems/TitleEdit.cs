@@ -15,14 +15,14 @@ namespace Todo.view.EditItems
         public TitleEdit(TodoData todoData)
         {
             InitializeComponent();
-            if(todoData.title != null)
-                titleTextBox.Text = todoData.title;
+            if(todoData.Title != null)
+                titleTextBox.Text = todoData.Title;
         }
 
         public TodoData UpdateData(TodoData todoData)
         {
             if (titleTextBox.Text == "") return todoData;
-            todoData.title = titleTextBox.Text;
+            todoData.Title = titleTextBox.Text;
             return todoData;
         }
     }

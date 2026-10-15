@@ -88,7 +88,6 @@
 
         #endregion
 
-        private Button deleteTodoButton;
         private Button StatusButton;
         private System.Windows.Forms.FlowLayoutPanel flowItem;
     }

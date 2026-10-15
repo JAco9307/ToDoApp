@@ -35,7 +35,7 @@ namespace Todo.view
         /// Updates the active view list.
         /// </summary>
         /// <param name="todoTitles">The todo titles.</param>
-        /// <param name="todoStatus">The todo status.</param>
+        /// <param name="todoStatus">The todo Status.</param>
         /// <returns>The list result.</returns>
         public List<TodoViewItem> UpdateActiveViewList(List<string> todoTitles, List<string> todoStatus)
         {
@@ -50,11 +50,12 @@ namespace Todo.view
 
             return controls;
         }
-        
+
         /// <summary>
         /// Adds a <see cref="TodoViewItem"/> to the GUI.
         /// </summary>
         /// <param name="TodoTitle">The todo title.</param>
+        /// <param name="Status">The todo status.</param>
         /// <returns>The todo view item that has been generated.</returns>
         private TodoViewItem addTodo(string TodoTitle, string Status)
         {
@@ -62,19 +63,21 @@ namespace Todo.view
             Invoke(() => flowLayout.Controls.Add(item));
             return item;
         }
-        
+
         /// <summary>
         /// Shows an dialog window to create or edit a TodoItem
         /// </summary>
-        /// <param name="currentTitle">Title to be filled out if editing and existing item</param>
+        /// <param name="context">The context data</param>
+        /// <param name="currentData">The current todo data if applicable</param>
         /// <returns></returns>
         public TodoData ShowEditTodoDialog(ContextData context, TodoData? currentData)
         {
 
             bool IsNew = false;
-            if (currentData == null)
+            if (currentData == null && listComboBox.SelectedItem != null)
             {
-                currentData = new TodoData();
+                var onList = listComboBox.SelectedItem.ToString();
+                currentData = new TodoData { OnList = onList };
                 IsNew = true;
             }
             

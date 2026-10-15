@@ -68,6 +68,11 @@ namespace Todo.testing.presenter
         {
             throw new NotImplementedException();
         }
+
+        public TodoList GetTodoList(string listId)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class mockView : ITodoView
@@ -79,7 +84,7 @@ namespace Todo.testing.presenter
         {
             return new TodoData
             {
-                title = "bazinga",
+                Title = "bazinga",
             };
         }
 
@@ -143,7 +148,7 @@ namespace Todo.testing.presenter
         {
             // Arrange
             var presenter = new Presenter(_view, _service);
-            presenter.statusOptions = new();
+            presenter.StatusOptions = new();
 
             presenter.UpdateView();
 
@@ -158,7 +163,7 @@ namespace Todo.testing.presenter
         {
             // Arrange
             var presenter = new Presenter(_view, _service);
-            presenter.statusOptions = new();
+            presenter.StatusOptions = new();
 
 
             presenter.CreateTodo();
@@ -173,7 +178,7 @@ namespace Todo.testing.presenter
             // Arrange
             var presenter = new Presenter(_view, _service);
             TodoItem todoItem = new("test");
-            presenter.statusOptions = new();
+            presenter.StatusOptions = new();
 
             // Act
             presenter.DeleteTodo(todoItem);
@@ -186,7 +191,7 @@ namespace Todo.testing.presenter
         public void CycleStatus_StateUnderTest_()
         {
             var presenter = new Presenter(_view, _service);
-            presenter.statusOptions = new();
+            presenter.StatusOptions = new();
             TodoItem todoItem = new("test");
             TodoViewItem item = new("test","Not Started");
 

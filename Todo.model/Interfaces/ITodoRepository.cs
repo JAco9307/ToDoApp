@@ -5,11 +5,11 @@ namespace Todo.model.Interfaces
     public interface ITodoRepository
     {
         public TodoList? GetList(int TodoListId);
+        public TodoList? GetList(string TodoListTitle);
         public void AddTodoItem(TodoItem todoItem, int listId);
         public TodoList AddList(string Title);
         public void DeleteTodoItem(TodoItem todoItem);
         public void DeleteList(TodoList list);
-        //public void RenameList(TodoList list, string Title);
         public StatusList? GetStatusOptions();
         public void UpdateDb();
         public List<string> GetListNames();

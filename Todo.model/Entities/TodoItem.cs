@@ -11,7 +11,7 @@
         /// Initializes a new instance of the <see cref="TodoItem"/> class.
         /// </summary>
         /// <param name="title">The title.</param>
-        /// <param name="Status">The status.</param>
+        /// <param name="Status">The Status.</param>
         public TodoItem(string title, string status = "Not Started")
         {
             Title = title;

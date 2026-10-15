@@ -14,7 +14,7 @@ namespace Todo.presenter
         private readonly ITodoView _view;
         private readonly ITodoService _service;
         private int _currentListId;
-        public StatusList? statusOptions;
+        public StatusList? StatusOptions;
         public Presenter(ITodoView view, ITodoService service)
         {
             _view = view;
@@ -30,8 +30,8 @@ namespace Todo.presenter
         {
             List<Control> controls = _view.StartUp();
             EventHandlerSetup(controls);
-            statusOptions = _service.GetStatusOptions();
-            UpdateLists(null);
+            StatusOptions = _service.GetStatusOptions();
+            UpdateLists();
 
             UpdateView();
         }
@@ -54,7 +54,7 @@ namespace Todo.presenter
         /// </summary>
         public void UpdateView()
         {
-            if (statusOptions == null) throw new NullReferenceException();
+            if (StatusOptions == null) throw new NullReferenceException();
             IReadOnlyList<TodoItem> TodoList = _service.GetTodoList(_currentListId).Items;
             List<string> TodoTitles = TodoList.Select(todoItem => todoItem.Title).ToList();
             List<string> TodoStatus = TodoList.Select(todoItem => todoItem.Status).ToList();
@@ -70,15 +70,16 @@ namespace Todo.presenter
         /// <summary>
         /// Opens the dialog for creating a new todo and sets up the <see cref="TodoItem"/> afterwards
         /// </summary>
-        public void CreateTodo()
+        public void CreateTodo() 
         {
-            if (statusOptions == null) throw new NullReferenceException();
+            if (StatusOptions == null) throw new NullReferenceException();
             var result = _view.ShowEditTodoDialog(GetContext());
-            if (result.title != null)
+            if (result.Title != null)
             {
-                TodoItem newTodo = new(result.title);
-                newTodo.SetTodoStatus(result.status);
-                _service.Add(_currentListId, newTodo);
+                TodoItem newTodo = new(result.Title);
+                newTodo.SetTodoStatus(result.Status);
+                int ListId = _service.GetTodoList(result.OnList).Id;
+                _service.Add(ListId, newTodo);
                 UpdateView();
             }
         }
@@ -89,7 +90,7 @@ namespace Todo.presenter
         /// <param name="todoItem">The todoViewItem to edit.</param>
         private void EditTodo(TodoItem todoItem, int ViewItemId)
         {
-            if (statusOptions == null) throw new NullReferenceException();
+            if (StatusOptions == null) throw new NullReferenceException();
             TodoData todoData = ItemToData(todoItem);
             TodoData result = _view.ShowEditTodoDialog(GetContext(), todoData);
             if (result.ToBeDeleted)
@@ -99,10 +100,10 @@ namespace Todo.presenter
                 return;
             }
             
-            if (result.title != null)
+            if (result.Title != null)
             {
-                todoItem.SetTodoTitle(result.title);
-                todoItem.SetTodoStatus(result.status);
+                todoItem.SetTodoTitle(result.Title);
+                todoItem.SetTodoStatus(result.Status);
                 _service.UpdateDb();
                 UpdateView();
             }
@@ -120,13 +121,13 @@ namespace Todo.presenter
         }
 
         /// <summary>
-        /// Updates the status of a <see cref="TodoItem"/>.
+        /// Updates the Status of a <see cref="TodoItem"/>.
         /// </summary>
         /// <param name="todoItem">The todo item.</param>
-        /// <param name="status">The status.</param>
-        public void UpdateStatus(TodoItem todoItem, string status)
+        /// <param name="Status">The Status.</param>
+        public void UpdateStatus(TodoItem todoItem, string Status)
         {
-            todoItem.SetTodoStatus(status);
+            todoItem.SetTodoStatus(Status);
         }
 
         /// <summary>
@@ -135,16 +136,16 @@ namespace Todo.presenter
         public void UpdateOptions()
         {
             // Set up and open options
-            if (statusOptions == null) return;
+            if (StatusOptions == null) return;
             List<string> currentListNames = _service.GetListNames();
 
             TodoOptions newOptions = _view.ShowOptionsMenu(new TodoOptions {
-                Status = statusOptions.options,
+                Status = StatusOptions.options,
                 ListNames = currentListNames
             });
 
             // Handle updating options
-            statusOptions.options = newOptions.Status;
+            StatusOptions.options = newOptions.Status;
             newOptions.ListNameChanges ??= new();
 
             var renamedFrom = newOptions.ListNameChanges.Keys.ToHashSet();
@@ -162,35 +163,37 @@ namespace Todo.presenter
                     _service.DeleteList(title);
 
             _service.UpdateDb();
-            UpdateLists(null);
+            UpdateLists();
         }
 
         /// <summary>
-        /// Cycles the status on the todo item.
+        /// Cycles the Status on the todo item.
         /// </summary>
         /// <param name="todoItem">The todo item.</param>
         /// <param name="sender">The sender.</param>
         public void CycleStatus(TodoItem todoItem, TodoViewItem sender)
         {
-            if (statusOptions == null) return;
-            int index = statusOptions.options.FindIndex(status => status == todoItem.Status);
-            todoItem.SetTodoStatus(statusOptions.options[(index+1) % statusOptions.options.Count]);
+            if (StatusOptions == null) return;
+            int index = StatusOptions.options.FindIndex(Status => Status == todoItem.Status);
+            todoItem.SetTodoStatus(StatusOptions.options[(index+1) % StatusOptions.options.Count]);
             sender.Status = todoItem.Status;
             _service.UpdateDb();
         }
 
-        public void UpdateLists(string? SelectedList)
+        public void UpdateLists()
         {
             var ListTitles = _service.GetListNames();
-            if (SelectedList == null) 
-                SelectedList = ListTitles[_currentListId-1];
-            _view.UpdateLists(ListTitles, SelectedList);
+            if (_currentListId - 1 < ListTitles.Count)
+                _view.UpdateLists(ListTitles,ListTitles[_currentListId - 1]);
+            else
+                _view.UpdateLists(ListTitles, ListTitles[0]);
+
         }
 
         private void UpdateSelectedList(string Title)
         {
-            var ListTitles = _service.GetListNames();
-            _currentListId = ListTitles.FindIndex(list => list == Title) + 1;
+            var SelectedList = _service.GetTodoList(Title);
+            _currentListId = SelectedList.Id;
             UpdateView();
         }
 
@@ -199,21 +202,24 @@ namespace Todo.presenter
         /// </summary>
         /// <param name="todoItem">The todo item.</param>
         /// <returns>The todo data.</returns>
-        public static TodoData ItemToData(TodoItem todoItem)
+        public TodoData ItemToData(TodoItem todoItem)
         {
             return new TodoData
             {
-                title = todoItem.Title,
-                status = todoItem.Status
+                Title = todoItem.Title,
+                Status = todoItem.Status,
+                OnList = _service.GetTodoList(todoItem.ListId).Title
+
             };
         }
 
         public ContextData GetContext()
         {
-            if (statusOptions == null) throw new NullReferenceException();
+            if (StatusOptions == null) throw new NullReferenceException();
             return new ContextData
             {
-                StatusOptions = statusOptions.options
+                StatusOptions = StatusOptions.options,
+                ListNames = _service.GetListNames()
             };
         }
     }

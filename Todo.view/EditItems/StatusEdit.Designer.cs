@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             flowLayoutPanel1 = new FlowLayoutPanel();
-            statusLabel = new Label();
-            statusComboBox = new ComboBox();
+            StatusLabel = new Label();
+            StatusComboBox = new ComboBox();
             flowLayoutPanel1.SuspendLayout();
             SuspendLayout();
             // 
@@ -38,38 +38,38 @@
             // 
             flowLayoutPanel1.AutoSize = true;
             flowLayoutPanel1.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            flowLayoutPanel1.Controls.Add(statusLabel);
-            flowLayoutPanel1.Controls.Add(statusComboBox);
+            flowLayoutPanel1.Controls.Add(StatusLabel);
+            flowLayoutPanel1.Controls.Add(StatusComboBox);
             flowLayoutPanel1.Dock = DockStyle.Fill;
             flowLayoutPanel1.Location = new Point(0, 0);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
             flowLayoutPanel1.Size = new Size(193, 30);
             flowLayoutPanel1.TabIndex = 0;
             // 
-            // statusLabel
+            // StatusLabel
             // 
-            statusLabel.AutoSize = true;
-            statusLabel.ForeColor = SystemColors.ButtonHighlight;
-            statusLabel.Location = new Point(3, 0);
-            statusLabel.MinimumSize = new Size(60, 30);
-            statusLabel.Name = "statusLabel";
-            statusLabel.Size = new Size(60, 30);
-            statusLabel.TabIndex = 7;
-            statusLabel.Text = "Status:";
-            statusLabel.TextAlign = ContentAlignment.MiddleLeft;
+            StatusLabel.AutoSize = true;
+            StatusLabel.ForeColor = SystemColors.ButtonHighlight;
+            StatusLabel.Location = new Point(3, 0);
+            StatusLabel.MinimumSize = new Size(60, 30);
+            StatusLabel.Name = "StatusLabel";
+            StatusLabel.Size = new Size(60, 30);
+            StatusLabel.TabIndex = 7;
+            StatusLabel.Text = "Status:";
+            StatusLabel.TextAlign = ContentAlignment.MiddleLeft;
             // 
-            // statusComboBox
+            // StatusComboBox
             // 
-            statusComboBox.Dock = DockStyle.Fill;
-            statusComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
-            statusComboBox.FlatStyle = FlatStyle.Popup;
-            statusComboBox.FormattingEnabled = true;
-            statusComboBox.Location = new Point(69, 3);
-            statusComboBox.MinimumSize = new Size(60, 0);
-            statusComboBox.Name = "statusComboBox";
-            statusComboBox.Size = new Size(121, 23);
-            statusComboBox.TabIndex = 6;
-            statusComboBox.TabStop = false;
+            StatusComboBox.Dock = DockStyle.Fill;
+            StatusComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            StatusComboBox.FlatStyle = FlatStyle.Popup;
+            StatusComboBox.FormattingEnabled = true;
+            StatusComboBox.Location = new Point(69, 3);
+            StatusComboBox.MinimumSize = new Size(60, 0);
+            StatusComboBox.Name = "StatusComboBox";
+            StatusComboBox.Size = new Size(121, 23);
+            StatusComboBox.TabIndex = 6;
+            StatusComboBox.TabStop = false;
             // 
             // StatusEdit
             // 
@@ -90,7 +90,7 @@
         #endregion
 
         private FlowLayoutPanel flowLayoutPanel1;
-        private Label statusLabel;
-        private ComboBox statusComboBox;
+        private Label StatusLabel;
+        private ComboBox StatusComboBox;
     }
 }

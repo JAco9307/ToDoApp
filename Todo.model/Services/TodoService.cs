@@ -36,13 +36,12 @@ namespace Todo.model.Services
         /// <param name="todoItem">The TodoItem.</param>
         public void Add(int listId, TodoItem todoItem)
         {
-            _todoLists[listId].Add(todoItem);
+            _todoLists.Find(list => list.Id == listId)?.Add(todoItem);
             _repository.AddTodoItem(todoItem,listId);
         }
         /// <summary>
-        /// Updates a TodoItem with new values
+        /// Updates all entities in database
         /// </summary>
-        /// <param name="todoItem"></param>
         public void UpdateDb()
         {
             _repository.UpdateDb();
@@ -80,11 +79,37 @@ namespace Todo.model.Services
             _todoLists.Add(list);
             return list;
         }
+        public TodoList GetTodoList(string listTitle)
+        {
+            TodoList? list = _todoLists.Find(list => list.Title == listTitle);
+            if (list != null)
+                return list;
 
+            list = _repository.GetList(listTitle);
+            if (list != null)
+            {
+                _todoLists.Add(list);
+                return list;
+            }
+
+            list = new TodoList{ Title = listTitle };
+            _todoLists.Add(list);
+            return list;
+        }
+
+
+        /// <summary>
+        /// Adds a new list to the repository.
+        /// </summary>
+        /// <param name="Title">The list's title.</param>
         public void AddList(string Title) 
         { 
             _repository.AddList(Title);
         }
+        /// <summary>
+        /// Deletes a list.
+        /// </summary>
+        /// <param name="Title">The title.</param>
         public void DeleteList(string Title)
         {
             var list = _todoLists.FirstOrDefault(list => list.Title == Title);
@@ -93,6 +118,11 @@ namespace Todo.model.Services
             _todoLists.Remove(list);
         }
 
+        /// <summary>
+        /// Renames a list by name.
+        /// </summary>
+        /// <param name="TitleOld">The current title .</param>
+        /// <param name="TitleNew">The new title .</param>
         public void RenameList(string TitleOld, string TitleNew)
         {
             var list = _todoLists.FirstOrDefault(list => list.Title == TitleOld);
@@ -109,6 +139,10 @@ namespace Todo.model.Services
             return list;
         }
 
+        /// <summary>
+        /// Gets the list names. If no lists are found, creates a new empty list
+        /// </summary>
+        /// <returns>The list result.</returns>
         public List<string> GetListNames()
         {
             _repository.UpdateDb();

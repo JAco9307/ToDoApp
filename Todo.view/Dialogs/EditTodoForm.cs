@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using Todo.view.EditItems;
 using Todo.view.Entities;
 using Todo.view.Interfaces;
-using Todo.view.EditItems;
+using Todo.view.OptionsItems;
 
 namespace Todo.view
 {
@@ -22,7 +23,8 @@ namespace Todo.view
             EditItems = new List<ITodoPropertyEdit>
             {
                 new TitleEdit(_todoData),
-                new StatusEdit(_todoData,_context)
+                new StatusEdit(_todoData,_context),
+                new ListIdEdit(_context, _todoData)
             };
             foreach (ITodoPropertyEdit EditItem in EditItems)
             {
@@ -30,7 +32,6 @@ namespace Todo.view
             }
             if (IsNew)
             {
-                //deleteButton.Visible = false;
                 tableLayoutPanel.ColumnCount = 2;
             }
         }

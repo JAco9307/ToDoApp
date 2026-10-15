@@ -122,7 +122,7 @@
             nameButton.TabIndex = 8;
             nameButton.Text = "Change Name";
             nameButton.UseVisualStyleBackColor = false;
-            nameButton.Click += nameButton_Click;
+            nameButton.Click += renameButton_Click;
             // 
             // ListNameOptions
             // 

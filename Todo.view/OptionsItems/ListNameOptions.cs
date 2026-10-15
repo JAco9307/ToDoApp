@@ -61,7 +61,7 @@ namespace Todo.view.OptionsItems
             }
         }
 
-        private void nameButton_Click(object sender, EventArgs e)
+        private void renameButton_Click(object sender, EventArgs e)
         {
             if (listBox.SelectedItem == null) return; 
             var inputDialog = new TextInputDialog("List name:");

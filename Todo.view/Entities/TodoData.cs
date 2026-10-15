@@ -10,8 +10,9 @@ namespace Todo.view.Entities
     /// </summary>
     public struct TodoData
     {
-        public string? title;
-        public string status;
+        public string? Title;
+        public string Status;
+        public string OnList;
 
         public bool ToBeDeleted;
 

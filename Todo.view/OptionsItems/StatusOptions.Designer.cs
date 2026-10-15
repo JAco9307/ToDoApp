@@ -28,32 +28,32 @@
         /// </summary>
         private void InitializeComponent()
         {
-            statusLabel = new Label();
-            statusOptionsTextBox = new TextBox();
+            StatusLabel = new Label();
+            StatusOptionsTextBox = new TextBox();
             flowLayoutPanel = new FlowLayoutPanel();
             flowLayoutPanel.SuspendLayout();
             SuspendLayout();
             // 
-            // statusLabel
+            // StatusLabel
             // 
-            statusLabel.AutoSize = true;
-            statusLabel.ForeColor = SystemColors.ButtonHighlight;
-            statusLabel.Location = new Point(3, 0);
-            statusLabel.MinimumSize = new Size(100, 30);
-            statusLabel.Name = "statusLabel";
-            statusLabel.Size = new Size(100, 30);
-            statusLabel.TabIndex = 4;
-            statusLabel.Text = "Status Options:";
+            StatusLabel.AutoSize = true;
+            StatusLabel.ForeColor = SystemColors.ButtonHighlight;
+            StatusLabel.Location = new Point(3, 0);
+            StatusLabel.MinimumSize = new Size(100, 30);
+            StatusLabel.Name = "StatusLabel";
+            StatusLabel.Size = new Size(100, 30);
+            StatusLabel.TabIndex = 4;
+            StatusLabel.Text = "Status Options:";
             // 
-            // statusOptionsTextBox
+            // StatusOptionsTextBox
             // 
-            statusOptionsTextBox.Location = new Point(109, 3);
-            statusOptionsTextBox.MaxLength = 40;
-            statusOptionsTextBox.Multiline = true;
-            statusOptionsTextBox.Name = "statusOptionsTextBox";
-            statusOptionsTextBox.Size = new Size(355, 51);
-            statusOptionsTextBox.TabIndex = 5;
-            statusOptionsTextBox.TabStop = false;
+            StatusOptionsTextBox.Location = new Point(109, 3);
+            StatusOptionsTextBox.MaxLength = 40;
+            StatusOptionsTextBox.Multiline = true;
+            StatusOptionsTextBox.Name = "StatusOptionsTextBox";
+            StatusOptionsTextBox.Size = new Size(355, 51);
+            StatusOptionsTextBox.TabIndex = 5;
+            StatusOptionsTextBox.TabStop = false;
 
             // 
             // flowLayoutPanel
@@ -61,8 +61,8 @@
             flowLayoutPanel.AutoSize = true;
             flowLayoutPanel.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             flowLayoutPanel.BackColor = Color.FromArgb(64, 64, 64);
-            flowLayoutPanel.Controls.Add(statusLabel);
-            flowLayoutPanel.Controls.Add(statusOptionsTextBox);
+            flowLayoutPanel.Controls.Add(StatusLabel);
+            flowLayoutPanel.Controls.Add(StatusOptionsTextBox);
             flowLayoutPanel.Dock = DockStyle.Fill;
             flowLayoutPanel.Location = new Point(0, 0);
             flowLayoutPanel.Name = "flowLayoutPanel";
@@ -88,8 +88,8 @@
 
         #endregion
 
-        private Label statusLabel;
-        private TextBox statusOptionsTextBox;
+        private Label StatusLabel;
+        private TextBox StatusOptionsTextBox;
         private FlowLayoutPanel flowLayoutPanel;
     }
 }

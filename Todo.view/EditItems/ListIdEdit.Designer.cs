@@ -1,6 +1,6 @@
 ﻿namespace Todo.view.OptionsItems
 {
-    partial class ListIdOptions
+    partial class ListIdEdit
     {
         /// <summary> 
         /// Required designer variable.
@@ -70,14 +70,14 @@
             listComboBox.Size = new Size(124, 23);
             listComboBox.TabIndex = 5;
             // 
-            // ListIdOptions
+            // ListIdEdit
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoSize = true;
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
             Controls.Add(flowLayoutPanel);
-            Name = "ListIdOptions";
+            Name = "ListIdEdit";
             Size = new Size(236, 30);
             flowLayoutPanel.ResumeLayout(false);
             flowLayoutPanel.PerformLayout();

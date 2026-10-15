@@ -19,8 +19,8 @@ namespace Todo.testing.View
 
         private TodoData TestTodoData = new TodoData 
         { 
-            title = "Title",
-            status = "Completed",
+            Title = "Title",
+            Status = "Completed",
         };
 
         [TestMethod]
@@ -35,7 +35,7 @@ namespace Todo.testing.View
             editTodoForm.CancelButton.PerformClick();
 
             // Assert
-            Assert.AreEqual(null, editTodoForm.todoData.title);
+            Assert.AreEqual(null, editTodoForm.todoData.Title);
         }
 
         [TestMethod]
@@ -49,7 +49,7 @@ namespace Todo.testing.View
             editTodoForm.saveClick(sender, e);
 
             // Assert
-            Assert.AreEqual("Title", editTodoForm.todoData.title);
+            Assert.AreEqual("Title", editTodoForm.todoData.Title);
         }
     }
 }

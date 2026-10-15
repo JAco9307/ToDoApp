@@ -39,7 +39,7 @@ public class TodoServiceTests
             return null;
         }
 
-        public void UpdateStatusOptions(StatusList statusOptions)
+        public void UpdateStatusOptions(StatusList StatusOptions)
         {
             
         }
@@ -68,6 +68,11 @@ public class TodoServiceTests
         public List<TodoList> GetLists()
         {
             return new();
+        }
+
+        public TodoList? GetList(string TodoListTitle)
+        {
+            throw new NotImplementedException();
         }
     }
 

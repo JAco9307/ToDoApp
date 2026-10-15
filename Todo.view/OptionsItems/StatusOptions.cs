@@ -15,21 +15,21 @@ namespace Todo.view.OptionsItems
         public StatusOptions(TodoOptions currentOptions)
         {
             InitializeComponent();
-            statusOptionsTextBox.Text = string.Join(",", currentOptions.Status);
+            StatusOptionsTextBox.Text = string.Join(",", currentOptions.Status);
         }
 
         public TodoOptions Save(TodoOptions currentOptions)
         {
-            if (statusOptionsTextBox.Text == "") return currentOptions;
+            if (StatusOptionsTextBox.Text == "") return currentOptions;
             try
             {
-                string status = statusOptionsTextBox.Text;
-                List<string> result = status.Split(new char[] { ',' }).ToList();
+                string Status = StatusOptionsTextBox.Text;
+                List<string> result = Status.Split(new char[] { ',' }).ToList();
                 currentOptions.Status = result;
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Cannot parse status options\n" + ex.ToString(), "Error", MessageBoxButtons.OK);
+                MessageBox.Show("Cannot parse Status options\n" + ex.ToString(), "Error", MessageBoxButtons.OK);
             }
             return currentOptions;
         }

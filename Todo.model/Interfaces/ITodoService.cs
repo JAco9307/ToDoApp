@@ -12,6 +12,7 @@ namespace Todo.model.Interfaces
         public void RenameList(string TitleOld, string TitleNew);
 
         public TodoList GetTodoList(int listId);
+        public TodoList GetTodoList(string listTitle);
         public StatusList GetStatusOptions();
         public List<string> GetListNames();
     }
