@@ -69,12 +69,14 @@ namespace Todo.view
         /// <returns></returns>
         public TodoData ShowEditTodoDialog(ContextData context, TodoData? currentData)
         {
+            bool IsNew = false;
             if (currentData == null)
             {
                 currentData = new TodoData();
+                IsNew = true;
             }
             
-            var CreateTodoForm = new EditTodoForm(context, (TodoData)currentData);
+            var CreateTodoForm = new EditTodoForm(context, (TodoData)currentData, IsNew);
             DialogResult result = CreateTodoForm.ShowDialog();
 
             return CreateTodoForm.todoData;
