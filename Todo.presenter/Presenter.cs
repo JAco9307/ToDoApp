@@ -1,4 +1,3 @@
-﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
@@ -35,7 +34,6 @@ namespace Todo.presenter
             UpdateLists(null);
 
             UpdateView();
-
         }
 
 
@@ -63,8 +61,7 @@ namespace Todo.presenter
             List<TodoViewItem> todoViewItems = _view.UpdateActiveViewList(TodoTitles, TodoStatus);
 
             foreach(TodoViewItem item in todoViewItems) {
-                item.Delete += delegate { DeleteTodo(TodoList[item.id]);  };
-                item.TodoLabel.Click += delegate { EditTodo(TodoList[item.id]); };
+                item.TodoLabel.Click += delegate { EditTodo(TodoList[item.id], item.id); };
                 item.CycleStatus.Click += delegate { CycleStatus(TodoList[item.id], item); };
             }
         }
@@ -90,11 +87,18 @@ namespace Todo.presenter
         /// Opens the dialog for editing a todo
         /// </summary>
         /// <param name="todoItem">The todoViewItem to edit.</param>
-        private void EditTodo(TodoItem todoItem)
+        private void EditTodo(TodoItem todoItem, int ViewItemId)
         {
             if (statusOptions == null) throw new NullReferenceException();
             TodoData todoData = ItemToData(todoItem);
             TodoData result = _view.ShowEditTodoDialog(GetContext(), todoData);
+            if (result.ToBeDeleted)
+            {
+                DeleteTodo(todoItem);
+                UpdateView();
+                return;
+            }
+            
             if (result.title != null)
             {
                 todoItem.SetTodoTitle(result.title);
@@ -130,6 +134,7 @@ namespace Todo.presenter
         /// </summary>
         public void UpdateOptions()
         {
+            // Set up and open options
             if (statusOptions == null) return;
             List<string> currentListNames = _service.GetListNames();
 
@@ -138,20 +143,25 @@ namespace Todo.presenter
                 ListNames = currentListNames
             });
 
+            // Handle updating options
             statusOptions.options = newOptions.Status;
-            _service.UpdateDb();
+            newOptions.ListNameChanges ??= new();
 
-            var diflist = newOptions.ListNames.Where(name => currentListNames.All(name2 => name2 != name));
-            var diflist2 = currentListNames.Where(name => newOptions.ListNames.All(name2 => name2 != name));
-            foreach (string Title in diflist) 
-            { 
-                _service.AddList(Title);
-            }
-            foreach (string Title in diflist2)
-            {
-                _service.DeleteList(Title);
-            }
-            
+            var renamedFrom = newOptions.ListNameChanges.Keys.ToHashSet();
+            var renamedTo = newOptions.ListNameChanges.Values.ToHashSet();
+
+            foreach (var (OldName,NewName) in newOptions.ListNameChanges)
+                _service.RenameList(OldName, NewName);
+
+            foreach (var title in newOptions.ListNames.Except(currentListNames))
+                if (!renamedTo.Contains(title))
+                    _service.AddList(title);
+
+            foreach (var title in currentListNames.Except(newOptions.ListNames))
+                if (!renamedFrom.Contains(title))
+                    _service.DeleteList(title);
+
+            _service.UpdateDb();
             UpdateLists(null);
         }
 

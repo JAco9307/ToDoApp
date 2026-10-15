@@ -36,6 +36,7 @@ namespace Todo.model.Services
         /// <param name="todoItem">The TodoItem.</param>
         public void Add(int listId, TodoItem todoItem)
         {
+            _todoLists[listId].Add(todoItem);
             _repository.AddTodoItem(todoItem,listId);
         }
         /// <summary>
@@ -90,6 +91,14 @@ namespace Todo.model.Services
             if (list == null) return;
             _repository.DeleteList(list);
             _todoLists.Remove(list);
+        }
+
+        public void RenameList(string TitleOld, string TitleNew)
+        {
+            var list = _todoLists.FirstOrDefault(list => list.Title == TitleOld);
+            if (list == null) return;
+            list.Title = TitleNew;
+            UpdateDb();
         }
 
         public StatusList GetStatusOptions()

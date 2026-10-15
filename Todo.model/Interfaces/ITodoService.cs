@@ -9,6 +9,7 @@ namespace Todo.model.Interfaces
         public void Delete(int listId, TodoItem todoItem);
         public void AddList(string Title);
         public void DeleteList(string Title);
+        public void RenameList(string TitleOld, string TitleNew);
 
         public TodoList GetTodoList(int listId);
         public StatusList GetStatusOptions();

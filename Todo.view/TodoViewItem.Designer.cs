@@ -30,7 +30,6 @@
         {
             flowItem = new FlowLayoutPanel();
             StatusButton = new Button();
-            deleteTodoButton = new Button();
             todoLabel = new System.Windows.Forms.Label();
             flowItem.SuspendLayout();
             SuspendLayout();
@@ -41,7 +40,6 @@
             flowItem.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             flowItem.Controls.Add(StatusButton);
             flowItem.Controls.Add(todoLabel);
-            flowItem.Controls.Add(deleteTodoButton);
             flowItem.Dock = DockStyle.Fill;
             flowItem.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             flowItem.Location = new Point(0, 0);
@@ -60,6 +58,7 @@
             StatusButton.Text = "Status here";
             StatusButton.UseVisualStyleBackColor = true;
             StatusButton.TabStop = false;
+
             // 
             // todoLabel
             // 
@@ -69,20 +68,6 @@
             todoLabel.Size = new System.Drawing.Size(518, 24);
             todoLabel.TabIndex = 3;
             todoLabel.Text = "svend";
-            // 
-            // deleteTodoButton
-            // 
-            deleteTodoButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            deleteTodoButton.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            deleteTodoButton.Location = new System.Drawing.Point(527, 4);
-            deleteTodoButton.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            deleteTodoButton.Name = "deleteTodoButton";
-            deleteTodoButton.Size = new System.Drawing.Size(86, 31);
-            deleteTodoButton.TabIndex = 2;
-            deleteTodoButton.Text = "Delete";
-            deleteTodoButton.UseVisualStyleBackColor = true;
-            deleteTodoButton.Click += deleteTodoButton_Click;
-            deleteTodoButton.TabStop = false;
             // 
             // TodoViewItem
             // 

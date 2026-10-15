@@ -32,7 +32,7 @@ namespace Todo.testing.View
             EventArgs e = new();
 
             // Act
-            editTodoForm.cancelClick(sender, e);
+            editTodoForm.CancelButton.PerformClick();
 
             // Assert
             Assert.AreEqual(null, editTodoForm.todoData.title);

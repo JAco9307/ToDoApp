@@ -13,6 +13,7 @@ namespace Todo.view.OptionsItems
 {
     public partial class ListNameOptions : UserControl, IOption
     {
+        private Dictionary<string, string> ListNameChanges = new();
         public ListNameOptions(TodoOptions currentOptions)
         {
             InitializeComponent();
@@ -22,6 +23,10 @@ namespace Todo.view.OptionsItems
         public TodoOptions Save(TodoOptions currentOptions)
         {
             currentOptions.ListNames = listBox.Items.Cast<string>().ToList();
+            if (currentOptions.ListNameChanges == null) { currentOptions.ListNameChanges = new(); }
+            foreach (var nameChange in ListNameChanges) 
+                currentOptions.ListNameChanges.Add(nameChange.Key, nameChange.Value); 
+
             return currentOptions;
         }
 
@@ -29,8 +34,8 @@ namespace Todo.view.OptionsItems
         {
             if (listBox.SelectedItem == null) return;
             var result = MessageBox.Show(
-                "Are you sure you want to delete " + listBox.SelectedItem.ToString(), 
-                "Delete list", 
+                "Are you sure you want to delete " + listBox.SelectedItem.ToString(),
+                "Delete list",
                 MessageBoxButtons.YesNo);
             if (result == DialogResult.Yes)
             {
@@ -52,6 +57,27 @@ namespace Todo.view.OptionsItems
             }
             if (result == DialogResult.OK)
             {
+                listBox.Items.Add(inputDialog.text);
+            }
+        }
+
+        private void nameButton_Click(object sender, EventArgs e)
+        {
+            if (listBox.SelectedItem == null) return; 
+            var inputDialog = new TextInputDialog("List name:");
+            var result = inputDialog.ShowDialog();
+            if (listBox.Items.Cast<string>().ToList().Contains(inputDialog.text))
+            {
+                MessageBox.Show(
+                "A list with this name already exists",
+                "Cannot complete action",
+                MessageBoxButtons.OK);
+                return;
+            }
+            if (result == DialogResult.OK)
+            {
+                ListNameChanges.Add(listBox.SelectedItem.ToString(), inputDialog.text);
+                listBox.Items.Remove(listBox.SelectedItem);
                 listBox.Items.Add(inputDialog.text);
             }
         }

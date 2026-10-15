@@ -33,6 +33,7 @@
             listBox = new ListBox();
             addButton = new Button();
             removeButton = new Button();
+            nameButton = new Button();
             flowLayoutPanel.SuspendLayout();
             SuspendLayout();
             // 
@@ -44,11 +45,12 @@
             flowLayoutPanel.Controls.Add(titleLabel);
             flowLayoutPanel.Controls.Add(listBox);
             flowLayoutPanel.Controls.Add(addButton);
+            flowLayoutPanel.Controls.Add(nameButton);
             flowLayoutPanel.Controls.Add(removeButton);
             flowLayoutPanel.Dock = DockStyle.Fill;
             flowLayoutPanel.Location = new Point(0, 0);
             flowLayoutPanel.Name = "flowLayoutPanel";
-            flowLayoutPanel.Size = new Size(454, 70);
+            flowLayoutPanel.Size = new Size(555, 70);
             flowLayoutPanel.TabIndex = 7;
             flowLayoutPanel.WrapContents = false;
             // 
@@ -98,13 +100,29 @@
             removeButton.Dock = DockStyle.Fill;
             removeButton.FlatStyle = FlatStyle.Flat;
             removeButton.ForeColor = SystemColors.ButtonHighlight;
-            removeButton.Location = new Point(368, 3);
+            removeButton.Location = new Point(469, 3);
             removeButton.Name = "removeButton";
             removeButton.Size = new Size(83, 64);
             removeButton.TabIndex = 7;
             removeButton.Text = "Remove List";
             removeButton.UseVisualStyleBackColor = false;
             removeButton.Click += removeButton_Click;
+            // 
+            // nameButton
+            // 
+            nameButton.AutoSize = true;
+            nameButton.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            nameButton.BackColor = Color.FromArgb(64, 64, 64);
+            nameButton.Dock = DockStyle.Fill;
+            nameButton.FlatStyle = FlatStyle.Flat;
+            nameButton.ForeColor = SystemColors.ButtonHighlight;
+            nameButton.Location = new Point(368, 3);
+            nameButton.Name = "nameButton";
+            nameButton.Size = new Size(95, 64);
+            nameButton.TabIndex = 8;
+            nameButton.Text = "Change Name";
+            nameButton.UseVisualStyleBackColor = false;
+            nameButton.Click += nameButton_Click;
             // 
             // ListNameOptions
             // 
@@ -114,7 +132,7 @@
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
             Controls.Add(flowLayoutPanel);
             Name = "ListNameOptions";
-            Size = new Size(454, 70);
+            Size = new Size(555, 70);
             flowLayoutPanel.ResumeLayout(false);
             flowLayoutPanel.PerformLayout();
             ResumeLayout(false);
@@ -128,5 +146,6 @@
         private ListBox listBox;
         private Button addButton;
         private Button removeButton;
+        private Button nameButton;
     }
 }

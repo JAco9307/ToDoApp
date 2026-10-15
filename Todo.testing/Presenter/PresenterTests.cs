@@ -43,6 +43,31 @@ namespace Todo.testing.presenter
         {
             throw new NotImplementedException();
         }
+
+        public void UpdateDb()
+        {
+            
+        }
+
+        public void AddList(string Title)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteList(string Title)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RenameList(string TitleOld, string TitleNew)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<string> GetListNames()
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class mockView : ITodoView
@@ -74,6 +99,11 @@ namespace Todo.testing.presenter
         {
             calledUpdate = true;
             return new List<TodoViewItem>();
+        }
+
+        public void UpdateLists(List<string> lists, string selectList)
+        {
+            throw new NotImplementedException();
         }
     }
 

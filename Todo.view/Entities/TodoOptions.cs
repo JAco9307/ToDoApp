@@ -12,6 +12,8 @@ namespace Todo.view.Entities
     {
         public List<string> Status;
         public List<string> ListNames;
+        public string CurrentList;
+        public Dictionary<string,string> ListNameChanges;
 
     }
 }

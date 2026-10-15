@@ -15,6 +15,7 @@ namespace Todo.testing.View
         {
             TodoOptions ops = new TodoOptions();
             ops.Status = [ "a", "b" ];
+            ops.ListNames = [ "1" ];
             OptionsForm optionsForm = new OptionsForm(ops);
             object sender = new();
             EventArgs e = new();
