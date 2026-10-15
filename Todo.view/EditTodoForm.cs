@@ -19,7 +19,8 @@ namespace Todo.view
             EditItems = new List<ITodoPropertyEdit>
             {
                 new TitleEdit(_todoData),
-                new StatusEdit(_todoData,_context)
+                new StatusEdit(_todoData,_context),
+                new DescriptionEdit(_todoData)
             };
             foreach (ITodoPropertyEdit EditItem in EditItems)
             {

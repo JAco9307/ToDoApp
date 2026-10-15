@@ -1,11 +1,6 @@
-using Microsoft.Extensions.Options;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows.Forms;
 using Todo.model.Entities;
 using Todo.model.Interfaces;
-using Todo.model.Migrations;
 using Todo.view;
 using Todo.view.Entities;
 using Todo.view.Interfaces;
@@ -75,7 +70,7 @@ namespace Todo.presenter
             var result = _view.ShowEditTodoDialog(GetContext());
             if (result.title != null)
             {
-                TodoItem newTodo = new(result.title);
+                TodoItem newTodo = new(result.title, result.description);
                 newTodo.SetTodoStatus(result.status);
                 _service.Add(_currentListId, newTodo);
                 UpdateView();
@@ -102,6 +97,7 @@ namespace Todo.presenter
             {
                 todoItem.SetTodoTitle(result.title);
                 todoItem.SetTodoStatus(result.status);
+                todoItem.SetDescription(result.description);
                 _service.UpdateTodoItem(todoItem);
                 UpdateView();
             }
@@ -163,6 +159,7 @@ namespace Todo.presenter
             return new TodoData
             {
                 title = todoItem.Title,
+                description = todoItem.Description,
                 status = todoItem.Status
             };
         }

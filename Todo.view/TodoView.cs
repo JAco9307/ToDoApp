@@ -90,7 +90,7 @@ namespace Todo.view
         /// <returns>The options set when saving.</returns>
         public TodoOptions ShowOptionsMenu(TodoOptions currentOptions)
         {
-            var OptionsForm = new OptionsForm(currentOptions);
+            OptionsForm OptionsForm = new OptionsForm(currentOptions);
             DialogResult result = OptionsForm.ShowDialog();
             if (result == DialogResult.OK)
                 return OptionsForm.OutputOptions;
