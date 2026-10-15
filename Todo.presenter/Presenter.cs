@@ -46,6 +46,8 @@ namespace Todo.presenter
         {
             controls[0].Click += delegate { CreateTodo(); };
             controls[1].Click += delegate { UpdateOptions(); };
+            ComboBox sortBox = (ComboBox)controls[2];
+            sortBox.SelectedIndexChanged += delegate { UpdateView(); };
         }
 
         /// <summary>

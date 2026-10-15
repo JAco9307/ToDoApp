@@ -20,9 +20,12 @@ namespace Todo.view
 
             List<Control> controls = [
                 createTodoButton, 
-                optionsButton
+                optionsButton,
+                SortingDropDown
                 ];
-
+            List<string> sortingOptions = ["Name", "Id"];
+            SortingDropDown.Items.AddRange(sortingOptions.ToArray());
+            SortingDropDown.SelectedItem = SortingDropDown.Items[0];
             return controls;
         }
 
@@ -47,7 +50,17 @@ namespace Todo.view
                 newTodo.id = i;
                 controls.Add(newTodo); 
             }
-            controls.Sort(TodoViewItem.CompareByTitle);
+
+            switch (SortingDropDown.SelectedIndex)
+            {
+                case 0:
+                    controls.Sort(TodoViewItem.CompareByTitle);
+                    break;
+                case 1:
+                    controls.Sort(TodoViewItem.CompareByTitle);
+                    controls.Reverse();
+                    break;
+            }
             Invoke(() => flowLayout.Controls.AddRange(controls.ToArray()));
             return controls;
         }

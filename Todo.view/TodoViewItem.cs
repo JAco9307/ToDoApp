@@ -35,7 +35,7 @@ namespace Todo.view
 
         public static int CompareByTitle(TodoViewItem item1, TodoViewItem item2)
         {
-            return item1.TodoLabel.Text.CompareTo(item2.todoLabel.Text);
+            return String.Compare(item1.TodoLabel.Text, item2.todoLabel.Text, StringComparison.Ordinal);
         }
     }
 }
