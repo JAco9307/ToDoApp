@@ -24,6 +24,7 @@ namespace Todo.view
             List<Control> controls = [
                 createTodoButton, 
                 optionsButton,
+                listComboBox,
                 SortingDropDown,
                 SortOrderCheckBox,
                 ];
@@ -45,14 +46,13 @@ namespace Todo.view
         /// Updates the active view list.
         /// </summary>
         /// <param name="todoTitles">The todo titles.</param>
-        /// <param name="todoStatus">The todo status.</param>
+        /// <param name="todoStatus">The todo Status.</param>
         /// <returns>The list result.</returns>
         public List<TodoViewItem> UpdateActiveViewList(List<TodoData> todoDatas)
         {
-            flowLayout.Controls.Clear();
-            List<TodoViewItem> controls = [];
+            Invoke(()=> flowLayout.Controls.Clear());
+            List<TodoViewItem> controls = new();
             Invoke (() =>SortTodoDatas(todoDatas));
-
             for(int i = 0; i < todoDatas.Count; i++)
             {
                 TodoViewItem newTodo = addTodo(todoDatas[i]);
@@ -79,6 +79,7 @@ namespace Todo.view
         /// Adds a <see cref="TodoViewItem"/> to the GUI.
         /// </summary>
         /// <param name="TodoTitle">The todo title.</param>
+        /// <param name="Status">The todo status.</param>
         /// <returns>The todo view item that has been generated.</returns>
         private TodoViewItem addTodo(TodoData todoData)
         {
@@ -86,26 +87,24 @@ namespace Todo.view
             //Invoke(() => flowLayout.Controls.Add(item));
             return item;
         }
-        
+
         /// <summary>
         /// Shows an dialog window to create or edit a TodoItem
         /// </summary>
-        /// <param name="currentTitle">Title to be filled out if editing and existing item</param>
+        /// <param name="context">The context data</param>
+        /// <param name="currentData">The current todo data if applicable</param>
         /// <returns></returns>
-        public TodoData ShowEditTodoDialog(ContextData context, TodoData? currentData)
+        public TodoData ShowEditTodoDialog(ContextData context, TodoData currentData, bool IsNew)
         {
-            bool IsNew = false;
-            if (currentData == null)
-            {
-                currentData = new TodoData();
-                IsNew = true;
-            }
-            
-            var CreateTodoForm = new EditTodoForm(context, (TodoData)currentData, IsNew);
+            var CreateTodoForm = new EditTodoForm(context, currentData, IsNew);
             DialogResult result = CreateTodoForm.ShowDialog();
+            TodoData todoData = CreateTodoForm.todoData;
+            if (result == DialogResult.Cancel)
+            {
+                todoData.ToBeDeleted = true;
+            }
 
-            return CreateTodoForm.todoData;
-
+            return todoData;
         }
 
         /// <summary>
@@ -121,6 +120,15 @@ namespace Todo.view
                 return OptionsForm.OutputOptions;
             else
                 return currentOptions;
+        }
+
+        public void UpdateLists(List<string> strings, string selectList)
+        {
+            Invoke(() => { 
+                listComboBox.Items.Clear();
+                listComboBox.Items.AddRange(strings.ToArray());
+                listComboBox.SelectedItem = selectList;
+            });
         }
     }
 }

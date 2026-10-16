@@ -14,13 +14,16 @@ namespace Todo.testing.View
         {
             StatusOptions = ["Not Started",
                     "In Progress",
-                    "Completed"]
+                    "Completed"],
+            ListNames = ["New List"],
+            AllTags = new(),
         };
 
-        private TodoData TestTodoData = new TodoData 
-        { 
-            title = "Title",
-            status = "Completed",
+        private TodoData TestTodoData = new TodoData
+        {
+            Title = "Title",
+            Status = "Completed",
+            CurrentTags = new()
         };
 
         [TestMethod]
@@ -32,10 +35,11 @@ namespace Todo.testing.View
             EventArgs e = new();
 
             // Act
-            editTodoForm.cancelClick(sender, e);
+            editTodoForm.CancelButton?.PerformClick();
 
             // Assert
-            Assert.IsNull(editTodoForm.todoData.title);
+
+            Assert.IsNull(editTodoForm.todoData.Title);
         }
 
         [TestMethod]
@@ -49,7 +53,7 @@ namespace Todo.testing.View
             editTodoForm.saveClick(sender, e);
 
             // Assert
-            Assert.AreEqual("Title", editTodoForm.todoData.title);
+            Assert.AreEqual("Title", editTodoForm.todoData.Title);
         }
     }
 }

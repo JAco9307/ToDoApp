@@ -10,13 +10,13 @@ namespace Todo.view.ViewObjects
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public string Status
         {
-            get { return _status; }
+            get { return _Status; }
             set {
-                _status = value; 
+                _Status = value; 
                 CycleStatus.Text = value; 
             } 
         }
-        private string _status;
+        private string _Status;
 
 
         /// <summary>
@@ -27,9 +27,9 @@ namespace Todo.view.ViewObjects
         {
             InitializeComponent();
 
-            _status = todoData.status;
-            CycleStatus.Text = todoData.status;
-            todoLabel.Text = todoData.title;
+            _Status = todoData.Status;
+            CycleStatus.Text = todoData.Status;
+            todoLabel.Text = todoData.TodoTitle;
         }
                 
         public Button CycleStatus => StatusButton;

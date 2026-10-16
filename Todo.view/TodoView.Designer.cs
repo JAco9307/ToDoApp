@@ -29,11 +29,12 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TodoView));
-            flowLayout = new System.Windows.Forms.FlowLayoutPanel();
-            headerLayout = new System.Windows.Forms.FlowLayoutPanel();
-            label1 = new System.Windows.Forms.Label();
-            createTodoButton = new System.Windows.Forms.Button();
-            optionsButton = new System.Windows.Forms.Button();
+            flowLayout = new FlowLayoutPanel();
+            headerLayout = new FlowLayoutPanel();
+            label1 = new Label();
+            createTodoButton = new Button();
+            optionsButton = new Button();
+            listComboBox = new ComboBox();
             SortingDropDown = new System.Windows.Forms.ComboBox();
             SortOrderCheckBox = new System.Windows.Forms.CheckBox();
             headerLayout.SuspendLayout();
@@ -60,10 +61,11 @@
             headerLayout.Controls.Add(label1);
             headerLayout.Controls.Add(createTodoButton);
             headerLayout.Controls.Add(optionsButton);
+            headerLayout.Controls.Add(listComboBox);
             headerLayout.Controls.Add(SortingDropDown);
             headerLayout.Controls.Add(SortOrderCheckBox);
-            headerLayout.Dock = System.Windows.Forms.DockStyle.Top;
-            headerLayout.Location = new System.Drawing.Point(0, 0);
+            headerLayout.Dock = DockStyle.Top;
+            headerLayout.Location = new Point(0, 0);
             headerLayout.Name = "headerLayout";
             headerLayout.Size = new System.Drawing.Size(800, 30);
             headerLayout.TabIndex = 3;
@@ -89,6 +91,7 @@
             createTodoButton.Name = "createTodoButton";
             createTodoButton.Size = new System.Drawing.Size(75, 23);
             createTodoButton.TabIndex = 1;
+            createTodoButton.TabStop = false;
             createTodoButton.Text = "New Todo";
             createTodoButton.UseVisualStyleBackColor = true;
             // 
@@ -100,8 +103,20 @@
             optionsButton.Name = "optionsButton";
             optionsButton.Size = new System.Drawing.Size(75, 23);
             optionsButton.TabIndex = 2;
+            optionsButton.TabStop = false;
             optionsButton.Text = "Options";
             optionsButton.UseVisualStyleBackColor = true;
+            // 
+            // listComboBox
+            // 
+            listComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            listComboBox.FormattingEnabled = true;
+            listComboBox.Items.AddRange(new object[] { "2", "3", "54", "56" });
+            listComboBox.Location = new Point(213, 3);
+            listComboBox.Name = "listComboBox";
+            listComboBox.Size = new Size(185, 23);
+            listComboBox.TabIndex = 3;
+            listComboBox.TabStop = false;
             // 
             // SortingDropDown
             // 
@@ -143,10 +158,11 @@
         private System.Windows.Forms.ComboBox SortingDropDown;
 
         #endregion
-        private System.Windows.Forms.FlowLayoutPanel flowLayout;
-        private System.Windows.Forms.FlowLayoutPanel headerLayout;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button createTodoButton;
-        private System.Windows.Forms.Button optionsButton;
+        private FlowLayoutPanel flowLayout;
+        private FlowLayoutPanel headerLayout;
+        private Label label1;
+        private Button createTodoButton;
+        private Button optionsButton;
+        private ComboBox listComboBox;
     }
 }
