@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using Todo.view.Entities;
 
 namespace Todo.view
 {
@@ -22,13 +23,13 @@ namespace Todo.view
         /// Initializes a new instance of the <see cref="TodoViewItem"/> class.
         /// </summary>
         /// <param name="TodoTitle">The todo title.</param>
-        public TodoViewItem(string TodoTitle, string Status)
+        public TodoViewItem(TodoData todoData)
         {
             InitializeComponent();
 
-            _status = Status;
-            CycleStatus.Text = Status;
-            todoLabel.Text = TodoTitle;
+            _status = todoData.status;
+            CycleStatus.Text = todoData.status;
+            todoLabel.Text = todoData.title;
         }
                 
         public Button CycleStatus => StatusButton;

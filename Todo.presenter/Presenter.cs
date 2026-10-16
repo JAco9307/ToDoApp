@@ -53,9 +53,12 @@ namespace Todo.presenter
         {
             if (statusOptions == null) throw new NullReferenceException();
             IReadOnlyList<TodoItem> TodoList = _service.GetTodoList(_currentListId).Items;
-            List<string> TodoTitles = TodoList.Select(todoItem => todoItem.Title).ToList();
-            List<string> TodoStatus = TodoList.Select(todoItem => todoItem.Status).ToList();
-            List<TodoViewItem> todoViewItems = _view.UpdateActiveViewList(TodoTitles, TodoStatus);
+            List<TodoData> todoDatas = new List<TodoData>();
+            foreach (TodoItem todoItem in TodoList)
+            {
+                todoDatas.Add(ItemToData(todoItem));
+            }
+            List<TodoViewItem> todoViewItems = _view.UpdateActiveViewList(todoDatas);
 
             foreach(TodoViewItem item in todoViewItems) {
                 item.TodoLabel.Click += delegate { EditTodo(TodoList[item.id], item.id); };
@@ -112,7 +115,7 @@ namespace Todo.presenter
                 return null;
             }
 
-    if (result.title != null)
+            if (result.title != null)
             {
                 todoItem.SetTodoTitle(result.title);
                 todoItem.SetTodoStatus(result.status);
@@ -120,7 +123,7 @@ namespace Todo.presenter
                 List<TodoTag> newTags = allTags.Where(tag => HasMatchingTitle(result, tag)).ToList();
                 todoItem.setTags(newTags);
                 todoItem.SetDescription(result.description);
-    }
+            }
 
             return todoItem;
         }

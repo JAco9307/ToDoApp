@@ -40,13 +40,13 @@ namespace Todo.view
         /// <param name="todoTitles">The todo titles.</param>
         /// <param name="todoStatus">The todo status.</param>
         /// <returns>The list result.</returns>
-        public List<TodoViewItem> UpdateActiveViewList(List<string> todoTitles, List<string> todoStatus)
+        public List<TodoViewItem> UpdateActiveViewList(List<TodoData> todoDatas)
         {
             flowLayout.Controls.Clear();
-            List<TodoViewItem> controls = new();
-            for(int i = 0; i < todoTitles.Count; i++)
+            List<TodoViewItem> controls = [];
+            for(int i = 0; i < todoDatas.Count; i++)
             {
-                TodoViewItem newTodo = addTodo(todoTitles[i], todoStatus[i]);
+                TodoViewItem newTodo = addTodo(todoDatas[i]);
                 newTodo.id = i;
                 controls.Add(newTodo); 
             }
@@ -71,9 +71,9 @@ namespace Todo.view
         /// </summary>
         /// <param name="TodoTitle">The todo title.</param>
         /// <returns>The todo view item that has been generated.</returns>
-        private TodoViewItem addTodo(string TodoTitle, string Status)
+        private TodoViewItem addTodo(TodoData todoData)
         {
-            TodoViewItem item = new TodoViewItem(TodoTitle, Status);
+            TodoViewItem item = new TodoViewItem(todoData);
             //Invoke(() => flowLayout.Controls.Add(item));
             return item;
         }

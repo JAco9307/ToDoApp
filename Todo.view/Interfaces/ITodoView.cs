@@ -13,7 +13,7 @@ namespace Todo.view.Interfaces
         /// </summary>
         /// <param name="todoTitles">The todo list.</param>
         /// <returns>List of each created todo view item </returns>
-        public List<TodoViewItem> UpdateActiveViewList(List<string> todoTitles, List<string> todoStatus);
+        public List<TodoViewItem> UpdateActiveViewList(List<TodoData> todoDatas);
 
         /// <summary>
         /// Start the form in a thread.
