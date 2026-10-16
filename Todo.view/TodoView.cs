@@ -1,6 +1,5 @@
 using Todo.view.Entities;
 using Todo.view.Interfaces;
-using System.Collections.Generic;
 using Todo.view.ViewObjects;
 
 namespace Todo.view
@@ -8,6 +7,9 @@ namespace Todo.view
     public partial class TodoView : Form, ITodoView
     {
         private Thread? guiThread;
+
+        private Dictionary<string, Comparison<TodoData>> _sortingOptions;
+        
         public TodoView()
         {
             InitializeComponent();
@@ -22,10 +24,14 @@ namespace Todo.view
             List<Control> controls = [
                 createTodoButton, 
                 optionsButton,
-                SortingDropDown
+                SortingDropDown,
+                SortOrderCheckBox,
                 ];
-            List<string> sortingOptions = ["Name", "Status"];
-            SortingDropDown.Items.AddRange(sortingOptions.ToArray());
+            _sortingOptions = new Dictionary<string, Comparison<TodoData>>();
+            _sortingOptions.Add("Name", TodoData.CompareByTitle);
+            _sortingOptions.Add("Status", TodoData.CompareByStatus);
+            SortingDropDown.DataSource = _sortingOptions.Keys.ToList();
+            
             SortingDropDown.SelectedItem = SortingDropDown.Items[0];
             return controls;
         }
@@ -45,18 +51,8 @@ namespace Todo.view
         {
             flowLayout.Controls.Clear();
             List<TodoViewItem> controls = [];
-            
-            switch (SortingDropDown.SelectedIndex)
-            {
-                case 0:
-                    todoDatas.Sort(TodoData.CompareByTitle);
-                    break;
-                case 1:
-                    todoDatas.Sort(TodoData.CompareByStatus);
-                    break;
-            }
-            if (SortOrderCheckBox.Checked) controls.Reverse();
-            
+            Invoke (() =>SortTodoDatas(todoDatas));
+
             for(int i = 0; i < todoDatas.Count; i++)
             {
                 TodoViewItem newTodo = addTodo(todoDatas[i]);
@@ -67,7 +63,18 @@ namespace Todo.view
             Invoke(() => flowLayout.Controls.AddRange(controls.ToArray<Control>()));
             return controls;
         }
-        
+
+        private void SortTodoDatas(List<TodoData> todoDatas)
+        {
+            var selectedItem = SortingDropDown.SelectedItem;
+            if (selectedItem != null && selectedItem.ToString() != null && _sortingOptions.ContainsKey(selectedItem.ToString()))
+            {
+                Comparison<TodoData> sortingOption = _sortingOptions[selectedItem.ToString()];
+                todoDatas.Sort(sortingOption);
+                if (SortOrderCheckBox.Checked) todoDatas.Reverse();
+            }
+        }
+
         /// <summary>
         /// Adds a <see cref="TodoViewItem"/> to the GUI.
         /// </summary>
