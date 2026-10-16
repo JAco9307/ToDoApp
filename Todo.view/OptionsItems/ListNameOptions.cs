@@ -23,9 +23,9 @@ namespace Todo.view.OptionsItems
         public TodoOptions Save(TodoOptions currentOptions)
         {
             currentOptions.ListNames = listBox.Items.Cast<string>().ToList();
-            if (currentOptions.ListNameChanges == null) { currentOptions.ListNameChanges = new(); }
-            foreach (var nameChange in ListNameChanges) 
-                currentOptions.ListNameChanges.Add(nameChange.Key, nameChange.Value); 
+            currentOptions.ListNameChanges ??= [];
+            foreach (var nameChange in ListNameChanges)
+                currentOptions.ListNameChanges.Add(nameChange.Key, nameChange.Value);
 
             return currentOptions;
         }
@@ -34,7 +34,9 @@ namespace Todo.view.OptionsItems
         {
             if (listBox.SelectedItem == null) return;
             var result = MessageBox.Show(
-                "Are you sure you want to delete " + listBox.SelectedItem.ToString(),
+                "Are you sure you want to delete " + listBox.SelectedItem.ToString() + "?" +
+                "\nThis will also delete all todos on the list." +
+                "\nThis action is permanent after saving options",
                 "Delete list",
                 MessageBoxButtons.YesNo);
             if (result == DialogResult.Yes)
@@ -63,9 +65,10 @@ namespace Todo.view.OptionsItems
 
         private void renameButton_Click(object sender, EventArgs e)
         {
-            if (listBox.SelectedItem == null) return; 
-            var inputDialog = new TextInputDialog("List name:");
+            if (listBox.SelectedItem == null) return;
+            var inputDialog = new TextInputDialog("List name:", listBox.SelectedItem.ToString() ?? "ERROR");
             var result = inputDialog.ShowDialog();
+            if (result != DialogResult.OK) return;
             if (listBox.Items.Cast<string>().ToList().Contains(inputDialog.text))
             {
                 MessageBox.Show(
@@ -74,12 +77,11 @@ namespace Todo.view.OptionsItems
                 MessageBoxButtons.OK);
                 return;
             }
-            if (result == DialogResult.OK)
-            {
-                ListNameChanges.Add(listBox.SelectedItem.ToString(), inputDialog.text);
-                listBox.Items.Remove(listBox.SelectedItem);
-                listBox.Items.Add(inputDialog.text);
-            }
+
+            ListNameChanges.Add(listBox.SelectedItem.ToString() ?? "ERROR", inputDialog.text);
+            listBox.Items.Remove(listBox.SelectedItem);
+            listBox.Items.Add(inputDialog.text);
+            
         }
     }
 }

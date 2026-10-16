@@ -11,10 +11,11 @@ namespace Todo.view.Dialogs
     public partial class TextInputDialog : Form
     {
         public string text => textBox.Text;
-        public TextInputDialog(string header)
+        public TextInputDialog(string header, string defaultText = "")
         {
             InitializeComponent();
             headerLabel.Text = header;
+            textBox.Text = defaultText;
             textBox.Select();
         }
 

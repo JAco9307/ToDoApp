@@ -24,8 +24,8 @@ namespace Todo.view.OptionsItems
         {
             if (listComboBox.SelectedItem == null) return todoData;
             string? listname = listComboBox.SelectedItem.ToString();
-            if (listname == null) return todoData;
-            todoData.OnList = listname;
+            if (listname != null)
+                todoData.OnList = listname;
             return todoData;
         }
     }

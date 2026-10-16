@@ -104,6 +104,7 @@ namespace Todo.presenter
             {
                 todoItem.SetTodoTitle(result.Title);
                 todoItem.SetTodoStatus(result.Status);
+                todoItem.ListId = _service.GetTodoList(result.OnList).Id;
                 _service.UpdateDb();
                 UpdateView();
             }

@@ -76,11 +76,14 @@ namespace Todo.view
             bool IsNew = false;
             if (currentData == null && listComboBox.SelectedItem != null)
             {
-                var onList = listComboBox.SelectedItem.ToString();
+                var onList = listComboBox.SelectedItem?.ToString() ?? "New List";
                 currentData = new TodoData { OnList = onList };
                 IsNew = true;
             }
-            
+
+            if (currentData == null)
+                return new TodoData();
+
             var CreateTodoForm = new EditTodoForm(context, (TodoData)currentData, IsNew);
             DialogResult result = CreateTodoForm.ShowDialog();
 
