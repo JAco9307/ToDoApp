@@ -91,6 +91,7 @@ namespace Todo.view
         {
             OptionsForm OptionsForm = new OptionsForm(currentOptions);
             DialogResult result = OptionsForm.ShowDialog();
+
             if (result == DialogResult.OK)
                 return OptionsForm.OutputOptions;
             else

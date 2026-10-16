@@ -62,8 +62,9 @@ namespace Todo.view.OptionsItems
             if (listBox.SelectedItem == null) return;
             var inputDialog = new TextInputDialog("List name:", listBox.SelectedItem.ToString() ?? "ERROR");
             var result = inputDialog.ShowDialog();
+
             if (result != DialogResult.OK) return;
-            if (listBox.Items.Cast<string>().ToList().Contains(inputDialog.text))
+            if (listBox.Items.Contains(inputDialog.text))
             {
                 MessageBox.Show(
                 "A list with this name already exists",

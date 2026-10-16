@@ -27,12 +27,17 @@ namespace Todo.view.ViewObjects
 
         private void DeleteButton_Click(object sender, EventArgs e)
         {
-            DialogResult confirmResult = MessageBox.Show("Are you sure to delete this tag?", "Confirm Delete", MessageBoxButtons.YesNo);
-            if (confirmResult.ToString() == "No")
+            DialogResult confirmResult = MessageBox.Show(
+                "Are you sure to delete this tag?", 
+                "Confirm Delete", 
+                MessageBoxButtons.YesNo
+                );
+
+            if (confirmResult == DialogResult.No)
                 return;
 
             Delete?.Invoke(this, new EventArgs());
-            Parent?.Controls.Remove(this);
+            Dispose();
         }
         private void UpdateTag()
         {

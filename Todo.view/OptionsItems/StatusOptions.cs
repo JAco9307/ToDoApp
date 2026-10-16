@@ -32,7 +32,8 @@ namespace Todo.view.OptionsItems
         {
             var inputDialog = new TextInputDialog("List name:");
             var result = inputDialog.ShowDialog();
-            if (statusBox.Items.Cast<string>().ToList().Contains(inputDialog.text))
+
+            if (statusBox.Items.Contains(inputDialog.text))
             {
                 MessageBox.Show(
                 "A status with this name already exists",
@@ -40,6 +41,7 @@ namespace Todo.view.OptionsItems
                 MessageBoxButtons.OK);
                 return;
             }
+
             if (result == DialogResult.OK)
             {
                 statusBox.Items.Add(inputDialog.text);
@@ -51,8 +53,9 @@ namespace Todo.view.OptionsItems
             if (statusBox.SelectedItem == null) return;
             var inputDialog = new TextInputDialog("Status name:", statusBox.SelectedItem.ToString() ?? "ERROR");
             var result = inputDialog.ShowDialog();
+
             if (result != DialogResult.OK) return;
-            if (statusBox.Items.Cast<string>().ToList().Contains(inputDialog.text))
+            if (statusBox.Items.Contains(inputDialog.text))
             {
                 MessageBox.Show(
                 "A status with this name already exists",
@@ -60,6 +63,7 @@ namespace Todo.view.OptionsItems
                 MessageBoxButtons.OK);
                 return;
             }
+
             statusBox.Items.Remove(statusBox.SelectedItem);
             statusBox.Items.Add(inputDialog.text);
 
