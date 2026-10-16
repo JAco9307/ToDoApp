@@ -34,6 +34,11 @@ namespace Todo.testing.presenter
             return new TodoList();
         }
 
+        public List<TodoTag> GetAllTags()
+        {
+            throw new NotImplementedException();
+        }
+
         public StatusList GetStatusOptions()
         {
             throw new NotImplementedException();
@@ -44,21 +49,30 @@ namespace Todo.testing.presenter
             throw new NotImplementedException();
         }
 
+<<<<<<< HEAD
         public void UpdateDb()
         {
             
         }
 
         public void AddList(string Title)
+=======
+        public void UpdateTagOptions(List<TodoTag> tags)
+>>>>>>> main
         {
             throw new NotImplementedException();
         }
 
+<<<<<<< HEAD
         public void DeleteList(string Title)
+=======
+        public void AddTagOptions(List<TodoTag> newTags)
+>>>>>>> main
         {
             throw new NotImplementedException();
         }
 
+<<<<<<< HEAD
         public void RenameList(string TitleOld, string TitleNew)
         {
             throw new NotImplementedException();
@@ -70,6 +84,9 @@ namespace Todo.testing.presenter
         }
 
         public TodoList GetTodoList(string listId)
+=======
+        public void RemoveTagOptions(List<TodoTag> newTags)
+>>>>>>> main
         {
             throw new NotImplementedException();
         }
@@ -115,8 +132,8 @@ namespace Todo.testing.presenter
     [TestClass]
     public class PresenterTests
     {
-        ITodoView _view;
-        ITodoService _service;
+        ITodoView _view = new mockView();
+        ITodoService _service = new mockService();
 
         [TestInitialize]
         public void Init() 

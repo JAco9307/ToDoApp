@@ -17,7 +17,7 @@ namespace Todo.view.OptionsItems
         {
             InitializeComponent();
             listComboBox.Items.AddRange(_context.ListNames.ToArray());
-            listComboBox.SelectedItem = _todoData.OnList;
+                listComboBox.SelectedItem = _todoData.OnList;
         }
 
         public TodoData UpdateData(TodoData todoData)

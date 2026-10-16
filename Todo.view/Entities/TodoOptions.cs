@@ -14,6 +14,7 @@ namespace Todo.view.Entities
         public List<string> ListNames;
         public string CurrentList;
         public Dictionary<string,string> ListNameChanges;
+        public List<(string,Color)> Tags;
 
     }
 }

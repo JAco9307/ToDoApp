@@ -44,7 +44,7 @@
             flowLayoutPanel.Dock = DockStyle.Fill;
             flowLayoutPanel.Location = new Point(0, 0);
             flowLayoutPanel.Name = "flowLayoutPanel";
-            flowLayoutPanel.Size = new Size(302, 31);
+            flowLayoutPanel.Size = new Size(342, 31);
             flowLayoutPanel.TabIndex = 7;
             flowLayoutPanel.WrapContents = false;
             // 
@@ -54,16 +54,16 @@
             titleLabel.Dock = DockStyle.Fill;
             titleLabel.ForeColor = SystemColors.ButtonHighlight;
             titleLabel.Location = new Point(3, 0);
-            titleLabel.MinimumSize = new Size(60, 25);
+            titleLabel.MinimumSize = new Size(100, 25);
             titleLabel.Name = "titleLabel";
-            titleLabel.Size = new Size(60, 31);
+            titleLabel.Size = new Size(100, 31);
             titleLabel.TabIndex = 4;
             titleLabel.Text = "Title:";
             titleLabel.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // titleTextBox
             // 
-            titleTextBox.Location = new Point(69, 3);
+            titleTextBox.Location = new Point(109, 3);
             titleTextBox.MaxLength = 40;
             titleTextBox.Multiline = true;
             titleTextBox.Name = "titleTextBox";
@@ -79,7 +79,7 @@
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
             Controls.Add(flowLayoutPanel);
             Name = "TitleEdit";
-            Size = new Size(302, 31);
+            Size = new Size(342, 31);
             flowLayoutPanel.ResumeLayout(false);
             flowLayoutPanel.PerformLayout();
             ResumeLayout(false);

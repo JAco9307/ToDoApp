@@ -70,24 +70,17 @@ namespace Todo.view
         /// <param name="context">The context data</param>
         /// <param name="currentData">The current todo data if applicable</param>
         /// <returns></returns>
-        public TodoData ShowEditTodoDialog(ContextData context, TodoData? currentData)
+        public TodoData ShowEditTodoDialog(ContextData context, TodoData currentData, bool IsNew)
         {
-
-            bool IsNew = false;
-            if (currentData == null && listComboBox.SelectedItem != null)
+            var CreateTodoForm = new EditTodoForm(context, currentData, IsNew);
+            DialogResult result = CreateTodoForm.ShowDialog();
+            TodoData todoData = CreateTodoForm.todoData;
+            if (result == DialogResult.Cancel)
             {
-                var onList = listComboBox.SelectedItem?.ToString() ?? "New List";
-                currentData = new TodoData { OnList = onList };
-                IsNew = true;
+                todoData.ToBeDeleted = true;
             }
 
-            if (currentData == null)
-                return new TodoData();
-
-            var CreateTodoForm = new EditTodoForm(context, (TodoData)currentData, IsNew);
-            DialogResult result = CreateTodoForm.ShowDialog();
-
-            return CreateTodoForm.todoData;
+            return todoData;
         }
 
         /// <summary>
@@ -97,7 +90,7 @@ namespace Todo.view
         /// <returns>The options set when saving.</returns>
         public TodoOptions ShowOptionsMenu(TodoOptions currentOptions)
         {
-            var OptionsForm = new OptionsForm(currentOptions);
+            OptionsForm OptionsForm = new OptionsForm(currentOptions);
             DialogResult result = OptionsForm.ShowDialog();
             if (result == DialogResult.OK)
                 return OptionsForm.OutputOptions;

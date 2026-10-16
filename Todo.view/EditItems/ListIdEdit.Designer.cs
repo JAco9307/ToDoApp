@@ -44,7 +44,7 @@
             flowLayoutPanel.Dock = DockStyle.Fill;
             flowLayoutPanel.Location = new Point(0, 0);
             flowLayoutPanel.Name = "flowLayoutPanel";
-            flowLayoutPanel.Size = new Size(236, 30);
+            flowLayoutPanel.Size = new Size(234, 30);
             flowLayoutPanel.TabIndex = 7;
             flowLayoutPanel.WrapContents = false;
             // 
@@ -53,19 +53,22 @@
             titleLabel.AutoSize = true;
             titleLabel.Dock = DockStyle.Fill;
             titleLabel.ForeColor = SystemColors.ButtonHighlight;
-            titleLabel.Location = new Point(3, 0);
+            titleLabel.Location = new Point(2, 0);
+            titleLabel.Margin = new Padding(2, 0, 2, 0);
             titleLabel.MinimumSize = new Size(100, 30);
             titleLabel.Name = "titleLabel";
             titleLabel.Size = new Size(100, 30);
             titleLabel.TabIndex = 4;
             titleLabel.Text = "On List:";
-            titleLabel.TextAlign = ContentAlignment.MiddleCenter;
+            titleLabel.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // listComboBox
             // 
             listComboBox.Dock = DockStyle.Fill;
+            listComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            listComboBox.FlatStyle = FlatStyle.Flat;
             listComboBox.FormattingEnabled = true;
-            listComboBox.Location = new Point(109, 3);
+            listComboBox.Location = new Point(107, 3);
             listComboBox.Name = "listComboBox";
             listComboBox.Size = new Size(124, 23);
             listComboBox.TabIndex = 5;
@@ -78,7 +81,7 @@
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
             Controls.Add(flowLayoutPanel);
             Name = "ListIdEdit";
-            Size = new Size(236, 30);
+            Size = new Size(234, 30);
             flowLayoutPanel.ResumeLayout(false);
             flowLayoutPanel.PerformLayout();
             ResumeLayout(false);

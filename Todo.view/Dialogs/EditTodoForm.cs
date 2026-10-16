@@ -24,7 +24,9 @@ namespace Todo.view
             {
                 new TitleEdit(_todoData),
                 new StatusEdit(_todoData,_context),
-                new ListIdEdit(_context, _todoData)
+                new ListIdEdit(_context, _todoData),
+                new DescriptionEdit(_todoData),
+                new TagsEdit(_todoData,_context)
             };
             foreach (ITodoPropertyEdit EditItem in EditItems)
             {
@@ -34,10 +36,17 @@ namespace Todo.view
             {
                 tableLayoutPanel.ColumnCount = 2;
             }
+
+
+        }
+        public void cancelClick(object sender, EventArgs e)
+        {
+            Close();
         }
 
         public void saveClick(object sender, EventArgs e)
         {
+            DialogResult = DialogResult.OK;
             foreach (ITodoPropertyEdit EditItem in EditItems)
             {
                 todoData = EditItem.UpdateData(todoData);

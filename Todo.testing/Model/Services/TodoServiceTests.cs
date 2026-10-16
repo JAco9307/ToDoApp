@@ -74,6 +74,21 @@ public class TodoServiceTests
         {
             throw new NotImplementedException();
         }
+
+        public List<TodoTag>? GetAllTags()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddTagOptions(List<TodoTag> newTags)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveTagOptions(List<TodoTag> newTags)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     [TestMethod]

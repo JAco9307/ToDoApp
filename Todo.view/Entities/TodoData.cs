@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Todo.view.Entities
+﻿namespace Todo.view.Entities
 {
  
     /// <summary>
@@ -13,8 +9,10 @@ namespace Todo.view.Entities
         public string? Title;
         public string Status;
         public string OnList;
+        public string Description;
 
         public bool ToBeDeleted;
 
+        public List<(string, Color)> CurrentTags;
     }
 }

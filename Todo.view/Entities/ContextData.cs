@@ -8,5 +8,6 @@ namespace Todo.view.Entities
     {
         public List<string> StatusOptions;
         public List<string> ListNames;
+        public List<(string, Color)> AllTags;
     }
 }

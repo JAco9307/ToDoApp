@@ -28,32 +28,34 @@
         /// </summary>
         private void InitializeComponent()
         {
-            flowLayoutPanel1 = new FlowLayoutPanel();
+            flowLayoutPanel = new FlowLayoutPanel();
             StatusLabel = new Label();
             StatusComboBox = new ComboBox();
-            flowLayoutPanel1.SuspendLayout();
+            flowLayoutPanel.SuspendLayout();
             SuspendLayout();
             // 
-            // flowLayoutPanel1
+            // flowLayoutPanel
             // 
-            flowLayoutPanel1.AutoSize = true;
-            flowLayoutPanel1.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            flowLayoutPanel1.Controls.Add(StatusLabel);
-            flowLayoutPanel1.Controls.Add(StatusComboBox);
-            flowLayoutPanel1.Dock = DockStyle.Fill;
-            flowLayoutPanel1.Location = new Point(0, 0);
-            flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Size = new Size(193, 30);
-            flowLayoutPanel1.TabIndex = 0;
+            flowLayoutPanel.AutoSize = true;
+            flowLayoutPanel.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            flowLayoutPanel.Controls.Add(StatusLabel);
+            flowLayoutPanel.Controls.Add(StatusComboBox);
+            flowLayoutPanel.Dock = DockStyle.Fill;
+            flowLayoutPanel.Location = new Point(0, 0);
+            flowLayoutPanel.Name = "flowLayoutPanel";
+            flowLayoutPanel.Size = new Size(196, 30);
+            flowLayoutPanel.TabIndex = 0;
             // 
             // StatusLabel
             // 
             StatusLabel.AutoSize = true;
+            StatusLabel.Dock = DockStyle.Fill;
             StatusLabel.ForeColor = SystemColors.ButtonHighlight;
-            StatusLabel.Location = new Point(3, 0);
-            StatusLabel.MinimumSize = new Size(60, 30);
+            StatusLabel.Location = new Point(2, 0);
+            StatusLabel.Margin = new Padding(2, 0, 2, 0);
+            StatusLabel.MinimumSize = new Size(100, 30);
             StatusLabel.Name = "StatusLabel";
-            StatusLabel.Size = new Size(60, 30);
+            StatusLabel.Size = new Size(100, 30);
             StatusLabel.TabIndex = 7;
             StatusLabel.Text = "Status:";
             StatusLabel.TextAlign = ContentAlignment.MiddleLeft;
@@ -62,12 +64,12 @@
             // 
             StatusComboBox.Dock = DockStyle.Fill;
             StatusComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
-            StatusComboBox.FlatStyle = FlatStyle.Popup;
+            StatusComboBox.FlatStyle = FlatStyle.Flat;
             StatusComboBox.FormattingEnabled = true;
-            StatusComboBox.Location = new Point(69, 3);
-            StatusComboBox.MinimumSize = new Size(60, 0);
+            StatusComboBox.Location = new Point(107, 3);
+            StatusComboBox.MinimumSize = new Size(43, 0);
             StatusComboBox.Name = "StatusComboBox";
-            StatusComboBox.Size = new Size(121, 23);
+            StatusComboBox.Size = new Size(86, 23);
             StatusComboBox.TabIndex = 6;
             StatusComboBox.TabStop = false;
             // 
@@ -76,20 +78,19 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoSize = true;
-            AutoSizeMode = AutoSizeMode.GrowAndShrink;
             BackColor = Color.FromArgb(64, 64, 64);
-            Controls.Add(flowLayoutPanel1);
+            Controls.Add(flowLayoutPanel);
             Name = "StatusEdit";
-            Size = new Size(193, 30);
-            flowLayoutPanel1.ResumeLayout(false);
-            flowLayoutPanel1.PerformLayout();
+            Size = new Size(196, 30);
+            flowLayoutPanel.ResumeLayout(false);
+            flowLayoutPanel.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
 
-        private FlowLayoutPanel flowLayoutPanel1;
+        private FlowLayoutPanel flowLayoutPanel;
         private Label StatusLabel;
         private ComboBox StatusComboBox;
     }

@@ -10,10 +10,12 @@ namespace Todo.model.Interfaces
         public void AddList(string Title);
         public void DeleteList(string Title);
         public void RenameList(string TitleOld, string TitleNew);
-
+        public List<TodoTag> GetAllTags();
+        public void AddTagOptions(List<TodoTag> newTags);
+        public void RemoveTagOptions(List<TodoTag> newTags);
+        public StatusList GetStatusOptions();
         public TodoList GetTodoList(int listId);
         public TodoList GetTodoList(string listTitle);
-        public StatusList GetStatusOptions();
         public List<string> GetListNames();
     }
 }
