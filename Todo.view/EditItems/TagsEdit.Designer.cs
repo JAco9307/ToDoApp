@@ -32,15 +32,19 @@
             CurrentTagsLabel = new Label();
             AddTagsComboBox = new ComboBox();
             CurrentTagsFlowLayout = new FlowLayoutPanel();
+            flowLayoutPanel = new FlowLayoutPanel();
+            flowLayoutPanel.SuspendLayout();
             SuspendLayout();
             // 
             // AddTagsLabel
             // 
             AddTagsLabel.AutoSize = true;
             AddTagsLabel.ForeColor = SystemColors.ControlLightLight;
-            AddTagsLabel.Location = new Point(7, 13);
+            AddTagsLabel.Location = new Point(2, 0);
+            AddTagsLabel.Margin = new Padding(2, 0, 2, 0);
+            AddTagsLabel.MinimumSize = new Size(100, 0);
             AddTagsLabel.Name = "AddTagsLabel";
-            AddTagsLabel.Size = new Size(90, 25);
+            AddTagsLabel.Size = new Size(100, 15);
             AddTagsLabel.TabIndex = 0;
             AddTagsLabel.Text = "Add Tags:";
             // 
@@ -48,40 +52,58 @@
             // 
             CurrentTagsLabel.AutoSize = true;
             CurrentTagsLabel.ForeColor = SystemColors.ControlLightLight;
-            CurrentTagsLabel.Location = new Point(7, 53);
+            CurrentTagsLabel.Location = new Point(2, 29);
+            CurrentTagsLabel.Margin = new Padding(2, 0, 2, 0);
+            CurrentTagsLabel.MinimumSize = new Size(100, 0);
             CurrentTagsLabel.Name = "CurrentTagsLabel";
-            CurrentTagsLabel.Size = new Size(114, 25);
+            CurrentTagsLabel.Size = new Size(100, 15);
             CurrentTagsLabel.TabIndex = 1;
             CurrentTagsLabel.Text = "Current Tags:";
             // 
             // AddTagsComboBox
             // 
             AddTagsComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            AddTagsComboBox.FlatStyle = FlatStyle.Flat;
             AddTagsComboBox.FormattingEnabled = true;
-            AddTagsComboBox.Location = new Point(138, 10);
+            AddTagsComboBox.Location = new Point(107, 3);
             AddTagsComboBox.Name = "AddTagsComboBox";
-            AddTagsComboBox.Size = new Size(306, 33);
+            AddTagsComboBox.Size = new Size(215, 23);
             AddTagsComboBox.TabIndex = 2;
             AddTagsComboBox.SelectedIndexChanged += TagsComboBoxSelectionChanged;
             // 
             // CurrentTagsFlowLayout
             // 
-            CurrentTagsFlowLayout.Location = new Point(138, 56);
+            CurrentTagsFlowLayout.Location = new Point(106, 31);
+            CurrentTagsFlowLayout.Margin = new Padding(2);
             CurrentTagsFlowLayout.Name = "CurrentTagsFlowLayout";
-            CurrentTagsFlowLayout.Size = new Size(306, 150);
+            CurrentTagsFlowLayout.Size = new Size(214, 90);
             CurrentTagsFlowLayout.TabIndex = 3;
+            // 
+            // flowLayoutPanel
+            // 
+            flowLayoutPanel.AutoSize = true;
+            flowLayoutPanel.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            flowLayoutPanel.Controls.Add(AddTagsLabel);
+            flowLayoutPanel.Controls.Add(AddTagsComboBox);
+            flowLayoutPanel.Controls.Add(CurrentTagsLabel);
+            flowLayoutPanel.Controls.Add(CurrentTagsFlowLayout);
+            flowLayoutPanel.Dock = DockStyle.Fill;
+            flowLayoutPanel.Location = new Point(0, 0);
+            flowLayoutPanel.Name = "flowLayoutPanel";
+            flowLayoutPanel.Size = new Size(348, 125);
+            flowLayoutPanel.TabIndex = 4;
             // 
             // TagsEdit
             // 
-            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(64, 64, 64);
-            Controls.Add(CurrentTagsFlowLayout);
-            Controls.Add(AddTagsComboBox);
-            Controls.Add(CurrentTagsLabel);
-            Controls.Add(AddTagsLabel);
+            Controls.Add(flowLayoutPanel);
+            Margin = new Padding(2);
             Name = "TagsEdit";
-            Size = new Size(451, 209);
+            Size = new Size(348, 125);
+            flowLayoutPanel.ResumeLayout(false);
+            flowLayoutPanel.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -92,5 +114,6 @@
         private Label CurrentTagsLabel;
         private ComboBox AddTagsComboBox;
         private FlowLayoutPanel CurrentTagsFlowLayout;
+        private FlowLayoutPanel flowLayoutPanel;
     }
 }

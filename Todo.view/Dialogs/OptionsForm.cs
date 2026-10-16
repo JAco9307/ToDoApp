@@ -28,6 +28,7 @@ namespace Todo.view
             OptionItems = new List<IOption>
             {
                 new StatusOptions(currentOptions),
+                new ListNameOptions(currentOptions),
                 new TagsOptions(currentOptions),
                 new ExportImportOptions(currentOptions)
             };

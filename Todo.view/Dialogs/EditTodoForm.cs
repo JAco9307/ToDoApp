@@ -1,6 +1,10 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
+using Todo.view.EditItems;
 using Todo.view.Entities;
 using Todo.view.Interfaces;
-using Todo.view.EditItems;
+using Todo.view.OptionsItems;
 
 namespace Todo.view
 {
@@ -20,6 +24,7 @@ namespace Todo.view
             {
                 new TitleEdit(_todoData),
                 new StatusEdit(_todoData,_context),
+                new ListIdEdit(_context, _todoData),
                 new DescriptionEdit(_todoData),
                 new TagsEdit(_todoData,_context)
             };
@@ -29,7 +34,6 @@ namespace Todo.view
             }
             if (IsNew)
             {
-                //deleteButton.Visible = false;
                 tableLayoutPanel.ColumnCount = 2;
             }
 
@@ -42,6 +46,7 @@ namespace Todo.view
 
         public void saveClick(object sender, EventArgs e)
         {
+            DialogResult = DialogResult.OK;
             foreach (ITodoPropertyEdit EditItem in EditItems)
             {
                 todoData = EditItem.UpdateData(todoData);

@@ -33,32 +33,52 @@ namespace Todo.testing.presenter
             calledGetList = true;
             return new TodoList();
         }
-
         public List<TodoTag> GetAllTags()
         {
-            throw new NotImplementedException();
+            return [];
         }
-
         public StatusList GetStatusOptions()
         {
             throw new NotImplementedException();
         }
-
         public void UpdateStatusOptions(StatusList options)
         {
             throw new NotImplementedException();
         }
-
-        public void UpdateTagOptions(List<TodoTag> tags)
+        public void UpdateDb()
+        {
+            
+        }
+        public void AddList(string Title)
         {
             throw new NotImplementedException();
         }
+        public void UpdateTagOptions(List<TodoTag> tags)
 
+        {
+            throw new NotImplementedException();
+        }
+        public void DeleteList(string Title)
+        {
+            throw new NotImplementedException();
+        }
         public void AddTagOptions(List<TodoTag> newTags)
         {
             throw new NotImplementedException();
         }
+        public void RenameList(string TitleOld, string TitleNew)
+        {
+            throw new NotImplementedException();
+        }
+        public List<string> GetListNames()
+        {
+            return [];
+        }
+        public TodoList GetTodoList(string listId)
+        {
+            return new();
 
+        }
         public void RemoveTagOptions(List<TodoTag> newTags)
         {
             throw new NotImplementedException();
@@ -74,13 +94,18 @@ namespace Todo.testing.presenter
         {
             return new TodoData
             {
-                title = "bazinga",
+                Title = "bazinga",
             };
+        }
+
+        public TodoData ShowEditTodoDialog(ContextData context, TodoData currentData, bool IsNew)
+        {
+            return new();
         }
 
         public TodoOptions ShowOptionsMenu(TodoOptions currentOptions)
         {
-            throw new NotImplementedException();
+            return new();
         }
 
         public List<Control> StartUp()
@@ -89,11 +114,15 @@ namespace Todo.testing.presenter
             return new List<Control>();
         }
 
-
         public List<TodoViewItem> UpdateActiveViewList(List<string> todoTitles, List<string> todoStatus)
         {
             calledUpdate = true;
             return new List<TodoViewItem>();
+        }
+
+        public void UpdateLists(List<string> lists, string selectList)
+        {
+            throw new NotImplementedException();
         }
     }
 
@@ -133,7 +162,7 @@ namespace Todo.testing.presenter
         {
             // Arrange
             var presenter = new Presenter(_view, _service);
-            presenter.statusOptions = new();
+            presenter.StatusOptions = new();
 
             presenter.UpdateView();
 
@@ -148,7 +177,7 @@ namespace Todo.testing.presenter
         {
             // Arrange
             var presenter = new Presenter(_view, _service);
-            presenter.statusOptions = new();
+            presenter.StatusOptions = new();
 
 
             presenter.CreateTodo();
@@ -163,7 +192,7 @@ namespace Todo.testing.presenter
             // Arrange
             var presenter = new Presenter(_view, _service);
             TodoItem todoItem = new("test");
-            presenter.statusOptions = new();
+            presenter.StatusOptions = new();
 
             // Act
             presenter.DeleteTodo(todoItem);
@@ -176,7 +205,7 @@ namespace Todo.testing.presenter
         public void CycleStatus_StateUnderTest_()
         {
             var presenter = new Presenter(_view, _service);
-            presenter.statusOptions = new();
+            presenter.StatusOptions = new();
             TodoItem todoItem = new("test");
             TodoViewItem item = new("test","Not Started");
 

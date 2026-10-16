@@ -13,8 +13,12 @@ namespace Todo.testing.View
         [TestMethod]
         public void cancelClick_StateUnderTest_ExpectedBehavior()
         {
-            TodoOptions ops = new TodoOptions();
-            ops.Status = [ "a", "b" ];
+            TodoOptions ops = new TodoOptions
+            {
+                Status = ["a", "b"],
+                ListNames = ["1"],
+                Tags = new()
+            };
             OptionsForm optionsForm = new OptionsForm(ops);
             object sender = new();
             EventArgs e = new();

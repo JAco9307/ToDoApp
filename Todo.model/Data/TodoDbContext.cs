@@ -31,9 +31,9 @@ public class TodoDbContext : DbContext
         modelBuilder.Entity<TodoList>().HasKey(todoList => todoList.Id);
         //Specifies one-to-many relationship between TodoList and TodoItem
         modelBuilder.Entity<TodoList>().HasMany(todoList => todoList.Items).WithOne().HasForeignKey(todoItem => todoItem.ListId).IsRequired();
-        modelBuilder.Entity<StatusList>().HasKey(status => status.Id);
+        modelBuilder.Entity<StatusList>().HasKey(Status => Status.Id);
         modelBuilder.Entity<StatusList>()
-            .Property(status => status.options)
+            .Property(Status => Status.options)
             .HasConversion(
                 status => string.Join(',', status),
                 status => status.Split(',', StringSplitOptions.RemoveEmptyEntries).ToList());

@@ -6,9 +6,10 @@
     /// </summary>
     public struct TodoData
     {
-        public string? title;
-        public string description;
-        public string status;
+        public string? Title;
+        public string Status;
+        public string ListTitle;
+        public string Description;
 
         public bool ToBeDeleted;
 

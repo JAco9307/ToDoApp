@@ -36,10 +36,41 @@ public class TodoServiceTests
 
         public StatusList? GetStatusOptions()
         {
-            throw new NotImplementedException();
+            return null;
         }
 
-        public void UpdateStatusOptions(StatusList statusOptions)
+        public void UpdateStatusOptions(StatusList StatusOptions)
+        {
+            
+        }
+
+        public void AddTodoItem(TodoItem todoItem, int listId)
+        {
+            
+        }
+
+        public TodoList AddList(string Title)
+        {
+            return new();
+        }
+
+        public void DeleteList(TodoList list)
+        {
+            
+        }
+
+        public List<string> GetListNames()
+        {
+            return new();
+
+        }
+
+        public List<TodoList> GetLists()
+        {
+            return new();
+        }
+
+        public TodoList? GetList(string TodoListTitle)
         {
             throw new NotImplementedException();
         }
