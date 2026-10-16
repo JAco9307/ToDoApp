@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
-using Todo.view.Forms;
+﻿using Todo.view.Forms;
 
 namespace Todo.view.ViewObjects
 {

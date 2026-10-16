@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Todo.view.Entities;
+﻿using Todo.view.Entities;
 
 namespace Todo.view.Interfaces
 {

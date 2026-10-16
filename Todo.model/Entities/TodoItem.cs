@@ -7,7 +7,7 @@
         public string Title { get; private set; }
         public string Description { get; private set; }
         public string Status { get; private set; }
-        public List<TodoTag> Tags {  get; private set; } = new List<TodoTag>();
+        public List<TodoTag> Tags { get; private set; } = new List<TodoTag>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TodoItem"/> class.
@@ -15,7 +15,7 @@
         /// <param name="title">The title.</param>
         /// <param name="description">The description</param>
         /// <param name="Status">The status.</param>
-        public TodoItem(string title, string description= "", string status = "Not Started")
+        public TodoItem(string title, string description = "", string status = "Not Started")
         {
             Title = title;
             Status = status;

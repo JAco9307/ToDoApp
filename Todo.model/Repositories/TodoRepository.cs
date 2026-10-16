@@ -1,5 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Diagnostics.CodeAnalysis;
 using Todo.model.Data;
 using Todo.model.Entities;
 using Todo.model.Interfaces;
@@ -119,7 +119,7 @@ namespace Todo.model.Repositories
 
         public List<TodoList> GetLists()
         {
-            return _dbContext.TodoLists 
+            return _dbContext.TodoLists
                 .Include(list => list.Items)
                 .ToList();
         }

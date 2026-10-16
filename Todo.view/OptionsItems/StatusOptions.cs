@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
+﻿using System.Data;
 using Todo.view.Dialogs;
 using Todo.view.Entities;
 using Todo.view.Interfaces;
@@ -68,7 +62,7 @@ namespace Todo.view.OptionsItems
             }
             statusBox.Items.Remove(statusBox.SelectedItem);
             statusBox.Items.Add(inputDialog.text);
-            
+
         }
 
         private void removeButton_Click(object sender, EventArgs e)
@@ -96,7 +90,7 @@ namespace Todo.view.OptionsItems
             int dir = direction ? 1 : -1;
 
             int selectIndex = statusBox.SelectedIndex;
-            (statusBox.Items[selectIndex + dir], statusBox.Items[selectIndex]) 
+            (statusBox.Items[selectIndex + dir], statusBox.Items[selectIndex])
                 = (statusBox.Items[selectIndex], statusBox.Items[selectIndex + dir]);
             statusBox.SelectedItem = statusBox.Items[selectIndex + dir];
         }

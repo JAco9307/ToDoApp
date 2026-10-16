@@ -1,7 +1,6 @@
 using Todo.model.Entities;
 using Todo.model.Interfaces;
 using Todo.model.Services;
-using static Microsoft.ApplicationInsights.MetricDimensionNames.TelemetryContext;
 
 namespace Todo.testing;
 
@@ -41,12 +40,12 @@ public class TodoServiceTests
 
         public void UpdateStatusOptions(StatusList StatusOptions)
         {
-            
+
         }
 
         public void AddTodoItem(TodoItem todoItem, int listId)
         {
-            
+
         }
 
         public TodoList AddList(string Title)
@@ -56,7 +55,7 @@ public class TodoServiceTests
 
         public void DeleteList(TodoList list)
         {
-            
+
         }
 
         public List<string> GetListNames()

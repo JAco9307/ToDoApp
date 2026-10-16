@@ -1,13 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
-using Todo.view.Entities;
+﻿using Todo.view.Entities;
 using Todo.view.Interfaces;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Todo.view.EditItems
 {
@@ -34,7 +26,7 @@ namespace Todo.view.EditItems
         {
             if (StatusComboBox.SelectedItem == null) return todoData;
             Status = StatusComboBox.SelectedItem.ToString();
-            if (Status == null) return todoData; 
+            if (Status == null) return todoData;
             todoData.Status = Status;
             return todoData;
         }

@@ -24,9 +24,9 @@ namespace Todo.model.Services
         {
             _repository = todoRepository;
             var lists = _repository.GetLists();
-            foreach(var list in lists)
+            foreach (var list in lists)
                 _todoLists.Add(list);
-            
+
         }
 
         /// <summary>
@@ -37,7 +37,7 @@ namespace Todo.model.Services
         public void Add(int listId, TodoItem todoItem)
         {
             _todoLists.Find(list => list.Id == listId)?.Add(todoItem);
-            _repository.AddTodoItem(todoItem,listId);
+            _repository.AddTodoItem(todoItem, listId);
         }
         /// <summary>
         /// Updates all entities in database
@@ -69,12 +69,12 @@ namespace Todo.model.Services
                 return list;
 
             list = _repository.GetList(listId);
-            if(list != null)
+            if (list != null)
             {
                 _todoLists.Add(list);
                 return list;
             }
-            
+
             list = new TodoList(listId);
             _todoLists.Add(list);
             return list;
@@ -92,7 +92,7 @@ namespace Todo.model.Services
                 return list;
             }
 
-            list = new TodoList{ Title = listTitle };
+            list = new TodoList { Title = listTitle };
             _todoLists.Add(list);
             return list;
         }
@@ -102,8 +102,8 @@ namespace Todo.model.Services
         /// Adds a new list to the repository.
         /// </summary>
         /// <param name="Title">The list's title.</param>
-        public void AddList(string Title) 
-        { 
+        public void AddList(string Title)
+        {
             _repository.AddList(Title);
         }
         /// <summary>
@@ -152,7 +152,7 @@ namespace Todo.model.Services
                 TodoList list = new TodoList(1);
                 _todoLists.Add(list);
                 output.Add(list.Title);
-                
+
             }
             if (output.Count == 0 && _todoLists.Count != 0) //not sure why this check is nessesary but it is
             {

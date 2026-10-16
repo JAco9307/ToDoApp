@@ -47,7 +47,7 @@ namespace Todo.testing.presenter
         }
         public void UpdateDb()
         {
-            
+
         }
         public void AddList(string Title)
         {
@@ -133,7 +133,7 @@ namespace Todo.testing.presenter
         ITodoService _service = new mockService();
 
         [TestInitialize]
-        public void Init() 
+        public void Init()
         {
             _view = new mockView();
             _service = new mockService();
@@ -149,8 +149,8 @@ namespace Todo.testing.presenter
             {
                 presenter.StartUp();
             }
-            catch (ArgumentOutOfRangeException) 
-            { 
+            catch (ArgumentOutOfRangeException)
+            {
             }
 
             // Assert
@@ -207,7 +207,7 @@ namespace Todo.testing.presenter
             var presenter = new Presenter(_view, _service);
             presenter.StatusOptions = new();
             TodoItem todoItem = new("test");
-            TodoViewItem item = new("test","Not Started");
+            TodoViewItem item = new("test", "Not Started");
 
             Assert.AreEqual("Not Started", todoItem.Status);
             presenter.CycleStatus(todoItem, item);

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Text;
+﻿using System.Drawing;
 
 namespace Todo.model.Entities
 {
@@ -12,7 +9,7 @@ namespace Todo.model.Entities
         public Color Color { get; private set; }
 
         private TodoTag() { }
-        public TodoTag(string title,  Color color)
+        public TodoTag(string title, Color color)
         {
             Title = title;
             Color = color;

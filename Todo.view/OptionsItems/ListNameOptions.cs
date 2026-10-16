@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
+﻿using System.Data;
 using Todo.view.Dialogs;
 using Todo.view.Entities;
 using Todo.view.Interfaces;
@@ -81,7 +75,7 @@ namespace Todo.view.OptionsItems
             ListNameChanges.Add(listBox.SelectedItem.ToString() ?? "ERROR", inputDialog.text);
             listBox.Items.Remove(listBox.SelectedItem);
             listBox.Items.Add(inputDialog.text);
-            
+
         }
     }
 }

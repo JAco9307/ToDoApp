@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Todo.view.Entities
+﻿namespace Todo.view.Entities
 {
 
     /// <summary>
@@ -13,8 +9,8 @@ namespace Todo.view.Entities
         public List<string> Status;
         public List<string> ListNames;
         public string CurrentList;
-        public Dictionary<string,string> ListNameChanges;
-        public List<(string,Color)> Tags;
+        public Dictionary<string, string> ListNameChanges;
+        public List<(string, Color)> Tags;
 
     }
 }

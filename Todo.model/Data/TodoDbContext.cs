@@ -18,7 +18,7 @@ public class TodoDbContext : DbContext
     /// <param name="options">DbContext Options</param>
     public TodoDbContext(DbContextOptions<TodoDbContext> options) : base(options)
     {
-        
+
     }
 
     /// <summary>

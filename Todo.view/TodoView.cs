@@ -18,7 +18,7 @@ namespace Todo.view
             guiThread.Start();
 
             List<Control> controls = [
-                createTodoButton, 
+                createTodoButton,
                 optionsButton,
                 listComboBox
                 ];
@@ -39,13 +39,13 @@ namespace Todo.view
         /// <returns>The list result.</returns>
         public List<TodoViewItem> UpdateActiveViewList(List<string> todoTitles, List<string> todoStatus)
         {
-            Invoke(()=> flowLayout.Controls.Clear());
+            Invoke(() => flowLayout.Controls.Clear());
             List<TodoViewItem> controls = new();
-            for(int i = 0; i < todoTitles.Count; i++)
+            for (int i = 0; i < todoTitles.Count; i++)
             {
                 TodoViewItem newTodo = addTodo(todoTitles[i], todoStatus[i]);
                 newTodo.id = i;
-                controls.Add(newTodo); 
+                controls.Add(newTodo);
             }
 
             return controls;
@@ -100,7 +100,8 @@ namespace Todo.view
 
         public void UpdateLists(List<string> strings, string selectList)
         {
-            Invoke(() => { 
+            Invoke(() =>
+            {
                 listComboBox.Items.Clear();
                 listComboBox.Items.AddRange(strings.ToArray());
                 listComboBox.SelectedItem = selectList;
