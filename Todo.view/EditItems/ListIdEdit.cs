@@ -14,10 +14,9 @@ namespace Todo.view.OptionsItems
 
         public TodoData UpdateData(TodoData todoData)
         {
-            if (listComboBox.SelectedItem == null) return todoData;
-            string? listname = listComboBox.SelectedItem.ToString();
-            if (listname != null)
+            if (listComboBox.SelectedItem?.ToString() is string listname)
                 todoData.ListTitle = listname;
+
             return todoData;
         }
     }

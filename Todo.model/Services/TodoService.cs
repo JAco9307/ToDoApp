@@ -10,6 +10,7 @@ namespace Todo.model.Services
         private ITodoRepository _repository;
         private readonly List<TodoList> _todoLists = new List<TodoList>();
         public IReadOnlyList<TodoList> TodoLists => _todoLists;
+        private StatusList? _statusOptions;
 
         [ExcludeFromCodeCoverage]
         public TodoService()
@@ -133,10 +134,12 @@ namespace Todo.model.Services
 
         public StatusList GetStatusOptions()
         {
-            StatusList Options = new();
-            StatusList? list = _repository.GetStatusOptions();
-            if (list == null) return (new StatusList());
-            return list;
+            if (_statusOptions == null)
+            {
+                StatusList? list = _repository.GetStatusOptions();
+                _statusOptions = list != null ? list : new StatusList();
+            }
+            return _statusOptions;
         }
 
         /// <summary>

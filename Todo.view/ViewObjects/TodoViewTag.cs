@@ -49,7 +49,7 @@ namespace Todo.view.ViewObjects
 
         private void TodoViewTag_MouseClick(object sender, MouseEventArgs e)
         {
-            if (Delete is null)
+            if (Delete is not null)
                 return;
 
             UpdateTag();
@@ -57,7 +57,7 @@ namespace Todo.view.ViewObjects
 
         private void ViewTagText_Click(object sender, EventArgs e)
         {
-            if (Delete is null)
+            if (Delete is not null)
                 return;
 
             UpdateTag();

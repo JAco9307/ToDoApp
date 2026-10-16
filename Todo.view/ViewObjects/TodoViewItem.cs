@@ -10,10 +10,11 @@ namespace Todo.view
         public string Status
         {
             get { return _Status; }
-            set {
-                _Status = value; 
-                CycleStatus.Text = value; 
-            } 
+            set
+            {
+                _Status = value;
+                CycleStatus.Text = value;
+            }
         }
         private string _Status;
 
@@ -30,7 +31,7 @@ namespace Todo.view
             CycleStatus.Text = Status;
             todoLabel.Text = TodoTitle;
         }
-                
+
         public Button CycleStatus => StatusButton;
 
     }

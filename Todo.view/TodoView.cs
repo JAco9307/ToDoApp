@@ -40,7 +40,7 @@ namespace Todo.view
         public List<TodoViewItem> UpdateActiveViewList(List<string> todoTitles, List<string> todoStatus)
         {
             Invoke(() => flowLayout.Controls.Clear());
-            List<TodoViewItem> controls = new();
+            List<TodoViewItem> controls = [];
             for (int i = 0; i < todoTitles.Count; i++)
             {
                 TodoViewItem newTodo = addTodo(todoTitles[i], todoStatus[i]);
@@ -59,7 +59,7 @@ namespace Todo.view
         /// <returns>The todo view item that has been generated.</returns>
         private TodoViewItem addTodo(string TodoTitle, string Status)
         {
-            TodoViewItem item = new TodoViewItem(TodoTitle, Status);
+            TodoViewItem item = new(TodoTitle, Status);
             Invoke(() => flowLayout.Controls.Add(item));
             return item;
         }
@@ -72,13 +72,12 @@ namespace Todo.view
         /// <returns></returns>
         public TodoData ShowEditTodoDialog(ContextData context, TodoData currentData, bool IsNew)
         {
-            var CreateTodoForm = new EditTodoForm(context, currentData, IsNew);
+            EditTodoForm CreateTodoForm = new(context, currentData, IsNew);
             DialogResult result = CreateTodoForm.ShowDialog();
             TodoData todoData = CreateTodoForm.todoData;
+
             if (result == DialogResult.Cancel && IsNew)
-            {
                 todoData.ToBeDeleted = true;
-            }
 
             return todoData;
         }

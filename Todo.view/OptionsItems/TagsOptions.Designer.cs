@@ -36,25 +36,29 @@
             // AvailableTagsLabel
             // 
             AvailableTagsLabel.ForeColor = SystemColors.ControlLight;
-            AvailableTagsLabel.Location = new Point(3, 6);
+            AvailableTagsLabel.Location = new Point(2, 4);
+            AvailableTagsLabel.Margin = new Padding(2, 0, 2, 0);
             AvailableTagsLabel.Name = "AvailableTagsLabel";
-            AvailableTagsLabel.Size = new Size(145, 60);
+            AvailableTagsLabel.Size = new Size(102, 36);
             AvailableTagsLabel.TabIndex = 0;
             AvailableTagsLabel.Text = "Available Tags:";
             // 
             // TagsFlowLayoutPanel
             // 
-            TagsFlowLayoutPanel.Location = new Point(154, 6);
+            TagsFlowLayoutPanel.Location = new Point(108, 4);
+            TagsFlowLayoutPanel.Margin = new Padding(2, 2, 2, 2);
             TagsFlowLayoutPanel.Name = "TagsFlowLayoutPanel";
-            TagsFlowLayoutPanel.Size = new Size(392, 184);
+            TagsFlowLayoutPanel.Size = new Size(274, 110);
             TagsFlowLayoutPanel.TabIndex = 1;
             // 
             // AddTagButton
             // 
             AddTagButton.ForeColor = SystemColors.ControlLight;
-            AddTagButton.Location = new Point(552, 6);
+            AddTagButton.Location = new Point(386, 4);
+            AddTagButton.Margin = new Padding(2, 2, 2, 2);
+            AddTagButton.MinimumSize = new Size(0, 25);
             AddTagButton.Name = "AddTagButton";
-            AddTagButton.Size = new Size(112, 34);
+            AddTagButton.Size = new Size(78, 25);
             AddTagButton.TabIndex = 2;
             AddTagButton.Text = "Add Tag";
             AddTagButton.UseVisualStyleBackColor = true;
@@ -62,13 +66,14 @@
             // 
             // TagsOptions
             // 
-            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(AddTagButton);
             Controls.Add(TagsFlowLayoutPanel);
             Controls.Add(AvailableTagsLabel);
+            Margin = new Padding(2, 2, 2, 2);
             Name = "TagsOptions";
-            Size = new Size(671, 193);
+            Size = new Size(470, 116);
             ResumeLayout(false);
         }
 

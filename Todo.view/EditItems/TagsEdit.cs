@@ -1,15 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
+﻿using System.Data;
 using Todo.view.Entities;
 using Todo.view.Interfaces;
 using Todo.view.ViewObjects;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Todo.view.EditItems
 {
@@ -47,22 +39,23 @@ namespace Todo.view.EditItems
 
         public void TagsComboBoxSelectionChanged(object sender, EventArgs e)
         {
-            if(CurrentTags == null)
+            if (CurrentTags == null)
                 throw new NullReferenceException();
 
             if (AddTagsComboBox.SelectedItem is not string)
                 return;
+            string selectedItem = (string)AddTagsComboBox.SelectedItem;
 
-            (string title, Color color) tag = AllTags.First(tag => tag.Item1 == AddTagsComboBox.SelectedItem.ToString());
+            (string title, Color color) tag = AllTags.First(tag => tag.Item1 == selectedItem);
             TodoViewTag viewTag = new TodoViewTag(tag.title, tag.color);
 
             CurrentTagsFlowLayout.Controls.Add(viewTag);
 
             viewTag.Delete += delegate { AddTagsComboBox.Items.Add(tag.title); };
 
-            CurrentTags.Add(AllTags.FirstOrDefault(tag => tag.Item1 == (string)AddTagsComboBox.SelectedItem));
+            CurrentTags.Add(AllTags.FirstOrDefault(tag => tag.Item1 == selectedItem));
 
-            AddTagsComboBox.Items.Remove(AddTagsComboBox.SelectedItem.ToString());
+            AddTagsComboBox.Items.Remove(selectedItem);
         }
     }
 }
