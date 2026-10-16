@@ -75,7 +75,7 @@ namespace Todo.view
             var CreateTodoForm = new EditTodoForm(context, currentData, IsNew);
             DialogResult result = CreateTodoForm.ShowDialog();
             TodoData todoData = CreateTodoForm.todoData;
-            if (result == DialogResult.Cancel)
+            if (result == DialogResult.Cancel && IsNew)
             {
                 todoData.ToBeDeleted = true;
             }
