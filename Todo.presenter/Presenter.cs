@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.Text.Json;
 using System.Windows.Forms;
 using Todo.model.Entities;
 using Todo.model.Interfaces;
@@ -27,9 +28,9 @@ namespace Todo.presenter
         /// </summary>
         public void StartUp()
         {
+            statusOptions = _service.GetStatusOptions();
             List<Control> controls = _view.StartUp();
             EventHandlerSetup(controls);
-            statusOptions = _service.GetStatusOptions();
             UpdateView();
         }
 
@@ -110,7 +111,7 @@ namespace Todo.presenter
                 return null;
             }
 
-    if (result.title != null)
+            if (result.title != null)
             {
                 todoItem.SetTodoTitle(result.title);
                 todoItem.SetTodoStatus(result.status);
@@ -165,6 +166,7 @@ namespace Todo.presenter
 
             TodoOptions newOptions = _view.ShowOptionsMenu(new TodoOptions {Status = statusOptions.options, Tags = tags});
 
+
             statusOptions.options = newOptions.Status;
 
             _service.UpdateStatusOptions(statusOptions);
@@ -185,6 +187,24 @@ namespace Todo.presenter
 
             _service.AddTagOptions(addedTags);
             _service.RemoveTagOptions(removedTags);
+
+            if(newOptions.ImportFilePath != null)
+            {
+                importJson(newOptions.ImportFilePath);
+            }
+
+            if (newOptions.CreateExport)
+            {
+                List<TodoList> lists = new List<TodoList>();
+                List<int> ids = new List<int> { 1 };
+                foreach (int id in ids)
+                {
+                    lists.Add(_service.GetTodoList(id));
+                }
+                exportJson(lists);
+                UpdateOptions();
+                return;
+            }
         }
 
         /// <summary>
@@ -224,6 +244,24 @@ namespace Todo.presenter
             {
                 StatusOptions = statusOptions.options,
             };
+        }
+
+        private void importJson(string filePath)
+        {
+            string json = File.ReadAllText(filePath);
+            List<TodoList>? lists = JsonSerializer.Deserialize<List<TodoList>>(json);
+            if (lists == null)
+                return;
+            foreach (TodoList list in lists)
+            {
+                //Save list via _service.
+            }
+        }
+
+        private void exportJson(List<TodoList> lists)
+        {
+            string json = JsonSerializer.Serialize(lists, new JsonSerializerOptions { WriteIndented = true});
+            File.WriteAllText("Lists.json", json);
         }
     }
 }

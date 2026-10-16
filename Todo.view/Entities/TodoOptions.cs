@@ -12,6 +12,8 @@ namespace Todo.view.Entities
     {
         public List<string> Status;
         public List<(string,Color)> Tags;
+        public bool CreateExport;
+        public string ImportFilePath;
 
     }
 }

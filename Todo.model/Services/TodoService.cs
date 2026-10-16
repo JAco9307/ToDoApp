@@ -10,6 +10,7 @@ namespace Todo.model.Services
         private ITodoRepository _repository;
         private readonly Dictionary<int, TodoList> _todoLists = new Dictionary<int, TodoList>();
         public IReadOnlyDictionary<int, TodoList> TodoLists => _todoLists;
+        private List<TodoTag>? _allTags;
 
         [ExcludeFromCodeCoverage]
         public TodoService()
@@ -86,17 +87,24 @@ namespace Todo.model.Services
 
         public List<TodoTag> GetAllTags()
         {
-            return _repository.GetAllTags() ?? new List<TodoTag>();
+            if (_allTags != null)
+                return _allTags;
+            
+            _allTags = _repository.GetAllTags() ?? new List<TodoTag>();
+            return _allTags;
         }
 
         public void AddTagOptions(List<TodoTag> newTags)
         {
+            
+            _allTags?.AddRange(newTags);
             _repository.AddTagOptions(newTags);
         }
 
-        public void RemoveTagOptions(List<TodoTag> newTags)
+        public void RemoveTagOptions(List<TodoTag> tags)
         {
-            _repository.RemoveTagOptions(newTags);
+            _allTags?.RemoveAll(tag => tags.Contains(tag));
+            _repository.RemoveTagOptions(tags);
         }
     }
 }
