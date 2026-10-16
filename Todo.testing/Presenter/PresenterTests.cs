@@ -34,12 +34,32 @@ namespace Todo.testing.presenter
             return new TodoList();
         }
 
+        public List<TodoTag> GetAllTags()
+        {
+            throw new NotImplementedException();
+        }
+
         public StatusList GetStatusOptions()
         {
             throw new NotImplementedException();
         }
 
         public void UpdateStatusOptions(StatusList options)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateTagOptions(List<TodoTag> tags)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddTagOptions(List<TodoTag> newTags)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveTagOptions(List<TodoTag> newTags)
         {
             throw new NotImplementedException();
         }
@@ -80,8 +100,8 @@ namespace Todo.testing.presenter
     [TestClass]
     public class PresenterTests
     {
-        ITodoView _view;
-        ITodoService _service;
+        ITodoView _view = new mockView();
+        ITodoService _service = new mockService();
 
         [TestInitialize]
         public void Init() 

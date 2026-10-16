@@ -1,11 +1,7 @@
-using Microsoft.Extensions.Options;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Drawing;
 using System.Windows.Forms;
 using Todo.model.Entities;
 using Todo.model.Interfaces;
-using Todo.model.Migrations;
 using Todo.view;
 using Todo.view.Entities;
 using Todo.view.Interfaces;
@@ -73,15 +69,11 @@ namespace Todo.presenter
         /// </summary>
         public void CreateTodo()
         {
-            if (statusOptions == null) throw new NullReferenceException();
-            var result = _view.ShowEditTodoDialog(GetContext());
-            if (result.title != null)
-            {
-                TodoItem newTodo = new(result.title);
-                newTodo.SetTodoStatus(result.status);
-                _service.Add(_currentListId, newTodo);
-                UpdateView();
-            }
+            TodoItem? newTodo = HandleEditPopUp(null);
+            if (newTodo == null)
+                return;
+            _service.Add(_currentListId, newTodo);
+            UpdateView();
         }
         
         /// <summary>
@@ -90,25 +82,55 @@ namespace Todo.presenter
         /// <param name="todoItem">The todoViewItem to edit.</param>
         private void EditTodo(TodoItem todoItem, int ViewItemId)
         {
+            TodoItem? newTodo = HandleEditPopUp(todoItem);
+            if (newTodo == null)
+                return;
+            _service.UpdateTodoItem(newTodo);
+            UpdateView();
+        }
+
+        private TodoItem? HandleEditPopUp(TodoItem? todoItem)
+        {
+            if (todoItem == null)
+                todoItem = new TodoItem("");
+
+
             if (statusOptions == null) throw new NullReferenceException();
+
+            List<TodoTag> allTags = _service.GetAllTags();
+
             TodoData todoData = ItemToData(todoItem);
-            TodoData result = _view.ShowEditTodoDialog(GetContext(), todoData);
+
+            ContextData context = GetContext();
+            context.AllTags = allTags.Select(tag => (tag.Title, tag.Color)).ToList();
+
+            TodoData result = _view.ShowEditTodoDialog(context, todoData);
             if (result.ToBeDeleted)
             {
                 DeleteTodo(todoItem);
                 UpdateView();
-                return;
+                return null;
             }
-            
-            if (result.title != null)
+
+    if (result.title != null)
             {
                 todoItem.SetTodoTitle(result.title);
                 todoItem.SetTodoStatus(result.status);
-                _service.UpdateTodoItem(todoItem);
-                UpdateView();
-            }
+
+                List<TodoTag> newTags = allTags.Where(tag => HasMatchingTitle(result, tag)).ToList();
+                todoItem.setTags(newTags);
+                todoItem.SetDescription(result.description);
+    }
+
+            return todoItem;
+        }
+
+        private static bool HasMatchingTitle(TodoData todoData, TodoTag tag)
+        {
+            return todoData.CurrentTags.Any(newTag => newTag.Item1 == tag.Title);
         }
         
+
 
         /// <summary>
         /// Deletes a <see cref="TodoItem"/> .
@@ -136,9 +158,35 @@ namespace Todo.presenter
         public void UpdateOptions()
         {
             if (statusOptions == null) return;
-            TodoOptions newOptions = _view.ShowOptionsMenu(new TodoOptions {Status = statusOptions.options});
+
+            List<TodoTag> allTags = _service.GetAllTags();
+            List<TodoTag> addedTags = new List<TodoTag>();
+            List<TodoTag> removedTags = new List<TodoTag>();
+
+            List<(string title, Color color)> tags = allTags.Select(tag => (tag.Title, tag.Color)).ToList();
+
+            TodoOptions newOptions = _view.ShowOptionsMenu(new TodoOptions {Status = statusOptions.options, Tags = tags});
+
             statusOptions.options = newOptions.Status;
+
             _service.UpdateStatusOptions(statusOptions);
+
+            foreach (TodoTag tag in allTags)
+            {
+                if(newOptions.Tags.Any(optionsTag => optionsTag.Item1 == tag.Title))
+                {
+                    newOptions.Tags.Remove(newOptions.Tags.FirstOrDefault(optionsTag => optionsTag.Item1 == tag.Title));
+                    continue;
+                }
+                removedTags.Add(tag);
+            }
+            foreach((string title, Color color) tag in newOptions.Tags)
+            {
+                addedTags.Add(new TodoTag(tag.title, tag.color));
+            }
+
+            _service.AddTagOptions(addedTags);
+            _service.RemoveTagOptions(removedTags);
         }
 
         /// <summary>
@@ -165,6 +213,8 @@ namespace Todo.presenter
             return new TodoData
             {
                 title = todoItem.Title,
+                CurrentTags = todoItem.Tags.Select(tag => (tag.Title, tag.Color)).ToList(),
+                description = todoItem.Description,
                 status = todoItem.Status
             };
         }
@@ -174,7 +224,7 @@ namespace Todo.presenter
             if (statusOptions == null) throw new NullReferenceException();
             return new ContextData
             {
-                StatusOptions = statusOptions.options
+                StatusOptions = statusOptions.options,
             };
         }
     }

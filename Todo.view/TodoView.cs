@@ -85,12 +85,14 @@ namespace Todo.view
         /// <returns></returns>
         public TodoData ShowEditTodoDialog(ContextData context, TodoData? currentData)
         {
+            bool IsNew = false;
             if (currentData == null)
             {
                 currentData = new TodoData();
+                IsNew = true;
             }
             
-            var CreateTodoForm = new EditTodoForm(context, (TodoData)currentData);
+            var CreateTodoForm = new EditTodoForm(context, (TodoData)currentData, IsNew);
             DialogResult result = CreateTodoForm.ShowDialog();
 
             return CreateTodoForm.todoData;
@@ -104,7 +106,7 @@ namespace Todo.view
         /// <returns>The options set when saving.</returns>
         public TodoOptions ShowOptionsMenu(TodoOptions currentOptions)
         {
-            var OptionsForm = new OptionsForm(currentOptions);
+            OptionsForm OptionsForm = new OptionsForm(currentOptions);
             DialogResult result = OptionsForm.ShowDialog();
             if (result == DialogResult.OK)
                 return OptionsForm.OutputOptions;

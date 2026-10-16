@@ -47,7 +47,7 @@
             saveButton.ForeColor = SystemColors.ButtonHighlight;
             saveButton.Location = new Point(3, 3);
             saveButton.Name = "saveButton";
-            saveButton.Size = new Size(112, 24);
+            saveButton.Size = new Size(162, 44);
             saveButton.TabIndex = 0;
             saveButton.Text = "Save";
             saveButton.UseVisualStyleBackColor = true;
@@ -60,12 +60,13 @@
             cancelButton.Dock = DockStyle.Fill;
             cancelButton.FlatStyle = FlatStyle.Flat;
             cancelButton.ForeColor = SystemColors.ButtonHighlight;
-            cancelButton.Location = new Point(121, 3);
+            cancelButton.Location = new Point(171, 3);
             cancelButton.Name = "cancelButton";
-            cancelButton.Size = new Size(112, 24);
+            cancelButton.Size = new Size(162, 44);
             cancelButton.TabIndex = 1;
             cancelButton.Text = "Cancel";
             cancelButton.UseVisualStyleBackColor = true;
+            cancelButton.Click += cancelClick;
             // 
             // CenterBox
             // 
@@ -74,17 +75,19 @@
             CenterBox.Dock = DockStyle.Fill;
             CenterBox.FlatStyle = FlatStyle.Popup;
             CenterBox.Location = new Point(0, 0);
+            CenterBox.Margin = new Padding(4, 5, 4, 5);
             CenterBox.Name = "CenterBox";
-            CenterBox.Size = new Size(360, 165);
+            CenterBox.Padding = new Padding(4, 5, 4, 5);
+            CenterBox.Size = new Size(514, 639);
             CenterBox.TabIndex = 4;
             CenterBox.TabStop = false;
             // 
             // flowLayoutPanel
             // 
             flowLayoutPanel.Dock = DockStyle.Fill;
-            flowLayoutPanel.Location = new Point(3, 19);
+            flowLayoutPanel.Location = new Point(4, 29);
             flowLayoutPanel.Name = "flowLayoutPanel";
-            flowLayoutPanel.Size = new Size(354, 113);
+            flowLayoutPanel.Size = new Size(506, 555);
             flowLayoutPanel.TabIndex = 3;
             // 
             // tableLayoutPanel
@@ -97,11 +100,11 @@
             tableLayoutPanel.Controls.Add(cancelButton, 1, 0);
             tableLayoutPanel.Controls.Add(deleteButton, 2, 0);
             tableLayoutPanel.Dock = DockStyle.Bottom;
-            tableLayoutPanel.Location = new Point(3, 132);
+            tableLayoutPanel.Location = new Point(4, 584);
             tableLayoutPanel.Name = "tableLayoutPanel";
             tableLayoutPanel.RowCount = 1;
             tableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel.Size = new Size(354, 30);
+            tableLayoutPanel.Size = new Size(506, 50);
             tableLayoutPanel.TabIndex = 0;
             // 
             // deleteButton
@@ -111,9 +114,9 @@
             deleteButton.Dock = DockStyle.Fill;
             deleteButton.FlatStyle = FlatStyle.Flat;
             deleteButton.ForeColor = SystemColors.ButtonHighlight;
-            deleteButton.Location = new Point(239, 3);
+            deleteButton.Location = new Point(339, 3);
             deleteButton.Name = "deleteButton";
-            deleteButton.Size = new Size(112, 24);
+            deleteButton.Size = new Size(164, 44);
             deleteButton.TabIndex = 4;
             deleteButton.Text = "Delete";
             deleteButton.UseVisualStyleBackColor = false;
@@ -122,14 +125,15 @@
             // EditTodoForm
             // 
             AcceptButton = saveButton;
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(64, 64, 64);
             CancelButton = cancelButton;
-            ClientSize = new Size(360, 165);
+            ClientSize = new Size(514, 639);
             ControlBox = false;
             Controls.Add(CenterBox);
             FormBorderStyle = FormBorderStyle.None;
+            Margin = new Padding(4, 5, 4, 5);
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "EditTodoForm";

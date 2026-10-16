@@ -13,17 +13,24 @@ namespace Todo.view
         /// </summary>
         /// <param name="_context">The current context.</param>
         /// <param name="_todoData">The current todo data.</param>
-        public EditTodoForm(ContextData _context, TodoData _todoData)
+        public EditTodoForm(ContextData _context, TodoData _todoData, bool IsNew = false)
         {
             InitializeComponent();
             EditItems = new List<ITodoPropertyEdit>
             {
                 new TitleEdit(_todoData),
-                new StatusEdit(_todoData,_context)
+                new StatusEdit(_todoData,_context),
+                new DescriptionEdit(_todoData),
+                new TagsEdit(_todoData,_context)
             };
             foreach (ITodoPropertyEdit EditItem in EditItems)
             {
                 flowLayoutPanel.Controls.Add((Control)EditItem);
+            }
+            if (IsNew)
+            {
+                //deleteButton.Visible = false;
+                tableLayoutPanel.ColumnCount = 2;
             }
 
 

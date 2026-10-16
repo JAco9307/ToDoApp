@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Drawing;
 using Todo.model.Entities;
 
 namespace Todo.model.Data;
@@ -9,7 +10,8 @@ public class TodoDbContext : DbContext
     public DbSet<TodoItem> TodoItems { get; set; }
     public DbSet<TodoList> TodoLists { get; set; }
     public DbSet<StatusList> TodoStatusOptions { get; set; }
-    
+    public DbSet<TodoTag> TodoTags { get; set; }
+
     /// <summary>
     /// Initializes a new instance of the <see cref="TodoDbContext"/> class
     /// </summary>
@@ -35,5 +37,14 @@ public class TodoDbContext : DbContext
             .HasConversion(
                 status => string.Join(',', status),
                 status => status.Split(',', StringSplitOptions.RemoveEmptyEntries).ToList());
+
+        modelBuilder.Entity<TodoItem>().HasMany(todoItem => todoItem.Tags).WithMany();
+        modelBuilder.Entity<TodoTag>().Property(tag => tag.Color).HasConversion(color => color.ToArgb(), value => Color.FromArgb(value));
+
+        modelBuilder.Entity<TodoTag>().HasData(
+                new { Id = -1, Title = "Urgent", Color = Color.Red },
+                new { Id = -2, Title = "Important", Color = Color.Yellow },
+                new { Id = -3, Title = "Other", Color = Color.Blue }
+         );
     }
 }
