@@ -17,7 +17,7 @@ namespace Todo.view.OptionsItems
         {
             InitializeComponent();
             listComboBox.Items.AddRange(_context.ListNames.ToArray());
-                listComboBox.SelectedItem = _todoData.OnList;
+                listComboBox.SelectedItem = _todoData.ListTitle;
         }
 
         public TodoData UpdateData(TodoData todoData)
@@ -25,7 +25,7 @@ namespace Todo.view.OptionsItems
             if (listComboBox.SelectedItem == null) return todoData;
             string? listname = listComboBox.SelectedItem.ToString();
             if (listname != null)
-                todoData.OnList = listname;
+                todoData.ListTitle = listname;
             return todoData;
         }
     }

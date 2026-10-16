@@ -33,60 +33,53 @@ namespace Todo.testing.presenter
             calledGetList = true;
             return new TodoList();
         }
-
         public List<TodoTag> GetAllTags()
         {
-            throw new NotImplementedException();
+            return [];
         }
-
         public StatusList GetStatusOptions()
         {
             throw new NotImplementedException();
         }
-
         public void UpdateStatusOptions(StatusList options)
         {
             throw new NotImplementedException();
         }
-
-<<<<<<< HEAD
         public void UpdateDb()
         {
             
         }
-
         public void AddList(string Title)
-=======
+        {
+            throw new NotImplementedException();
+        }
         public void UpdateTagOptions(List<TodoTag> tags)
->>>>>>> main
+
         {
             throw new NotImplementedException();
         }
-
-<<<<<<< HEAD
         public void DeleteList(string Title)
-=======
-        public void AddTagOptions(List<TodoTag> newTags)
->>>>>>> main
         {
             throw new NotImplementedException();
         }
-
-<<<<<<< HEAD
+        public void AddTagOptions(List<TodoTag> newTags)
+        {
+            throw new NotImplementedException();
+        }
         public void RenameList(string TitleOld, string TitleNew)
         {
             throw new NotImplementedException();
         }
-
         public List<string> GetListNames()
         {
-            throw new NotImplementedException();
+            return [];
         }
-
         public TodoList GetTodoList(string listId)
-=======
+        {
+            return new();
+
+        }
         public void RemoveTagOptions(List<TodoTag> newTags)
->>>>>>> main
         {
             throw new NotImplementedException();
         }
@@ -105,9 +98,14 @@ namespace Todo.testing.presenter
             };
         }
 
+        public TodoData ShowEditTodoDialog(ContextData context, TodoData currentData, bool IsNew)
+        {
+            return new();
+        }
+
         public TodoOptions ShowOptionsMenu(TodoOptions currentOptions)
         {
-            throw new NotImplementedException();
+            return new();
         }
 
         public List<Control> StartUp()
@@ -115,7 +113,6 @@ namespace Todo.testing.presenter
             calledStartup = true;
             return new List<Control>();
         }
-
 
         public List<TodoViewItem> UpdateActiveViewList(List<string> todoTitles, List<string> todoStatus)
         {

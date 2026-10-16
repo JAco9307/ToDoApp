@@ -8,7 +8,7 @@
     {
         public string? Title;
         public string Status;
-        public string OnList;
+        public string ListTitle;
         public string Description;
 
         public bool ToBeDeleted;

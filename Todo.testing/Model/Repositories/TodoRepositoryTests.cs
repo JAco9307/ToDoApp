@@ -103,7 +103,7 @@ public class TodoRepositoryTests
         string TitleString = new("this is a todo item");
         string DescString = new("This is a description");
         TodoItem todoItem = new TodoItem(TitleString,DescString);
-        repository.AddTodoItem(todoItem);
+        repository.AddTodoItem(todoItem,0);
         
         TodoItem savedTodoItem = dbContext.TodoItems.Find(1)!;
         Assert.AreEqual(savedTodoItem.Description, DescString);

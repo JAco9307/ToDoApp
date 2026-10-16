@@ -125,7 +125,7 @@ namespace Todo.presenter
             {
                 todoItem.SetTodoTitle(result.Title);
                 todoItem.SetTodoStatus(result.Status);
-                todoItem.ListId = _service.GetTodoList(result.OnList).Id;
+                todoItem.ListId = _service.GetTodoList(result.ListTitle).Id;
                 List<TodoTag> newTags = allTags.Where(tag => HasMatchingTitle(result, tag)).ToList();
                 todoItem.setTags(newTags);
                 todoItem.SetDescription(result.Description);
@@ -264,7 +264,7 @@ namespace Todo.presenter
             {
                 Title = todoItem.Title,
                 Status = todoItem.Status,
-                OnList = _service.GetTodoList(todoItem.ListId).Title,
+                ListTitle = _service.GetTodoList(todoItem.ListId).Title,
                 CurrentTags = todoItem.Tags.Select(tag => (tag.Title, tag.Color)).ToList(),
                 Description = todoItem.Description,
 
