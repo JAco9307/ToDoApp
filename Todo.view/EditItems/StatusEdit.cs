@@ -17,25 +17,25 @@ namespace Todo.view.EditItems
         public StatusEdit(TodoData todoData, ContextData context)
         {
             InitializeComponent();
-            statusComboBox.Items.AddRange(context.StatusOptions.ToArray());
-            if (todoData.status == null)
+            StatusComboBox.Items.AddRange(context.StatusOptions.ToArray());
+            if (todoData.Status == null)
             {
-                statusComboBox.SelectedItem = context.StatusOptions[0];
+                StatusComboBox.SelectedItem = context.StatusOptions[0];
                 Status = context.StatusOptions[0];
             }
             else
             {
-                statusComboBox.SelectedItem = todoData.status;
-                Status = todoData.status;
+                StatusComboBox.SelectedItem = todoData.Status;
+                Status = todoData.Status;
             }
         }
 
         public TodoData UpdateData(TodoData todoData)
         {
-            if (statusComboBox.SelectedItem == null) return todoData;
-            Status = statusComboBox.SelectedItem.ToString();
+            if (StatusComboBox.SelectedItem == null) return todoData;
+            Status = StatusComboBox.SelectedItem.ToString();
             if (Status == null) return todoData; 
-            todoData.status = Status;
+            todoData.Status = Status;
             return todoData;
         }
     }

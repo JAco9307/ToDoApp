@@ -34,6 +34,7 @@
             label1 = new Label();
             createTodoButton = new Button();
             optionsButton = new Button();
+            listComboBox = new ComboBox();
             headerLayout.SuspendLayout();
             SuspendLayout();
             // 
@@ -58,6 +59,7 @@
             headerLayout.Controls.Add(label1);
             headerLayout.Controls.Add(createTodoButton);
             headerLayout.Controls.Add(optionsButton);
+            headerLayout.Controls.Add(listComboBox);
             headerLayout.Dock = DockStyle.Top;
             headerLayout.Location = new Point(0, 0);
             headerLayout.Name = "headerLayout";
@@ -85,6 +87,7 @@
             createTodoButton.Name = "createTodoButton";
             createTodoButton.Size = new Size(75, 23);
             createTodoButton.TabIndex = 1;
+            createTodoButton.TabStop = false;
             createTodoButton.Text = "New Todo";
             createTodoButton.UseVisualStyleBackColor = true;
             // 
@@ -96,8 +99,20 @@
             optionsButton.Name = "optionsButton";
             optionsButton.Size = new Size(75, 23);
             optionsButton.TabIndex = 2;
+            optionsButton.TabStop = false;
             optionsButton.Text = "Options";
             optionsButton.UseVisualStyleBackColor = true;
+            // 
+            // listComboBox
+            // 
+            listComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            listComboBox.FormattingEnabled = true;
+            listComboBox.Items.AddRange(new object[] { "2", "3", "54", "56" });
+            listComboBox.Location = new Point(213, 3);
+            listComboBox.Name = "listComboBox";
+            listComboBox.Size = new Size(185, 23);
+            listComboBox.TabIndex = 3;
+            listComboBox.TabStop = false;
             // 
             // TodoView
             // 
@@ -123,5 +138,6 @@
         private Label label1;
         private Button createTodoButton;
         private Button optionsButton;
+        private ComboBox listComboBox;
     }
 }

@@ -30,7 +30,7 @@
         {
             flowItem = new FlowLayoutPanel();
             StatusButton = new Button();
-            todoLabel = new System.Windows.Forms.Label();
+            todoLabel = new Label();
             flowItem.SuspendLayout();
             SuspendLayout();
             // 
@@ -41,30 +41,31 @@
             flowItem.Controls.Add(StatusButton);
             flowItem.Controls.Add(todoLabel);
             flowItem.Dock = DockStyle.Fill;
-            flowItem.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             flowItem.Location = new Point(0, 0);
+            flowItem.Margin = new Padding(3, 4, 3, 4);
             flowItem.Name = "flowItem";
-            flowItem.Size = new Size(710, 29);
+            flowItem.Size = new Size(612, 26);
             flowItem.TabIndex = 3;
             flowItem.WrapContents = false;
             // 
             // StatusButton
             // 
+            StatusButton.ForeColor = SystemColors.ButtonHighlight;
             StatusButton.Location = new Point(3, 2);
             StatusButton.Margin = new Padding(3, 2, 3, 2);
             StatusButton.Name = "StatusButton";
             StatusButton.Size = new Size(82, 22);
             StatusButton.TabIndex = 3;
+            StatusButton.TabStop = false;
             StatusButton.Text = "Status here";
             StatusButton.UseVisualStyleBackColor = true;
-
             // 
             // todoLabel
             // 
-            todoLabel.BackColor = System.Drawing.Color.White;
-            todoLabel.Location = new System.Drawing.Point(3, 0);
+            todoLabel.BackColor = Color.White;
+            todoLabel.Location = new Point(91, 0);
             todoLabel.Name = "todoLabel";
-            todoLabel.Size = new System.Drawing.Size(518, 24);
+            todoLabel.Size = new Size(518, 24);
             todoLabel.TabIndex = 3;
             todoLabel.Text = "svend";
             // 
@@ -73,12 +74,11 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoSize = true;
-            AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            AutoSizeMode = AutoSizeMode.GrowAndShrink;
             Controls.Add(flowItem);
+            Margin = new Padding(3, 4, 3, 4);
             Name = "TodoViewItem";
-            Size = new Size(710, 29);
-            Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            Size = new System.Drawing.Size(524, 24);
+            Size = new Size(612, 26);
             flowItem.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
@@ -87,7 +87,7 @@
         private System.Windows.Forms.Label todoLabel;
 
         #endregion
-        
+
         private Button StatusButton;
         private System.Windows.Forms.FlowLayoutPanel flowItem;
     }
