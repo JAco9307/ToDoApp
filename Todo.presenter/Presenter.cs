@@ -46,9 +46,9 @@ namespace Todo.presenter
             controls[1].Click += delegate { UpdateOptions(); };
             controls[2].TextChanged += delegate { UpdateSelectedList(controls[2].Text); };
 
-            ComboBox sortBox = (ComboBox)controls[];
+            ComboBox sortBox = (ComboBox)controls[3];
             sortBox.SelectedIndexChanged += delegate { UpdateView(); };
-            CheckBox sortOrderCheckBox = (CheckBox)controls[];
+            CheckBox sortOrderCheckBox = (CheckBox)controls[4];
             sortOrderCheckBox.CheckStateChanged += delegate { UpdateView(); };
         }
 

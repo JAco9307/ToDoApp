@@ -29,7 +29,7 @@ namespace Todo.view.ViewObjects
 
             _Status = todoData.Status;
             CycleStatus.Text = todoData.Status;
-            todoLabel.Text = todoData.TodoTitle;
+            todoLabel.Text = todoData.Title;
         }
                 
         public Button CycleStatus => StatusButton;
