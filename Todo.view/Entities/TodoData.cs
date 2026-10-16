@@ -13,5 +13,15 @@
         public bool ToBeDeleted;
 
         public List<(string, Color)> CurrentTags;
+        
+        public static int CompareByTitle(TodoData item1, TodoData item2)
+        {
+            return String.Compare(item1.title, item2.title, StringComparison.Ordinal);
+        }
+
+        public static int CompareByStatus(TodoData item1, TodoData item2)
+        {
+            return String.Compare(item1.status, item2.status, StringComparison.Ordinal);
+        }
     }
 }

@@ -1,6 +1,7 @@
 using Todo.view.Entities;
 using Todo.view.Interfaces;
 using System.Collections.Generic;
+using Todo.view.ViewObjects;
 
 namespace Todo.view
 {
@@ -23,7 +24,7 @@ namespace Todo.view
                 optionsButton,
                 SortingDropDown
                 ];
-            List<string> sortingOptions = ["Name", "Id"];
+            List<string> sortingOptions = ["Name", "Status"];
             SortingDropDown.Items.AddRange(sortingOptions.ToArray());
             SortingDropDown.SelectedItem = SortingDropDown.Items[0];
             return controls;
@@ -44,25 +45,26 @@ namespace Todo.view
         {
             flowLayout.Controls.Clear();
             List<TodoViewItem> controls = [];
+            
+            switch (SortingDropDown.SelectedIndex)
+            {
+                case 0:
+                    todoDatas.Sort(TodoData.CompareByTitle);
+                    break;
+                case 1:
+                    todoDatas.Sort(TodoData.CompareByStatus);
+                    break;
+            }
+            if (SortOrderCheckBox.Checked) controls.Reverse();
+            
             for(int i = 0; i < todoDatas.Count; i++)
             {
                 TodoViewItem newTodo = addTodo(todoDatas[i]);
                 newTodo.id = i;
                 controls.Add(newTodo); 
             }
-
-            switch (SortingDropDown.SelectedIndex)
-            {
-                case 0:
-                    controls.Sort(TodoViewItem.CompareByTitle);
-                    if (SortOrderCheckBox.Checked) controls.Reverse();
-                    break;
-                case 1:
-                    controls.Sort(TodoViewItem.CompareByTitle);
-                    if (SortOrderCheckBox.Checked) controls.Reverse();
-                    break;
-            }
-            Invoke(() => flowLayout.Controls.AddRange(controls.ToArray()));
+            
+            Invoke(() => flowLayout.Controls.AddRange(controls.ToArray<Control>()));
             return controls;
         }
         
