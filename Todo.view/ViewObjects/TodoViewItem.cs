@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
+using Todo.view.Entities;
 
-namespace Todo.view
+namespace Todo.view.ViewObjects
 {
     public partial class TodoViewItem : UserControl
     {
@@ -17,22 +18,29 @@ namespace Todo.view
             }
         }
         private string _Status;
-
+        public Button CycleStatus => StatusButton;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TodoViewItem"/> class.
         /// </summary>
-        /// <param name="TodoTitle">The todo title.</param>
-        public TodoViewItem(string TodoTitle, string Status)
+        /// <param name="todoData">the TodoData to populate the TodoViewItem with.</param>
+        public TodoViewItem(TodoData todoData)
         {
             InitializeComponent();
 
-            _Status = Status;
-            CycleStatus.Text = Status;
-            todoLabel.Text = TodoTitle;
+            _Status = todoData.Status;
+            CycleStatus.Text = todoData.Status;
+            todoLabel.Text = todoData.Title;
         }
-
-        public Button CycleStatus => StatusButton;
-
+        
+        public static int CompareByTitle(TodoViewItem item1, TodoViewItem item2)
+        {
+            return String.Compare(item1.todoLabel.Text, item2.todoLabel.Text, StringComparison.Ordinal);
+        }
+        
+        public static int CompareByStatus(TodoViewItem item1, TodoViewItem item2)
+        {
+            return String.Compare(item1.Status, item2.Status, StringComparison.Ordinal);
+        }
     }
 }

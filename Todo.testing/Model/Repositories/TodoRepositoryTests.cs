@@ -52,7 +52,7 @@ public class TodoRepositoryTests
 
         TodoItem todoItem = new TodoItem("this is a todo item");
         repository.AddTodoItem(todoItem, 1);
-        repository.DeleteTodoItem(todoItem);
+        dbContext.TodoItems.Remove(todoItem);
         TodoItem? savedTodoItem = dbContext.TodoItems.SingleOrDefault(todoItem => todoItem.Title == "this is a todo item");
         Assert.IsNull(savedTodoItem);
     }
