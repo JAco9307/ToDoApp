@@ -9,6 +9,7 @@ public class TodoDbContext : DbContext
 
     public DbSet<TodoItem> TodoItems { get; set; }
     public DbSet<TodoList> TodoLists { get; set; }
+    public DbSet<Status> TodoStatus { get; set; }
     public DbSet<StatusList> TodoStatusOptions { get; set; }
     public DbSet<TodoTag> TodoTags { get; set; }
 
