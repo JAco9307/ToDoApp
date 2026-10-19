@@ -1,8 +1,10 @@
 ﻿using System.Drawing;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Windows.Forms;
 using Todo.model.Entities;
 using Todo.model.Interfaces;
+using Todo.model.Serialization;
 using Todo.view;
 using Todo.view.Entities;
 using Todo.view.Interfaces;
@@ -140,6 +142,10 @@ namespace Todo.presenter
         {
             return todoData.CurrentTags.Any(newTag => newTag.Item1 == tag.Title);
         }
+        private static bool HasMatchingTitle(List<TodoTag> currentTags, TodoTag newTag)
+        {
+            return currentTags.Any(tag => tag.Title == newTag.Title);
+        }
 
 
 
@@ -219,7 +225,7 @@ namespace Todo.presenter
             _service.AddTagOptions(addedTags);
             _service.RemoveTagOptions(removedTags);
 
-            if(newOptions.ImportFilePath != null)
+            if(newOptions.ImportFilePath != null && newOptions.ImportFilePath != "")
             {
                 importJson(newOptions.ImportFilePath);
             }
@@ -302,19 +308,55 @@ namespace Todo.presenter
         private void importJson(string filePath)
         {
             string json = File.ReadAllText(filePath);
-            List<TodoList>? lists = JsonSerializer.Deserialize<List<TodoList>>(json);
+            var options = new JsonSerializerOptions
+            {
+                WriteIndented = true,
+                ReferenceHandler = ReferenceHandler.Preserve
+            };
+            options.Converters.Add(new ColorJsonConverter());
+            List<TodoList>? lists = JsonSerializer.Deserialize<List<TodoList>>(json, options);
+            List<string> currentListNames = _service.GetListNames();
             if (lists == null)
                 return;
             foreach (TodoList list in lists)
             {
-                //Save list via _service.
+                list.Title = CheckIfListNameAlreadyExist(list.Title, currentListNames);
+                _service.AddList(list.Title);
+                TodoList newList = _service.GetTodoList(list.Title);
+                copyList(list, newList.Id);
             }
+        }
+
+        private void UseExistingTags(List<TodoTag> tags, List<TodoTag> allTags)
+        {
+            tags = tags.Select(tag => FindMatchingTag(tag, allTags)).ToList();
+        }
+        private static TodoTag FindMatchingTag(TodoTag newTag, List<TodoTag> allTags)
+        {
+            return allTags.FirstOrDefault(tag => tag.Title == newTag.Title) ?? newTag;
+        }
+
+        private string CheckIfListNameAlreadyExist(string title, List<string> currentTitles)
+        {
+            if (currentTitles.Contains(title))
+                return CheckIfListNameAlreadyExist(title + "(1)", currentTitles);
+            return title;
         }
 
         private void exportJson(List<TodoList> lists)
         {
             string json = JsonSerializer.Serialize(lists, new JsonSerializerOptions { WriteIndented = true});
             File.WriteAllText("Lists.json", json);
+        }
+
+        private void copyList(TodoList fromList, int toListId)
+        {
+            List<TodoTag> allTags = _service.GetAllTags();
+            foreach(TodoItem item in fromList.Items)
+            {
+                UseExistingTags(item.Tags, allTags);
+                _service.Add(toListId, item);
+            }
         }
     }
 }

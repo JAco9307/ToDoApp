@@ -46,8 +46,9 @@
             saveButton.FlatStyle = FlatStyle.Flat;
             saveButton.ForeColor = SystemColors.ButtonHighlight;
             saveButton.Location = new Point(0, 0);
+            saveButton.Margin = new Padding(4, 5, 4, 5);
             saveButton.Name = "saveButton";
-            saveButton.Size = new Size(244, 32);
+            saveButton.Size = new Size(442, 53);
             saveButton.TabIndex = 0;
             saveButton.Text = "Save";
             saveButton.UseVisualStyleBackColor = true;
@@ -59,8 +60,9 @@
             cancelButton.FlatStyle = FlatStyle.Flat;
             cancelButton.ForeColor = SystemColors.ButtonHighlight;
             cancelButton.Location = new Point(0, 0);
+            cancelButton.Margin = new Padding(4, 5, 4, 5);
             cancelButton.Name = "cancelButton";
-            cancelButton.Size = new Size(246, 32);
+            cancelButton.Size = new Size(447, 53);
             cancelButton.TabIndex = 1;
             cancelButton.Text = "Cancel";
             cancelButton.UseVisualStyleBackColor = true;
@@ -72,8 +74,10 @@
             CenterBox.Dock = DockStyle.Fill;
             CenterBox.FlatStyle = FlatStyle.Popup;
             CenterBox.Location = new Point(0, 0);
+            CenterBox.Margin = new Padding(4, 5, 4, 5);
             CenterBox.Name = "CenterBox";
-            CenterBox.Size = new Size(632, 300);
+            CenterBox.Padding = new Padding(4, 5, 4, 5);
+            CenterBox.Size = new Size(903, 593);
             CenterBox.TabIndex = 4;
             CenterBox.TabStop = false;
             // 
@@ -82,9 +86,10 @@
             flowLayoutPanel.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             flowLayoutPanel.Dock = DockStyle.Top;
             flowLayoutPanel.FlowDirection = FlowDirection.TopDown;
-            flowLayoutPanel.Location = new Point(3, 19);
+            flowLayoutPanel.Location = new Point(4, 29);
+            flowLayoutPanel.Margin = new Padding(4, 5, 4, 5);
             flowLayoutPanel.Name = "flowLayoutPanel";
-            flowLayoutPanel.Size = new Size(494, 240);
+            flowLayoutPanel.Size = new Size(895, 496);
             flowLayoutPanel.TabIndex = 2;
             flowLayoutPanel.WrapContents = false;
             // 
@@ -92,7 +97,8 @@
             // 
             splitContainer.Dock = DockStyle.Bottom;
             splitContainer.IsSplitterFixed = true;
-            splitContainer.Location = new Point(3, 265);
+            splitContainer.Location = new Point(4, 535);
+            splitContainer.Margin = new Padding(4, 5, 4, 5);
             splitContainer.Name = "splitContainer";
             // 
             // splitContainer.Panel1
@@ -102,21 +108,23 @@
             // splitContainer.Panel2
             // 
             splitContainer.Panel2.Controls.Add(cancelButton);
-            splitContainer.Size = new Size(494, 32);
-            splitContainer.SplitterDistance = 244;
+            splitContainer.Size = new Size(895, 53);
+            splitContainer.SplitterDistance = 442;
+            splitContainer.SplitterWidth = 6;
             splitContainer.TabIndex = 3;
             // 
             // OptionsForm
             // 
             AcceptButton = saveButton;
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(64, 64, 64);
             CancelButton = cancelButton;
-            ClientSize = new Size(632, 300);
+            ClientSize = new Size(903, 593);
             ControlBox = false;
             Controls.Add(CenterBox);
             FormBorderStyle = FormBorderStyle.None;
+            Margin = new Padding(4, 5, 4, 5);
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "OptionsForm";

@@ -42,8 +42,9 @@
             flowLayoutPanel.Controls.Add(StatusComboBox);
             flowLayoutPanel.Dock = DockStyle.Fill;
             flowLayoutPanel.Location = new Point(0, 0);
+            flowLayoutPanel.Margin = new Padding(4, 5, 4, 5);
             flowLayoutPanel.Name = "flowLayoutPanel";
-            flowLayoutPanel.Size = new Size(196, 30);
+            flowLayoutPanel.Size = new Size(280, 50);
             flowLayoutPanel.TabIndex = 0;
             // 
             // StatusLabel
@@ -51,11 +52,10 @@
             StatusLabel.AutoSize = true;
             StatusLabel.Dock = DockStyle.Fill;
             StatusLabel.ForeColor = SystemColors.ButtonHighlight;
-            StatusLabel.Location = new Point(2, 0);
-            StatusLabel.Margin = new Padding(2, 0, 2, 0);
-            StatusLabel.MinimumSize = new Size(100, 30);
+            StatusLabel.Location = new Point(3, 0);
+            StatusLabel.MinimumSize = new Size(143, 50);
             StatusLabel.Name = "StatusLabel";
-            StatusLabel.Size = new Size(100, 30);
+            StatusLabel.Size = new Size(143, 50);
             StatusLabel.TabIndex = 7;
             StatusLabel.Text = "Status:";
             StatusLabel.TextAlign = ContentAlignment.MiddleLeft;
@@ -66,22 +66,24 @@
             StatusComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             StatusComboBox.FlatStyle = FlatStyle.Flat;
             StatusComboBox.FormattingEnabled = true;
-            StatusComboBox.Location = new Point(107, 3);
-            StatusComboBox.MinimumSize = new Size(43, 0);
+            StatusComboBox.Location = new Point(153, 5);
+            StatusComboBox.Margin = new Padding(4, 5, 4, 5);
+            StatusComboBox.MinimumSize = new Size(60, 0);
             StatusComboBox.Name = "StatusComboBox";
-            StatusComboBox.Size = new Size(86, 23);
+            StatusComboBox.Size = new Size(121, 33);
             StatusComboBox.TabIndex = 6;
             StatusComboBox.TabStop = false;
             // 
             // StatusEdit
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoSize = true;
             BackColor = Color.FromArgb(64, 64, 64);
             Controls.Add(flowLayoutPanel);
+            Margin = new Padding(4, 5, 4, 5);
             Name = "StatusEdit";
-            Size = new Size(196, 30);
+            Size = new Size(280, 50);
             flowLayoutPanel.ResumeLayout(false);
             flowLayoutPanel.PerformLayout();
             ResumeLayout(false);

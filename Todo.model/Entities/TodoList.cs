@@ -1,4 +1,6 @@
-﻿namespace Todo.model.Entities
+﻿using System.Text.Json.Serialization;
+
+namespace Todo.model.Entities
 {
     public class TodoList
     {
@@ -16,6 +18,12 @@
         {
             Id = listId;
             Title = "New List";
+        }
+        [JsonConstructor]
+        public TodoList(int id, string title, IReadOnlyList<TodoItem> items)
+        {
+            Title = title;
+            _items = items.ToList();
         }
 
         /// <summary>

@@ -38,7 +38,7 @@ namespace Todo.view.OptionsItems
 
         private void ExportListButton_Click(object sender, EventArgs e)
         {
-
+            //open dialog to pick list.
         }
 
         private void ImportListButton_Click(object sender, EventArgs e)

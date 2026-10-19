@@ -35,6 +35,7 @@
             // 
             // ExportButton
             // 
+            ExportButton.ForeColor = SystemColors.ControlLightLight;
             ExportButton.Location = new Point(3, 3);
             ExportButton.Name = "ExportButton";
             ExportButton.Size = new Size(141, 34);
@@ -45,6 +46,7 @@
             // 
             // ExportListButton
             // 
+            ExportListButton.ForeColor = SystemColors.ControlLightLight;
             ExportListButton.Location = new Point(150, 3);
             ExportListButton.Name = "ExportListButton";
             ExportListButton.Size = new Size(141, 34);
@@ -55,6 +57,7 @@
             // 
             // ImportListButton
             // 
+            ImportListButton.ForeColor = SystemColors.ControlLightLight;
             ImportListButton.Location = new Point(297, 3);
             ImportListButton.Name = "ImportListButton";
             ImportListButton.Size = new Size(141, 34);
