@@ -8,7 +8,7 @@ namespace Todo.view
     {
         private Thread? guiThread;
 
-        private Dictionary<string, Comparison<TodoData>> _sortingOptions;
+        private Dictionary<string, Comparison<TodoViewItem>> _sortingOptions;
         
         public TodoView()
         {
@@ -28,9 +28,9 @@ namespace Todo.view
                 SortingDropDown,
                 SortOrderCheckBox,
                 ];
-            _sortingOptions = new Dictionary<string, Comparison<TodoData>>();
-            _sortingOptions.Add("Name", TodoData.CompareByTitle);
-            _sortingOptions.Add("Status", TodoData.CompareByStatus);
+            _sortingOptions = new Dictionary<string, Comparison<TodoViewItem>>();
+            _sortingOptions.Add("Name", TodoViewItem.CompareByTitle);
+            _sortingOptions.Add("Status", TodoViewItem.CompareByStatus);
             SortingDropDown.DataSource = _sortingOptions.Keys.ToList();
             
             SortingDropDown.SelectedItem = SortingDropDown.Items[0];
@@ -52,26 +52,25 @@ namespace Todo.view
         {
             Invoke(()=> flowLayout.Controls.Clear());
             List<TodoViewItem> controls = new();
-            Invoke (() =>SortTodoDatas(todoDatas));
             for(int i = 0; i < todoDatas.Count; i++)
             {
                 TodoViewItem newTodo = addTodo(todoDatas[i]);
                 newTodo.id = i;
                 controls.Add(newTodo); 
             }
-            
+            Invoke (() =>SortTodoViewItems(controls));
             Invoke(() => flowLayout.Controls.AddRange(controls.ToArray<Control>()));
             return controls;
         }
 
-        private void SortTodoDatas(List<TodoData> todoDatas)
+        private void SortTodoViewItems(List<TodoViewItem> todoViewItems)
         {
             var selectedItem = SortingDropDown.SelectedItem;
             if (selectedItem != null && selectedItem.ToString() != null && _sortingOptions.ContainsKey(selectedItem.ToString()))
             {
-                Comparison<TodoData> sortingOption = _sortingOptions[selectedItem.ToString()];
-                todoDatas.Sort(sortingOption);
-                if (SortOrderCheckBox.Checked) todoDatas.Reverse();
+                Comparison<TodoViewItem> sortingOption = _sortingOptions[selectedItem.ToString()];
+                todoViewItems.Sort(sortingOption);
+                if (SortOrderCheckBox.Checked) todoViewItems.Reverse();
             }
         }
 
