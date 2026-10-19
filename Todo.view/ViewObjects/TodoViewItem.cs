@@ -11,10 +11,11 @@ namespace Todo.view.ViewObjects
         public string Status
         {
             get { return _Status; }
-            set {
-                _Status = value; 
-                CycleStatus.Text = value; 
-            } 
+            set
+            {
+                _Status = value;
+                CycleStatus.Text = value;
+            }
         }
         private string _Status;
         public Button CycleStatus => StatusButton;

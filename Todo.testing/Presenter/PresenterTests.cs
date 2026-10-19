@@ -40,7 +40,7 @@ namespace Todo.testing.presenter
         }
         public StatusList GetStatusOptions()
         {
-            throw new NotImplementedException();
+            return new();
         }
         public void UpdateStatusOptions(StatusList options)
         {
@@ -48,7 +48,7 @@ namespace Todo.testing.presenter
         }
         public void UpdateDb()
         {
-            
+
         }
         public void AddList(string Title)
         {
@@ -134,7 +134,7 @@ namespace Todo.testing.presenter
         ITodoService _service = new mockService();
 
         [TestInitialize]
-        public void Init() 
+        public void Init()
         {
             _view = new mockView();
             _service = new mockService();
@@ -150,8 +150,8 @@ namespace Todo.testing.presenter
             {
                 presenter.StartUp();
             }
-            catch (ArgumentOutOfRangeException) 
-            { 
+            catch (ArgumentOutOfRangeException)
+            {
             }
 
             // Assert
@@ -212,10 +212,10 @@ namespace Todo.testing.presenter
             {
                 Title = "test",
                 Status = "Not Started",
-                ListTitle = null,
-                Description = null,
+                ListTitle = "x",
+                Description = "x",
                 ToBeDeleted = false,
-                CurrentTags = null
+                CurrentTags = []
             };
             TodoViewItem item = new(todoData);
 

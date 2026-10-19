@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
-using Todo.view.Forms;
+﻿using Todo.view.Forms;
 
 namespace Todo.view.ViewObjects
 {
@@ -34,12 +27,17 @@ namespace Todo.view.ViewObjects
 
         private void DeleteButton_Click(object sender, EventArgs e)
         {
-            DialogResult confirmResult = MessageBox.Show("Are you sure to delete this tag?", "Confirm Delete", MessageBoxButtons.YesNo);
-            if (confirmResult.ToString() == "No")
+            DialogResult confirmResult = MessageBox.Show(
+                "Are you sure to delete this tag?",
+                "Confirm Delete",
+                MessageBoxButtons.YesNo
+                );
+
+            if (confirmResult == DialogResult.No)
                 return;
 
             Delete?.Invoke(this, new EventArgs());
-            Parent?.Controls.Remove(this);
+            Dispose();
         }
         private void UpdateTag()
         {
@@ -56,7 +54,7 @@ namespace Todo.view.ViewObjects
 
         private void TodoViewTag_MouseClick(object sender, MouseEventArgs e)
         {
-            if (Delete is null)
+            if (Delete is not null)
                 return;
 
             UpdateTag();
@@ -64,7 +62,7 @@ namespace Todo.view.ViewObjects
 
         private void ViewTagText_Click(object sender, EventArgs e)
         {
-            if (Delete is null)
+            if (Delete is not null)
                 return;
 
             UpdateTag();

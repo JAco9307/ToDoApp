@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
+﻿using System.Data;
 using Todo.view.Dialogs;
 using Todo.view.Entities;
 using Todo.view.Interfaces;
@@ -36,7 +30,7 @@ namespace Todo.view.OptionsItems
             var result = MessageBox.Show(
                 "Are you sure you want to delete " + listBox.SelectedItem.ToString() + "?" +
                 "\nThis will also delete all todos on the list." +
-                "\nThis action is permanent after saving options",
+                "\nThis action becomes permanent when saving",
                 "Delete list",
                 MessageBoxButtons.YesNo);
             if (result == DialogResult.Yes)
@@ -68,8 +62,9 @@ namespace Todo.view.OptionsItems
             if (listBox.SelectedItem == null) return;
             var inputDialog = new TextInputDialog("List name:", listBox.SelectedItem.ToString() ?? "ERROR");
             var result = inputDialog.ShowDialog();
+
             if (result != DialogResult.OK) return;
-            if (listBox.Items.Cast<string>().ToList().Contains(inputDialog.text))
+            if (listBox.Items.Contains(inputDialog.text))
             {
                 MessageBox.Show(
                 "A list with this name already exists",
@@ -81,7 +76,7 @@ namespace Todo.view.OptionsItems
             ListNameChanges.Add(listBox.SelectedItem.ToString() ?? "ERROR", inputDialog.text);
             listBox.Items.Remove(listBox.SelectedItem);
             listBox.Items.Add(inputDialog.text);
-            
+
         }
     }
 }

@@ -7,7 +7,7 @@
         public IReadOnlyList<TodoItem> Items => _items;
 
         public string Title { get; set; }
-        
+
         public TodoList()
         {
             Title = "New List";
@@ -35,7 +35,7 @@
         {
             bool success = _items.Remove(item);
 
-            if(!success)
+            if (!success)
                 throw new KeyNotFoundException("Given item was not found in the list");
         }
     }

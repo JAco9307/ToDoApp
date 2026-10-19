@@ -1,14 +1,6 @@
-﻿using System.Diagnostics;
-using System.Windows;
-using Todo.view;
-using Todo.model;
-using Todo.view.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows.Forms;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 using Todo.model.Services;
+using Todo.view;
 
 namespace Todo.presenter
 {
@@ -25,4 +17,3 @@ namespace Todo.presenter
     }
 }
 
-   

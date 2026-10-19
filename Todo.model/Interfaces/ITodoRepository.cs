@@ -8,7 +8,6 @@ namespace Todo.model.Interfaces
         public TodoList? GetList(string TodoListTitle);
         public void AddTodoItem(TodoItem todoItem, int listId);
         public TodoList AddList(string Title);
-        public void DeleteTodoItem(TodoItem todoItem);
         public void DeleteList(TodoList list);
         public List<TodoTag>? GetAllTags();
         public void AddTagOptions(List<TodoTag> newTags);

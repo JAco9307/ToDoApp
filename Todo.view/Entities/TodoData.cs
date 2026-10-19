@@ -1,6 +1,6 @@
 ﻿namespace Todo.view.Entities
 {
- 
+
     /// <summary>
     /// A struct for containing the values of a todo item.
     /// </summary>
