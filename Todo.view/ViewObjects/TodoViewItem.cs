@@ -22,7 +22,7 @@ namespace Todo.view.ViewObjects
         /// <summary>
         /// Initializes a new instance of the <see cref="TodoViewItem"/> class.
         /// </summary>
-        /// <param name="TodoTitle">The todo title.</param>
+        /// <param name="todoData">the TodoData to populate the TodoViewItem with.</param>
         public TodoViewItem(TodoData todoData)
         {
             InitializeComponent();
