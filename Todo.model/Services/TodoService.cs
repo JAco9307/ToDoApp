@@ -30,45 +30,27 @@ namespace Todo.model.Services
 
         }
 
-        /// <summary>
-        /// Adds the TodoItem to the TodoList with the given ID. 
-        /// Creates a new TodoList if none exist. 
-        /// Throws an IndexOutOfRange exception if ID doesnt exist.
-        /// </summary>
-        /// <param name="listId">The list id.</param>
-        /// <param name="todoItem">The TodoItem.</param>
+        //interface
         public void Add(int listId, TodoItem todoItem)
         {
             _todoLists.Find(list => list.Id == listId)?.Add(todoItem);
             _repository.AddTodoItem(todoItem, listId);
         }
-        /// <summary>
-        /// Updates all entities in database
-        /// </summary>
+
+        //interface
         public void UpdateDb()
         {
             _repository.UpdateDb();
         }
 
-        /// <summary>
-        /// Deletes the TodoItem from the TodoList with the given ID. 
-        /// Throws an IndexOutOfRange exception if ID doesnt exist.
-        /// </summary>
-        /// <param name="listId">The list id.</param>
-        /// <param name="todoItem">The TodoItem.</param>
+        //interface
         public void Delete(int listId, TodoItem todoItem)
         {
             _todoLists.First(list => list.Id == listId).Remove(todoItem);
             _repository.UpdateDb();
         }
 
-        /// <summary>
-        /// Gets the todo list with the given ID,
-        /// If list is not found in service layer it checks database,
-        /// If not found in database it creates a new list.
-        /// </summary>
-        /// <param name="listId">The list id.</param>
-        /// <returns>The TodoList.</returns>
+        //interface
         public TodoList GetTodoList(int listId)
         {
             TodoList? list = _todoLists.Find(list => list.Id == listId);
@@ -93,19 +75,13 @@ namespace Todo.model.Services
         }
 
 
-        /// <summary>
-        /// Adds a new list to the repository.
-        /// </summary>
-        /// <param name="Title">The list's title.</param>
+        //interface
         public void AddList(string Title)
         {
             _repository.AddList(Title);
         }
 
-        /// <summary>
-        /// Deletes a list.
-        /// </summary>
-        /// <param name="Title">The title.</param>
+        //interface
         public void DeleteList(string Title)
         {
             var list = _todoLists.FirstOrDefault(list => list.Title == Title);
@@ -114,11 +90,7 @@ namespace Todo.model.Services
             _repository.DeleteList(list);
         }
 
-        /// <summary>
-        /// Renames a list by name.
-        /// </summary>
-        /// <param name="TitleOld">The current title .</param>
-        /// <param name="TitleNew">The new title .</param>
+        //interface
         public void RenameList(string TitleOld, string TitleNew)
         {
             var list = _todoLists.FirstOrDefault(list => list.Title == TitleOld);
@@ -127,10 +99,7 @@ namespace Todo.model.Services
             UpdateDb();
         }
 
-        /// <summary>
-        /// Gets the status options.
-        /// </summary>
-        /// <returns>The status list result.</returns>
+        //interface
         public StatusList GetStatusOptions()
         {
             if (_statusOptions == null)
@@ -141,10 +110,7 @@ namespace Todo.model.Services
             return _statusOptions;
         }
 
-        /// <summary>
-        /// Gets the list names. If no lists are found, creates a new empty list
-        /// </summary>
-        /// <returns>The list result.</returns>
+        //interface
         public List<string> GetListNames()
         {
             _repository.UpdateDb();
@@ -163,16 +129,19 @@ namespace Todo.model.Services
             return output;
         }
 
+        //interface
         public List<TodoTag> GetAllTags()
         {
             return _repository.GetAllTags() ?? new List<TodoTag>();
         }
 
+        //interface
         public void AddTagOptions(List<TodoTag> newTags)
         {
             _repository.AddTagOptions(newTags);
         }
 
+        //interface
         public void RemoveTagOptions(List<TodoTag> newTags)
         {
             _repository.RemoveTagOptions(newTags);

@@ -263,9 +263,9 @@ namespace Todo.presenter
         {
             var ListTitles = _service.GetListNames();
             if (_currentListId - 1 < ListTitles.Count)
-                _view.UpdateLists(ListTitles, ListTitles[_currentListId - 1]);
+                _view.UpdateComboboxLists(ListTitles, ListTitles[_currentListId - 1]);
             else
-                _view.UpdateLists(ListTitles, ListTitles[0]);
+                _view.UpdateComboboxLists(ListTitles, ListTitles[0]);
 
         }
 

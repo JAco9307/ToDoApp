@@ -9,7 +9,7 @@ namespace Todo.view
         private Thread? guiThread;
 
         private Dictionary<string, Comparison<TodoViewItem>> _sortingOptions = [];
-        
+
         public TodoView()
         {
             InitializeComponent();
@@ -28,9 +28,9 @@ namespace Todo.view
                 SortingDropDown,
                 SortOrderCheckBox,
                 ];
-            
+
             SetupSortingOptions();
-            
+
             return controls;
         }
 
@@ -54,26 +54,22 @@ namespace Todo.view
             Application.Run(this);
         }
 
-        /// <summary>
-        /// Updates the active view list.
-        /// </summary>
-        /// <param name="todoDatas">List of todoData to used to generate TodoViewItems</param>
-        /// <returns>The list result.</returns>
+        //interface
         public List<TodoViewItem> UpdateActiveViewList(List<TodoData> todoDatas)
         {
-            Invoke(()=> flowLayout.Controls.Clear());
+            Invoke(() => flowLayout.Controls.Clear());
             List<TodoViewItem> controls = [];
-            for(int i = 0; i < todoDatas.Count; i++)
+            for (int i = 0; i < todoDatas.Count; i++)
             {
                 TodoViewItem newTodo = addTodo(todoDatas[i]);
                 newTodo.id = i;
                 controls.Add(newTodo);
             }
-            Invoke (() =>SortTodoViewItems(controls));
+            Invoke(() => SortTodoViewItems(controls));
             Invoke(() => flowLayout.Controls.AddRange(controls.ToArray<Control>()));
             return controls;
         }
-        
+
         /// <summary>
         /// Sorts the list of TodoViewItems in place, based on the sorting method and reverse selection of the UI 
         /// </summary>
@@ -100,12 +96,7 @@ namespace Todo.view
             return item;
         }
 
-        /// <summary>
-        /// Shows an dialog window to create or edit a TodoItem
-        /// </summary>
-        /// <param name="context">The context data</param>
-        /// <param name="currentData">The current todo data if applicable</param>
-        /// <returns></returns>
+        //interface
         public TodoData ShowEditTodoDialog(ContextData context, TodoData currentData, bool IsNew)
         {
             EditTodoForm CreateTodoForm = new(context, currentData, IsNew);
@@ -118,11 +109,7 @@ namespace Todo.view
             return todoData;
         }
 
-        /// <summary>
-        /// Opens the options form and recieves the data in it afterwards.
-        /// </summary>
-        /// <param name="currentOptions">The current options.</param>
-        /// <returns>The options set when saving.</returns>
+        //interface
         public TodoOptions ShowOptionsMenu(TodoOptions currentOptions)
         {
             OptionsForm OptionsForm = new OptionsForm(currentOptions);
@@ -134,7 +121,8 @@ namespace Todo.view
                 return currentOptions;
         }
 
-        public void UpdateLists(List<string> strings, string selectList)
+        //interface
+        public void UpdateComboboxLists(List<string> strings, string selectList)
         {
             Invoke(() =>
             {
