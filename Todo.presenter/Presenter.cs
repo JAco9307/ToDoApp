@@ -91,16 +91,21 @@ namespace Todo.presenter
             UpdateView();
         }
 
+        /// <summary>
+        /// Handles the edit pop up.
+        /// </summary>
+        /// <param name="todoItem">The todo item´being edited. null if making new todo item</param>
+        /// <returns>The todo item result.</returns>
         private TodoItem? HandleEditPopUp(TodoItem? todoItem)
         {
-            bool IsNew = false;
-            if (todoItem == null)
+            bool IsNew = (todoItem == null);
+            if (IsNew)
             {
-                IsNew = true;
                 todoItem = new TodoItem("") { ListId = _currentListId };
             }
 
             if (StatusOptions == null) throw new NullReferenceException();
+            if (todoItem == null) throw new NullReferenceException();
 
             List<TodoTag> allTags = _service.GetAllTags();
 
@@ -120,19 +125,19 @@ namespace Todo.presenter
                 return null;
             }
 
-            if (result.Title != null)
-            {
-                todoItem.ListId = _service.GetTodoList(result.ListTitle).Id;
-                List<TodoTag> newTags = allTags.Where(tag => HasMatchingTitle(result, tag)).ToList();
+            if (result.Title == null)
+                return todoItem;
 
-                todoItem.SetTodoTitle(result.Title);
-                todoItem.SetTodoStatus(result.Status);
-                todoItem.setTags(newTags);
-                todoItem.SetDescription(result.Description);
+            todoItem.ListId = _service.GetTodoList(result.ListTitle).Id;
+            List<TodoTag> newTags = allTags.Where(tag => HasMatchingTitle(result, tag)).ToList();
 
-                _service.UpdateDb();
-                UpdateView();
-            }
+            todoItem.SetTodoTitle(result.Title);
+            todoItem.SetTodoStatus(result.Status);
+            todoItem.setTags(newTags);
+            todoItem.SetDescription(result.Description);
+
+            _service.UpdateDb();
+            UpdateView();
 
             return todoItem;
         }
@@ -282,6 +287,10 @@ namespace Todo.presenter
             };
         }
 
+        /// <summary>
+        /// Gets the current context information.
+        /// </summary>
+        /// <returns>The context data result.</returns>
         public ContextData GetContext()
         {
             if (StatusOptions == null) throw new NullReferenceException();

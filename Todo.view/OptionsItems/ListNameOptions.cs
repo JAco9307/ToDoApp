@@ -30,7 +30,7 @@ namespace Todo.view.OptionsItems
             var result = MessageBox.Show(
                 "Are you sure you want to delete " + listBox.SelectedItem.ToString() + "?" +
                 "\nThis will also delete all todos on the list." +
-                "\nThis action is permanent after saving options",
+                "\nThis action becomes permanent when saving",
                 "Delete list",
                 MessageBoxButtons.YesNo);
             if (result == DialogResult.Yes)

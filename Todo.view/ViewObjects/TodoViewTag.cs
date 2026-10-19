@@ -28,8 +28,8 @@ namespace Todo.view.ViewObjects
         private void DeleteButton_Click(object sender, EventArgs e)
         {
             DialogResult confirmResult = MessageBox.Show(
-                "Are you sure to delete this tag?", 
-                "Confirm Delete", 
+                "Are you sure to delete this tag?",
+                "Confirm Delete",
                 MessageBoxButtons.YesNo
                 );
 

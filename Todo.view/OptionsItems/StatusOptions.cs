@@ -88,15 +88,17 @@ namespace Todo.view.OptionsItems
         private void MoveSelectedItem(bool direction)
         {
             if (statusBox.SelectedItem == null) return;
-            if (statusBox.SelectedIndex >= statusBox.Items.Count - 1 && direction) return;
-            if (statusBox.SelectedIndex == 0 && !direction) return;
 
-            int dir = direction ? 1 : -1;
+            int index = statusBox.SelectedIndex;
+            int newIndex = index + (direction ? 1 : -1);
 
-            int selectIndex = statusBox.SelectedIndex;
-            (statusBox.Items[selectIndex + dir], statusBox.Items[selectIndex])
-                = (statusBox.Items[selectIndex], statusBox.Items[selectIndex + dir]);
-            statusBox.SelectedItem = statusBox.Items[selectIndex + dir];
+            if (newIndex < 0 || newIndex >= statusBox.Items.Count)
+                return;
+
+            (statusBox.Items[index], statusBox.Items[newIndex]) =
+                (statusBox.Items[newIndex], statusBox.Items[index]);
+
+            statusBox.SelectedIndex = newIndex;
         }
     }
 }

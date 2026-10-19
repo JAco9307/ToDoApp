@@ -31,7 +31,9 @@ namespace Todo.model.Services
         }
 
         /// <summary>
-        /// Adds the TodoItem to the TodoList with the given ID. Creates a new TodoList if none exist. Throws an IndexOutOfRange exception if ID doesnt exist.
+        /// Adds the TodoItem to the TodoList with the given ID. 
+        /// Creates a new TodoList if none exist. 
+        /// Throws an IndexOutOfRange exception if ID doesnt exist.
         /// </summary>
         /// <param name="listId">The list id.</param>
         /// <param name="todoItem">The TodoItem.</param>
@@ -49,17 +51,21 @@ namespace Todo.model.Services
         }
 
         /// <summary>
-        /// Deletes the TodoItem from the TodoList with the given ID. Throws an IndexOutOfRange exception if ID doesnt exist.
+        /// Deletes the TodoItem from the TodoList with the given ID. 
+        /// Throws an IndexOutOfRange exception if ID doesnt exist.
         /// </summary>
         /// <param name="listId">The list id.</param>
         /// <param name="todoItem">The TodoItem.</param>
         public void Delete(int listId, TodoItem todoItem)
         {
-            _repository.DeleteTodoItem(todoItem);
+            _todoLists.First(list => list.Id == listId).Remove(todoItem);
+            _repository.UpdateDb();
         }
 
         /// <summary>
-        /// Gets the todo list with the given ID. If Id is out of range, then it check the Db, and then if still not found, then it creates a new.
+        /// Gets the todo list with the given ID,
+        /// If list is not found in service layer it checks database,
+        /// If not found in database it creates a new list.
         /// </summary>
         /// <param name="listId">The list id.</param>
         /// <returns>The TodoList.</returns>
@@ -69,14 +75,8 @@ namespace Todo.model.Services
             if (list != null)
                 return list;
 
-            list = _repository.GetList(listId);
-            if (list != null)
-            {
-                _todoLists.Add(list);
-                return list;
-            }
+            list = _repository.GetList(listId) ?? new TodoList(listId);
 
-            list = new TodoList(listId);
             _todoLists.Add(list);
             return list;
         }
@@ -86,14 +86,8 @@ namespace Todo.model.Services
             if (list != null)
                 return list;
 
-            list = _repository.GetList(listTitle);
-            if (list != null)
-            {
-                _todoLists.Add(list);
-                return list;
-            }
+            list = _repository.GetList(listTitle) ?? new TodoList { Title = listTitle };
 
-            list = new TodoList { Title = listTitle };
             _todoLists.Add(list);
             return list;
         }
@@ -107,6 +101,7 @@ namespace Todo.model.Services
         {
             _repository.AddList(Title);
         }
+
         /// <summary>
         /// Deletes a list.
         /// </summary>
@@ -115,8 +110,8 @@ namespace Todo.model.Services
         {
             var list = _todoLists.FirstOrDefault(list => list.Title == Title);
             if (list == null) return;
-            _repository.DeleteList(list);
             _todoLists.Remove(list);
+            _repository.DeleteList(list);
         }
 
         /// <summary>
@@ -132,12 +127,16 @@ namespace Todo.model.Services
             UpdateDb();
         }
 
+        /// <summary>
+        /// Gets the status options.
+        /// </summary>
+        /// <returns>The status list result.</returns>
         public StatusList GetStatusOptions()
         {
             if (_statusOptions == null)
             {
                 StatusList? list = _repository.GetStatusOptions();
-                _statusOptions = list != null ? list : new StatusList();
+                _statusOptions = list ?? new StatusList();
             }
             return _statusOptions;
         }

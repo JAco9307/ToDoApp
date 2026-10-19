@@ -8,8 +8,7 @@ namespace Todo.view.EditItems
         public TitleEdit(TodoData todoData)
         {
             InitializeComponent();
-            if (todoData.Title != null)
-                titleTextBox.Text = todoData.Title;
+            titleTextBox?.Text = todoData.Title;
         }
 
         public TodoData UpdateData(TodoData todoData)
