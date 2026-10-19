@@ -1,11 +1,15 @@
 using Todo.view.Entities;
 using Todo.view.Interfaces;
+using Todo.view.ViewObjects;
 
 namespace Todo.view
 {
     public partial class TodoView : Form, ITodoView
     {
         private Thread? guiThread;
+
+        private Dictionary<string, Comparison<TodoViewItem>> _sortingOptions;
+        
         public TodoView()
         {
             InitializeComponent();
@@ -20,10 +24,29 @@ namespace Todo.view
             List<Control> controls = [
                 createTodoButton, 
                 optionsButton,
-                listComboBox
+                listComboBox,
+                SortingDropDown,
+                SortOrderCheckBox,
                 ];
-
+            
+            SetupSortingOptions();
+            
             return controls;
+        }
+
+        /// <summary>
+        /// Populates the _sortingOptions dictionary names and method of sorting methods that can be used on TodoViewItems.
+        /// Then populates the combobox with the name and sets the first index to be selected.
+        /// </summary>
+        private void SetupSortingOptions()
+        {
+            _sortingOptions = new Dictionary<string, Comparison<TodoViewItem>>
+            {
+                { "Name", TodoViewItem.CompareByTitle },
+                { "Status", TodoViewItem.CompareByStatus }
+            };
+            SortingDropDown.DataSource = _sortingOptions.Keys.ToList();
+            SortingDropDown.SelectedItem = SortingDropDown.Items[0];
         }
 
         private void FormThread()
@@ -34,33 +57,46 @@ namespace Todo.view
         /// <summary>
         /// Updates the active view list.
         /// </summary>
-        /// <param name="todoTitles">The todo titles.</param>
-        /// <param name="todoStatus">The todo Status.</param>
+        /// <param name="todoDatas">List of todoData to used to generate TodoViewItems</param>
         /// <returns>The list result.</returns>
-        public List<TodoViewItem> UpdateActiveViewList(List<string> todoTitles, List<string> todoStatus)
+        public List<TodoViewItem> UpdateActiveViewList(List<TodoData> todoDatas)
         {
             Invoke(()=> flowLayout.Controls.Clear());
             List<TodoViewItem> controls = new();
-            for(int i = 0; i < todoTitles.Count; i++)
+            for(int i = 0; i < todoDatas.Count; i++)
             {
-                TodoViewItem newTodo = addTodo(todoTitles[i], todoStatus[i]);
+                TodoViewItem newTodo = addTodo(todoDatas[i]);
                 newTodo.id = i;
                 controls.Add(newTodo); 
             }
-
+            Invoke (() =>SortTodoViewItems(controls));
+            Invoke(() => flowLayout.Controls.AddRange(controls.ToArray<Control>()));
             return controls;
+        }
+        
+        /// <summary>
+        /// Sorts the list of TodoViewItems in place, based on the sorting method and reverse selection of the UI 
+        /// </summary>
+        /// <param name="todoViewItems">List of TodoViewItems to be sorted</param>
+        private void SortTodoViewItems(List<TodoViewItem> todoViewItems)
+        {
+            var selectedItem = SortingDropDown.SelectedItem;
+            if (selectedItem != null && selectedItem.ToString() != null && _sortingOptions.ContainsKey(selectedItem.ToString()))
+            {
+                Comparison<TodoViewItem> sortingOption = _sortingOptions[selectedItem.ToString()];
+                todoViewItems.Sort(sortingOption);
+                if (SortOrderCheckBox.Checked) todoViewItems.Reverse();
+            }
         }
 
         /// <summary>
         /// Adds a <see cref="TodoViewItem"/> to the GUI.
         /// </summary>
-        /// <param name="TodoTitle">The todo title.</param>
-        /// <param name="Status">The todo status.</param>
+        /// <param name="todoData">the TodoData to populate the TodoViewItem</param>
         /// <returns>The todo view item that has been generated.</returns>
-        private TodoViewItem addTodo(string TodoTitle, string Status)
+        private TodoViewItem addTodo(TodoData todoData)
         {
-            TodoViewItem item = new TodoViewItem(TodoTitle, Status);
-            Invoke(() => flowLayout.Controls.Add(item));
+            TodoViewItem item = new TodoViewItem(todoData);
             return item;
         }
 

@@ -2,9 +2,9 @@
 using System.Windows.Forms;
 using Todo.model.Entities;
 using Todo.model.Interfaces;
-using Todo.view;
 using Todo.view.Entities;
 using Todo.view.Interfaces;
+using Todo.view.ViewObjects;
 
 namespace Todo.presenter
 {
@@ -46,6 +46,10 @@ namespace Todo.presenter
             controls[1].Click += delegate { UpdateOptions(); };
             controls[2].TextChanged += delegate { UpdateSelectedList(controls[2].Text); };
 
+            ComboBox sortBox = (ComboBox)controls[3];
+            sortBox.SelectedIndexChanged += delegate { UpdateView(); };
+            CheckBox sortOrderCheckBox = (CheckBox)controls[4];
+            sortOrderCheckBox.CheckStateChanged += delegate { UpdateView(); };
         }
 
         /// <summary>
@@ -55,9 +59,12 @@ namespace Todo.presenter
         {
             if (StatusOptions == null) throw new NullReferenceException();
             IReadOnlyList<TodoItem> TodoList = _service.GetTodoList(_currentListId).Items;
-            List<string> TodoTitles = TodoList.Select(todoItem => todoItem.Title).ToList();
-            List<string> TodoStatus = TodoList.Select(todoItem => todoItem.Status).ToList();
-            List<TodoViewItem> todoViewItems = _view.UpdateActiveViewList(TodoTitles, TodoStatus);
+            List<TodoData> todoDatas = new List<TodoData>();
+            foreach (TodoItem todoItem in TodoList)
+            {
+                todoDatas.Add(ItemToData(todoItem));
+            }
+            List<TodoViewItem> todoViewItems = _view.UpdateActiveViewList(todoDatas);
 
             foreach(TodoViewItem item in todoViewItems) {
                 item.TodoLabel.Click += delegate { EditTodo(TodoList[item.id], item.id); };

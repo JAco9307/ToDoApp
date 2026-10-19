@@ -1,4 +1,4 @@
-﻿namespace Todo.view
+﻿namespace Todo.view.ViewObjects
 {
     partial class TodoViewItem
     {
