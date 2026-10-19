@@ -28,13 +28,21 @@ namespace Todo.view
                 SortingDropDown,
                 SortOrderCheckBox,
                 ];
-            _sortingOptions = new Dictionary<string, Comparison<TodoViewItem>>();
-            _sortingOptions.Add("Name", TodoViewItem.CompareByTitle);
-            _sortingOptions.Add("Status", TodoViewItem.CompareByStatus);
-            SortingDropDown.DataSource = _sortingOptions.Keys.ToList();
             
-            SortingDropDown.SelectedItem = SortingDropDown.Items[0];
+            SetupSortingOptions();
+            
             return controls;
+        }
+
+        private void SetupSortingOptions()
+        {
+            _sortingOptions = new Dictionary<string, Comparison<TodoViewItem>>
+            {
+                { "Name", TodoViewItem.CompareByTitle },
+                { "Status", TodoViewItem.CompareByStatus }
+            };
+            SortingDropDown.DataSource = _sortingOptions.Keys.ToList();
+            SortingDropDown.SelectedItem = SortingDropDown.Items[0];
         }
 
         private void FormThread()

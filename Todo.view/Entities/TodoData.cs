@@ -14,15 +14,5 @@
         public bool ToBeDeleted;
 
         public List<(string, Color)> CurrentTags;
-        
-        public static int CompareByTitle(TodoData item1, TodoData item2)
-        {
-            return String.Compare(item1.Title, item2.Title, StringComparison.Ordinal);
-        }
-
-        public static int CompareByStatus(TodoData item1, TodoData item2)
-        {
-            return String.Compare(item1.Status, item2.Status, StringComparison.Ordinal);
-        }
     }
 }
