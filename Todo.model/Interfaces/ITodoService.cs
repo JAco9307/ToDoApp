@@ -28,6 +28,31 @@ namespace Todo.model.Interfaces
         /// <param name="todoItem">The TodoItem.</param>
         public void Delete(int listId, TodoItem todoItem);
 
+        /// <summary>
+        /// Gets the status options.
+        /// </summary>
+        /// <returns>The status list result.</returns>
+        public StatusList GetStatusOptions();
+
+        /// <summary>
+        /// Gets the all tags.
+        /// </summary>
+        /// <returns>The list result.</returns>
+        public List<TodoTag> GetAllTags();
+
+
+        /// <summary>
+        /// Adds the given tag options.
+        /// </summary>
+        /// <param name="newTags">The new tags.</param>
+        public void AddTagOptions(List<TodoTag> newTags);
+
+        /// <summary>
+        /// Removes the given tag options.
+        /// </summary>
+        /// <param name="newTags">The tags to remove.</param>
+        public void RemoveTagOptions(List<TodoTag> newTags);
+
 
         public interface ILists
         {
@@ -75,31 +100,5 @@ namespace Todo.model.Interfaces
             /// <returns>The list result.</returns>
             public List<string> GetNames();
         }
-
-        /// <summary>
-        /// Gets the status options.
-        /// </summary>
-        /// <returns>The status list result.</returns>
-        public StatusList GetStatusOptions();
-
-        /// <summary>
-        /// Gets the all tags.
-        /// </summary>
-        /// <returns>The list result.</returns>
-        public List<TodoTag> GetAllTags();
-
-
-        /// <summary>
-        /// Adds the given tag options.
-        /// </summary>
-        /// <param name="newTags">The new tags.</param>
-        public void AddTagOptions(List<TodoTag> newTags);
-
-        /// <summary>
-        /// Removes the given tag options.
-        /// </summary>
-        /// <param name="newTags">The tags to remove.</param>
-        public void RemoveTagOptions(List<TodoTag> newTags);
-
     }
 }
