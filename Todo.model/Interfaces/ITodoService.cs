@@ -4,7 +4,7 @@ namespace Todo.model.Interfaces
 {
     public interface ITodoService
     {
-        public ILists Lists();
+        public ILists Lists { get; }
 
         /// <summary>
         /// Adds the TodoItem to the TodoList with the given ID. 

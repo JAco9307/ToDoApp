@@ -1,8 +1,8 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using Todo.model.Entities;
 using Todo.model.Interfaces;
 using Todo.model.Repositories;
-using static Todo.model.Services.TodoService;
 
 namespace Todo.model.Services
 {
@@ -10,9 +10,8 @@ namespace Todo.model.Services
     {
         private ITodoRepository _repository;
         private StatusList? _statusOptions;
-
-        public ITodoService.ILists list;
-        public ITodoService.ILists Lists() => list;
+        private ITodoService.ILists list;
+        public ITodoService.ILists Lists { get { return list; }}
 
         [ExcludeFromCodeCoverage]
         public TodoService()
