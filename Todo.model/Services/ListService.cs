@@ -3,15 +3,23 @@ using System.Collections.Generic;
 using System.Text;
 using Todo.model.Entities;
 using Todo.model.Interfaces;
+using Todo.model.Repositories;
 
 namespace Todo.model.Services
 {
-    class TodoLists : ITodoService.ILists
+    public class ListService : IListService
     {
         private ITodoRepository _repository;
         private readonly List<TodoList> _todoLists = new List<TodoList>();
         public List<TodoList> todoLists() => _todoLists;
-        public TodoLists(ITodoRepository repository)
+        public ListService()
+        {
+            _repository = new TodoRepository();
+            var lists = _repository.GetLists();
+            foreach (var list in lists)
+                _todoLists.Add(list);
+        }
+        public ListService(ITodoRepository repository)
         {
             _repository = repository;
             var lists = _repository.GetLists();

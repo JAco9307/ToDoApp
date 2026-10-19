@@ -5,11 +5,16 @@ namespace Todo.model.Interfaces
     public interface ITodoRepository
     {
         /// <summary>
-        /// Adds a TodoItem to the database and saves it
+        /// Adds a TodoItem to the database
         /// </summary>
         /// <param name="todoItem">The TodoItem to add</param>
-        /// <param name="listId">The id of list to add the item to</param>
-        public void AddTodoItem(TodoItem todoItem, int listId);
+        public void AddTodoItem(TodoItem todoItem);
+
+        /// <summary>
+        /// Deletes a TodoItem from the databas
+        /// </summary>
+        /// <param name="todoItem">The TodoItem to remove</param>
+        public void DeleteTodoItem(TodoItem todoItem);
 
         /// <summary>
         /// Adds a new list.
@@ -68,7 +73,7 @@ namespace Todo.model.Interfaces
         public List<TodoTag>? GetAllTags();
 
         /// <summary>
-        /// Adds new tag options.
+        /// Adds new tag options.,k
         /// </summary>
         /// <param name="newTags">The new tags.</param>
         public void AddTagOptions(List<TodoTag> newTags);
@@ -78,11 +83,5 @@ namespace Todo.model.Interfaces
         /// </summary>
         /// <param name="tags">The tags to remove.</param>
         public void RemoveTagOptions(List<TodoTag> newTags);
-
-
-
-
-
-
     }
 }

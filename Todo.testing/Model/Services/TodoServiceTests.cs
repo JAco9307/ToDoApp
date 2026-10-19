@@ -93,7 +93,7 @@ public class TodoServiceTests
     [TestMethod]
     public void List_ShouldBeEmptyWhenCreated()
     {
-        TodoService service = new TodoService(new TestTodoRepository());
+        ListService service = new ListService(new TestTodoRepository());
 
         Assert.IsNotNull(service);
         Assert.IsEmpty(service.TodoLists);
@@ -103,7 +103,7 @@ public class TodoServiceTests
     public void Add_ShouldAddTodoItemToListZero()
     {
 
-        TodoService service = new TodoService(new TestTodoRepository());
+        ListService service = new ListService(new TestTodoRepository());
         TodoItem todoItem = new TodoItem("Test Title");
 
         service.GetTodoList(0);
@@ -117,7 +117,7 @@ public class TodoServiceTests
     [TestMethod]
     public void Add_ShouldAddMultipleTodoItemsToTheSameList()
     {
-        TodoService service = new TodoService(new TestTodoRepository());
+        ListService service = new ListService(new TestTodoRepository());
         TodoItem todoItem1 = new TodoItem("Test Title");
         TodoItem todoItem2 = new TodoItem("Second Test Title");
 
@@ -134,7 +134,7 @@ public class TodoServiceTests
     [TestMethod]
     public void Delete_ShouldRemoveItemFromTodoList()
     {
-        TodoService service = new TodoService(new TestTodoRepository());
+        ListService service = new ListService(new TestTodoRepository());
         TodoItem todoItem1 = new TodoItem("Test Title");
         TodoItem todoItem2 = new TodoItem("Second Test Title");
 
@@ -153,7 +153,7 @@ public class TodoServiceTests
     [TestMethod]
     public void GetTodoList_ShouldReturnTheCorrectList()
     {
-        TodoService service = new TodoService(new TestTodoRepository());
+        ListService service = new ListService(new TestTodoRepository());
         TodoItem todoItem1 = new TodoItem("Test Title");
         TodoItem todoItem2 = new TodoItem("Second Test Title");
 
@@ -173,7 +173,7 @@ public class TodoServiceTests
     [TestMethod]
     public void GetTodoList_ShouldReturnFromRepositoryIfNotInMemory()
     {
-        TodoService service = new TodoService(new TestTodoRepository());
+        ListService service = new ListService(new TestTodoRepository());
         TodoItem todoItem1 = new TodoItem("Test Title");
         TodoItem todoItem2 = new TodoItem("Second Test Title");
 
@@ -193,7 +193,7 @@ public class TodoServiceTests
     [TestMethod]
     public void GetTodoList_ShouldCreateNewListIfNullFromRepository()
     {
-        TodoService service = new TodoService(new TestTodoRepository());
+        ListService service = new ListService(new TestTodoRepository());
 
         TodoList list = service.GetTodoList(999);
 

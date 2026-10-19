@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using Todo.model.Interfaces;
 using Todo.model.Services;
 using Todo.view;
 
@@ -10,8 +11,7 @@ namespace Todo.presenter
         static void Main(string[] args)
         {
             TodoView view = new();
-            TodoService service = new TodoService();
-            Presenter presenter = new(view, service);
+            Presenter presenter = new(view);
             presenter.StartUp();
         }
     }
