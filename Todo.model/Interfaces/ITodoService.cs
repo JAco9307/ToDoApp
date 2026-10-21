@@ -13,7 +13,7 @@ namespace Todo.model.Interfaces
         public List<TodoTag> GetAllTags();
         public void AddTagOptions(List<TodoTag> newTags);
         public void RemoveTagOptions(List<TodoTag> newTags);
-        public StatusList GetStatusOptions();
+        public List<Status> GetStatusOptions();
         public TodoList GetTodoList(int listId);
         public TodoList GetTodoList(string listTitle);
         public List<string> GetListNames();

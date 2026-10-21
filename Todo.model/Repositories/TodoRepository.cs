@@ -128,11 +128,9 @@ namespace Todo.model.Repositories
         /// Gets the Status options, if none exists makes a new default entry.
         /// </summary>
         /// <returns>The Status list result.</returns>
-        public StatusList? GetStatusOptions()
+        public List<Status> GetStatusOptions()
         {
-            if (!_dbContext.TodoStatusOptions.Any())
-                _dbContext.TodoStatusOptions.Add(new StatusList());
-            return _dbContext.TodoStatusOptions.FirstOrDefault();
+            return _dbContext.TodoStatus.ToList();
         }
 
 

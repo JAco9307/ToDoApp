@@ -13,7 +13,9 @@ namespace Todo.presenter
         private readonly ITodoView _view;
         private readonly ITodoService _service;
         private int _currentListId;
-        public StatusList? StatusOptions;
+        public List<Status> StatusOptions;
+        private Status? _status;
+
         public Presenter(ITodoView view, ITodoService service)
         {
             _view = view;
@@ -105,7 +107,8 @@ namespace Todo.presenter
             if (todoItem == null)
             {
                 IsNew = true;
-                todoItem = new TodoItem("") { ListId = _currentListId };
+                todoItem = new TodoItem("") { ListId = _currentListId};
+                todoItem.SetStatus(StatusOptions[0]);
             }
 
             if (StatusOptions == null) throw new NullReferenceException();
@@ -118,7 +121,7 @@ namespace Todo.presenter
             context.AllTags = allTags.Select(tag => (tag.Title, tag.Color)).ToList();
 
             TodoData result = _view.ShowEditTodoDialog(context, todoData, IsNew);
-
+            
             if (result.ToBeDeleted && IsNew)
                 return null;
             if (result.ToBeDeleted)
@@ -131,7 +134,8 @@ namespace Todo.presenter
             if (result.Title != null)
             {
                 todoItem.SetTodoTitle(result.Title);
-                todoItem.SetTodoStatus(result.Status);
+                _status = StatusOptions.Find(status => status.Title == result.Status);
+                todoItem.SetStatus(_status);
                 todoItem.ListId = _service.GetTodoList(result.ListTitle).Id;
                 List<TodoTag> newTags = allTags.Where(tag => HasMatchingTitle(result, tag)).ToList();
                 todoItem.setTags(newTags);
@@ -167,7 +171,7 @@ namespace Todo.presenter
         /// <param name="Status">The Status.</param>
         public void UpdateStatus(TodoItem todoItem, string Status)
         {
-            todoItem.SetTodoStatus(Status);
+            todoItem.SetStatus(Status);
         }
 
         /// <summary>
@@ -183,15 +187,15 @@ namespace Todo.presenter
             List<TodoTag> removedTags = new List<TodoTag>();
 
             List<(string title, Color color)> tags = allTags.Select(tag => (tag.Title, tag.Color)).ToList();
-
+            
             TodoOptions newOptions = _view.ShowOptionsMenu(new TodoOptions {
-                Status = StatusOptions.options,
+                Status = StatusOptions.Select(status => status.ToString()).ToList(),
                 ListNames = currentListNames,
                 Tags = tags
             });
 
             // Handle updating options
-            StatusOptions.options = newOptions.Status;
+            //StatusOptions = newOptions.Status;
             newOptions.ListNameChanges ??= new();
 
             var renamedFrom = newOptions.ListNameChanges.Keys.ToHashSet();
@@ -237,9 +241,9 @@ namespace Todo.presenter
         public void CycleStatus(TodoItem todoItem, TodoViewItem sender)
         {
             if (StatusOptions == null) return;
-            int index = StatusOptions.options.FindIndex(Status => Status == todoItem.Status);
-            todoItem.SetTodoStatus(StatusOptions.options[(index+1) % StatusOptions.options.Count]);
-            sender.Status = todoItem.Status;
+            int index = StatusOptions.FindIndex(Status => Status == todoItem.Status);
+            todoItem.SetStatus(StatusOptions[(index+1) % StatusOptions.Count]);
+            sender.Status = todoItem.Status.ToString();
             _service.UpdateDb();
         }
 
@@ -270,7 +274,7 @@ namespace Todo.presenter
             return new TodoData
             {
                 Title = todoItem.Title,
-                Status = todoItem.Status,
+                Status = todoItem.Status.Title,
                 ListTitle = _service.GetTodoList(todoItem.ListId).Title,
                 CurrentTags = todoItem.Tags.Select(tag => (tag.Title, tag.Color)).ToList(),
                 Description = todoItem.Description,
@@ -283,7 +287,7 @@ namespace Todo.presenter
             if (StatusOptions == null) throw new NullReferenceException();
             return new ContextData
             {
-                StatusOptions = StatusOptions.options,
+                StatusOptions = StatusOptions.Select(status => status.ToString()).ToList(),
                 ListNames = _service.GetListNames()
             };
         }

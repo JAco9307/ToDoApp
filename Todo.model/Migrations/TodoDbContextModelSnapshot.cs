@@ -16,19 +16,42 @@ namespace Todo.model.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "10.0.12");
 
-            modelBuilder.Entity("Todo.model.Entities.StatusList", b =>
+            modelBuilder.Entity("Todo.model.Entities.Status", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("options")
+                    b.Property<int>("Order")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
-                    b.ToTable("TodoStatusOptions");
+                    b.ToTable("TodoStatus");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = -3,
+                            Order = 1,
+                            Title = "Not Started"
+                        },
+                        new
+                        {
+                            Id = -2,
+                            Order = 2,
+                            Title = "In Progress"
+                        },
+                        new
+                        {
+                            Id = -1,
+                            Order = 3,
+                            Title = "Completed"
+                        });
                 });
 
             modelBuilder.Entity("Todo.model.Entities.TodoItem", b =>
@@ -44,9 +67,8 @@ namespace Todo.model.Migrations
                     b.Property<int>("ListId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<int>("StatusId")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -55,6 +77,8 @@ namespace Todo.model.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ListId");
+
+                    b.HasIndex("StatusId");
 
                     b.ToTable("TodoItems");
                 });
@@ -134,6 +158,14 @@ namespace Todo.model.Migrations
                         .HasForeignKey("ListId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("Todo.model.Entities.Status", "Status")
+                        .WithMany()
+                        .HasForeignKey("StatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Status");
                 });
 
             modelBuilder.Entity("TodoItemTodoTag", b =>
