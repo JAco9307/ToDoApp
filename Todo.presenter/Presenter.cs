@@ -155,7 +155,7 @@ namespace Todo.presenter
 
             todoItem.SetTodoTitle(result.Title);
             todoItem.SetTodoStatus(result.Status);
-            todoItem.setTags(newTags);
+            todoItem.SetTags(newTags);
             todoItem.SetDescription(result.Description);
 
             _todoService.UpdateDb();
@@ -251,8 +251,10 @@ namespace Todo.presenter
                 }
                 addedTags.AddRange(remainingTags.Select(tag => new TodoTag(tag.Item1, tag.Item2)));
 
-                _tagService.AddOptions(addedTags);
-                _tagService.RemoveOptions(removedTags);
+                if (addedTags.Count > 0)
+                    _tagService.AddOptions(addedTags);
+                if (removedTags.Count > 0)
+                    _tagService.RemoveOptions(removedTags);
             }
         }
 
@@ -274,6 +276,9 @@ namespace Todo.presenter
             _todoService.UpdateDb();
         }
 
+        /// <summary>
+        /// Updates the lists in the <see cref="ComboBox"/> list selector.
+        /// </summary>
         public void UpdateLists()
         {
             var ListTitles = _listService.GetNames();
@@ -284,6 +289,10 @@ namespace Todo.presenter
 
         }
 
+        /// <summary>
+        /// Updates the selected list and updates view after to reflect changes.
+        /// </summary>
+        /// <param name="Title">The title.</param>
         private void UpdateSelectedList(string Title)
         {
             var SelectedList = _listService.Get(Title);

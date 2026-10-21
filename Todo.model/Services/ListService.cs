@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Todo.model.Entities;
+﻿using Todo.model.Entities;
 using Todo.model.Interfaces;
 using Todo.model.Repositories;
 
@@ -78,7 +75,6 @@ namespace Todo.model.Services
         //interface
         public List<string> GetNames()
         {
-            _repository.UpdateDb();
             List<string> output = _repository.GetListNames();
             if (output.Count == 0 && _todoLists.Count == 0)
             {
@@ -86,7 +82,7 @@ namespace Todo.model.Services
                 output.Add("New List");
 
             }
-            if (output.Count == 0 && _todoLists.Count != 0) 
+            if (output.Count == 0 && _todoLists.Count != 0)
             {
                 output.Add(_todoLists[0].Title);
             }
