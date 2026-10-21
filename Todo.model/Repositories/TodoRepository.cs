@@ -124,6 +124,12 @@ namespace Todo.model.Repositories
                 .ToList();
         }
 
+        public void AddStatusOptions(List<Status> status)
+        {
+            _dbContext.TodoStatus.AddRange(status);
+            _dbContext.SaveChanges();
+        }
+
         /// <summary>
         /// Gets the Status options, if none exists makes a new default entry.
         /// </summary>

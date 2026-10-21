@@ -131,6 +131,11 @@ namespace Todo.model.Services
             UpdateDb();
         }
 
+        public void AddStatusOptions(List<Status> status)
+        {
+            _repository.AddStatusOptions(status);
+        }
+
         public List<Status> GetStatusOptions()
         {
             List<Status> list = _repository.GetStatusOptions();

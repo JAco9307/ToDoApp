@@ -10,7 +10,6 @@ public class Status
     {
         Title = title;
     }
-
     public override string ToString()
     {
         return Title;

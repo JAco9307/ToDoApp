@@ -14,7 +14,6 @@ namespace Todo.presenter
         private readonly ITodoService _service;
         private int _currentListId;
         public List<Status> StatusOptions;
-        private Status? _status;
 
         public Presenter(ITodoView view, ITodoService service)
         {
@@ -134,7 +133,7 @@ namespace Todo.presenter
             if (result.Title != null)
             {
                 todoItem.SetTodoTitle(result.Title);
-                _status = StatusOptions.Find(status => status.Title == result.Status);
+                Status _status = StatusOptions.Find(status => status.Title == result.Status);
                 todoItem.SetStatus(_status);
                 todoItem.ListId = _service.GetTodoList(result.ListTitle).Id;
                 List<TodoTag> newTags = allTags.Where(tag => HasMatchingTitle(result, tag)).ToList();
@@ -181,6 +180,7 @@ namespace Todo.presenter
         {
             // Set up and open options
             if (StatusOptions == null) return;
+            StatusOptions = StatusOptions.OrderBy(status => status.Order).ToList();
             List<string> currentListNames = _service.GetListNames();
             List<TodoTag> allTags = _service.GetAllTags();
             List<TodoTag> addedTags = new List<TodoTag>();
@@ -195,7 +195,23 @@ namespace Todo.presenter
             });
 
             // Handle updating options
-            //StatusOptions = newOptions.Status;
+            List<Status> tempStatusList = new List<Status>();
+            for (int index = 0; index < newOptions.Status.Count; index++)
+            {
+                if (StatusOptions.Exists(status => status.Title == newOptions.Status[index]))
+                {
+                    Status status = StatusOptions.Find(status => status.Title == newOptions.Status[index]);
+                    status.Order = index;
+                    tempStatusList.Add(status);
+                }
+                else
+                {
+                    Status status = new Status(newOptions.Status[index]);
+                    tempStatusList.Add(status);
+                }
+            }
+            StatusOptions = tempStatusList;
+            
             newOptions.ListNameChanges ??= new();
 
             var renamedFrom = newOptions.ListNameChanges.Keys.ToHashSet();
@@ -226,7 +242,8 @@ namespace Todo.presenter
             {
                 addedTags.Add(new TodoTag(tag.title, tag.color));
             }
-
+            
+            _service.AddStatusOptions(StatusOptions.Where(status => status.Id >= 0).ToList());
             _service.AddTagOptions(addedTags);
             _service.RemoveTagOptions(removedTags);
             _service.UpdateDb();
