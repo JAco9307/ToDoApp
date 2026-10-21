@@ -1,14 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
-using Todo.view.Entities;
+﻿using Todo.view.Entities;
 using Todo.view.Interfaces;
 using Todo.view.ViewObjects;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Todo.view.OptionsItems
 {

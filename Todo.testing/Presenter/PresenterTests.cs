@@ -5,6 +5,7 @@ using Todo.presenter;
 using Todo.view;
 using Todo.view.Entities;
 using Todo.view.Interfaces;
+using Todo.view.ViewObjects;
 
 namespace Todo.testing.presenter
 {
@@ -39,7 +40,7 @@ namespace Todo.testing.presenter
         }
         public StatusList GetStatusOptions()
         {
-            throw new NotImplementedException();
+            return new();
         }
         public void UpdateStatusOptions(StatusList options)
         {
@@ -47,7 +48,7 @@ namespace Todo.testing.presenter
         }
         public void UpdateDb()
         {
-            
+
         }
         public void AddList(string Title)
         {
@@ -108,16 +109,16 @@ namespace Todo.testing.presenter
             return new();
         }
 
+        public List<TodoViewItem> UpdateActiveViewList(List<TodoData> todoDatas)
+        {
+            calledUpdate = true;
+            return new List<TodoViewItem>();
+        }
+
         public List<Control> StartUp()
         {
             calledStartup = true;
             return new List<Control>();
-        }
-
-        public List<TodoViewItem> UpdateActiveViewList(List<string> todoTitles, List<string> todoStatus)
-        {
-            calledUpdate = true;
-            return new List<TodoViewItem>();
         }
 
         public void UpdateLists(List<string> lists, string selectList)
@@ -133,7 +134,7 @@ namespace Todo.testing.presenter
         ITodoService _service = new mockService();
 
         [TestInitialize]
-        public void Init() 
+        public void Init()
         {
             _view = new mockView();
             _service = new mockService();
@@ -149,8 +150,8 @@ namespace Todo.testing.presenter
             {
                 presenter.StartUp();
             }
-            catch (ArgumentOutOfRangeException) 
-            { 
+            catch (ArgumentOutOfRangeException)
+            {
             }
 
             // Assert
@@ -207,7 +208,16 @@ namespace Todo.testing.presenter
             var presenter = new Presenter(_view, _service);
             presenter.StatusOptions = new();
             TodoItem todoItem = new("test");
-            TodoViewItem item = new("test","Not Started");
+            TodoData todoData = new TodoData
+            {
+                Title = "test",
+                Status = "Not Started",
+                ListTitle = "x",
+                Description = "x",
+                ToBeDeleted = false,
+                CurrentTags = []
+            };
+            TodoViewItem item = new(todoData);
 
             Assert.AreEqual("Not Started", todoItem.Status);
             presenter.CycleStatus(todoItem, item);

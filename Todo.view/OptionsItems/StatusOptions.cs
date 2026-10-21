@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
+﻿using System.Data;
 using Todo.view.Dialogs;
 using Todo.view.Entities;
 using Todo.view.Interfaces;
@@ -38,7 +32,8 @@ namespace Todo.view.OptionsItems
         {
             var inputDialog = new TextInputDialog("List name:");
             var result = inputDialog.ShowDialog();
-            if (statusBox.Items.Cast<string>().ToList().Contains(inputDialog.text))
+
+            if (statusBox.Items.Contains(inputDialog.text))
             {
                 MessageBox.Show(
                 "A status with this name already exists",
@@ -46,6 +41,7 @@ namespace Todo.view.OptionsItems
                 MessageBoxButtons.OK);
                 return;
             }
+
             if (result == DialogResult.OK)
             {
                 statusBox.Items.Add(inputDialog.text);
@@ -57,8 +53,9 @@ namespace Todo.view.OptionsItems
             if (statusBox.SelectedItem == null) return;
             var inputDialog = new TextInputDialog("Status name:", statusBox.SelectedItem.ToString() ?? "ERROR");
             var result = inputDialog.ShowDialog();
+
             if (result != DialogResult.OK) return;
-            if (statusBox.Items.Cast<string>().ToList().Contains(inputDialog.text))
+            if (statusBox.Items.Contains(inputDialog.text))
             {
                 MessageBox.Show(
                 "A status with this name already exists",
@@ -66,9 +63,10 @@ namespace Todo.view.OptionsItems
                 MessageBoxButtons.OK);
                 return;
             }
+
             statusBox.Items.Remove(statusBox.SelectedItem);
             statusBox.Items.Add(inputDialog.text);
-            
+
         }
 
         private void removeButton_Click(object sender, EventArgs e)
@@ -90,15 +88,17 @@ namespace Todo.view.OptionsItems
         private void MoveSelectedItem(bool direction)
         {
             if (statusBox.SelectedItem == null) return;
-            if (statusBox.SelectedIndex >= statusBox.Items.Count - 1 && direction) return;
-            if (statusBox.SelectedIndex == 0 && !direction) return;
 
-            int dir = direction ? 1 : -1;
+            int index = statusBox.SelectedIndex;
+            int newIndex = index + (direction ? 1 : -1);
 
-            int selectIndex = statusBox.SelectedIndex;
-            (statusBox.Items[selectIndex + dir], statusBox.Items[selectIndex]) 
-                = (statusBox.Items[selectIndex], statusBox.Items[selectIndex + dir]);
-            statusBox.SelectedItem = statusBox.Items[selectIndex + dir];
+            if (newIndex < 0 || newIndex >= statusBox.Items.Count)
+                return;
+
+            (statusBox.Items[index], statusBox.Items[newIndex]) =
+                (statusBox.Items[newIndex], statusBox.Items[index]);
+
+            statusBox.SelectedIndex = newIndex;
         }
     }
 }

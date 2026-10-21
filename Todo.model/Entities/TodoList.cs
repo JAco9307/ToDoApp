@@ -9,7 +9,7 @@ namespace Todo.model.Entities
         public IReadOnlyList<TodoItem> Items => _items;
 
         public string Title { get; set; }
-        
+
         public TodoList()
         {
             Title = "New List";
@@ -43,7 +43,7 @@ namespace Todo.model.Entities
         {
             bool success = _items.Remove(item);
 
-            if(!success)
+            if (!success)
                 throw new KeyNotFoundException("Given item was not found in the list");
         }
     }

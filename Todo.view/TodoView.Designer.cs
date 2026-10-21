@@ -23,8 +23,8 @@
         #region Windows Form Designer generated code
 
         /// <summary>
-        ///  Required method for Designer support - do not modify
-        ///  the contents of this method with the code editor.
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent()
         {
@@ -35,6 +35,8 @@
             createTodoButton = new Button();
             optionsButton = new Button();
             listComboBox = new ComboBox();
+            SortingDropDown = new System.Windows.Forms.ComboBox();
+            SortOrderCheckBox = new System.Windows.Forms.CheckBox();
             headerLayout.SuspendLayout();
             SuspendLayout();
             // 
@@ -42,50 +44,52 @@
             // 
             flowLayout.AutoScroll = true;
             flowLayout.AutoSize = true;
-            flowLayout.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            flowLayout.Dock = DockStyle.Fill;
-            flowLayout.FlowDirection = FlowDirection.TopDown;
-            flowLayout.Location = new Point(0, 29);
+            flowLayout.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            flowLayout.Dock = System.Windows.Forms.DockStyle.Fill;
+            flowLayout.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            flowLayout.Location = new System.Drawing.Point(0, 30);
             flowLayout.Name = "flowLayout";
-            flowLayout.Size = new Size(800, 421);
+            flowLayout.Size = new System.Drawing.Size(800, 420);
             flowLayout.TabIndex = 1;
             flowLayout.WrapContents = false;
             // 
             // headerLayout
             // 
             headerLayout.AutoSize = true;
-            headerLayout.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            headerLayout.BackColor = Color.DimGray;
+            headerLayout.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            headerLayout.BackColor = System.Drawing.Color.DimGray;
             headerLayout.Controls.Add(label1);
             headerLayout.Controls.Add(createTodoButton);
             headerLayout.Controls.Add(optionsButton);
             headerLayout.Controls.Add(listComboBox);
+            headerLayout.Controls.Add(SortingDropDown);
+            headerLayout.Controls.Add(SortOrderCheckBox);
             headerLayout.Dock = DockStyle.Top;
             headerLayout.Location = new Point(0, 0);
             headerLayout.Name = "headerLayout";
-            headerLayout.Size = new Size(800, 29);
+            headerLayout.Size = new System.Drawing.Size(800, 30);
             headerLayout.TabIndex = 3;
             headerLayout.WrapContents = false;
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Dock = DockStyle.Fill;
-            label1.ForeColor = SystemColors.ButtonHighlight;
-            label1.Location = new Point(3, 0);
+            label1.Dock = System.Windows.Forms.DockStyle.Fill;
+            label1.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            label1.Location = new System.Drawing.Point(3, 0);
             label1.Name = "label1";
-            label1.Size = new Size(42, 29);
+            label1.Size = new System.Drawing.Size(42, 30);
             label1.TabIndex = 0;
             label1.Text = "Todos:";
-            label1.TextAlign = ContentAlignment.MiddleCenter;
+            label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // createTodoButton
             // 
-            createTodoButton.FlatStyle = FlatStyle.Popup;
-            createTodoButton.ForeColor = SystemColors.ButtonHighlight;
-            createTodoButton.Location = new Point(51, 3);
+            createTodoButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            createTodoButton.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            createTodoButton.Location = new System.Drawing.Point(51, 3);
             createTodoButton.Name = "createTodoButton";
-            createTodoButton.Size = new Size(75, 23);
+            createTodoButton.Size = new System.Drawing.Size(75, 23);
             createTodoButton.TabIndex = 1;
             createTodoButton.TabStop = false;
             createTodoButton.Text = "New Todo";
@@ -93,11 +97,11 @@
             // 
             // optionsButton
             // 
-            optionsButton.FlatStyle = FlatStyle.Popup;
-            optionsButton.ForeColor = SystemColors.ButtonHighlight;
-            optionsButton.Location = new Point(132, 3);
+            optionsButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            optionsButton.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            optionsButton.Location = new System.Drawing.Point(132, 3);
             optionsButton.Name = "optionsButton";
-            optionsButton.Size = new Size(75, 23);
+            optionsButton.Size = new System.Drawing.Size(75, 23);
             optionsButton.TabIndex = 2;
             optionsButton.TabStop = false;
             optionsButton.Text = "Options";
@@ -114,23 +118,44 @@
             listComboBox.TabIndex = 3;
             listComboBox.TabStop = false;
             // 
+            // SortingDropDown
+            // 
+            SortingDropDown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            SortingDropDown.FormattingEnabled = true;
+            SortingDropDown.Location = new System.Drawing.Point(213, 3);
+            SortingDropDown.Name = "SortingDropDown";
+            SortingDropDown.Size = new System.Drawing.Size(97, 23);
+            SortingDropDown.TabIndex = 3;
+            // 
+            // SortOrderCheckBox
+            // 
+            SortOrderCheckBox.Location = new System.Drawing.Point(316, 3);
+            SortOrderCheckBox.Name = "SortOrderCheckBox";
+            SortOrderCheckBox.Size = new System.Drawing.Size(104, 24);
+            SortOrderCheckBox.TabIndex = 4;
+            SortOrderCheckBox.Text = "Descending";
+            SortOrderCheckBox.UseVisualStyleBackColor = true;
+            // 
             // TodoView
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.FromArgb(64, 64, 64);
-            ClientSize = new Size(800, 450);
+            AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            BackColor = System.Drawing.Color.FromArgb(((int)((byte)64)), ((int)((byte)64)), ((int)((byte)64)));
+            ClientSize = new System.Drawing.Size(800, 450);
             Controls.Add(flowLayout);
             Controls.Add(headerLayout);
-            FormBorderStyle = FormBorderStyle.SizableToolWindow;
-            Icon = (Icon)resources.GetObject("$this.Icon");
-            Name = "TodoView";
+            FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
+            Icon = ((System.Drawing.Icon)resources.GetObject("$this.Icon"));
             Text = "ToDo App";
             headerLayout.ResumeLayout(false);
             headerLayout.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
+
+        private System.Windows.Forms.CheckBox SortOrderCheckBox;
+
+        private System.Windows.Forms.ComboBox SortingDropDown;
 
         #endregion
         private FlowLayoutPanel flowLayout;

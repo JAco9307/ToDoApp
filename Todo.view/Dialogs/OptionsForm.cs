@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
-using Todo.view.Entities;
+﻿using Todo.view.Entities;
 using Todo.view.Interfaces;
 using Todo.view.OptionsItems;
 
@@ -36,7 +28,7 @@ namespace Todo.view
             {
                 flowLayoutPanel.Controls.Add((Control)OptionItem);
             }
-                      
+
         }
 
         public void cancelClick(object sender, EventArgs e)
@@ -53,7 +45,7 @@ namespace Todo.view
         /// <param name="e">The event.</param>
         public void saveClick(object sender, EventArgs e)
         {
-            foreach (IOption option in OptionItems) 
+            foreach (IOption option in OptionItems)
             {
                 OutputOptions = option.Save(OutputOptions);
             }

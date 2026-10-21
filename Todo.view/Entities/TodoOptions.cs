@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Todo.view.Entities
+﻿namespace Todo.view.Entities
 {
 
     /// <summary>

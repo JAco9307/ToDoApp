@@ -1,7 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Windows.Forms;
-using Todo.view;
+﻿using Todo.view;
 using Todo.view.Entities;
 
 namespace Todo.testing.View
