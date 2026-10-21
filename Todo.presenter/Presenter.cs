@@ -314,7 +314,15 @@ namespace Todo.presenter
                 ReferenceHandler = ReferenceHandler.Preserve
             };
             options.Converters.Add(new ColorJsonConverter());
-            List<TodoList>? lists = JsonSerializer.Deserialize<List<TodoList>>(json, options);
+            List<TodoList>? lists;
+            try
+            {
+                lists = JsonSerializer.Deserialize<List<TodoList>>(json, options);
+            }catch (Exception)
+            {
+                DialogResult confirmResult = MessageBox.Show("List import failed, please ensure the right file was selected.", "Failed to import!", MessageBoxButtons.OK);
+                return;
+            }
             List<string> currentListNames = _service.GetListNames();
             if (lists == null)
                 return;
@@ -327,11 +335,11 @@ namespace Todo.presenter
             }
         }
 
-        private void UseExistingTags(List<TodoTag> tags, List<TodoTag> allTags)
+        private List<TodoTag> UseExistingTags(List<TodoTag> tags, List<TodoTag> allTags)
         {
-            tags = tags.Select(tag => FindMatchingTag(tag, allTags)).ToList();
+            return tags.Select(tag => FindMatchingTag(tag, allTags)).ToList();
         }
-        private static TodoTag FindMatchingTag(TodoTag newTag, List<TodoTag> allTags)
+        private TodoTag FindMatchingTag(TodoTag newTag, List<TodoTag> allTags)
         {
             return allTags.FirstOrDefault(tag => tag.Title == newTag.Title) ?? newTag;
         }
@@ -354,9 +362,25 @@ namespace Todo.presenter
             List<TodoTag> allTags = _service.GetAllTags();
             foreach(TodoItem item in fromList.Items)
             {
-                UseExistingTags(item.Tags, allTags);
+                if (!SanitizeItem(item))
+                    continue;
+                item.setTags(UseExistingTags(item.Tags, allTags));
                 _service.Add(toListId, item);
             }
+        }
+        
+        private bool SanitizeItem(TodoItem item)
+        {
+            if (item.Title == null)
+                return false;
+            if (item.Status == null)
+                item.SetTodoStatus("");
+            if (item.Description == null)
+                item.SetDescription("");
+            if (item.Tags == null)
+                item.setTags(new List<TodoTag>());
+
+            return true;
         }
     }
 }
