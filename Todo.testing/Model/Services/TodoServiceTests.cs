@@ -38,16 +38,6 @@ public class TodoServiceTests
             return null;
         }
 
-        public void UpdateStatusOptions(StatusList StatusOptions)
-        {
-
-        }
-
-        public void AddTodoItem(TodoItem todoItem, int listId)
-        {
-
-        }
-
         public TodoList AddList(string Title)
         {
             return new();
@@ -90,22 +80,27 @@ public class TodoServiceTests
         }
     }
 
+    public ListService Listservice = new ListService();
+    public TodoService Todoservice = new TodoService();
+
+    [TestInitialize]
+    public void initial() 
+    {
+        var testrepo = new TestTodoRepository();
+        Listservice = new ListService(testrepo);
+        Todoservice = new TodoService(testrepo);
+    }
+
     [TestMethod]
     public void List_ShouldBeEmptyWhenCreated()
     {
-        ListService service = new ListService(new TestTodoRepository());
-
-        Assert.IsNotNull(service);
-        Assert.IsEmpty(service.todoLists());
+        Assert.IsNotNull(Listservice);
+        Assert.IsEmpty(Listservice.todoLists());
     }
 
     [TestMethod]
     public void Add_ShouldAddTodoItemToListZero()
     {
-        var testrepo = new TestTodoRepository();
-        ListService Listservice = new ListService(testrepo);
-        TodoService Todoservice = new TodoService(testrepo);
-
         TodoItem todoItem = new TodoItem("Test Title");
 
         Listservice.Get(0);
@@ -119,9 +114,6 @@ public class TodoServiceTests
     [TestMethod]
     public void Add_ShouldAddMultipleTodoItemsToTheSameList()
     {
-        var testrepo = new TestTodoRepository();
-        ListService Listservice = new ListService(testrepo);
-        TodoService Todoservice = new TodoService(testrepo);
         TodoItem todoItem1 = new TodoItem("Test Title");
         TodoItem todoItem2 = new TodoItem("Second Test Title");
 
@@ -138,9 +130,6 @@ public class TodoServiceTests
     [TestMethod]
     public void Delete_ShouldRemoveItemFromTodoList()
     {
-        var testrepo = new TestTodoRepository();
-        ListService Listservice = new ListService(testrepo);
-        TodoService Todoservice = new TodoService(testrepo);
         TodoItem todoItem1 = new TodoItem("Test Title");
         TodoItem todoItem2 = new TodoItem("Second Test Title");
 
@@ -159,9 +148,6 @@ public class TodoServiceTests
     [TestMethod]
     public void GetTodoList_ShouldReturnTheCorrectList()
     {
-        var testrepo = new TestTodoRepository();
-        ListService Listservice = new ListService(testrepo);
-        TodoService Todoservice = new TodoService(testrepo);
         TodoItem todoItem1 = new TodoItem("Test Title");
         TodoItem todoItem2 = new TodoItem("Second Test Title");
 
@@ -181,9 +167,6 @@ public class TodoServiceTests
     [TestMethod]
     public void GetTodoList_ShouldReturnFromRepositoryIfNotInMemory()
     {
-        var testrepo = new TestTodoRepository();
-        ListService Listservice = new ListService(testrepo);
-        TodoService Todoservice = new TodoService(testrepo);
         TodoItem todoItem1 = new TodoItem("Test Title");
         TodoItem todoItem2 = new TodoItem("Second Test Title");
 
@@ -203,7 +186,6 @@ public class TodoServiceTests
     [TestMethod]
     public void GetTodoList_ShouldCreateNewListIfNullFromRepository()
     {
-        ListService Listservice = new ListService(new TestTodoRepository());
 
         TodoList list = Listservice.Get(999);
 
