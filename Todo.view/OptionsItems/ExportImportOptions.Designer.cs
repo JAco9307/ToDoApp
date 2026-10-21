@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             ExportButton = new Button();
-            ExportListButton = new Button();
             ImportListButton = new Button();
             SuspendLayout();
             // 
@@ -44,21 +43,10 @@
             ExportButton.UseVisualStyleBackColor = true;
             ExportButton.Click += ExportButton_Click;
             // 
-            // ExportListButton
-            // 
-            ExportListButton.ForeColor = SystemColors.ControlLightLight;
-            ExportListButton.Location = new Point(150, 3);
-            ExportListButton.Name = "ExportListButton";
-            ExportListButton.Size = new Size(141, 34);
-            ExportListButton.TabIndex = 1;
-            ExportListButton.Text = "Export Lists";
-            ExportListButton.UseVisualStyleBackColor = true;
-            ExportListButton.Click += ExportListButton_Click;
-            // 
             // ImportListButton
             // 
             ImportListButton.ForeColor = SystemColors.ControlLightLight;
-            ImportListButton.Location = new Point(297, 3);
+            ImportListButton.Location = new Point(150, 3);
             ImportListButton.Name = "ImportListButton";
             ImportListButton.Size = new Size(141, 34);
             ImportListButton.TabIndex = 2;
@@ -72,17 +60,15 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(64, 64, 64);
             Controls.Add(ImportListButton);
-            Controls.Add(ExportListButton);
             Controls.Add(ExportButton);
             Name = "ExportImportOptions";
-            Size = new Size(563, 42);
+            Size = new Size(300, 42);
             ResumeLayout(false);
         }
 
         #endregion
 
         private Button ExportButton;
-        private Button ExportListButton;
         private Button ImportListButton;
     }
 }

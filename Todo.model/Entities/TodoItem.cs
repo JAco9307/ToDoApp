@@ -45,7 +45,7 @@ namespace Todo.model.Entities
 
         public void setTags(List<TodoTag> tags)
         {
-            Tags = tags;
+            Tags = tags ?? new List<TodoTag>();
         }
 
         public void SetTodoStatus(string status)
