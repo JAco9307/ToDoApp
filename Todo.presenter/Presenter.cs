@@ -147,8 +147,8 @@ namespace Todo.presenter
                 return null;
             }
 
-            if (result.Title == null)
-                return todoItem;
+            if (result.Title == "" || result.Title == null)
+                return null;
 
             todoItem.ListId = _listService.Get(result.ListTitle).Id;
             List<TodoTag> newTags = allTags.Where(tag => HasMatchingTitle(result, tag)).ToList();
