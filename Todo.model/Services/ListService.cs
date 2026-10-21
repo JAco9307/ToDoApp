@@ -82,12 +82,11 @@ namespace Todo.model.Services
             List<string> output = _repository.GetListNames();
             if (output.Count == 0 && _todoLists.Count == 0)
             {
-                TodoList list = new TodoList(1);
-                _todoLists.Add(list);
-                output.Add(list.Title);
+                _repository.AddList("New List");
+                output.Add("New List");
 
             }
-            if (output.Count == 0 && _todoLists.Count != 0) //not sure why this check is nessesary but it is
+            if (output.Count == 0 && _todoLists.Count != 0) 
             {
                 output.Add(_todoLists[0].Title);
             }
