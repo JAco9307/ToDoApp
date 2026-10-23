@@ -12,6 +12,12 @@ public struct StatusData
         Title = title;
         Order = order;
     }
+
+    public StatusData(string value)
+    {
+        throw new NotImplementedException();
+    }
+
     public override string ToString()
     {
         return Title;

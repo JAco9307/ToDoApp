@@ -5,12 +5,12 @@ namespace Todo.view.EditItems
 {
     public partial class StatusEdit : UserControl, ITodoPropertyEdit
     {
-        string? Status;
+        StatusData Status;
         public StatusEdit(TodoData todoData, ContextData context)
         {
             InitializeComponent();
             StatusComboBox.Items.AddRange(context.StatusOptions.ToArray());
-            if (todoData.Status == null)
+            if (todoData.Status.Title == null)
             {
                 StatusComboBox.SelectedItem = context.StatusOptions[0];
                 Status = context.StatusOptions[0];
@@ -25,8 +25,8 @@ namespace Todo.view.EditItems
         public TodoData UpdateData(TodoData todoData)
         {
             if (StatusComboBox.SelectedItem == null) return todoData;
-            Status = StatusComboBox.SelectedItem.ToString();
-            if (Status == null) return todoData;
+            Status.Title = StatusComboBox.SelectedItem.ToString();
+            if (Status.Title == null) return todoData;
             todoData.Status = Status;
             return todoData;
         }

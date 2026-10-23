@@ -10,7 +10,8 @@ namespace Todo.view.OptionsItems
         public StatusOptions(TodoOptions currentOptions)
         {
             InitializeComponent();
-            statusBox.Items.AddRange(currentOptions.Status.ToArray());
+            statusBox.DataSource = currentOptions.Status;
+            //statusBox.Items.AddRange(currentOptions.Status.ToArray());
         }
 
         public TodoOptions Save(TodoOptions currentOptions)
@@ -18,7 +19,7 @@ namespace Todo.view.OptionsItems
             if (statusBox.Items.Count == 0) return currentOptions;
             try
             {
-                List<string> result = statusBox.Items.Cast<string>().ToList();
+                List<StatusData> result = new List<StatusData>();
                 currentOptions.Status = result;
             }
             catch (Exception ex)

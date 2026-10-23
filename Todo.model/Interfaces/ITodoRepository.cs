@@ -64,7 +64,7 @@ namespace Todo.model.Interfaces
         /// Gets the Status options, if none exists makes a new default entry.
         /// </summary>
         /// <returns>The Status list result.</returns>
-        public StatusList? GetStatusOptions();
+        public List<Status> GetStatusOptions();
 
         /// <summary>
         /// Gets the all tags.

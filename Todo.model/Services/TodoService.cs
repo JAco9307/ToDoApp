@@ -8,7 +8,7 @@ namespace Todo.model.Services
     public class TodoService : ITodoService
     {
         private ITodoRepository _repository;
-        private StatusList? _statusOptions;
+        private List<Status> _statusOptions;
 
         [ExcludeFromCodeCoverage]
         public TodoService()
@@ -40,14 +40,9 @@ namespace Todo.model.Services
         }
 
         //interface
-        public StatusList GetStatusOptions()
+        public List<Status> GetStatusOptions()
         {
-            if (_statusOptions == null)
-            {
-                StatusList? list = _repository.GetStatusOptions();
-                _statusOptions = list ?? new StatusList();
-            }
-            return _statusOptions;
+            return _repository.GetStatusOptions();
         }
     }
 }

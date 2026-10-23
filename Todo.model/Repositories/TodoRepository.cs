@@ -117,7 +117,7 @@ namespace Todo.model.Repositories
         }
 
         //interface
-        public StatusList? GetStatusOptions()
+        public List<Status> GetStatusOptions()
         {
             return _dbContext.TodoStatus.ToList();
         }
