@@ -20,7 +20,7 @@ namespace Todo.model.Entities
             Title = "New List";
         }
         [JsonConstructor]
-        public TodoList(int id, string title, IReadOnlyList<TodoItem> items)
+        public TodoList(string title, IReadOnlyList<TodoItem> items)
         {
             Title = title;
             _items = items.ToList();

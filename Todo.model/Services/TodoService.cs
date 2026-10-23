@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Todo.model.Entities;
@@ -188,16 +187,13 @@ namespace Todo.model.Services
         {
             _allTags?.RemoveAll(tag => tags.Contains(tag));
             _repository.RemoveTagOptions(tags);
-
-
-
         }
 
         /// <summary>
         /// Imports the json.
         /// </summary>
         /// <param name="filePath">The file path of the json file.</param>
-        public void ImportJson(string filePath)
+        public bool ImportJson(string filePath)
         {
             string json = File.ReadAllText(filePath);
             var options = new JsonSerializerOptions
@@ -213,11 +209,11 @@ namespace Todo.model.Services
             }
             catch (Exception)
             {
-                return;
+                return false;
             }
             List<string> currentListNames = GetListNames();
             if (lists == null)
-                return;
+                return false;
             foreach (TodoList list in lists)
             {
                 list.Title = CheckIfListNameAlreadyExist(list.Title + " (Imported List)", currentListNames);
@@ -225,6 +221,7 @@ namespace Todo.model.Services
                 TodoList newList = GetTodoList(list.Title);
                 copyList(list, newList.Id);
             }
+            return true;
         }
 
         /// <summary>

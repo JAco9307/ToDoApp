@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
+using System.Xml.Serialization;
 using Todo.model.Entities;
 using Todo.model.Interfaces;
 using Todo.view.Entities;
@@ -153,10 +154,6 @@ namespace Todo.presenter
         {
             return todoData.CurrentTags.Any(newTag => newTag.Item1 == tag.Title);
         }
-        private static bool HasMatchingTitle(List<TodoTag> currentTags, TodoTag newTag)
-        {
-            return currentTags.Any(tag => tag.Title == newTag.Title);
-        }
 
 
         /// <summary>
@@ -203,12 +200,40 @@ namespace Todo.presenter
 
             UpdateListNames(currentListNames, newOptions);
             UpdateTags(allTags, newOptions);
+            Import(newOptions);
+            Export(newOptions);
 
             _service.UpdateDb();
             UpdateLists();
         }
 
-        void UpdateListNames(List<string> currentListNames, TodoOptions newOptions)
+        private void Export(TodoOptions newOptions)
+        {
+            if (!newOptions.CreateExport)
+                return;
+
+            List<TodoList> lists = new List<TodoList>();
+            List<int> ids = new List<int> { 1 };
+            foreach (int id in ids)
+            {
+                lists.Add(_service.GetTodoList(id));
+            }
+            _service.ExportJson(lists);
+            UpdateOptions();
+        }
+
+        private void Import(TodoOptions newOptions)
+        {
+            if (newOptions.ImportFilePath == null)
+                return;
+            if (newOptions.ImportFilePath == "")
+                return;
+            bool result = _service.ImportJson(newOptions.ImportFilePath);
+            if (!result)
+                MessageBox.Show("Import of lists failed, ensure the correct json was chosen.", "Import failed", MessageBoxButtons.OK);
+        }
+
+        private void UpdateListNames(List<string> currentListNames, TodoOptions newOptions)
         {
             var renamedFrom = newOptions.ListNameChanges.Keys.ToHashSet();
             var renamedTo = newOptions.ListNameChanges.Values.ToHashSet();
@@ -225,7 +250,7 @@ namespace Todo.presenter
                     _service.DeleteList(title);
         }
 
-        void UpdateTags(List<TodoTag> allTags, TodoOptions newOptions)
+        private void UpdateTags(List<TodoTag> allTags, TodoOptions newOptions)
         {
             List<TodoTag> addedTags = new List<TodoTag>();
             List<TodoTag> removedTags = new List<TodoTag>();
@@ -243,26 +268,6 @@ namespace Todo.presenter
 
             _service.AddTagOptions(addedTags);
             _service.RemoveTagOptions(removedTags);
-
-            if (newOptions.ImportFilePath != null && newOptions.ImportFilePath != "")
-            {
-                _service.ImportJson(newOptions.ImportFilePath);
-            }
-
-            if (newOptions.CreateExport)
-            {
-                List<TodoList> lists = new List<TodoList>();
-                List<int> ids = new List<int> { 1 };
-                foreach (int id in ids)
-                {
-                    lists.Add(_service.GetTodoList(id));
-                }
-                _service.ExportJson(lists);
-                UpdateOptions();
-                return;
-            }
-            _service.UpdateDb();
-            UpdateLists();
         }
 
         /// <summary>

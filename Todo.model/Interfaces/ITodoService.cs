@@ -17,7 +17,7 @@ namespace Todo.model.Interfaces
         public TodoList GetTodoList(int listId);
         public TodoList GetTodoList(string listTitle);
         public List<string> GetListNames();
-        public void ImportJson(string filePath);
+        public bool ImportJson(string filePath);
         public void ExportJson(List<TodoList> lists);
     }
 }

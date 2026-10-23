@@ -25,9 +25,8 @@ namespace Todo.model.Entities
         }
 
         [JsonConstructor]
-        public TodoItem(int id, int listId, string title, string description, string status, List<TodoTag> tags)
+        public TodoItem(string title, string description, string status, List<TodoTag> tags)
         {
-            ListId = listId;
             Title = title;
             Description = description;
             Status = status;
