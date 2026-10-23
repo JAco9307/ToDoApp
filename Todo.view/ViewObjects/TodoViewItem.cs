@@ -11,10 +11,11 @@ namespace Todo.view.ViewObjects
         public string Status
         {
             get { return _Status; }
-            set {
-                _Status = value; 
-                CycleStatus.Text = value; 
-            } 
+            set
+            {
+                _Status = value;
+                CycleStatus.Text = value;
+            }
         }
         private string _Status;
         public Button CycleStatus => StatusButton;
@@ -31,12 +32,12 @@ namespace Todo.view.ViewObjects
             CycleStatus.Text = todoData.Status;
             todoLabel.Text = todoData.Title;
         }
-        
+
         public static int CompareByTitle(TodoViewItem item1, TodoViewItem item2)
         {
             return String.Compare(item1.todoLabel.Text, item2.todoLabel.Text, StringComparison.Ordinal);
         }
-        
+
         public static int CompareByStatus(TodoViewItem item1, TodoViewItem item2)
         {
             return String.Compare(item1.Status, item2.Status, StringComparison.Ordinal);

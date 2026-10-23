@@ -1,9 +1,6 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 using Todo.view;
 using Todo.view.Entities;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Todo.testing.View
 {

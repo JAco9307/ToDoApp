@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
-using Todo.view.EditItems;
+﻿using Todo.view.EditItems;
 using Todo.view.Entities;
 using Todo.view.Interfaces;
 using Todo.view.OptionsItems;

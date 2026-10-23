@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
-
-namespace Todo.view.Dialogs
+﻿namespace Todo.view.Dialogs
 {
     public partial class TextInputDialog : Form
     {
@@ -26,7 +18,7 @@ namespace Todo.view.Dialogs
 
         private void cancelButton_Click(object sender, EventArgs e)
         {
-            DialogResult=DialogResult.Cancel;
+            DialogResult = DialogResult.Cancel;
         }
     }
 }

@@ -8,8 +8,8 @@ namespace Todo.view
     {
         private Thread? guiThread;
 
-        private Dictionary<string, Comparison<TodoViewItem>> _sortingOptions;
-        
+        private Dictionary<string, Comparison<TodoViewItem>> _sortingOptions = [];
+
         public TodoView()
         {
             InitializeComponent();
@@ -22,15 +22,15 @@ namespace Todo.view
             guiThread.Start();
 
             List<Control> controls = [
-                createTodoButton, 
+                createTodoButton,
                 optionsButton,
                 listComboBox,
                 SortingDropDown,
                 SortOrderCheckBox,
                 ];
-            
+
             SetupSortingOptions();
-            
+
             return controls;
         }
 
@@ -54,26 +54,22 @@ namespace Todo.view
             Application.Run(this);
         }
 
-        /// <summary>
-        /// Updates the active view list.
-        /// </summary>
-        /// <param name="todoDatas">List of todoData to used to generate TodoViewItems</param>
-        /// <returns>The list result.</returns>
+        //interface
         public List<TodoViewItem> UpdateActiveViewList(List<TodoData> todoDatas)
         {
-            Invoke(()=> flowLayout.Controls.Clear());
-            List<TodoViewItem> controls = new();
-            for(int i = 0; i < todoDatas.Count; i++)
+            Invoke(() => flowLayout.Controls.Clear());
+            List<TodoViewItem> controls = [];
+            for (int i = 0; i < todoDatas.Count; i++)
             {
                 TodoViewItem newTodo = addTodo(todoDatas[i]);
                 newTodo.id = i;
-                controls.Add(newTodo); 
+                controls.Add(newTodo);
             }
-            Invoke (() =>SortTodoViewItems(controls));
+            Invoke(() => SortTodoViewItems(controls));
             Invoke(() => flowLayout.Controls.AddRange(controls.ToArray<Control>()));
             return controls;
         }
-        
+
         /// <summary>
         /// Sorts the list of TodoViewItems in place, based on the sorting method and reverse selection of the UI 
         /// </summary>
@@ -81,9 +77,9 @@ namespace Todo.view
         private void SortTodoViewItems(List<TodoViewItem> todoViewItems)
         {
             var selectedItem = SortingDropDown.SelectedItem;
-            if (selectedItem != null && selectedItem.ToString() != null && _sortingOptions.ContainsKey(selectedItem.ToString()))
+            if (_sortingOptions.ContainsKey(selectedItem?.ToString() ?? ""))
             {
-                Comparison<TodoViewItem> sortingOption = _sortingOptions[selectedItem.ToString()];
+                Comparison<TodoViewItem> sortingOption = _sortingOptions[selectedItem?.ToString() ?? ""];
                 todoViewItems.Sort(sortingOption);
                 if (SortOrderCheckBox.Checked) todoViewItems.Reverse();
             }
@@ -100,43 +96,36 @@ namespace Todo.view
             return item;
         }
 
-        /// <summary>
-        /// Shows an dialog window to create or edit a TodoItem
-        /// </summary>
-        /// <param name="context">The context data</param>
-        /// <param name="currentData">The current todo data if applicable</param>
-        /// <returns></returns>
+        //interface
         public TodoData ShowEditTodoDialog(ContextData context, TodoData currentData, bool IsNew)
         {
-            var CreateTodoForm = new EditTodoForm(context, currentData, IsNew);
+            EditTodoForm CreateTodoForm = new(context, currentData, IsNew);
             DialogResult result = CreateTodoForm.ShowDialog();
             TodoData todoData = CreateTodoForm.todoData;
-            if (result == DialogResult.Cancel)
-            {
+
+            if (result == DialogResult.Cancel && IsNew)
                 todoData.ToBeDeleted = true;
-            }
 
             return todoData;
         }
 
-        /// <summary>
-        /// Opens the options form and recieves the data in it afterwards.
-        /// </summary>
-        /// <param name="currentOptions">The current options.</param>
-        /// <returns>The options set when saving.</returns>
+        //interface
         public TodoOptions ShowOptionsMenu(TodoOptions currentOptions)
         {
             OptionsForm OptionsForm = new OptionsForm(currentOptions);
             DialogResult result = OptionsForm.ShowDialog();
+
             if (result == DialogResult.OK)
                 return OptionsForm.OutputOptions;
             else
                 return currentOptions;
         }
 
-        public void UpdateLists(List<string> strings, string selectList)
+        //interface
+        public void UpdateComboboxLists(List<string> strings, string selectList)
         {
-            Invoke(() => { 
+            Invoke(() =>
+            {
                 listComboBox.Items.Clear();
                 listComboBox.Items.AddRange(strings.ToArray());
                 listComboBox.SelectedItem = selectList;

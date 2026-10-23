@@ -1,5 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Diagnostics.CodeAnalysis;
 using Todo.model.Data;
 using Todo.model.Entities;
 using Todo.model.Interfaces;
@@ -28,14 +28,10 @@ namespace Todo.model.Repositories
             _dbContext = dbContext;
         }
 
-        /// <summary>
-        /// Adds a TodoItem to the database and saves it
-        /// </summary>
-        /// <param name="item">The TodoItem to add</param>
-        /// <param name="listId">The id of list to add the item to</param>
-        public void AddTodoItem(TodoItem item, int listId)
+        //interface
+        public void AddTodoItem(TodoItem item)
         {
-            TodoList? todoList = _dbContext.TodoLists.FirstOrDefault(list => list.Id == listId);
+            TodoList? todoList = _dbContext.TodoLists.FirstOrDefault(list => list.Id == item.ListId);
             if (todoList == null)
             {
                 todoList = AddList("New List");
@@ -46,6 +42,13 @@ namespace Todo.model.Repositories
             _dbContext.SaveChanges();
         }
 
+        public void DeleteTodoItem(TodoItem todoItem)
+        {
+            _dbContext.TodoItems.Remove(todoItem);
+            _dbContext.SaveChanges();
+        }
+
+        //interface
         public TodoList AddList(string Title)
         {
             TodoList newlist = new TodoList { Title = Title };
@@ -53,34 +56,22 @@ namespace Todo.model.Repositories
             _dbContext.SaveChanges();
             return newlist;
         }
+
+        //interface
         public void DeleteList(TodoList list)
         {
+            if (!_dbContext.TodoLists.Contains(list)) return;
             _dbContext.TodoLists.Remove(list);
             _dbContext.SaveChanges();
         }
 
-        /// <summary>
-        /// Deletes a TodoItem from the database
-        /// </summary>
-        /// <param name="todoItem">The TodoItem to delete</param>
-        public void DeleteTodoItem(TodoItem todoItem)
-        {
-            _dbContext.TodoItems.Remove(todoItem);
-            _dbContext.SaveChanges();
-        }
-        /// <summary>
-        /// Updates all entities with unsaved changes to the database
-        /// </summary>
+        //interface
         public void UpdateDb()
         {
             _dbContext.SaveChanges();
         }
 
-        /// <summary>
-        /// Gets a TodoList with a given Id, Creates a new list if none exist
-        /// </summary>
-        /// <param name="TodoListId">Id of the TodoList</param>
-        /// <returns>The TodoList</returns>
+        //interface
         public TodoList? GetList(int TodoListId)
         {
             NewListIfNone();
@@ -98,6 +89,9 @@ namespace Todo.model.Repositories
                 .FirstOrDefault(list => list.Title == TodoListTitle);
         }
 
+        /// <summary>
+        /// Creates a new empty list if none exist in the database.
+        /// </summary>
         private void NewListIfNone()
         {
             if (!_dbContext.TodoLists.Any())
@@ -107,50 +101,42 @@ namespace Todo.model.Repositories
             }
         }
 
-        /// <summary>
-        /// Gets all TodoLists
-        /// </summary>
-        /// <returns>The TodoLists</returns>
+        //interface
         public List<string> GetListNames()
         {
             return _dbContext.TodoLists
                 .Select(list => list.Title).ToList();
         }
 
+        //interface
         public List<TodoList> GetLists()
         {
-            return _dbContext.TodoLists 
+            return _dbContext.TodoLists
                 .Include(list => list.Items)
                 .ToList();
         }
 
-        public void AddStatusOptions(List<Status> status)
-        {
-            _dbContext.TodoStatus.AddRange(status);
-            _dbContext.SaveChanges();
-        }
-
-        /// <summary>
-        /// Gets the Status options, if none exists makes a new default entry.
-        /// </summary>
-        /// <returns>The Status list result.</returns>
-        public List<Status> GetStatusOptions()
+        //interface
+        public StatusList? GetStatusOptions()
         {
             return _dbContext.TodoStatus.ToList();
         }
 
 
+        //interface
         public List<TodoTag>? GetAllTags()
         {
             return _dbContext.TodoTags.ToList();
         }
 
+        //interface
         public void AddTagOptions(List<TodoTag> newTags)
         {
             _dbContext.TodoTags.AddRange(newTags);
             _dbContext.SaveChanges();
         }
 
+        //interface
         public void RemoveTagOptions(List<TodoTag> tags)
         {
             _dbContext.TodoTags.RemoveRange(tags);

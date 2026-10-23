@@ -6,8 +6,8 @@
         public int ListId { get; set; }
         public string Title { get; private set; }
         public string Description { get; private set; }
-        public Status Status { get; private set; }
-        public List<TodoTag> Tags {  get; private set; } = new List<TodoTag>();
+        public string Status { get; private set; }
+        public List<TodoTag> Tags { get; private set; } = new List<TodoTag>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TodoItem"/> class.
@@ -15,7 +15,7 @@
         /// <param name="title">The title.</param>
         /// <param name="description">The description</param>
         /// <param name="Status">The status.</param>
-        public TodoItem(string title, string description= "")
+        public TodoItem(string title, string description = "", string status = "Not Started")
         {
             Title = title;
             Description = description;
@@ -30,21 +30,28 @@
             Title = title;
         }
 
-        public void setTags(List<TodoTag> tags)
+        /// <summary>
+        /// Sets the tags.
+        /// </summary>
+        /// <param name="tags">The tags.</param>
+        public void SetTags(List<TodoTag> tags)
         {
             Tags = tags;
         }
 
-        public void SetStatus(Status status)
+        /// <summary>
+        /// Sets the todo status.
+        /// </summary>
+        /// <param name="status">The status.</param>
+        public void SetTodoStatus(string status)
         {
             Status = status;
         }
 
-        public void SetStatus(string status)
-        {
-            Status = new Status(status);
-        }
-
+        /// <summary>
+        /// Sets the description.
+        /// </summary>
+        /// <param name="description">The description.</param>
         public void SetDescription(string description)
         {
             Description = description;
