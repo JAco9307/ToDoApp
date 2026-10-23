@@ -31,16 +31,28 @@
             Title = title;
         }
 
-        public void setTags(List<TodoTag> tags)
+        /// <summary>
+        /// Sets the tags.
+        /// </summary>
+        /// <param name="tags">The tags.</param>
+        public void SetTags(List<TodoTag> tags)
         {
             Tags = tags;
         }
 
+        /// <summary>
+        /// Sets the todo status.
+        /// </summary>
+        /// <param name="status">The status.</param>
         public void SetTodoStatus(string status)
         {
             Status = status;
         }
 
+        /// <summary>
+        /// Sets the description.
+        /// </summary>
+        /// <param name="description">The description.</param>
         public void SetDescription(string description)
         {
             Description = description;

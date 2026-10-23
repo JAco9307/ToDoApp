@@ -2,6 +2,8 @@
 using System.Windows.Forms;
 using Todo.model.Entities;
 using Todo.model.Interfaces;
+using Todo.model.Repositories;
+using Todo.model.Services;
 using Todo.view.Entities;
 using Todo.view.Interfaces;
 using Todo.view.ViewObjects;
@@ -11,13 +13,26 @@ namespace Todo.presenter
     public class Presenter
     {
         private readonly ITodoView _view;
-        private readonly ITodoService _service;
+        private readonly ITodoService _todoService;
+        private readonly IListService _listService;
+        private readonly ITagService _tagService;
         private int _currentListId;
         public StatusList? StatusOptions;
-        public Presenter(ITodoView view, ITodoService service)
+        public Presenter(ITodoView view, ITodoService todoService, IListService listService, ITagService tagService)
         {
             _view = view;
-            _service = service;
+            _todoService = todoService;
+            _listService = listService;
+            _tagService = tagService;
+            _currentListId = 1;
+        }
+        public Presenter(ITodoView view)
+        {
+            _view = view;
+            ITodoRepository todoRepository = new TodoRepository();
+            _todoService = new TodoService(todoRepository);
+            _listService = new ListService(todoRepository);
+            _tagService = new TagService(todoRepository);
             _currentListId = 1;
         }
 
@@ -27,7 +42,7 @@ namespace Todo.presenter
         /// </summary>
         public void StartUp()
         {
-            StatusOptions = _service.GetStatusOptions();
+            StatusOptions = _todoService.GetStatusOptions();
             List<Control> controls = _view.StartUp();
             EventHandlerSetup(controls);
             UpdateLists();
@@ -56,7 +71,7 @@ namespace Todo.presenter
         public void UpdateView()
         {
             if (StatusOptions == null) throw new NullReferenceException();
-            IReadOnlyList<TodoItem> TodoList = _service.GetTodoList(_currentListId).Items;
+            IReadOnlyList<TodoItem> TodoList = _listService.Get(_currentListId).Items;
             List<TodoData> todoDatas = new List<TodoData>();
             foreach (TodoItem todoItem in TodoList)
             {
@@ -80,7 +95,7 @@ namespace Todo.presenter
             TodoItem? newTodo = HandleEditPopUp(null);
             if (newTodo == null)
                 return;
-            _service.Add(_currentListId, newTodo);
+            _todoService.Add(newTodo);
             UpdateView();
         }
 
@@ -94,7 +109,7 @@ namespace Todo.presenter
             TodoItem? newTodo = HandleEditPopUp(todoItem);
             if (newTodo == null)
                 return;
-            _service.UpdateDb();
+            _todoService.UpdateDb();
             UpdateView();
         }
 
@@ -114,7 +129,7 @@ namespace Todo.presenter
             if (StatusOptions == null) throw new NullReferenceException();
             if (todoItem == null) throw new NullReferenceException();
 
-            List<TodoTag> allTags = _service.GetAllTags();
+            List<TodoTag> allTags = _tagService.GetAll();
 
             TodoData todoData = ItemToData(todoItem);
 
@@ -132,18 +147,18 @@ namespace Todo.presenter
                 return null;
             }
 
-            if (result.Title == null)
-                return todoItem;
+            if (result.Title == "" || result.Title == null)
+                return null;
 
-            todoItem.ListId = _service.GetTodoList(result.ListTitle).Id;
+            todoItem.ListId = _listService.Get(result.ListTitle).Id;
             List<TodoTag> newTags = allTags.Where(tag => HasMatchingTitle(result, tag)).ToList();
 
             todoItem.SetTodoTitle(result.Title);
             todoItem.SetTodoStatus(result.Status);
-            todoItem.setTags(newTags);
+            todoItem.SetTags(newTags);
             todoItem.SetDescription(result.Description);
 
-            _service.UpdateDb();
+            _todoService.UpdateDb();
             UpdateView();
 
             return todoItem;
@@ -161,7 +176,7 @@ namespace Todo.presenter
         /// <param name="todoItem">The todo item.</param>
         public void DeleteTodo(TodoItem todoItem)
         {
-            _service.Delete(_currentListId, todoItem);
+            _todoService.Delete(todoItem);
             UpdateView();
         }
 
@@ -182,8 +197,8 @@ namespace Todo.presenter
         {
             // Set up and open options
             if (StatusOptions == null) return;
-            List<string> currentListNames = _service.GetListNames();
-            List<TodoTag> allTags = _service.GetAllTags();
+            List<string> currentListNames = _listService.GetNames();
+            List<TodoTag> allTags = _tagService.GetAll();
             List<(string title, Color color)> tags = allTags.Select(tag => (tag.Title, tag.Color)).ToList();
 
             TodoOptions newOptions = _view.ShowOptionsMenu(new TodoOptions
@@ -200,7 +215,7 @@ namespace Todo.presenter
             UpdateListNames(currentListNames, newOptions);
             UpdateTags(allTags, newOptions);
 
-            _service.UpdateDb();
+            _todoService.UpdateDb();
             UpdateLists();
 
             void UpdateListNames(List<string> currentListNames, TodoOptions newOptions)
@@ -209,15 +224,15 @@ namespace Todo.presenter
                 var renamedTo = newOptions.ListNameChanges.Values.ToHashSet();
 
                 foreach (var (OldName, NewName) in newOptions.ListNameChanges)
-                    _service.RenameList(OldName, NewName);
+                    _listService.Rename(OldName, NewName);
 
                 foreach (var title in newOptions.ListNames.Except(currentListNames))
                     if (!renamedTo.Contains(title))
-                        _service.AddList(title);
+                        _listService.Add(title);
 
                 foreach (var title in currentListNames.Except(newOptions.ListNames))
                     if (!renamedFrom.Contains(title))
-                        _service.DeleteList(title);
+                        _listService.Delete(title);
             }
 
             void UpdateTags(List<TodoTag> allTags, TodoOptions newOptions)
@@ -236,8 +251,10 @@ namespace Todo.presenter
                 }
                 addedTags.AddRange(remainingTags.Select(tag => new TodoTag(tag.Item1, tag.Item2)));
 
-                _service.AddTagOptions(addedTags);
-                _service.RemoveTagOptions(removedTags);
+                if (addedTags.Count > 0)
+                    _tagService.AddOptions(addedTags);
+                if (removedTags.Count > 0)
+                    _tagService.RemoveOptions(removedTags);
             }
         }
 
@@ -256,22 +273,29 @@ namespace Todo.presenter
             todoItem.SetTodoStatus(opt[(index + 1) % opt.Count]);
             sender.Status = todoItem.Status;
 
-            _service.UpdateDb();
+            _todoService.UpdateDb();
         }
 
+        /// <summary>
+        /// Updates the lists in the <see cref="ComboBox"/> list selector.
+        /// </summary>
         public void UpdateLists()
         {
-            var ListTitles = _service.GetListNames();
+            var ListTitles = _listService.GetNames();
             if (_currentListId - 1 < ListTitles.Count)
-                _view.UpdateLists(ListTitles, ListTitles[_currentListId - 1]);
+                _view.UpdateComboboxLists(ListTitles, ListTitles[_currentListId - 1]);
             else
-                _view.UpdateLists(ListTitles, ListTitles[0]);
+                _view.UpdateComboboxLists(ListTitles, ListTitles[0]);
 
         }
 
+        /// <summary>
+        /// Updates the selected list and updates view after to reflect changes.
+        /// </summary>
+        /// <param name="Title">The title.</param>
         private void UpdateSelectedList(string Title)
         {
-            var SelectedList = _service.GetTodoList(Title);
+            var SelectedList = _listService.Get(Title);
             _currentListId = SelectedList.Id;
             UpdateView();
         }
@@ -287,7 +311,7 @@ namespace Todo.presenter
             {
                 Title = todoItem.Title,
                 Status = todoItem.Status,
-                ListTitle = _service.GetTodoList(todoItem.ListId).Title,
+                ListTitle = _listService.Get(todoItem.ListId).Title,
                 CurrentTags = todoItem.Tags.Select(tag => (tag.Title, tag.Color)).ToList(),
                 Description = todoItem.Description,
 
@@ -304,7 +328,7 @@ namespace Todo.presenter
             return new ContextData
             {
                 StatusOptions = StatusOptions.options,
-                ListNames = _service.GetListNames()
+                ListNames = _listService.GetNames()
             };
         }
     }

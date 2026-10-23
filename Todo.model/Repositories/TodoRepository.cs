@@ -28,14 +28,10 @@ namespace Todo.model.Repositories
             _dbContext = dbContext;
         }
 
-        /// <summary>
-        /// Adds a TodoItem to the database and saves it
-        /// </summary>
-        /// <param name="item">The TodoItem to add</param>
-        /// <param name="listId">The id of list to add the item to</param>
-        public void AddTodoItem(TodoItem item, int listId)
+        //interface
+        public void AddTodoItem(TodoItem item)
         {
-            TodoList? todoList = _dbContext.TodoLists.FirstOrDefault(list => list.Id == listId);
+            TodoList? todoList = _dbContext.TodoLists.FirstOrDefault(list => list.Id == item.ListId);
             if (todoList == null)
             {
                 todoList = AddList("New List");
@@ -46,11 +42,13 @@ namespace Todo.model.Repositories
             _dbContext.SaveChanges();
         }
 
-        /// <summary>
-        /// Adds a new list.
-        /// </summary>
-        /// <param name="Title">The title of the new list.</param>
-        /// <returns>The todo list result.</returns>
+        public void DeleteTodoItem(TodoItem todoItem)
+        {
+            _dbContext.TodoItems.Remove(todoItem);
+            _dbContext.SaveChanges();
+        }
+
+        //interface
         public TodoList AddList(string Title)
         {
             TodoList newlist = new TodoList { Title = Title };
@@ -58,10 +56,8 @@ namespace Todo.model.Repositories
             _dbContext.SaveChanges();
             return newlist;
         }
-        /// <summary>
-        /// Deletes a list.
-        /// </summary>
-        /// <param name="list">The list.</param>
+
+        //interface
         public void DeleteList(TodoList list)
         {
             if (!_dbContext.TodoLists.Contains(list)) return;
@@ -69,19 +65,13 @@ namespace Todo.model.Repositories
             _dbContext.SaveChanges();
         }
 
-        /// <summary>
-        /// Updates all entities with unsaved changes to the database
-        /// </summary>
+        //interface
         public void UpdateDb()
         {
             _dbContext.SaveChanges();
         }
 
-        /// <summary>
-        /// Gets a TodoList with a given Id, Creates a new list if none exist
-        /// </summary>
-        /// <param name="TodoListId">Id of the TodoList</param>
-        /// <returns>The TodoList</returns>
+        //interface
         public TodoList? GetList(int TodoListId)
         {
             NewListIfNone();
@@ -90,11 +80,6 @@ namespace Todo.model.Repositories
                 .ThenInclude(item => item.Tags)
                 .FirstOrDefault(list => list.Id == TodoListId);
         }
-        /// <summary>
-        /// Gets a TodoList with a given Title, Creates a new list if none exist
-        /// </summary>
-        /// <param name="TodoListTitle">Title of the TodoList</param>
-        /// <returns>The TodoList</returns>
         public TodoList? GetList(string TodoListTitle)
         {
             NewListIfNone();
@@ -104,6 +89,9 @@ namespace Todo.model.Repositories
                 .FirstOrDefault(list => list.Title == TodoListTitle);
         }
 
+        /// <summary>
+        /// Creates a new empty list if none exist in the database.
+        /// </summary>
         private void NewListIfNone()
         {
             if (!_dbContext.TodoLists.Any())
@@ -113,16 +101,14 @@ namespace Todo.model.Repositories
             }
         }
 
-        /// <summary>
-        /// Gets all TodoList titles as a list
-        /// </summary>
-        /// <returns>The todolist titles</returns>
+        //interface
         public List<string> GetListNames()
         {
             return _dbContext.TodoLists
                 .Select(list => list.Title).ToList();
         }
 
+        //interface
         public List<TodoList> GetLists()
         {
             return _dbContext.TodoLists
@@ -130,10 +116,7 @@ namespace Todo.model.Repositories
                 .ToList();
         }
 
-        /// <summary>
-        /// Gets the Status options, if none exists makes a new default entry.
-        /// </summary>
-        /// <returns>The Status list result.</returns>
+        //interface
         public StatusList? GetStatusOptions()
         {
             if (!_dbContext.TodoStatusOptions.Any())
@@ -142,29 +125,20 @@ namespace Todo.model.Repositories
         }
 
 
-        /// <summary>
-        /// Gets the all tags.
-        /// </summary>
-        /// <returns>The list result.</returns>
+        //interface
         public List<TodoTag>? GetAllTags()
         {
             return _dbContext.TodoTags.ToList();
         }
 
-        /// <summary>
-        /// Adds new tag options.
-        /// </summary>
-        /// <param name="newTags">The new tags.</param>
+        //interface
         public void AddTagOptions(List<TodoTag> newTags)
         {
             _dbContext.TodoTags.AddRange(newTags);
             _dbContext.SaveChanges();
         }
 
-        /// <summary>
-        /// Removes tag options.
-        /// </summary>
-        /// <param name="tags">The tags to remove.</param>
+        //interface
         public void RemoveTagOptions(List<TodoTag> tags)
         {
             _dbContext.TodoTags.RemoveRange(tags);
