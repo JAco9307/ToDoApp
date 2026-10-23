@@ -30,8 +30,8 @@
         {
             SaveButton = new Button();
             CancelFormButton = new Button();
-            label1 = new Label();
-            label2 = new Label();
+            TitleLabel = new Label();
+            ColorLabel = new Label();
             textBox1 = new TextBox();
             panel1 = new Panel();
             PickColorButton = new Button();
@@ -39,7 +39,8 @@
             // 
             // SaveButton
             // 
-            SaveButton.Location = new Point(309, 471);
+            SaveButton.ForeColor = SystemColors.ControlLightLight;
+            SaveButton.Location = new Point(12, 129);
             SaveButton.Name = "SaveButton";
             SaveButton.Size = new Size(112, 34);
             SaveButton.TabIndex = 0;
@@ -49,7 +50,8 @@
             // 
             // CancelFormButton
             // 
-            CancelFormButton.Location = new Point(561, 471);
+            CancelFormButton.ForeColor = SystemColors.ControlLightLight;
+            CancelFormButton.Location = new Point(130, 129);
             CancelFormButton.Name = "CancelFormButton";
             CancelFormButton.Size = new Size(112, 34);
             CancelFormButton.TabIndex = 1;
@@ -57,41 +59,44 @@
             CancelFormButton.UseVisualStyleBackColor = true;
             CancelFormButton.Click += CancelButton_Click;
             // 
-            // label1
+            // TitleLabel
             // 
-            label1.AutoSize = true;
-            label1.Location = new Point(116, 141);
-            label1.Name = "label1";
-            label1.Size = new Size(59, 25);
-            label1.TabIndex = 2;
-            label1.Text = "label1";
+            TitleLabel.AutoSize = true;
+            TitleLabel.ForeColor = SystemColors.ControlLightLight;
+            TitleLabel.Location = new Point(30, 25);
+            TitleLabel.Name = "TitleLabel";
+            TitleLabel.Size = new Size(44, 25);
+            TitleLabel.TabIndex = 2;
+            TitleLabel.Text = "Title";
             // 
-            // label2
+            // ColorLabel
             // 
-            label2.AutoSize = true;
-            label2.Location = new Point(120, 216);
-            label2.Name = "label2";
-            label2.Size = new Size(59, 25);
-            label2.TabIndex = 3;
-            label2.Text = "label2";
+            ColorLabel.AutoSize = true;
+            ColorLabel.ForeColor = SystemColors.ControlLightLight;
+            ColorLabel.Location = new Point(19, 72);
+            ColorLabel.Name = "ColorLabel";
+            ColorLabel.Size = new Size(55, 25);
+            ColorLabel.TabIndex = 3;
+            ColorLabel.Text = "Color";
             // 
             // textBox1
             // 
-            textBox1.Location = new Point(251, 135);
+            textBox1.Location = new Point(80, 22);
             textBox1.Name = "textBox1";
             textBox1.Size = new Size(150, 31);
             textBox1.TabIndex = 4;
             // 
             // panel1
             // 
-            panel1.Location = new Point(252, 215);
+            panel1.Location = new Point(77, 65);
             panel1.Name = "panel1";
             panel1.Size = new Size(35, 36);
             panel1.TabIndex = 5;
             // 
             // PickColorButton
             // 
-            PickColorButton.Location = new Point(309, 216);
+            PickColorButton.ForeColor = SystemColors.ControlLightLight;
+            PickColorButton.Location = new Point(118, 67);
             PickColorButton.Name = "PickColorButton";
             PickColorButton.Size = new Size(112, 34);
             PickColorButton.TabIndex = 6;
@@ -104,14 +109,14 @@
             AcceptButton = SaveButton;
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = SystemColors.ControlDarkDark;
-            ClientSize = new Size(1038, 589);
+            BackColor = Color.FromArgb(64, 64, 64);
+            ClientSize = new Size(254, 173);
             ControlBox = false;
             Controls.Add(PickColorButton);
             Controls.Add(panel1);
             Controls.Add(textBox1);
-            Controls.Add(label2);
-            Controls.Add(label1);
+            Controls.Add(ColorLabel);
+            Controls.Add(TitleLabel);
             Controls.Add(CancelFormButton);
             Controls.Add(SaveButton);
             FormBorderStyle = FormBorderStyle.FixedDialog;
@@ -131,8 +136,8 @@
 
         private Button SaveButton;
         private Button CancelFormButton;
-        private Label label1;
-        private Label label2;
+        private Label TitleLabel;
+        private Label ColorLabel;
         private TextBox textBox1;
         private Panel panel1;
         private Button PickColorButton;
