@@ -99,21 +99,22 @@ namespace Todo.testing.presenter
             return new();
         }
 
-        public List<TodoViewItem> UpdateActiveViewList(List<TodoData> todoDatas)
-        {
-            calledUpdate = true;
-            return new List<TodoViewItem>();
-        }
-
-        public List<Control> StartUp()
+        public void StartUp()
         {
             calledStartup = true;
-            return new List<Control>();
         }
 
         public void UpdateComboboxLists(List<string> lists, string selectList)
         {
-            throw new NotImplementedException();
+        }
+
+        public void UpdateActiveViewList(List<TodoData> todoDatas, Action<int> editAction, Func<int, string> cycleStatusAction)
+        {
+            calledUpdate = true;
+        }
+
+        public void SetUpEvents(List<Action> actions, Action<string> listSelect)
+        {
         }
     }
     public class mockTagService : ITagService
@@ -229,12 +230,12 @@ namespace Todo.testing.presenter
                 ToBeDeleted = false,
                 CurrentTags = []
             };
-            TodoViewItem item = new(todoData);
+
 
             Assert.AreEqual("Not Started", todoItem.Status);
-            presenter.CycleStatus(todoItem, item);
+            presenter.CycleStatus(0);
             Assert.AreEqual("In Progress", todoItem.Status);
-            presenter.CycleStatus(todoItem, item);
+            presenter.CycleStatus(0);
             Assert.AreEqual("Completed", todoItem.Status);
         }
     }

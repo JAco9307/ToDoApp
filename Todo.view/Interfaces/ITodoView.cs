@@ -11,13 +11,13 @@ namespace Todo.view.Interfaces
         /// </summary>
         /// <param name="todoDatas">List of todoData to used to generate TodoViewItems</param>
         /// <returns>List of each created todo view item </returns>
-        public List<TodoViewItem> UpdateActiveViewList(List<TodoData> todoDatas);
+        public void UpdateActiveViewList(List<TodoData> todoDatas, Action<int> editAction, Func<int, string> cycleStatusAction);
 
         /// <summary>
         /// Start the form in a thread.
         /// </summary>
         /// <returns>Returns relevant controls for binding</returns>
-        public List<Control> StartUp();
+        public void StartUp();
 
         /// <summary>
         /// Shows an dialog window to create or edit a TodoItem
@@ -40,6 +40,9 @@ namespace Todo.view.Interfaces
         /// <param name="lists">The list titles.</param>
         /// <param name="selectList">The title of select list.</param>
         public void UpdateComboboxLists(List<string> lists, string selectList);
+
+        public void SetUpEvents(List<Action> actions, Action<string> listSelect);
+
 
     }
 }

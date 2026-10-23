@@ -15,23 +15,24 @@ namespace Todo.view
             InitializeComponent();
         }
 
-        public List<Control> StartUp()
+        public void StartUp()
         {
             guiThread = new Thread(FormThread);
             guiThread.SetApartmentState(ApartmentState.STA);
             guiThread.Start();
 
-            List<Control> controls = [
-                createTodoButton,
-                optionsButton,
-                listComboBox,
-                SortingDropDown,
-                SortOrderCheckBox,
-                ];
-
             SetupSortingOptions();
 
-            return controls;
+        }
+
+        //interface
+        public void SetUpEvents(List<Action> actions, Action<string> listSelect)
+        {
+            createTodoButton.Click += delegate { actions[0]();  };
+            optionsButton.Click += delegate { actions[1](); };
+            listComboBox.TextChanged += delegate { listSelect(listComboBox.Text); };
+            SortingDropDown.SelectedIndexChanged += delegate { actions[2](); };
+            SortOrderCheckBox.CheckStateChanged += delegate { actions[2](); };
         }
 
         /// <summary>
@@ -55,7 +56,7 @@ namespace Todo.view
         }
 
         //interface
-        public List<TodoViewItem> UpdateActiveViewList(List<TodoData> todoDatas)
+        public void UpdateActiveViewList(List<TodoData> todoDatas, Action<int> editAction, Func<int, string> cycleStatusAction)
         {
             Invoke(() => flowLayout.Controls.Clear());
             List<TodoViewItem> controls = [];
@@ -64,10 +65,18 @@ namespace Todo.view
                 TodoViewItem newTodo = addTodo(todoDatas[i]);
                 newTodo.id = i;
                 controls.Add(newTodo);
+                newTodo.TodoLabel.Click += delegate 
+                { 
+                    editAction(newTodo.id); 
+                };
+                newTodo.CycleStatus.Click += delegate 
+                {
+                    newTodo.CycleStatus.Text = cycleStatusAction(newTodo.id); 
+                };
+
             }
             Invoke(() => SortTodoViewItems(controls));
             Invoke(() => flowLayout.Controls.AddRange(controls.ToArray<Control>()));
-            return controls;
         }
 
         /// <summary>
