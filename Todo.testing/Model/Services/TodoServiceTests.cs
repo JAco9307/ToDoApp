@@ -38,16 +38,6 @@ public class TodoServiceTests
             return null;
         }
 
-        public void UpdateStatusOptions(StatusList StatusOptions)
-        {
-
-        }
-
-        public void AddTodoItem(TodoItem todoItem, int listId)
-        {
-
-        }
-
         public TodoList AddList(string Title)
         {
             return new();
@@ -90,99 +80,102 @@ public class TodoServiceTests
         }
     }
 
+    public ListService Listservice = new ListService();
+    public TodoService Todoservice = new TodoService();
+
+    [TestInitialize]
+    public void initial() 
+    {
+        var testrepo = new TestTodoRepository();
+        Listservice = new ListService(testrepo);
+        Todoservice = new TodoService(testrepo);
+    }
+
     [TestMethod]
     public void List_ShouldBeEmptyWhenCreated()
     {
-        TodoService service = new TodoService(new TestTodoRepository());
-
-        Assert.IsNotNull(service);
-        Assert.IsEmpty(service.TodoLists);
+        Assert.IsNotNull(Listservice);
+        Assert.IsEmpty(Listservice.todoLists());
     }
 
     [TestMethod]
     public void Add_ShouldAddTodoItemToListZero()
     {
-
-        TodoService service = new TodoService(new TestTodoRepository());
         TodoItem todoItem = new TodoItem("Test Title");
 
-        service.GetTodoList(0);
+        Listservice.Get(0);
 
-        service.Add(0, todoItem);
+        Todoservice.Add(todoItem);
 
-        Assert.ContainsSingle(service.TodoLists);
-        Assert.Contains(todoItem, service.TodoLists[0].Items);
+        Assert.ContainsSingle(Listservice.todoLists());
+        Assert.Contains(todoItem, Listservice.Get(0).Items);
     }
 
     [TestMethod]
     public void Add_ShouldAddMultipleTodoItemsToTheSameList()
     {
-        TodoService service = new TodoService(new TestTodoRepository());
         TodoItem todoItem1 = new TodoItem("Test Title");
         TodoItem todoItem2 = new TodoItem("Second Test Title");
 
-        service.GetTodoList(0);
+        Listservice.Get(0);
 
-        service.Add(0, todoItem1);
-        service.Add(0, todoItem2);
+        Todoservice.Add(todoItem1);
+        Todoservice.Add(todoItem2);
 
-        Assert.HasCount(2, service.TodoLists[0].Items);
-        Assert.Contains(todoItem1, service.TodoLists[0].Items);
-        Assert.Contains(todoItem2, service.TodoLists[0].Items);
+        Assert.HasCount(2, Listservice.Get(0).Items);
+        Assert.Contains(todoItem1, Listservice.Get(0).Items);
+        Assert.Contains(todoItem2, Listservice.Get(0).Items);
     }
 
     [TestMethod]
     public void Delete_ShouldRemoveItemFromTodoList()
     {
-        TodoService service = new TodoService(new TestTodoRepository());
         TodoItem todoItem1 = new TodoItem("Test Title");
         TodoItem todoItem2 = new TodoItem("Second Test Title");
 
-        service.GetTodoList(0);
+        Listservice.Get(0);
 
-        service.Add(0, todoItem1);
-        service.Add(0, todoItem2);
+        Todoservice.Add(todoItem1);
+        Todoservice.Add(todoItem2);
 
-        service.Delete(0, todoItem1);
+        Todoservice.Delete(todoItem1);
 
-        Assert.HasCount(1, service.TodoLists[0].Items);
-        Assert.DoesNotContain(todoItem1, service.TodoLists[0].Items);
-        Assert.Contains(todoItem2, service.TodoLists[0].Items);
+        Assert.HasCount(1, Listservice.todoLists()[0].Items);
+        Assert.DoesNotContain(todoItem1, Listservice.todoLists()[0].Items);
+        Assert.Contains(todoItem2, Listservice.todoLists()[0].Items);
     }
 
     [TestMethod]
     public void GetTodoList_ShouldReturnTheCorrectList()
     {
-        TodoService service = new TodoService(new TestTodoRepository());
         TodoItem todoItem1 = new TodoItem("Test Title");
         TodoItem todoItem2 = new TodoItem("Second Test Title");
 
-        service.GetTodoList(0);
+        Listservice.Get(0);
 
-        service.Add(0, todoItem1);
-        service.Add(0, todoItem2);
+        Todoservice.Add(todoItem1);
+        Todoservice.Add(todoItem2);
 
-        TodoList list = service.GetTodoList(0);
+        TodoList list = Listservice.Get(0);
 
         Assert.IsNotNull(list);
         Assert.HasCount(2, list.Items);
-        Assert.Contains(todoItem1, service.TodoLists[0].Items);
-        Assert.Contains(todoItem2, service.TodoLists[0].Items);
+        Assert.Contains(todoItem1, Listservice.todoLists()[0].Items);
+        Assert.Contains(todoItem2, Listservice.todoLists()[0].Items);
     }
 
     [TestMethod]
     public void GetTodoList_ShouldReturnFromRepositoryIfNotInMemory()
     {
-        TodoService service = new TodoService(new TestTodoRepository());
         TodoItem todoItem1 = new TodoItem("Test Title");
         TodoItem todoItem2 = new TodoItem("Second Test Title");
 
-        service.GetTodoList(0);
+        Listservice.Get(0);
 
-        service.Add(0, todoItem1);
-        service.Add(0, todoItem2);
+        Todoservice.Add(todoItem1);
+        Todoservice.Add(todoItem2);
 
-        TodoList list = service.GetTodoList(55);
+        TodoList list = Listservice.Get(55);
 
         Assert.IsNotNull(list);
         Assert.IsEmpty(list.Items);
@@ -193,9 +186,8 @@ public class TodoServiceTests
     [TestMethod]
     public void GetTodoList_ShouldCreateNewListIfNullFromRepository()
     {
-        TodoService service = new TodoService(new TestTodoRepository());
 
-        TodoList list = service.GetTodoList(999);
+        TodoList list = Listservice.Get(999);
 
         Assert.IsNotNull(list);
         Assert.IsEmpty(list.Items);
