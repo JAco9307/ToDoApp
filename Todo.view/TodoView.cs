@@ -28,7 +28,7 @@ namespace Todo.view
         //interface
         public void SetUpEvents(List<Action> actions, Action<string> listSelect)
         {
-            createTodoButton.Click += delegate { actions[0]();  };
+            createTodoButton.Click += delegate { actions[0](); };
             optionsButton.Click += delegate { actions[1](); };
             listComboBox.TextChanged += delegate { listSelect(listComboBox.Text); };
             SortingDropDown.SelectedIndexChanged += delegate { actions[2](); };
@@ -65,13 +65,13 @@ namespace Todo.view
                 TodoViewItem newTodo = addTodo(todoDatas[i]);
                 newTodo.id = i;
                 controls.Add(newTodo);
-                newTodo.TodoLabel.Click += delegate 
-                { 
-                    editAction(newTodo.id); 
-                };
-                newTodo.CycleStatus.Click += delegate 
+                newTodo.TodoLabel.Click += delegate
                 {
-                    newTodo.CycleStatus.Text = cycleStatusAction(newTodo.id); 
+                    editAction(newTodo.id);
+                };
+                newTodo.CycleStatus.Click += delegate
+                {
+                    newTodo.CycleStatus.Text = cycleStatusAction(newTodo.id);
                 };
 
             }

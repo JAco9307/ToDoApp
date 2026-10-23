@@ -1,5 +1,4 @@
 ﻿using Todo.view.Entities;
-using Todo.view.ViewObjects;
 
 namespace Todo.view.Interfaces
 {
@@ -9,8 +8,9 @@ namespace Todo.view.Interfaces
         /// <summary>
         /// Updates the active view list.
         /// </summary>
-        /// <param name="todoDatas">List of todoData to used to generate TodoViewItems</param>
-        /// <returns>List of each created todo view item </returns>
+        /// <param name="todoDatas">>List of todoData to used to generate TodoViewItems</param>
+        /// <param name="editAction">The edit action.</param>
+        /// <param name="cycleStatusAction">The cycle status action.</param>
         public void UpdateActiveViewList(List<TodoData> todoDatas, Action<int> editAction, Func<int, string> cycleStatusAction);
 
         /// <summary>
@@ -41,6 +41,11 @@ namespace Todo.view.Interfaces
         /// <param name="selectList">The title of select list.</param>
         public void UpdateComboboxLists(List<string> lists, string selectList);
 
+        /// <summary>
+        /// Sets the up button events by passing the actions to the view.
+        /// </summary>
+        /// <param name="actions">The create, update options and update view actions.</param>
+        /// <param name="listSelect">The list selection action.</param>
         public void SetUpEvents(List<Action> actions, Action<string> listSelect);
 
 

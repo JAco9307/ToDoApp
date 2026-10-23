@@ -153,16 +153,14 @@
             PerformLayout();
         }
 
-        private System.Windows.Forms.CheckBox SortOrderCheckBox;
-
-        private System.Windows.Forms.ComboBox SortingDropDown;
-
         #endregion
         private FlowLayoutPanel flowLayout;
         private FlowLayoutPanel headerLayout;
         private Label label1;
-        private Button createTodoButton;
-        private Button optionsButton;
-        private ComboBox listComboBox;
+        public Button createTodoButton;
+        public Button optionsButton;
+        public ComboBox listComboBox;
+        public CheckBox SortOrderCheckBox;
+        public ComboBox SortingDropDown;
     }
 }

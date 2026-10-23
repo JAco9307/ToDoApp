@@ -84,7 +84,7 @@ public class TodoServiceTests
     public TodoService Todoservice = new TodoService();
 
     [TestInitialize]
-    public void initial() 
+    public void initial()
     {
         var testrepo = new TestTodoRepository();
         Listservice = new ListService(testrepo);

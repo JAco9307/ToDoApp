@@ -1,10 +1,8 @@
-﻿using System.Windows.Forms;
-using Todo.model.Entities;
+﻿using Todo.model.Entities;
 using Todo.model.Interfaces;
 using Todo.presenter;
 using Todo.view.Entities;
 using Todo.view.Interfaces;
-using Todo.view.ViewObjects;
 
 namespace Todo.testing.presenter
 {
@@ -221,16 +219,7 @@ namespace Todo.testing.presenter
             var presenter = new Presenter(_view, _Todoservice, _Listservice, _TagService);
             presenter.StatusOptions = new();
             TodoItem todoItem = new("test");
-            TodoData todoData = new TodoData
-            {
-                Title = "test",
-                Status = "Not Started",
-                ListTitle = "x",
-                Description = "x",
-                ToBeDeleted = false,
-                CurrentTags = []
-            };
-
+            presenter.TodoList.Add(todoItem);
 
             Assert.AreEqual("Not Started", todoItem.Status);
             presenter.CycleStatus(0);

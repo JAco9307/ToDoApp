@@ -6,7 +6,6 @@ using Todo.model.Repositories;
 using Todo.model.Services;
 using Todo.view.Entities;
 using Todo.view.Interfaces;
-using Todo.view.ViewObjects;
 
 namespace Todo.presenter
 {
@@ -16,10 +15,14 @@ namespace Todo.presenter
         private readonly ITodoService _todoService;
         private readonly IListService _listService;
         private readonly ITagService _tagService;
-        private List<TodoItem> TodoList = new();
+        public List<TodoItem> TodoList = new();
         private int _currentListId;
         public StatusList? StatusOptions;
-        public Presenter(ITodoView view, ITodoService todoService, IListService listService, ITagService tagService)
+        public Presenter(
+            ITodoView view,
+            ITodoService todoService,
+            IListService listService,
+            ITagService tagService)
         {
             _view = view;
             _todoService = todoService;
@@ -54,7 +57,6 @@ namespace Todo.presenter
         /// <summary>
         /// Perform the event handler setup.
         /// </summary>
-        /// <param name="controls">List of controls that require binding.</param>
         private void EventHandlerSetup()
         {
             List<Action> actions = new List<Action>
@@ -81,7 +83,7 @@ namespace Todo.presenter
                 todoDatas.Add(ItemToData(todoItem));
             }
             Action<int> editAction = EditTodo;
-            Func<int,string> cycleStatusAction = CycleStatus;
+            Func<int, string> cycleStatusAction = CycleStatus;
 
             _view.UpdateActiveViewList(todoDatas, editAction, cycleStatusAction);
         }
@@ -262,8 +264,8 @@ namespace Todo.presenter
         /// <summary>
         /// Cycles the Status on the todo item.
         /// </summary>
-        /// <param name="todoItem">The todo item.</param>
-        /// <param name="sender">The sender.</param>
+        /// <param name="todoItemId">The todo item id.</param>
+        /// <returns>The string result.</returns>
         public string CycleStatus(int todoItemId)
         {
             if (StatusOptions == null) return "ERROR";
