@@ -1,4 +1,6 @@
-﻿namespace Todo.model.Entities
+﻿using System.Text.Json.Serialization;
+
+namespace Todo.model.Entities
 {
     public class TodoItem
     {
@@ -22,6 +24,15 @@
             Description = description;
         }
 
+        [JsonConstructor]
+        public TodoItem(string title, string description, string status, List<TodoTag> tags)
+        {
+            Title = title;
+            Description = description;
+            Status = status;
+            Tags = tags;
+        }
+
         /// <summary>
         /// Sets the todo title.
         /// </summary>
@@ -37,7 +48,7 @@
         /// <param name="tags">The tags.</param>
         public void SetTags(List<TodoTag> tags)
         {
-            Tags = tags;
+            Tags = tags ?? new List<TodoTag>();
         }
 
         /// <summary>

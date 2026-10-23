@@ -7,6 +7,7 @@ namespace Todo.model.Services
     public class TagService : ITagService
     {
         private ITodoRepository _repository;
+        private List<TodoTag>? _allTags;
 
         public TagService()
         {
@@ -21,7 +22,11 @@ namespace Todo.model.Services
         //interface
         public List<TodoTag> GetAll()
         {
-            return _repository.GetAllTags() ?? new List<TodoTag>();
+            if (_allTags != null)
+                return _allTags;
+
+            _allTags = _repository.GetAllTags() ?? new List<TodoTag>();
+            return _allTags;
         }
 
         //interface
