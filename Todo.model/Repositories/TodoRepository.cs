@@ -142,5 +142,17 @@ namespace Todo.model.Repositories
             _dbContext.TodoTags.RemoveRange(tags);
             _dbContext.SaveChanges();
         }
+        //interface
+        public void AddStatusOptions(List<Status> statusToAdd)
+        {
+            _dbContext.TodoStatus.AddRange(statusToAdd);
+            _dbContext.SaveChanges();
+        }
+        //interface
+        public void DeleteStatusOptions(List<Status> statusToDelete)
+        {
+            _dbContext.TodoStatus.RemoveRange(statusToDelete);
+            _dbContext.SaveChanges();
+        }
     }
 }

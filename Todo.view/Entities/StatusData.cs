@@ -13,9 +13,10 @@ public struct StatusData
         Order = order;
     }
 
-    public StatusData(string value)
+    public StatusData(string title, int order)
     {
-        throw new NotImplementedException();
+        Title = title;
+        Order = order;
     }
 
     public override string ToString()

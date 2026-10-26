@@ -83,5 +83,8 @@ namespace Todo.model.Interfaces
         /// </summary>
         /// <param name="tags">The tags to remove.</param>
         public void RemoveTagOptions(List<TodoTag> newTags);
+
+        public void AddStatusOptions(List<Status> statusToAdd);
+        public void DeleteStatusOptions(List<Status> statusToDelete);
     }
 }

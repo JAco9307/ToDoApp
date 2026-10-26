@@ -25,9 +25,10 @@ namespace Todo.view.OptionsItems
             try
             {
                 List<StatusData> result = new List<StatusData>();
-                foreach (StatusData statusBoxItem in statusBox.Items)
+                foreach (object statusBoxItem in statusBox.Items)
                 {
-                    result.Add(statusBoxItem);
+                    StatusData currentStatusData = (StatusData)statusBoxItem;
+                    result.Add(currentStatusData);
                 }
                 currentOptions.Status = result;
             }
@@ -54,7 +55,7 @@ namespace Todo.view.OptionsItems
 
             if (result == DialogResult.OK)
             {
-                statusBox.Items.Add(inputDialog.text);
+                statusBox.Items.Add(new StatusData(inputDialog.text, statusBox.Items.Count));
             }
         }
 
