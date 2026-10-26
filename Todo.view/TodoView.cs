@@ -1,5 +1,5 @@
-using Todo.view.Entities;
-using Todo.view.Interfaces;
+using Todo.DTOs;
+using Todo.DTOs.interfaces;
 using Todo.view.ViewObjects;
 
 namespace Todo.view

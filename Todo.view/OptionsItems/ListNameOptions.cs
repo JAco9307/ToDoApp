@@ -1,6 +1,6 @@
 ﻿using System.Data;
+using Todo.DTOs;
 using Todo.view.Dialogs;
-using Todo.view.Entities;
 using Todo.view.Interfaces;
 
 namespace Todo.view.OptionsItems

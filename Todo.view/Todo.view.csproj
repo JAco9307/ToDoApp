@@ -12,4 +12,8 @@
     <Folder Include="Forms\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ViewDTOs\Todo.DTOs.csproj" />
+  </ItemGroup>
+
 </Project>

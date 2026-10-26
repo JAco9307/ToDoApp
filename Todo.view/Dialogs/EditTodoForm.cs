@@ -1,5 +1,5 @@
-﻿using Todo.view.EditItems;
-using Todo.view.Entities;
+﻿using Todo.DTOs;
+using Todo.view.EditItems;
 using Todo.view.Interfaces;
 using Todo.view.OptionsItems;
 

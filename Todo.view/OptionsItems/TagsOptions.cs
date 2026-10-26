@@ -1,4 +1,4 @@
-﻿using Todo.view.Entities;
+﻿using Todo.DTOs;
 using Todo.view.Interfaces;
 using Todo.view.ViewObjects;
 
