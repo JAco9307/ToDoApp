@@ -30,11 +30,11 @@ namespace Todo.model.Entities
         }
 
         [JsonConstructor]
-        public TodoItem(string title, string description, string status, List<TodoTag> tags)
+        public TodoItem(string title, string description, Status status, List<TodoTag> tags)
         {
             Title = title;
             Description = description;
-            Status = new Status(status);
+            Status = status;
             Tags = tags;
         }
 
