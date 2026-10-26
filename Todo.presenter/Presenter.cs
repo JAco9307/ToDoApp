@@ -41,9 +41,9 @@ namespace Todo.presenter
         /// <summary>
         /// Starts up the view and binds relevant controls.
         /// </summary>
-        public void StartUp()
+        public async void StartUp()
         {
-            StatusOptions = _todoService.GetStatusOptions();
+            StatusOptions = await _todoService.GetStatusOptions();
             List<Control> controls = _view.StartUp();
             EventHandlerSetup(controls);
             UpdateView();
@@ -69,14 +69,15 @@ namespace Todo.presenter
         /// <summary>
         /// Updates the view item list and binds the delete and edit buttons.
         /// </summary>
-        public void UpdateView()
+        public async void UpdateView()
         {
             if (StatusOptions == null) throw new NullReferenceException();
-            IReadOnlyList<TodoItem> TodoList = _listService.Get(_currentListId).Items;
-            List<TodoData> todoDatas = new List<TodoData>();
+            TodoList todoList = await _listService.Get(_currentListId);
+            IReadOnlyList<TodoItem> TodoList = todoList.Items;
+            List <TodoData> todoDatas = new List<TodoData>();
             foreach (TodoItem todoItem in TodoList)
             {
-                todoDatas.Add(ItemToData(todoItem));
+                todoDatas.Add(await ItemToData(todoItem));
             }
             List<TodoViewItem> todoViewItems = _view.UpdateActiveViewList(todoDatas);
 
@@ -91,9 +92,9 @@ namespace Todo.presenter
         /// <summary>
         /// Opens the dialog for creating a new todo and sets up the <see cref="TodoItem"/> afterwards
         /// </summary>
-        public void CreateTodo()
+        public async void CreateTodo()
         {
-            TodoItem? newTodo = HandleEditPopUp(null);
+            TodoItem? newTodo = await HandleEditPopUp(null);
             if (newTodo == null)
                 return;
             _todoService.Add(newTodo);
@@ -104,10 +105,10 @@ namespace Todo.presenter
         /// Opens the dialog for editing a todo
         /// </summary>
         /// <param name="todoItem">The todoViewItem to edit.</param>
-        private void EditTodo(TodoItem todoItem, int ViewItemId)
+        private async void EditTodo(TodoItem todoItem, int ViewItemId)
         {
             if (StatusOptions == null) throw new NullReferenceException();
-            TodoItem? newTodo = HandleEditPopUp(todoItem);
+            TodoItem? newTodo = await HandleEditPopUp(todoItem);
             if (newTodo == null)
                 return;
             _todoService.UpdateDb();
@@ -119,7 +120,7 @@ namespace Todo.presenter
         /// </summary>
         /// <param name="todoItem">The todo item´being edited. null if making new todo item</param>
         /// <returns>The todo item result.</returns>
-        private TodoItem? HandleEditPopUp(TodoItem? todoItem)
+        private async Task<TodoItem?> HandleEditPopUp(TodoItem? todoItem)
         {
             bool IsNew = (todoItem == null);
             if (IsNew)
@@ -130,11 +131,11 @@ namespace Todo.presenter
             if (StatusOptions == null) throw new NullReferenceException();
             if (todoItem == null) throw new NullReferenceException();
 
-            List<TodoTag> allTags = _tagService.GetAll();
+            List<TodoTag> allTags = await _tagService.GetAll();
 
-            TodoData todoData = ItemToData(todoItem);
+            TodoData todoData = await ItemToData(todoItem);
 
-            ContextData context = GetContext();
+            ContextData context = await GetContext();
             context.AllTags = allTags.Select(tag => (tag.Title, tag.Color)).ToList();
 
             TodoData result = _view.ShowEditTodoDialog(context, todoData, IsNew);
@@ -194,12 +195,12 @@ namespace Todo.presenter
         /// <summary>
         /// Opens the options menu and updates the options.
         /// </summary>
-        public void UpdateOptions()
+        public async void UpdateOptions()
         {
             // Set up and open options
             if (StatusOptions == null) return;
-            List<string> currentListNames = _listService.GetNames();
-            List<TodoTag> allTags = _tagService.GetAll();
+            List<string> currentListNames = await _listService.GetNames();
+            List<TodoTag> allTags = await _tagService.GetAll();
             List<(string title, Color color)> tags = allTags.Select(tag => (tag.Title, tag.Color)).ToList();
 
             TodoOptions newOptions = _view.ShowOptionsMenu(new TodoOptions
@@ -222,28 +223,29 @@ namespace Todo.presenter
             UpdateLists();
         }
 
-        private void Export(TodoOptions newOptions)
+        private async void Export(TodoOptions newOptions)
         {
             if (!newOptions.CreateExport)
                 return;
 
             List<TodoList> lists = new List<TodoList>();
-            List<string> names = _listService.GetNames();
+            List<string> names = await _listService.GetNames();
             foreach (string name in names)
             {
-                lists.Add(_listService.Get(name));
+                TodoList list = await _listService.Get(name);
+                lists.Add(list);
             }
             new ImportService(_listService, _tagService, _todoService).ExportJson(lists);
             UpdateOptions();
         }
 
-        private void Import(TodoOptions newOptions)
+        private async void Import(TodoOptions newOptions)
         {
             if (newOptions.ImportFilePath == null)
                 return;
             if (newOptions.ImportFilePath == "")
                 return;
-            bool result = new ImportService(_listService, _tagService, _todoService).ImportJson(newOptions.ImportFilePath);
+            bool result = await new ImportService(_listService, _tagService, _todoService).ImportJson(newOptions.ImportFilePath);
             if (!result)
                 MessageBox.Show("Import of lists failed, ensure the correct json was chosen.", "Import failed", MessageBoxButtons.OK);
         }
@@ -308,9 +310,9 @@ namespace Todo.presenter
         /// <summary>
         /// Updates the lists in the <see cref="ComboBox"/> list selector.
         /// </summary>
-        public void UpdateLists()
+        public async void UpdateLists()
         {
-            var ListTitles = _listService.GetNames();
+            var ListTitles = await _listService.GetNames();
             if (_currentListId - 1 < ListTitles.Count)
                 _view.UpdateComboboxLists(ListTitles, ListTitles[_currentListId - 1]);
             else
@@ -322,9 +324,9 @@ namespace Todo.presenter
         /// Updates the selected list and updates view after to reflect changes.
         /// </summary>
         /// <param name="Title">The title.</param>
-        private void UpdateSelectedList(string Title)
+        private async void UpdateSelectedList(string Title)
         {
-            var SelectedList = _listService.Get(Title);
+            var SelectedList = await _listService.Get(Title);
             _currentListId = SelectedList.Id;
             UpdateView();
         }
@@ -334,13 +336,14 @@ namespace Todo.presenter
         /// </summary>
         /// <param name="todoItem">The todo item.</param>
         /// <returns>The todo data.</returns>
-        public TodoData ItemToData(TodoItem todoItem)
+        public async Task<TodoData> ItemToData(TodoItem todoItem)
         {
+            TodoList list = await _listService.Get(todoItem.ListId);
             return new TodoData
             {
                 Title = todoItem.Title,
                 Status = todoItem.Status,
-                ListTitle = _listService.Get(todoItem.ListId).Title,
+                ListTitle = list.Title,
                 CurrentTags = todoItem.Tags.Select(tag => (tag.Title, tag.Color)).ToList(),
                 Description = todoItem.Description,
 
@@ -351,13 +354,13 @@ namespace Todo.presenter
         /// Gets the current context information.
         /// </summary>
         /// <returns>The context data result.</returns>
-        public ContextData GetContext()
+        public async Task<ContextData> GetContext()
         {
             if (StatusOptions == null) throw new NullReferenceException();
             return new ContextData
             {
                 StatusOptions = StatusOptions.options,
-                ListNames = _listService.GetNames()
+                ListNames = await _listService.GetNames()
             };
         }
     }

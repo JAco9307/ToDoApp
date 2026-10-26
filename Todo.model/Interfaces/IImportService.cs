@@ -12,7 +12,7 @@ namespace Todo.model.Interfaces
         /// </summary>
         /// <param name="filePath">The file path.</param>
         /// <returns>True if the operation succeeds; otherwise, false.</returns>
-        public bool ImportJson(string filePath);
+        public Task<bool> ImportJson(string filePath);
 
         /// <summary>
         /// Exports the json.

@@ -3,6 +3,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Todo.model.Entities;
 using Todo.model.Interfaces;
+using Todo.model.Migrations;
 using Todo.model.Repositories;
 using Todo.model.Serialization;
 
@@ -25,29 +26,29 @@ namespace Todo.model.Services
         }
 
         //interface
-        public void Add(TodoItem todoItem)
+        public async void Add(TodoItem todoItem)
         {
             _repository.AddTodoItem(todoItem);
         }
 
         //interface
-        public void Delete(TodoItem todoItem)
+        public async void Delete(TodoItem todoItem)
         {
             _repository.DeleteTodoItem(todoItem);
         }
 
         //interface
-        public void UpdateDb()
+        public async void UpdateDb()
         {
             _repository.UpdateDb();
         }
 
         //interface
-        public StatusList GetStatusOptions()
+        public async Task<StatusList> GetStatusOptions()
         {
             if (_statusOptions == null)
             {
-                StatusList? list = _repository.GetStatusOptions();
+                StatusList? list = await _repository.GetStatusOptions();
                 _statusOptions = list ?? new StatusList();
             }
             return _statusOptions;

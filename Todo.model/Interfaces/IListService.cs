@@ -12,7 +12,7 @@ namespace Todo.model.Interfaces
         /// </summary>
         /// <param name="listId">The list id.</param>
         /// <returns>The TodoList.</returns>
-        public TodoList Get(int listId);
+        public Task<TodoList> Get(int listId);
 
         /// <summary>
         /// Gets the todo list with the given Title,
@@ -21,7 +21,7 @@ namespace Todo.model.Interfaces
         /// </summary>
         /// <param name="listTitle">The list title.</param>
         /// <returns>The TodoList.</returns>
-        public TodoList Get(string listTitle);
+        public Task<TodoList> Get(string listTitle);
 
         /// <summary>
         /// Adds a new list to the repository.
@@ -46,6 +46,6 @@ namespace Todo.model.Interfaces
         /// Gets the list names. If no lists are found, creates a new empty list
         /// </summary>
         /// <returns>The list result.</returns>
-        public List<string> GetNames();
+        public Task<List<string>> GetNames();
     }
 }

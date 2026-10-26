@@ -8,7 +8,7 @@ namespace Todo.model.Interfaces
         /// Gets the all tags.
         /// </summary>
         /// <returns>The list result.</returns>
-        public List<TodoTag> GetAll();
+        public Task<List<TodoTag>> GetAll();
 
 
         /// <summary>

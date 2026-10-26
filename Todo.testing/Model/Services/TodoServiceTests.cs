@@ -1,3 +1,4 @@
+using Todo.model.Data;
 using Todo.model.Entities;
 using Todo.model.Interfaces;
 using Todo.model.Services;
@@ -10,21 +11,21 @@ public class TodoServiceTests
     private class TestTodoRepository : ITodoRepository
     {
         private TodoList _todoList = new TodoList();
-        public void AddTodoItem(TodoItem todoItem)
+        public void AddTodoItem(TodoItem todoItem, TodoDbContext? context = null)
         {
             _todoList.Add(todoItem);
         }
 
-        public void DeleteTodoItem(TodoItem todoItem)
+        public void DeleteTodoItem(TodoItem todoItem, TodoDbContext? context = null)
         {
             _todoList.Remove(todoItem);
         }
 
-        public void UpdateDb()
+        public void UpdateDb(TodoDbContext? context = null)
         {
         }
 
-        public TodoList? GetList(int TodoListId)
+        public async Task<TodoList?> GetList(int TodoListId, TodoDbContext? context = null)
         {
             if (TodoListId == 999)
                 return null;
@@ -33,48 +34,48 @@ public class TodoServiceTests
             return _todoList;
         }
 
-        public StatusList? GetStatusOptions()
+        public async Task<StatusList?> GetStatusOptions(TodoDbContext? context = null)
         {
             return null;
         }
 
-        public TodoList AddList(string Title)
+        public async Task<TodoList> AddList(string Title)
         {
             return new();
         }
 
-        public void DeleteList(TodoList list)
+        public void DeleteList(TodoList list, TodoDbContext? context = null)
         {
 
         }
 
-        public List<string> GetListNames()
-        {
-            return new();
-
-        }
-
-        public List<TodoList> GetLists()
+        public async Task<List<string>> GetListNames(TodoDbContext? context = null)
         {
             return new();
+
         }
 
-        public TodoList? GetList(string TodoListTitle)
+        public async Task<List<TodoList>> GetLists(TodoDbContext? context = null)
+        {
+            return new();
+        }
+
+        public async Task<TodoList?> GetList(string TodoListTitle, TodoDbContext? context = null)
         {
             throw new NotImplementedException();
         }
 
-        public List<TodoTag>? GetAllTags()
+        public async Task<List<TodoTag>?> GetAllTags(TodoDbContext? context = null)
         {
             throw new NotImplementedException();
         }
 
-        public void AddTagOptions(List<TodoTag> newTags)
+        public void AddTagOptions(List<TodoTag> newTags, TodoDbContext? context = null)
         {
             throw new NotImplementedException();
         }
 
-        public void RemoveTagOptions(List<TodoTag> newTags)
+        public void RemoveTagOptions(List<TodoTag> newTags, TodoDbContext? context = null)
         {
             throw new NotImplementedException();
         }
@@ -103,12 +104,12 @@ public class TodoServiceTests
     {
         TodoItem todoItem = new TodoItem("Test Title");
 
-        Listservice.Get(0);
+        TodoList list = Listservice.Get(0).Result;
 
         Todoservice.Add(todoItem);
 
         Assert.ContainsSingle(Listservice.todoLists());
-        Assert.Contains(todoItem, Listservice.Get(0).Items);
+        Assert.Contains(todoItem, Listservice.Get(0).Result.Items);
     }
 
     [TestMethod]
@@ -117,14 +118,14 @@ public class TodoServiceTests
         TodoItem todoItem1 = new TodoItem("Test Title");
         TodoItem todoItem2 = new TodoItem("Second Test Title");
 
-        Listservice.Get(0);
+        TodoList list = Listservice.Get(0).Result;
 
         Todoservice.Add(todoItem1);
         Todoservice.Add(todoItem2);
 
-        Assert.HasCount(2, Listservice.Get(0).Items);
-        Assert.Contains(todoItem1, Listservice.Get(0).Items);
-        Assert.Contains(todoItem2, Listservice.Get(0).Items);
+        Assert.HasCount(2, Listservice.Get(0).Result.Items);
+        Assert.Contains(todoItem1, Listservice.Get(0).Result.Items);
+        Assert.Contains(todoItem2, Listservice.Get(0).Result.Items);
     }
 
     [TestMethod]
@@ -133,7 +134,7 @@ public class TodoServiceTests
         TodoItem todoItem1 = new TodoItem("Test Title");
         TodoItem todoItem2 = new TodoItem("Second Test Title");
 
-        Listservice.Get(0);
+        TodoList list = Listservice.Get(0).Result;
 
         Todoservice.Add(todoItem1);
         Todoservice.Add(todoItem2);
@@ -151,12 +152,12 @@ public class TodoServiceTests
         TodoItem todoItem1 = new TodoItem("Test Title");
         TodoItem todoItem2 = new TodoItem("Second Test Title");
 
-        Listservice.Get(0);
+        TodoList list = Listservice.Get(0).Result;
 
         Todoservice.Add(todoItem1);
         Todoservice.Add(todoItem2);
 
-        TodoList list = Listservice.Get(0);
+        list = Listservice.Get(0).Result;
 
         Assert.IsNotNull(list);
         Assert.HasCount(2, list.Items);
@@ -170,12 +171,12 @@ public class TodoServiceTests
         TodoItem todoItem1 = new TodoItem("Test Title");
         TodoItem todoItem2 = new TodoItem("Second Test Title");
 
-        Listservice.Get(0);
+        TodoList list = Listservice.Get(0).Result;
 
         Todoservice.Add(todoItem1);
         Todoservice.Add(todoItem2);
 
-        TodoList list = Listservice.Get(55);
+        list = Listservice.Get(55).Result;
 
         Assert.IsNotNull(list);
         Assert.IsEmpty(list.Items);
@@ -187,7 +188,7 @@ public class TodoServiceTests
     public void GetTodoList_ShouldCreateNewListIfNullFromRepository()
     {
 
-        TodoList list = Listservice.Get(999);
+        TodoList list = Listservice.Get(999).Result;
 
         Assert.IsNotNull(list);
         Assert.IsEmpty(list.Items);

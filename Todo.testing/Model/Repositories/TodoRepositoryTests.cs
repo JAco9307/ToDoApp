@@ -70,7 +70,7 @@ public class TodoRepositoryTests
         TodoList todoList = new TodoList();
         dbContext.TodoLists.Add(todoList);
         dbContext.SaveChanges();
-        TodoList? todoListFromDb = repository.GetList(1);
+        TodoList? todoListFromDb = repository.GetList(1).Result;
         Assert.AreEqual(todoList, todoListFromDb);
     }
 
@@ -88,7 +88,7 @@ public class TodoRepositoryTests
         repository.AddTodoItem(todoItem);
         todoItem.SetTodoTitle("Changed");
         repository.UpdateDb();
-        Assert.AreEqual("Changed", dbContext.TodoItems.Find(todoItem.Id).Title);
+        Assert.AreEqual("Changed", dbContext.TodoItems.Find(todoItem.Id)?.Title);
     }
 
     [TestMethod]
@@ -108,5 +108,44 @@ public class TodoRepositoryTests
 
         TodoItem savedTodoItem = dbContext.TodoItems.Find(1)!;
         Assert.AreEqual(savedTodoItem.Description, DescString);
+    }
+
+    [TestMethod]
+    public void ConcurrencyTest()
+    {
+        ITodoRepository repository = new TodoRepository();
+
+        string TitleString = new("this is a todo item");
+        string DescString = new("This is a description");
+        TodoItem firstTodoItem = new TodoItem(TitleString, DescString);
+        TodoItem secondTodoItem = new TodoItem(TitleString, DescString);
+
+        Thread t1 = new Thread(() => repository.AddTodoItem(firstTodoItem));
+        Thread t2 = new Thread(() => repository.AddTodoItem(secondTodoItem));
+
+        t1.Start();
+        t2.Start();
+
+        t1.Join();
+        t2.Join();
+
+        TodoDbContext dbContext = CreateContext();
+        Console.WriteLine("HALP!");
+        TodoItem? savedFirstTodoItem = dbContext.TodoItems.Find(1);
+        TodoItem? savedSecondTodoItem = dbContext.TodoItems.Find(2);
+
+        Assert.IsNotNull(savedFirstTodoItem);
+        Assert.IsNotNull(savedSecondTodoItem);
+    }
+
+    private TodoDbContext CreateContext()
+    {
+        SqliteConnection connection = PrepareConnection();
+        TodoDbContext dbContext = prepareContext(connection);
+
+        connection.Open();
+        dbContext.Database.EnsureCreated();
+
+        return dbContext;
     }
 }

@@ -23,7 +23,7 @@ namespace Todo.model.Services
         }
 
         //interface
-        public bool ImportJson(string filePath)
+        public async Task<bool> ImportJson(string filePath)
         {
             string json = File.ReadAllText(filePath);
             var options = new JsonSerializerOptions
@@ -41,14 +41,14 @@ namespace Todo.model.Services
             {
                 return false;
             }
-            List<string> currentListNames = ListService.GetNames();
+            List<string> currentListNames = await ListService.GetNames();
             if (lists == null)
                 return false;
             foreach (TodoList list in lists)
             {
                 list.Title = CheckIfListNameAlreadyExist(list.Title + " (Imported List)", currentListNames);
                 ListService.Add(list.Title);
-                TodoList newList = ListService.Get(list.Title);
+                TodoList newList = await ListService.Get(list.Title);
                 copyList(list, newList.Id);
             }
             return true;
@@ -101,9 +101,9 @@ namespace Todo.model.Services
         /// </summary>
         /// <param name="fromList">The list to copy from.</param>
         /// <param name="toListId">The list id to copy to.</param>
-        private void copyList(TodoList fromList, int toListId)
+        private async void copyList(TodoList fromList, int toListId)
         {
-            List<TodoTag> allTags = TagService.GetAll();
+            List<TodoTag> allTags = await TagService.GetAll();
             foreach (TodoItem item in fromList.Items)
             {
                 if (!SanitizeItem(item))

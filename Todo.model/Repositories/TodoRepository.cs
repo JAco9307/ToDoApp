@@ -8,7 +8,7 @@ namespace Todo.model.Repositories
 {
     public class TodoRepository : ITodoRepository
     {
-        private TodoDbContext _dbContext;
+        TodoDbContext? _dbContext;
 
         /// <summary>
         /// Initializes a new instance of the TodoRepository
@@ -16,7 +16,6 @@ namespace Todo.model.Repositories
         [ExcludeFromCodeCoverage]
         public TodoRepository()
         {
-            _dbContext = TodoDbContextFactory.Create();
         }
 
         /// <summary>
@@ -29,61 +28,86 @@ namespace Todo.model.Repositories
         }
 
         //interface
-        public void AddTodoItem(TodoItem item)
+        public async void AddTodoItem(TodoItem item, TodoDbContext? context = null)
         {
-            TodoList? todoList = _dbContext.TodoLists.FirstOrDefault(list => list.Id == item.ListId);
+            await using TodoDbContext dbContext = context ?? TodoDbContextFactory.Create();
+
+            TodoList? todoList = await dbContext.TodoLists.FirstOrDefaultAsync(list => list.Id == item.ListId);
             if (todoList == null)
             {
-                todoList = AddList("New List");
+                todoList = await AddListWithContext("New List", dbContext);
                 item.ListId = todoList.Id;
             }
             item.ListId = todoList.Id;
-            _dbContext.TodoItems.Add(item);
-            _dbContext.SaveChanges();
+            await dbContext.TodoItems.AddAsync(item);
+            await dbContext.SaveChangesAsync();
         }
 
-        public void DeleteTodoItem(TodoItem todoItem)
+        public async void DeleteTodoItem(TodoItem todoItem, TodoDbContext? context = null)
         {
-            _dbContext.TodoItems.Remove(todoItem);
-            _dbContext.SaveChanges();
+            await using TodoDbContext dbContext = context ?? TodoDbContextFactory.Create();
+
+            dbContext.TodoItems.Remove(todoItem);
+            dbContext.SaveChanges();
         }
 
         //interface
-        public TodoList AddList(string Title)
+        public async Task<TodoList> AddList(string Title)
         {
+            await using TodoDbContext dbContext = TodoDbContextFactory.Create();
+
+            return await AddListWithContext(Title, dbContext);
+        }
+
+        //interface
+        private async Task<TodoList> AddListWithContext(string Title, TodoDbContext dbContext)
+        {
+
             TodoList newlist = new TodoList { Title = Title };
-            _dbContext.TodoLists.Add(newlist);
-            _dbContext.SaveChanges();
+            await dbContext.TodoLists.AddAsync(newlist);
+            await dbContext.SaveChangesAsync();
             return newlist;
         }
 
         //interface
-        public void DeleteList(TodoList list)
+        public async void DeleteList(TodoList list, TodoDbContext? context = null)
         {
-            if (!_dbContext.TodoLists.Contains(list)) return;
-            _dbContext.TodoLists.Remove(list);
-            _dbContext.SaveChanges();
+            await using TodoDbContext dbContext = context ?? TodoDbContextFactory.Create();
+
+            if (!dbContext.TodoLists.Contains(list)) return;
+            dbContext.TodoLists.Remove(list);
+            dbContext.SaveChanges();
         }
 
         //interface
-        public void UpdateDb()
+        public async void UpdateDb(TodoDbContext? context = null)
         {
-            _dbContext.SaveChanges();
+            await using TodoDbContext dbContext = context ?? TodoDbContextFactory.Create();
+
+            dbContext.SaveChanges();
         }
 
         //interface
-        public TodoList? GetList(int TodoListId)
+        public async Task<TodoList?> GetList(int TodoListId, TodoDbContext? context = null)
         {
-            NewListIfNone();
-            return _dbContext.TodoLists
+            await using TodoDbContext dbContext = context ?? TodoDbContextFactory.Create();
+
+            List<TodoItem> temp = await dbContext.TodoItems
+                .Where(item => item.ListId == TodoListId)
+                .ToListAsync();
+
+            NewListIfNone(dbContext);
+            return await dbContext.TodoLists
                 .Include(list => list.Items)
                 .ThenInclude(item => item.Tags)
-                .FirstOrDefault(list => list.Id == TodoListId);
+                .FirstOrDefaultAsync(list => list.Id == TodoListId);
         }
-        public TodoList? GetList(string TodoListTitle)
+        public async Task<TodoList?> GetList(string TodoListTitle, TodoDbContext? context = null)
         {
-            NewListIfNone();
-            return _dbContext.TodoLists
+            await using TodoDbContext dbContext = context ?? TodoDbContextFactory.Create();
+
+            NewListIfNone(dbContext);
+            return dbContext.TodoLists
                 .Include(list => list.Items)
                 .ThenInclude(item => item.Tags)
                 .FirstOrDefault(list => list.Title == TodoListTitle);
@@ -92,58 +116,70 @@ namespace Todo.model.Repositories
         /// <summary>
         /// Creates a new empty list if none exist in the database.
         /// </summary>
-        private void NewListIfNone()
+        private async void NewListIfNone(TodoDbContext dbContext, TodoDbContext? context = null)
         {
-            if (!_dbContext.TodoLists.Any())
+            if (!dbContext.TodoLists.Any())
             {
-                _dbContext.TodoLists.Add(new TodoList());
-                _dbContext.SaveChanges();
+                await dbContext.TodoLists.AddAsync(new TodoList());
+                await dbContext.SaveChangesAsync();
             }
         }
 
         //interface
-        public List<string> GetListNames()
+        public async Task<List<string>> GetListNames(TodoDbContext? context = null)
         {
-            return _dbContext.TodoLists
-                .Select(list => list.Title).ToList();
+            await using TodoDbContext dbContext = context ?? TodoDbContextFactory.Create();
+
+            return dbContext.TodoLists
+            .Select(list => list.Title).ToList();
         }
 
         //interface
-        public List<TodoList> GetLists()
+        public async Task<List<TodoList>> GetLists(TodoDbContext? context = null)
         {
-            return _dbContext.TodoLists
-                .Include(list => list.Items)
-                .ThenInclude(item => item.Tags)
-                .ToList();
+            await using TodoDbContext dbContext = context ?? TodoDbContextFactory.Create();
+
+            return dbContext.TodoLists
+            .Include(list => list.Items)
+            .ThenInclude(item => item.Tags)
+            .ToList();
         }
 
         //interface
-        public StatusList? GetStatusOptions()
+        public async Task<StatusList?> GetStatusOptions(TodoDbContext? context = null)
         {
-            if (!_dbContext.TodoStatusOptions.Any())
-                _dbContext.TodoStatusOptions.Add(new StatusList());
-            return _dbContext.TodoStatusOptions.FirstOrDefault();
+            await using TodoDbContext dbContext = context ?? TodoDbContextFactory.Create();
+
+            if (!dbContext.TodoStatusOptions.Any())
+                dbContext.TodoStatusOptions.Add(new StatusList());
+            return dbContext.TodoStatusOptions.FirstOrDefault();
         }
 
 
         //interface
-        public List<TodoTag>? GetAllTags()
+        public async Task<List<TodoTag>?> GetAllTags(TodoDbContext? context = null)
         {
-            return _dbContext.TodoTags.ToList();
+            await using TodoDbContext dbContext = context ?? TodoDbContextFactory.Create();
+
+            return dbContext.TodoTags.ToList();
         }
 
         //interface
-        public void AddTagOptions(List<TodoTag> newTags)
+        public async void AddTagOptions(List<TodoTag> newTags, TodoDbContext? context = null)
         {
-            _dbContext.TodoTags.AddRange(newTags);
-            _dbContext.SaveChanges();
+            await using TodoDbContext dbContext = context ?? TodoDbContextFactory.Create();
+
+            dbContext.TodoTags.AddRange(newTags);
+            dbContext.SaveChanges();
         }
 
         //interface
-        public void RemoveTagOptions(List<TodoTag> tags)
+        public async void RemoveTagOptions(List<TodoTag> tags, TodoDbContext? context = null)
         {
-            _dbContext.TodoTags.RemoveRange(tags);
-            _dbContext.SaveChanges();
+            await using TodoDbContext dbContext = context ?? TodoDbContextFactory.Create();
+
+            dbContext.TodoTags.RemoveRange(tags);
+            dbContext.SaveChanges();
         }
     }
 }

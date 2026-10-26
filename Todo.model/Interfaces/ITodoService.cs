@@ -30,6 +30,6 @@ namespace Todo.model.Interfaces
         /// Gets the status options.
         /// </summary>
         /// <returns>The status list result.</returns>
-        public StatusList GetStatusOptions();
+        public Task<StatusList> GetStatusOptions();
     }
 }

@@ -23,9 +23,9 @@ namespace Todo.testing.presenter
             calledDelete = true;
         }
 
-        public StatusList GetStatusOptions()
+        public async Task<StatusList> GetStatusOptions()
         {
-            return new();
+            return new StatusList();
         }
 
         public void UpdateDb()
@@ -45,22 +45,22 @@ namespace Todo.testing.presenter
         {
         }
 
-        public TodoList Get(int listId)
+        public async Task<TodoList> Get(int listId)
         {
             return new TodoList();
         }
 
-        public TodoList Get(string listTitle)
+        public async Task<TodoList> Get(string listTitle)
         {
             return new TodoList();
         }
 
-        public List<string> GetNames()
+        public async Task<List<string>> GetNames()
         {
             return [];
         }
 
-        public TodoList GetTodoList(int listId)
+        public async Task<TodoList> GetTodoList(int listId)
         {
             calledGetList = true;
             return new TodoList();
@@ -122,7 +122,7 @@ namespace Todo.testing.presenter
         {
         }
 
-        public List<TodoTag> GetAll()
+        public async Task<List<TodoTag>> GetAll()
         {
             return [];
         }

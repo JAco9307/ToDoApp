@@ -20,12 +20,12 @@ namespace Todo.model.Services
 
 
         //interface
-        public List<TodoTag> GetAll()
+        public async Task<List<TodoTag>> GetAll()
         {
             if (_allTags != null)
                 return _allTags;
 
-            _allTags = _repository.GetAllTags() ?? new List<TodoTag>();
+            _allTags = await _repository.GetAllTags() ?? new List<TodoTag>();
             return _allTags;
         }
 
