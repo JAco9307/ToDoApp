@@ -273,15 +273,16 @@ namespace Todo.presenter
         /// <param name="sender">The sender.</param>
         public void CycleStatus(TodoItem todoItem, TodoViewItem sender)
         {
-            // if (StatusOptions == null) return;
-            //
-            // List<Status> statusOptions = StatusOptions;
-            // int index = statusOptions.FindIndex(status => status == todoItem.Status);
-            //
-            // todoItem.SetTodoStatus(statusOptions[(index + 1) % statusOptions.Count]);
-            // sender.Status = todoItem.Status;
-            //
-            // _todoService.UpdateDb();
+            if (_statusOptions == null) return;
+            
+            List<Status> statusOptions = _statusOptions;
+            int index = statusOptions.FindIndex(status => status == todoItem.Status);
+            
+            todoItem.SetTodoStatus(statusOptions[(index + 1) % statusOptions.Count]);
+            
+            sender.Status = new StatusData(todoItem.Status.Id, todoItem.Status.Title, todoItem.Status.Order);
+            
+            _todoService.UpdateDb();
         }
 
         /// <summary>

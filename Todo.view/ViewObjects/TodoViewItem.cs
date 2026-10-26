@@ -8,13 +8,13 @@ namespace Todo.view.ViewObjects
         public int id;
         public Label TodoLabel => todoLabel;
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public string Status
+        public StatusData Status
         {
-            get { return _Status.ToString(); }
+            get { return _Status; }
             set
             {
-                _Status = new StatusData(value);
-                CycleStatus.Text = value;
+                _Status = value;
+                CycleStatus.Text = value.Title;
             }
         }
         private StatusData _Status;
@@ -40,7 +40,7 @@ namespace Todo.view.ViewObjects
 
         public static int CompareByStatus(TodoViewItem item1, TodoViewItem item2)
         {
-            return String.Compare(item1.Status, item2.Status, StringComparison.Ordinal);
+            return String.Compare(item1.Status.Title, item2.Status.Title, StringComparison.Ordinal);
         }
     }
 }
