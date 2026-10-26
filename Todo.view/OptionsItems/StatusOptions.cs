@@ -12,6 +12,7 @@ namespace Todo.view.OptionsItems
         {
             InitializeComponent();
             List<StatusData> statusOptions = currentOptions.Status;
+            statusOptions.Sort(StatusData.CompareByStatus);
             foreach (var statusData in statusOptions)
             {
                 statusBox.Items.Add(statusData);
@@ -25,11 +26,14 @@ namespace Todo.view.OptionsItems
             try
             {
                 List<StatusData> result = new List<StatusData>();
-                foreach (object statusBoxItem in statusBox.Items)
+                for (var index = 0; index < statusBox.Items.Count; index++)
                 {
+                    var statusBoxItem = statusBox.Items[index];
                     StatusData currentStatusData = (StatusData)statusBoxItem;
+                    currentStatusData.Order = index;
                     result.Add(currentStatusData);
                 }
+
                 currentOptions.Status = result;
             }
             catch (Exception ex)
@@ -111,7 +115,7 @@ namespace Todo.view.OptionsItems
 
             (statusBox.Items[index], statusBox.Items[newIndex]) =
                 (statusBox.Items[newIndex], statusBox.Items[index]);
-
+            
             statusBox.SelectedIndex = newIndex;
         }
     }
