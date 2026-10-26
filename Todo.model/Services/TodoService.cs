@@ -38,11 +38,5 @@ namespace Todo.model.Services
         {
             _repository.UpdateDb();
         }
-
-        //interface
-        public List<Status> GetStatusOptions()
-        {
-            return _repository.GetStatusOptions();
-        }
     }
 }
