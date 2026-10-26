@@ -1,4 +1,4 @@
-﻿namespace Todo.DTOs.interfaces
+﻿namespace Todo.utility.Interfaces
 
 {
     public interface ITodoView

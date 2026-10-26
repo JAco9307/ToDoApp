@@ -1,9 +1,12 @@
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Drawing;
 using Todo.utility;
-using Todo.utility.interfaces;
+using Todo.utility.Interfaces;
 using Todo.WebView.Components;
 
 public class TodoWebView : ITodoView
 {
+    public List<TodoData>? todoDatas;
     public static void Main(string[] args) { }
     public void SetUpEvents(List<Action> actions, Action<string> listSelect)
     {
@@ -51,6 +54,8 @@ public class TodoWebView : ITodoView
         builder.Services
             .AddRazorComponents()
             .AddInteractiveServerComponents();
+        builder.Services.AddSingleton<TodoWebView>(this);
+        builder.Services.AddSingleton<ITodoView>(this);
 
         var app = builder.Build();
 
@@ -60,18 +65,21 @@ public class TodoWebView : ITodoView
 
         app.MapRazorComponents<App>()
             .AddInteractiveServerRenderMode();
-        var file = app.Environment.WebRootFileProvider
-            .GetFileInfo("_framework/blazor.web.js");
 
-        Console.WriteLine($"Blazor script exists: {file.Exists}");
-        app.Run();
+        _app = app;
+        app.StartAsync();
+
     }
 
-    public void UpdateActiveViewList(List<TodoData> todoDatas, Action<int> editAction, Func<int, string> cycleStatusAction)
+    private WebApplication? _app;
+
+    public void UpdateActiveViewList(List<TodoData> _todoDatas, Action<int> editAction, Func<int, string> cycleStatusAction)
     {
+        todoDatas = _todoDatas;
     }
 
     public void UpdateComboboxLists(List<string> lists, string selectList)
     {
     }
 }
+

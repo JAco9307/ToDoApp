@@ -1,5 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using Todo.utility.Interfaces;
 using Todo.view;
+using Todo.WebView;
 
 namespace Todo.presenter
 {
@@ -8,9 +10,10 @@ namespace Todo.presenter
         [ExcludeFromCodeCoverage]
         static void Main(string[] args)
         {
-            TodoView view = new();
+            ITodoView view = new TodoWebView();
             Presenter presenter = new(view);
             presenter.StartUp();
+            Console.ReadLine();
         }
     }
 }

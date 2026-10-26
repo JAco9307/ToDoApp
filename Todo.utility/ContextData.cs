@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace Todo.DTOs
+namespace Todo.utility
 {
     /// <summary>
     /// Represents the <see cref="ContextData"/> struct.

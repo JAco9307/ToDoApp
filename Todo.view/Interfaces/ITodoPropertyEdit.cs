@@ -1,4 +1,4 @@
-﻿using Todo.DTOs;
+﻿using Todo.utility;
 
 namespace Todo.view.Interfaces
 {

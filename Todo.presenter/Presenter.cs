@@ -4,8 +4,8 @@ using Todo.model.Entities;
 using Todo.model.Interfaces;
 using Todo.model.Repositories;
 using Todo.model.Services;
-using Todo.view.Entities;
-using Todo.view.Interfaces;
+using Todo.utility;
+using Todo.utility.Interfaces;
 
 namespace Todo.presenter
 {

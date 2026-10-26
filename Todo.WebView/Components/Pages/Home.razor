@@ -1,7 +1,121 @@
 ﻿@page "/"
+@using Todo.utility
 
 <PageTitle>Home</PageTitle>
 
-<h1>Hello, world!</h1>
+<style>
+    * {
+        box-sizing: border-box;
+    }
 
-Welcome to your new app.
+    body {
+        margin: 0;
+        padding: 32px;
+        font-family: Arial, sans-serif;
+        background: #f4f6f8;
+        color: #222;
+    }
+
+    h1 {
+        margin: 0 0 24px;
+    }
+
+    .board {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(220px, 1fr));
+        gap: 16px;
+        align-items: start;
+    }
+
+    .column {
+        min-height: 300px;
+        padding: 16px;
+        background: #e8ecf1;
+        border-radius: 10px;
+    }
+
+        .column h2 {
+            margin: 0 0 14px;
+            font-size: 1.1rem;
+        }
+
+    .card {
+        touch-action: none;
+        user-select: none;
+    }
+
+        .card.dragging {
+            opacity: 0.5;
+        }
+
+    .column.drag-over {
+        background: #dce3ff;
+    }
+
+    @@media (max-width: 700px) {
+        body {
+            padding: 20px;
+        }
+
+        .board {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+
+<main class="board">
+    <section class="column" aria-label="To Do">
+        <h2>To Do</h2>
+        @foreach (var todo in TodoDatas ?? Array.Empty<TodoData>())
+        {
+            <div class="card" draggable="true">@todo.Title, @todo.Description @todo.Status</div>
+        }
+    </section>
+
+</main>
+
+<script>
+    let draggedCard = null;
+
+    document.addEventListener("dragstart", (event) => {
+        const card = event.target.closest(".card");
+        if (!card) return;
+
+        draggedCard = card;
+        event.dataTransfer.effectAllowed = "move";
+        event.dataTransfer.setData("text/plain", "kanban-card");
+    });
+
+    document.addEventListener("dragover", (event) => {
+        const column = event.target.closest(".column");
+        if (!column || !draggedCard) return;
+
+        event.preventDefault(); // Required to allow dropping
+        event.dataTransfer.dropEffect = "move";
+        column.classList.add("drag-over");
+    });
+
+    document.addEventListener("dragleave", (event) => {
+        const column = event.target.closest(".column");
+        if (column && !column.contains(event.relatedTarget)) {
+            column.classList.remove("drag-over");
+        }
+    });
+
+    document.addEventListener("drop", (event) => {
+        const column = event.target.closest(".column");
+        if (!column || !draggedCard) return;
+
+        event.preventDefault();
+        column.appendChild(draggedCard);
+        column.classList.remove("drag-over");
+    });
+
+    document.addEventListener("dragend", () => {
+        draggedCard = null;
+        document.querySelectorAll(".column").forEach((column) => {
+            column.classList.remove("drag-over");
+        });
+    });
+
+</script>

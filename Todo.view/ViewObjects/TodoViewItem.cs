@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel;
-using Todo.DTOs;
+using Todo.utility;
 
 namespace Todo.view.ViewObjects
 {
