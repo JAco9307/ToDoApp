@@ -10,7 +10,7 @@ namespace Todo.view.ViewObjects
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public StatusData Status
         {
-            get { return _Status; }
+            get => _Status;
             set
             {
                 _Status = value;

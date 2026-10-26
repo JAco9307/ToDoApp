@@ -7,18 +7,16 @@ namespace Todo.view.OptionsItems
 {
     public partial class StatusOptions : UserControl, IOption
     {
-        private List<StatusData> _StatusOptions;
 
         public StatusOptions(TodoOptions currentOptions)
         {
             InitializeComponent();
-            _StatusOptions = currentOptions.Status;
-            foreach (var statusData in _StatusOptions)
+            List<StatusData> statusOptions = currentOptions.Status;
+            foreach (var statusData in statusOptions)
             {
                 statusBox.Items.Add(statusData);
             }
             
-            //statusBox.Items.AddRange(currentOptions.Status.ToArray());
         }
 
         public TodoOptions Save(TodoOptions currentOptions)
@@ -26,7 +24,11 @@ namespace Todo.view.OptionsItems
             if (statusBox.Items.Count == 0) return currentOptions;
             try
             {
-                List<StatusData> result = _StatusOptions;
+                List<StatusData> result = new List<StatusData>();
+                foreach (StatusData statusBoxItem in statusBox.Items)
+                {
+                    result.Add(statusBoxItem);
+                }
                 currentOptions.Status = result;
             }
             catch (Exception ex)
@@ -59,7 +61,9 @@ namespace Todo.view.OptionsItems
         private void renameButton_Click(object sender, EventArgs e)
         {
             if (statusBox.SelectedItem == null) return;
-            var inputDialog = new TextInputDialog("Status name:", statusBox.SelectedItem.ToString() ?? "ERROR");
+            
+            StatusData selectedStatusData = (StatusData)statusBox.SelectedItem;
+            var inputDialog = new TextInputDialog("Status name:", selectedStatusData.Title ?? "ERROR");
             var result = inputDialog.ShowDialog();
 
             if (result != DialogResult.OK) return;
@@ -72,9 +76,10 @@ namespace Todo.view.OptionsItems
                 return;
             }
 
-            statusBox.Items.Remove(statusBox.SelectedItem);
-            statusBox.Items.Add(inputDialog.text);
-
+            selectedStatusData.Title = inputDialog.text;
+            int index = statusBox.SelectedIndex;
+            statusBox.Items.RemoveAt(index);
+            statusBox.Items.Insert(index, selectedStatusData);
         }
 
         private void removeButton_Click(object sender, EventArgs e)

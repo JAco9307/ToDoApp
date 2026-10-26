@@ -217,9 +217,8 @@ namespace Todo.presenter
             });
 
             // Handle updating options
-            //StatusOptions = newOptions.Status;
             newOptions.ListNameChanges ??= [];
-
+            UpdateStatuses(_statusOptions, newOptions);
             UpdateListNames(currentListNames, newOptions);
             UpdateTags(allTags, newOptions);
 
@@ -263,6 +262,26 @@ namespace Todo.presenter
                     _tagService.AddOptions(addedTags);
                 if (removedTags.Count > 0)
                     _tagService.RemoveOptions(removedTags);
+            }
+            
+            void UpdateStatuses(List<Status> statusOptions, TodoOptions todoOptions)
+            {
+                //TODO check for deleted and remove
+                //here
+                //
+                //adds and renames
+                foreach (var statusData in todoOptions.Status)
+                {
+                    Status? foundStatus = statusOptions.Find(status => status.Id == statusData.Id);
+                    if (foundStatus == null)
+                    {
+                        statusOptions.Add(new Status(statusData.Title));
+                        continue;
+                    }
+
+                    foundStatus.Title = statusData.Title;
+                    foundStatus.Order = statusData.Order;
+                }
             }
         }
 
