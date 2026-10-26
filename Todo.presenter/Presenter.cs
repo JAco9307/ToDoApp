@@ -153,8 +153,10 @@ namespace Todo.presenter
             todoItem.ListId = _listService.Get(result.ListTitle).Id;
             List<TodoTag> newTags = allTags.Where(tag => HasMatchingTitle(result, tag)).ToList();
 
+            Status todoStatus = _todoService.GetStatusOptions().Find(status => status.Id == result.Status.Id);
+            
             todoItem.SetTodoTitle(result.Title);
-            todoItem.SetTodoStatus(new Status(result.Status.Title));
+            todoItem.SetTodoStatus(todoStatus);
             todoItem.SetTags(newTags);
             todoItem.SetDescription(result.Description);
 
@@ -313,10 +315,17 @@ namespace Todo.presenter
         /// <returns>The todo data.</returns>
         public TodoData ItemToData(TodoItem todoItem)
         {
+            Status status;
+            if (todoItem.Status == null)
+            {
+                status = _todoService.GetStatusOptions()[0];
+            }
+            status = _todoService.GetStatusOptions().Find(status => status.Id == todoItem.Status.Id);
+            StatusData statusData = new StatusData(status.Id, status.Title, status.Order);
             return new TodoData
             {
                 Title = todoItem.Title,
-                Status = new StatusData(),
+                Status = statusData,
                 ListTitle = _listService.Get(todoItem.ListId).Title,
                 CurrentTags = todoItem.Tags.Select(tag => (tag.Title, tag.Color)).ToList(),
                 Description = todoItem.Description,
@@ -331,9 +340,14 @@ namespace Todo.presenter
         public ContextData GetContext()
         {
             if (StatusOptions == null) throw new NullReferenceException();
+            List<StatusData> statusDatas = new List<StatusData>();
+            foreach (Status status in StatusOptions)
+            {
+                statusDatas.Add(new StatusData(status.Id,status.Title,status.Order));
+            }
             return new ContextData
             {
-                StatusOptions = new List<StatusData>(),
+                StatusOptions = statusDatas,
                 ListNames = _listService.GetNames()
             };
         }

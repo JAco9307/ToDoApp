@@ -22,4 +22,9 @@ public struct StatusData
     {
         return Title;
     }
+    
+    public static int CompareByStatus(StatusData item1, StatusData item2)
+    {
+        return item1.Order - item2.Order;
+    }
 }

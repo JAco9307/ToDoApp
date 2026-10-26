@@ -9,7 +9,13 @@ namespace Todo.view.EditItems
         public StatusEdit(TodoData todoData, ContextData context)
         {
             InitializeComponent();
-            StatusComboBox.Items.AddRange(context.StatusOptions.ToArray());
+            
+            List<StatusData> statusDatas = context.StatusOptions;
+            foreach (var statusData in statusDatas)
+            {
+                StatusComboBox.Items.Add(statusData);
+            }
+            
             if (todoData.Status.Title == null)
             {
                 StatusComboBox.SelectedItem = context.StatusOptions[0];
@@ -25,7 +31,7 @@ namespace Todo.view.EditItems
         public TodoData UpdateData(TodoData todoData)
         {
             if (StatusComboBox.SelectedItem == null) return todoData;
-            Status.Title = StatusComboBox.SelectedItem.ToString();
+            Status = (StatusData)StatusComboBox.SelectedItem;
             if (Status.Title == null) return todoData;
             todoData.Status = Status;
             return todoData;

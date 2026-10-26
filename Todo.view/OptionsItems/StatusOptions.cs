@@ -7,10 +7,17 @@ namespace Todo.view.OptionsItems
 {
     public partial class StatusOptions : UserControl, IOption
     {
+        private List<StatusData> _StatusOptions;
+
         public StatusOptions(TodoOptions currentOptions)
         {
             InitializeComponent();
-            statusBox.DataSource = currentOptions.Status;
+            _StatusOptions = currentOptions.Status;
+            foreach (var statusData in _StatusOptions)
+            {
+                statusBox.Items.Add(statusData);
+            }
+            
             //statusBox.Items.AddRange(currentOptions.Status.ToArray());
         }
 
@@ -19,7 +26,7 @@ namespace Todo.view.OptionsItems
             if (statusBox.Items.Count == 0) return currentOptions;
             try
             {
-                List<StatusData> result = new List<StatusData>();
+                List<StatusData> result = _StatusOptions;
                 currentOptions.Status = result;
             }
             catch (Exception ex)
