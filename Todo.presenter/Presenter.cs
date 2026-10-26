@@ -17,7 +17,7 @@ namespace Todo.presenter
         private readonly IListService _listService;
         private readonly ITagService _tagService;
         private int _currentListId;
-        public List<Status> StatusOptions;
+        private List<Status> _statusOptions;
         public Presenter(ITodoView view, ITodoService todoService, IListService listService, ITagService tagService)
         {
             _view = view;
@@ -42,7 +42,7 @@ namespace Todo.presenter
         /// </summary>
         public void StartUp()
         {
-            StatusOptions = _todoService.GetStatusOptions();
+            _statusOptions = _todoService.GetStatusOptions();
             List<Control> controls = _view.StartUp();
             EventHandlerSetup(controls);
             UpdateLists();
@@ -70,7 +70,7 @@ namespace Todo.presenter
         /// </summary>
         public void UpdateView()
         {
-            if (StatusOptions == null) throw new NullReferenceException();
+            if (_statusOptions == null) throw new NullReferenceException();
             IReadOnlyList<TodoItem> TodoList = _listService.Get(_currentListId).Items;
             List<TodoData> todoDatas = new List<TodoData>();
             foreach (TodoItem todoItem in TodoList)
@@ -105,7 +105,7 @@ namespace Todo.presenter
         /// <param name="todoItem">The todoViewItem to edit.</param>
         private void EditTodo(TodoItem todoItem, int ViewItemId)
         {
-            if (StatusOptions == null) throw new NullReferenceException();
+            if (_statusOptions == null) throw new NullReferenceException();
             TodoItem? newTodo = HandleEditPopUp(todoItem);
             if (newTodo == null)
                 return;
@@ -123,10 +123,10 @@ namespace Todo.presenter
             bool IsNew = (todoItem == null);
             if (IsNew)
             {
-                todoItem = new TodoItem("", StatusOptions[0]) { ListId = _currentListId };
+                todoItem = new TodoItem("", _statusOptions[0]) { ListId = _currentListId };
             }
 
-            if (StatusOptions == null) throw new NullReferenceException();
+            if (_statusOptions == null) throw new NullReferenceException();
             if (todoItem == null) throw new NullReferenceException();
 
             List<TodoTag> allTags = _tagService.GetAll();
@@ -153,7 +153,7 @@ namespace Todo.presenter
             todoItem.ListId = _listService.Get(result.ListTitle).Id;
             List<TodoTag> newTags = allTags.Where(tag => HasMatchingTitle(result, tag)).ToList();
 
-            Status todoStatus = _todoService.GetStatusOptions().Find(status => status.Id == result.Status.Id);
+            Status todoStatus = _statusOptions.Find(status => status.Id == result.Status.Id);
             
             todoItem.SetTodoTitle(result.Title);
             todoItem.SetTodoStatus(todoStatus);
@@ -198,13 +198,13 @@ namespace Todo.presenter
         public void UpdateOptions()
         {
             // Set up and open options
-            if (StatusOptions == null) return;
+            if (_statusOptions == null) return;
             List<string> currentListNames = _listService.GetNames();
             List<TodoTag> allTags = _tagService.GetAll();
             List<(string title, Color color)> tags = allTags.Select(tag => (tag.Title, tag.Color)).ToList();
 
             List<StatusData> statusDatas = new List<StatusData>();
-            foreach (var status in StatusOptions)
+            foreach (var status in _statusOptions)
             {
                 statusDatas.Add(new StatusData(status.Id, status.Title, status.Order));
             }
@@ -320,7 +320,11 @@ namespace Todo.presenter
             {
                 status = _todoService.GetStatusOptions()[0];
             }
-            status = _todoService.GetStatusOptions().Find(status => status.Id == todoItem.Status.Id);
+            else
+            {
+                status = _todoService.GetStatusOptions().Find(status => status.Id == todoItem.Status.Id);
+            }
+            
             StatusData statusData = new StatusData(status.Id, status.Title, status.Order);
             return new TodoData
             {
@@ -339,9 +343,9 @@ namespace Todo.presenter
         /// <returns>The context data result.</returns>
         public ContextData GetContext()
         {
-            if (StatusOptions == null) throw new NullReferenceException();
+            if (_statusOptions == null) throw new NullReferenceException();
             List<StatusData> statusDatas = new List<StatusData>();
-            foreach (Status status in StatusOptions)
+            foreach (Status status in _statusOptions)
             {
                 statusDatas.Add(new StatusData(status.Id,status.Title,status.Order));
             }
