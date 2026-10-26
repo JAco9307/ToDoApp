@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
+using System.Xml.Serialization;
 using Todo.model.Entities;
 using Todo.model.Interfaces;
 using Todo.model.Repositories;
@@ -47,8 +48,8 @@ namespace Todo.presenter
             //_statusOptions = _todoService.GetStatusOptions();
             List<Control> controls = _view.StartUp();
             EventHandlerSetup(controls);
-            UpdateLists();
             UpdateView();
+            UpdateLists();
         }
 
 
@@ -223,14 +224,43 @@ namespace Todo.presenter
             UpdateStatuses(statusOptions, newOptions);
             UpdateListNames(currentListNames, newOptions);
             UpdateTags(allTags, newOptions);
+            Import(newOptions);
+            Export(newOptions);
 
             _todoService.UpdateDb();
             UpdateLists();
+        }
 
-            void UpdateListNames(List<string> currentListNames, TodoOptions newOptions)
+        private void Export(TodoOptions newOptions)
+        {
+            if (!newOptions.CreateExport)
+                return;
+
+            List<TodoList> lists = new List<TodoList>();
+            List<string> names = _listService.GetNames();
+            foreach (string name in names)
             {
-                var renamedFrom = newOptions.ListNameChanges.Keys.ToHashSet();
-                var renamedTo = newOptions.ListNameChanges.Values.ToHashSet();
+                lists.Add(_listService.Get(name));
+            }
+            new ImportService(_listService, _tagService, _todoService).ExportJson(lists);
+            UpdateOptions();
+        }
+
+        private void Import(TodoOptions newOptions)
+        {
+            if (newOptions.ImportFilePath == null)
+                return;
+            if (newOptions.ImportFilePath == "")
+                return;
+            bool result = new ImportService(_listService, _tagService, _todoService).ImportJson(newOptions.ImportFilePath);
+            if (!result)
+                MessageBox.Show("Import of lists failed, ensure the correct json was chosen.", "Import failed", MessageBoxButtons.OK);
+        }
+
+        private void UpdateListNames(List<string> currentListNames, TodoOptions newOptions)
+        {
+            var renamedFrom = newOptions.ListNameChanges.Keys.ToHashSet();
+            var renamedTo = newOptions.ListNameChanges.Values.ToHashSet();
 
                 foreach (var (OldName, NewName) in newOptions.ListNameChanges)
                     _listService.Rename(OldName, NewName);
@@ -244,21 +274,21 @@ namespace Todo.presenter
                         _listService.Delete(title);
             }
 
-            void UpdateTags(List<TodoTag> allTags, TodoOptions newOptions)
-            {
-                List<TodoTag> addedTags = new List<TodoTag>();
-                List<TodoTag> removedTags = new List<TodoTag>();
-                var remainingTags = newOptions.Tags.ToList();
+        private void UpdateTags(List<TodoTag> allTags, TodoOptions newOptions)
+        {
+            List<TodoTag> addedTags = new List<TodoTag>();
+            List<TodoTag> removedTags = new List<TodoTag>();
+            var remainingTags = newOptions.Tags.ToList();
 
-                foreach (var tag in allTags)
-                {
-                    var matchingTag = remainingTags.FirstOrDefault(option => option.Item1 == tag.Title);
-                    if (matchingTag != default)
-                        remainingTags.Remove(matchingTag);
-                    else
-                        removedTags.Add(tag);
-                }
-                addedTags.AddRange(remainingTags.Select(tag => new TodoTag(tag.Item1, tag.Item2)));
+            foreach (var tag in allTags)
+            {
+                var matchingTag = remainingTags.FirstOrDefault(option => option.Item1 == tag.Title);
+                if (matchingTag != default)
+                    remainingTags.Remove(matchingTag);
+                else
+                    removedTags.Add(tag);
+            }
+            addedTags.AddRange(remainingTags.Select(tag => new TodoTag(tag.Item1, tag.Item2)));
 
                 if (addedTags.Count > 0)
                     _tagService.AddOptions(addedTags);
