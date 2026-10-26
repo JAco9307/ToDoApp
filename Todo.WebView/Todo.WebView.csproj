@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup>
+		<TargetFramework>net10.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<BlazorDisableThrowNavigationException>true</BlazorDisableThrowNavigationException>
+		<OutputType>Exe</OutputType>
+		<RequiresAspNetWebAssets>true</RequiresAspNetWebAssets>
+		<RestoreProjectStyle>PackageReference</RestoreProjectStyle>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Viewutility\Todo.utility.csproj" />
+	</ItemGroup>
+
+</Project>
