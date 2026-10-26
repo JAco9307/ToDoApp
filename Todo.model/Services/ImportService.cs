@@ -14,12 +14,14 @@ namespace Todo.model.Services
         IListService ListService;
         ITagService TagService;
         ITodoService TodoService;
+        IStatusService StatusService;
 
-        public ImportService(IListService listService, ITagService tagService, ITodoService todoService)
+        public ImportService(IListService listService, ITagService tagService, ITodoService todoService, IStatusService statusService)
         {
             ListService = listService;
             TagService = tagService;
             TodoService = todoService;
+            StatusService = statusService;
         }
 
         //interface
@@ -126,7 +128,7 @@ namespace Todo.model.Services
             if (item.Title.Length > 40)
                 item.SetTodoTitle(item.Title.Substring(0, 40));
             if (item.Status == null)
-                item.SetTodoStatus("");
+                item.SetTodoStatus(new Status(""));
             if (item.Description == null)
                 item.SetDescription("");
             if (item.Tags == null)

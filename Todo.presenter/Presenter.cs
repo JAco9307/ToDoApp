@@ -242,7 +242,7 @@ namespace Todo.presenter
             {
                 lists.Add(_listService.Get(name));
             }
-            new ImportService(_listService, _tagService, _todoService).ExportJson(lists);
+            new ImportService(_listService, _tagService, _todoService, _statusService).ExportJson(lists);
             UpdateOptions();
         }
 
@@ -252,7 +252,7 @@ namespace Todo.presenter
                 return;
             if (newOptions.ImportFilePath == "")
                 return;
-            bool result = new ImportService(_listService, _tagService, _todoService).ImportJson(newOptions.ImportFilePath);
+            bool result = new ImportService(_listService, _tagService, _todoService, _statusService).ImportJson(newOptions.ImportFilePath);
             if (!result)
                 MessageBox.Show("Import of lists failed, ensure the correct json was chosen.", "Import failed", MessageBoxButtons.OK);
         }
@@ -262,17 +262,17 @@ namespace Todo.presenter
             var renamedFrom = newOptions.ListNameChanges.Keys.ToHashSet();
             var renamedTo = newOptions.ListNameChanges.Values.ToHashSet();
 
-                foreach (var (OldName, NewName) in newOptions.ListNameChanges)
-                    _listService.Rename(OldName, NewName);
+            foreach (var (OldName, NewName) in newOptions.ListNameChanges)
+                _listService.Rename(OldName, NewName);
 
-                foreach (var title in newOptions.ListNames.Except(currentListNames))
-                    if (!renamedTo.Contains(title))
-                        _listService.Add(title);
+            foreach (var title in newOptions.ListNames.Except(currentListNames))
+                if (!renamedTo.Contains(title))
+                    _listService.Add(title);
 
-                foreach (var title in currentListNames.Except(newOptions.ListNames))
-                    if (!renamedFrom.Contains(title))
-                        _listService.Delete(title);
-            }
+            foreach (var title in currentListNames.Except(newOptions.ListNames))
+                if (!renamedFrom.Contains(title))
+                    _listService.Delete(title);
+        }
 
         private void UpdateTags(List<TodoTag> allTags, TodoOptions newOptions)
         {
@@ -290,134 +290,133 @@ namespace Todo.presenter
             }
             addedTags.AddRange(remainingTags.Select(tag => new TodoTag(tag.Item1, tag.Item2)));
 
-                if (addedTags.Count > 0)
-                    _tagService.AddOptions(addedTags);
-                if (removedTags.Count > 0)
-                    _tagService.RemoveOptions(removedTags);
-            }
+            if (addedTags.Count > 0)
+                _tagService.AddOptions(addedTags);
+            if (removedTags.Count > 0)
+                _tagService.RemoveOptions(removedTags);
+        }
             
-            void UpdateStatuses(List<Status> statusOptions, TodoOptions todoOptions)
+        private void UpdateStatuses(List<Status> statusOptions, TodoOptions todoOptions)
+        {
+            List<Status> toBeDeleted = new List<Status>();
+            foreach (Status statusOption in statusOptions)
             {
-                List<Status> toBeDeleted = new List<Status>();
-                foreach (Status statusOption in statusOptions)
+                var matchingStatus = todoOptions.Status.FirstOrDefault(status => status.Id == statusOption.Id);
+                if (matchingStatus.Id == 0)
                 {
-                    var matchingStatus = todoOptions.Status.FirstOrDefault(status => status.Id == statusOption.Id);
-                    if (matchingStatus.Id == 0)
-                    {
-                        toBeDeleted.Add(statusOption);
-                    }
+                    toBeDeleted.Add(statusOption);
                 }
+            }
                 
-                List<Status> addedStatus = new List<Status>();
-                foreach (StatusData statusData in todoOptions.Status)
+            List<Status> addedStatus = new List<Status>();
+            foreach (StatusData statusData in todoOptions.Status)
+            {
+                Status? foundStatus = statusOptions.Find(status => status.Id == statusData.Id);
+                if (foundStatus == null)
                 {
-                    Status? foundStatus = statusOptions.Find(status => status.Id == statusData.Id);
-                    if (foundStatus == null)
-                    {
-                        Status itemToAdd = new Status(statusData.Title);
-                        addedStatus.Add(itemToAdd);
-                        statusOptions.Add(itemToAdd);
-                        continue;
-                    }
-                    foundStatus.Title = statusData.Title;
-                    foundStatus.Order = statusData.Order;
+                    Status itemToAdd = new Status(statusData.Title);
+                    addedStatus.Add(itemToAdd);
+                    statusOptions.Add(itemToAdd);
+                    continue;
                 }
+                foundStatus.Title = statusData.Title;
+                foundStatus.Order = statusData.Order;
+            }
                 
-                _statusService.AddOptions(addedStatus);
-                _statusService.DeleteOptions(toBeDeleted);
-            }
+            _statusService.AddOptions(addedStatus);
+            _statusService.DeleteOptions(toBeDeleted);
         }
 
-        /// <summary>
-        /// Cycles the Status on the todo item.
-        /// </summary>
-        /// <param name="todoItem">The todo item.</param>
-        /// <param name="sender">The sender.</param>
-        public void CycleStatus(TodoItem todoItem, TodoViewItem sender)
-        {
-            List<Status> statusOptions = _statusService.GetStatusOptions();
-            if (statusOptions == null) return;
+    /// <summary>
+    /// Cycles the Status on the todo item.
+    /// </summary>
+    /// <param name="todoItem">The todo item.</param>
+    /// <param name="sender">The sender.</param>
+    public void CycleStatus(TodoItem todoItem, TodoViewItem sender)
+    {
+        List<Status> statusOptions = _statusService.GetStatusOptions();
+        if (statusOptions == null) return;
             
-            int index = statusOptions.FindIndex(status => status == todoItem.Status);
+        int index = statusOptions.FindIndex(status => status == todoItem.Status);
             
-            todoItem.SetTodoStatus(statusOptions[(index + 1) % statusOptions.Count]);
+        todoItem.SetTodoStatus(statusOptions[(index + 1) % statusOptions.Count]);
             
-            sender.Status = new StatusData(todoItem.Status.Id, todoItem.Status.Title, todoItem.Status.Order);
+        sender.Status = new StatusData(todoItem.Status.Id, todoItem.Status.Title, todoItem.Status.Order);
             
-            _todoService.UpdateDb();
-        }
-
-        /// <summary>
-        /// Updates the lists in the <see cref="ComboBox"/> list selector.
-        /// </summary>
-        public void UpdateLists()
-        {
-            var ListTitles = _listService.GetNames();
-            if (_currentListId - 1 < ListTitles.Count)
-                _view.UpdateComboboxLists(ListTitles, ListTitles[_currentListId - 1]);
-            else
-                _view.UpdateComboboxLists(ListTitles, ListTitles[0]);
-
-        }
-
-        /// <summary>
-        /// Updates the selected list and updates view after to reflect changes.
-        /// </summary>
-        /// <param name="Title">The title.</param>
-        private void UpdateSelectedList(string Title)
-        {
-            var SelectedList = _listService.Get(Title);
-            _currentListId = SelectedList.Id;
-            UpdateView();
-        }
-
-        /// <summary>
-        /// Converts <see cref="TodoItem"> to <see cref="TodoData"/>.
-        /// </summary>
-        /// <param name="todoItem">The todo item.</param>
-        /// <returns>The todo data.</returns>
-        public TodoData ItemToData(TodoItem todoItem)
-        {
-            Status status;
-            if (todoItem.Status == null)
-            {
-                status = _statusService.GetStatusOptions()[0];
-            }
-            else
-            {
-                status = _statusService.GetStatusOptions().Find(status => status.Id == todoItem.Status.Id);
-            }
-            
-            StatusData statusData = new StatusData(status.Id, status.Title, status.Order);
-            return new TodoData
-            {
-                Title = todoItem.Title,
-                Status = statusData,
-                ListTitle = _listService.Get(todoItem.ListId).Title,
-                CurrentTags = todoItem.Tags.Select(tag => (tag.Title, tag.Color)).ToList(),
-                Description = todoItem.Description,
-
-            };
-        }
-
-        /// <summary>
-        /// Gets the current context information.
-        /// </summary>
-        /// <returns>The context data result.</returns>
-        public ContextData GetContext()
-        {
-            List<Status> _statusOptions = _statusService.GetStatusOptions();
-            if (_statusOptions == null) throw new NullReferenceException();
-            List<StatusData> statusDatas = new List<StatusData>();
-            foreach (Status status in _statusOptions)
-            {
-                statusDatas.Add(new StatusData(status.Id,status.Title,status.Order));
-            }
-            return new ContextData
-            {
-                StatusOptions = statusDatas,
-                ListNames = _listService.GetNames()
-            };
-        }
+        _todoService.UpdateDb();
     }
+
+    /// <summary>
+    /// Updates the lists in the <see cref="ComboBox"/> list selector.
+    /// </summary>
+    public void UpdateLists()
+    {
+        var ListTitles = _listService.GetNames();
+        if (_currentListId - 1 < ListTitles.Count)
+            _view.UpdateComboboxLists(ListTitles, ListTitles[_currentListId - 1]);
+        else
+            _view.UpdateComboboxLists(ListTitles, ListTitles[0]);
+
+    }
+
+    /// <summary>
+    /// Updates the selected list and updates view after to reflect changes.
+    /// </summary>
+    /// <param name="Title">The title.</param>
+    private void UpdateSelectedList(string Title)
+    {
+        var SelectedList = _listService.Get(Title);
+        _currentListId = SelectedList.Id;
+        UpdateView();
+    }
+
+    /// <summary>
+    /// Converts <see cref="TodoItem"> to <see cref="TodoData"/>.
+    /// </summary>
+    /// <param name="todoItem">The todo item.</param>
+    /// <returns>The todo data.</returns>
+    public TodoData ItemToData(TodoItem todoItem)
+    {
+        Status status;
+        if (todoItem.Status == null)
+        {
+            status = _statusService.GetStatusOptions()[0];
+        }
+        else
+        {
+            status = _statusService.GetStatusOptions().Find(status => status.Id == todoItem.Status.Id);
+        }
+            
+        StatusData statusData = new StatusData(status.Id, status.Title, status.Order);
+        return new TodoData
+        {
+            Title = todoItem.Title,
+            Status = statusData,
+            ListTitle = _listService.Get(todoItem.ListId).Title,
+            CurrentTags = todoItem.Tags.Select(tag => (tag.Title, tag.Color)).ToList(),
+            Description = todoItem.Description,
+
+        };
+    }
+
+    /// <summary>
+    /// Gets the current context information.
+    /// </summary>
+    /// <returns>The context data result.</returns>
+    public ContextData GetContext()
+    {
+        List<Status> _statusOptions = _statusService.GetStatusOptions();
+        if (_statusOptions == null) throw new NullReferenceException();
+        List<StatusData> statusDatas = new List<StatusData>();
+        foreach (Status status in _statusOptions)
+        {
+            statusDatas.Add(new StatusData(status.Id,status.Title,status.Order));
+        }
+        return new ContextData
+        {
+            StatusOptions = statusDatas,
+            ListNames = _listService.GetNames()
+        };
+    }
+}
 }

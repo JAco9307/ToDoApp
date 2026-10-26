@@ -34,7 +34,7 @@ namespace Todo.model.Entities
         {
             Title = title;
             Description = description;
-            Status = status;
+            Status = new Status(status);
             Tags = tags;
         }
 
