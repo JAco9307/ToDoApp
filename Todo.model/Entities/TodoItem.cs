@@ -30,7 +30,7 @@ namespace Todo.model.Entities
             Title = title;
             Description = description;
             Status = status;
-            Tags = tags;
+            Tags = tags ?? new List<TodoTag>();
         }
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace Todo.model.Entities
         /// <param name="tags">The tags.</param>
         public void SetTags(List<TodoTag> tags)
         {
-            Tags = tags ?? new List<TodoTag>();
+            Tags = tags;
         }
 
         /// <summary>
