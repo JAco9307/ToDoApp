@@ -1,5 +1,4 @@
-﻿using Todo.model.Entities;
-using Todo.view;
+﻿using Todo.view;
 using Todo.view.Entities;
 
 namespace Todo.testing.View

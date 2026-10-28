@@ -1,6 +1,5 @@
 ﻿using Todo.model.Entities;
 using Todo.model.Interfaces;
-using Todo.model.Repositories;
 
 namespace Todo.model.Services;
 
