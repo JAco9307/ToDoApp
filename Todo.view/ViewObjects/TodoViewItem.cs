@@ -40,7 +40,7 @@ namespace Todo.view.ViewObjects
 
         public static int CompareByStatus(TodoViewItem item1, TodoViewItem item2)
         {
-            return String.Compare(item1.Status.Title, item2.Status.Title, StringComparison.Ordinal);
+            return item1.Status.Order - item2.Status.Order;
         }
     }
 }

@@ -85,6 +85,7 @@ namespace Todo.presenter
             {
                 item.TodoLabel.Click += delegate { EditTodo(TodoList[item.id], item.id); };
                 item.CycleStatus.Click += delegate { CycleStatus(TodoList[item.id], item); };
+                item.CycleStatus.Click += delegate { UpdateView(); };
             }
         }
 
