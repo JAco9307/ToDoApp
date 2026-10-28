@@ -22,5 +22,23 @@ namespace Todo.WebView.Components.Pages
             while(MainView.todoDatas == null) await Task.Delay(10);
             return MainView.todoDatas.ToArray();
         }
+<<<<<<< Updated upstream
+=======
+
+        public void CycleStatus(int id)
+        {
+            MainView.CycleAction(id);
+            _navigationManager.NavigateTo("/", true);
+        }
+
+        public EditPopup? popupRef;
+
+        private async Task EditTodo(int id)
+        {
+            if (TodoDatas == null) return;
+            Task.Run(()=>
+                MainView.EditTodo(id, this));
+        }
+>>>>>>> Stashed changes
     }
 }

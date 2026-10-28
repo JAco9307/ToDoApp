@@ -67,11 +67,23 @@
     <section class="column" aria-label="To Do">
         <h2>To Do</h2>
         @foreach (var todo in TodoDatas ?? Array.Empty<TodoData>())
+<<<<<<< Updated upstream
         {
             <div class="card" draggable="true">@todo.Title, @todo.Description @todo.Status</div>
+=======
+        { 
+            <div class="card" draggable="true">
+                <span>
+                    <button @onclick="() => CycleStatus(TodoDatas.IndexOf(todo))">@todo.Status</button>
+                    @todo.Title
+                    <button @onclick="() => EditTodo(TodoDatas.IndexOf(todo))">Edit</button>
+                </span>
+            </div>
+>>>>>>> Stashed changes
         }
     </section>
 
+    <EditPopup @ref="popupRef" />
 </main>
 
 <script>

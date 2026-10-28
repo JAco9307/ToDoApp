@@ -1,0 +1,77 @@
+﻿@using Todo.utility;
+
+@{
+    var showClass = IsVisible ? "d-block" : "d-none";
+}
+
+<div class="toast-container p-3 @showClass" data-bs-autohide="true" data-bs-delay="5000">
+    <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <strong class="me-auto">Todo Item:</strong>
+            <button type="button" class="btn-close" aria-label="Close" @onclick="CloseWithoutSaving"></button>
+        </div>
+        <div>
+            <label class="toast-body">
+                Title:
+            </label>
+            <input type="text" id="title" name="title" @bind-value="Todo.Title"><br><br>
+        </div>
+
+        <div>
+            <label class="toast-body">
+                Description:
+            </label>
+            <input type="text" id="description" name="description" @bind-value="Todo.Description"><br><br>
+        </div>
+        <center>
+            <button @onclick="Save">Save</button>
+            <button @onclick="Delete">Delete</button>
+        </center>
+    </div>
+</div>
+
+@code {
+    [Inject]
+    public TodoWebView MainView { get; set; } = default!;
+
+    [Parameter]
+    public bool IsVisible { get; set; }
+
+    [Parameter]
+    public EventCallback<bool> IsVisibleChanged { get; set; }
+    public EventWaitHandle closeEvent = new(false,EventResetMode.ManualReset);
+
+    private TodoData Todo;
+    private TodoData OriginalTodo;
+
+    public void Show(TodoData todo)
+    {
+        closeEvent.Reset();
+        Todo = todo;
+        OriginalTodo = todo;
+        IsVisible = true;
+    }
+    private async void Delete()
+    {
+        Todo.ToBeDeleted = true;
+        Close();
+    }
+
+    private async void Save()
+    {
+        Close();
+    }
+
+    private async void CloseWithoutSaving()
+    {
+        Todo = OriginalTodo;
+        Close();
+    }
+
+    private async void Close()
+    {
+        IsVisible = false;
+        StateHasChanged();
+        closeEvent?.Set();
+    }
+}
