@@ -1,4 +1,5 @@
 ﻿@page "/"
+@rendermode InteractiveServer
 @using Todo.utility
 
 <PageTitle>Home</PageTitle>
@@ -21,10 +22,9 @@
     }
 
     .board {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(220px, 1fr));
-        gap: 16px;
-        align-items: start;
+        display: flex;
+        gap: 20px;
+        padding: 20px;
     }
 
     .column {
@@ -32,8 +32,8 @@
         padding: 16px;
         background: #e8ecf1;
         border-radius: 10px;
+        display: inline;
     }
-
         .column h2 {
             margin: 0 0 14px;
             font-size: 1.1rem;
@@ -42,10 +42,26 @@
     .card {
         touch-action: none;
         user-select: none;
+        padding: 12px;
+        margin-bottom: 10px;
+        border-radius: 8px;
     }
 
         .card.dragging {
             opacity: 0.5;
+        }
+
+        .card span {
+            display: grid;
+            grid-template-columns: 180px 1fr 70px;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card button {
+            width: 100%;
+            padding: 8px;
+            cursor: pointer;
         }
 
     .column.drag-over {
@@ -65,57 +81,17 @@
 
 <main class="board">
     <section class="column" aria-label="To Do">
-        <h2>To Do</h2>
+        <h2>@TodoDatas?.First().ListTitle</h2>
         @foreach (var todo in TodoDatas ?? Array.Empty<TodoData>())
-        {
-            <div class="card" draggable="true">@todo.Title, @todo.Description @todo.Status</div>
+        { 
+            <div class="card" draggable="true">
+                <span>
+                    <button @onclick="() => CycleStatus(TodoDatas.IndexOf(todo))">@todo.Status</button>
+                    @todo.Title
+                    <button>Edit</button>
+                </span>
+            </div>
         }
     </section>
 
 </main>
-
-<script>
-    let draggedCard = null;
-
-    document.addEventListener("dragstart", (event) => {
-        const card = event.target.closest(".card");
-        if (!card) return;
-
-        draggedCard = card;
-        event.dataTransfer.effectAllowed = "move";
-        event.dataTransfer.setData("text/plain", "kanban-card");
-    });
-
-    document.addEventListener("dragover", (event) => {
-        const column = event.target.closest(".column");
-        if (!column || !draggedCard) return;
-
-        event.preventDefault(); // Required to allow dropping
-        event.dataTransfer.dropEffect = "move";
-        column.classList.add("drag-over");
-    });
-
-    document.addEventListener("dragleave", (event) => {
-        const column = event.target.closest(".column");
-        if (column && !column.contains(event.relatedTarget)) {
-            column.classList.remove("drag-over");
-        }
-    });
-
-    document.addEventListener("drop", (event) => {
-        const column = event.target.closest(".column");
-        if (!column || !draggedCard) return;
-
-        event.preventDefault();
-        column.appendChild(draggedCard);
-        column.classList.remove("drag-over");
-    });
-
-    document.addEventListener("dragend", () => {
-        draggedCard = null;
-        document.querySelectorAll(".column").forEach((column) => {
-            column.classList.remove("drag-over");
-        });
-    });
-
-</script>

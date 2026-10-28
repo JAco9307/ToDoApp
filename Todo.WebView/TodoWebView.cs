@@ -8,8 +8,15 @@ public class TodoWebView : ITodoView
 {
     public List<TodoData>? todoDatas;
     public static void Main(string[] args) { }
-    public void SetUpEvents(List<Action> actions, Action<string> listSelect)
+    List<Action> actions = []; 
+    Action<string>? listSelect;
+
+    Action<int>? editAction;
+    Func<int, string>? cycleStatusAction;
+    public void SetUpEvents(List<Action> _actions, Action<string> _listSelect)
     {
+        actions = _actions;
+        listSelect = _listSelect;
     }
 
     public TodoData ShowEditTodoDialog(ContextData context, TodoData currentData, bool IsNew)
@@ -73,13 +80,25 @@ public class TodoWebView : ITodoView
 
     private WebApplication? _app;
 
-    public void UpdateActiveViewList(List<TodoData> _todoDatas, Action<int> editAction, Func<int, string> cycleStatusAction)
+    public void UpdateActiveViewList(List<TodoData> _todoDatas, Action<int> _editAction, Func<int, string> _cycleStatusAction)
     {
         todoDatas = _todoDatas;
+        editAction = _editAction;
+        cycleStatusAction = _cycleStatusAction;
     }
 
     public void UpdateComboboxLists(List<string> lists, string selectList)
     {
+    }
+
+    public void CycleAction(int i) 
+    {
+        if (cycleStatusAction != null && todoDatas != null)
+        {
+            TodoData todo = todoDatas[i];
+            todo.Status = cycleStatusAction(i);
+            todoDatas[i] = todo;
+        }
     }
 }
 
