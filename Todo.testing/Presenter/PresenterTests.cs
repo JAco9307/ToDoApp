@@ -187,8 +187,6 @@ namespace Todo.testing.presenter
             // Arrange
             var presenter = new Presenter(_view, _Todoservice, _Listservice, _TagService, _statusService);
 
-            //presenter.StatusOptions = new();
-
             presenter.UpdateView();
 
 
@@ -219,7 +217,6 @@ namespace Todo.testing.presenter
             // Arrange
             var presenter = new Presenter(_view, _Todoservice, _Listservice, _TagService, _statusService);
             TodoItem todoItem = new("test", new Status(""));
-            //presenter.StatusOptions = new();
 
             // Act
             presenter.DeleteTodo(todoItem);
