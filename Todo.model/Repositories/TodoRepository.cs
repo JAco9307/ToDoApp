@@ -118,11 +118,9 @@ namespace Todo.model.Repositories
         }
 
         //interface
-        public StatusList? GetStatusOptions()
+        public List<Status> GetStatusOptions()
         {
-            if (!_dbContext.TodoStatusOptions.Any())
-                _dbContext.TodoStatusOptions.Add(new StatusList());
-            return _dbContext.TodoStatusOptions.FirstOrDefault();
+            return _dbContext.TodoStatus.ToList();
         }
 
 
@@ -143,6 +141,18 @@ namespace Todo.model.Repositories
         public void RemoveTagOptions(List<TodoTag> tags)
         {
             _dbContext.TodoTags.RemoveRange(tags);
+            _dbContext.SaveChanges();
+        }
+        //interface
+        public void AddStatusOptions(List<Status> statusToAdd)
+        {
+            _dbContext.TodoStatus.AddRange(statusToAdd);
+            _dbContext.SaveChanges();
+        }
+        //interface
+        public void DeleteStatusOptions(List<Status> statusToDelete)
+        {
+            _dbContext.TodoStatus.RemoveRange(statusToDelete);
             _dbContext.SaveChanges();
         }
     }

@@ -9,7 +9,7 @@ public class TodoListTests
     public void List_ShouldNotBeNullBeforeAdd()
     {
         TodoList list = new TodoList();
-        TodoItem todoItem = new TodoItem("Test Title");
+        TodoItem todoItem = new TodoItem("Test Title", new Status(""));
 
 
         Assert.IsNotNull(list.Items);
@@ -19,7 +19,7 @@ public class TodoListTests
     public void List_ShouldBeEmptyAtStart()
     {
         TodoList list = new TodoList();
-        TodoItem todoItem = new TodoItem("Test Title");
+        TodoItem todoItem = new TodoItem("Test Title", new Status(""));
 
         Assert.IsEmpty(list.Items);
     }
@@ -28,7 +28,7 @@ public class TodoListTests
     public void Add_ShouldAddTheTodoItemToTheList()
     {
         TodoList list = new TodoList();
-        TodoItem todoItem = new TodoItem("Test Title");
+        TodoItem todoItem = new TodoItem("Test Title", new Status(""));
 
         list.Add(todoItem);
 
@@ -40,8 +40,8 @@ public class TodoListTests
     public void Add_ShouldAddMultipleTodos()
     {
         TodoList list = new TodoList();
-        TodoItem todoItem1 = new TodoItem("Test Title");
-        TodoItem todoItem2 = new TodoItem("Second Test Title");
+        TodoItem todoItem1 = new TodoItem("Test Title", new Status(""));
+        TodoItem todoItem2 = new TodoItem("Second Test Title", new Status(""));
 
         list.Add(todoItem1);
         list.Add(todoItem2);
@@ -55,7 +55,7 @@ public class TodoListTests
     public void Remove_ShouldRemoveTheTodoItemToTheList()
     {
         TodoList list = new TodoList();
-        TodoItem todoItem = new TodoItem("Test Title");
+        TodoItem todoItem = new TodoItem("Test Title", new Status(""));
 
         list.Add(todoItem);
 
@@ -68,8 +68,8 @@ public class TodoListTests
     public void Remove_ShouldRemoveTheCorrectTodoItemToTheList()
     {
         TodoList list = new TodoList();
-        TodoItem todoItem1 = new TodoItem("Test Title");
-        TodoItem todoItem2 = new TodoItem("Second Test Title");
+        TodoItem todoItem1 = new TodoItem("Test Title", new Status(""));
+        TodoItem todoItem2 = new TodoItem("Second Test Title", new Status(""));
 
         list.Add(todoItem1);
         list.Add(todoItem2);
@@ -85,7 +85,7 @@ public class TodoListTests
     public void Remove_ShouldThrowExceptionIfTodoNotFound()
     {
         TodoList list = new TodoList();
-        TodoItem todoItem = new TodoItem("Test Title");
+        TodoItem todoItem = new TodoItem("Test Title", new Status(""));
 
         Assert.Throws<KeyNotFoundException>(() => list.Remove(todoItem));
     }

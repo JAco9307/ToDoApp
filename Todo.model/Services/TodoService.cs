@@ -11,7 +11,7 @@ namespace Todo.model.Services
     public class TodoService : ITodoService
     {
         private ITodoRepository _repository;
-        private StatusList? _statusOptions;
+        private List<Status> _statusOptions;
 
         [ExcludeFromCodeCoverage]
         public TodoService()
@@ -40,17 +40,6 @@ namespace Todo.model.Services
         public void UpdateDb()
         {
             _repository.UpdateDb();
-        }
-
-        //interface
-        public StatusList GetStatusOptions()
-        {
-            if (_statusOptions == null)
-            {
-                StatusList? list = _repository.GetStatusOptions();
-                _statusOptions = list ?? new StatusList();
-            }
-            return _statusOptions;
         }
     }
 }

@@ -7,11 +7,14 @@ namespace Todo.testing.View
     [TestClass]
     public class EditTodoFormTests
     {
+        private static StatusData NotStarted = new StatusData("Not Started", 0);
+        private static StatusData InProgress = new StatusData("Not Started", 0);
+        private static StatusData Completed = new StatusData("Not Started", 0);
         private ContextData options = new ContextData
         {
-            StatusOptions = ["Not Started",
-                    "In Progress",
-                    "Completed"],
+            StatusOptions = [NotStarted,
+                    InProgress,
+                   Completed],
             ListNames = ["New List"],
             AllTags = new(),
         };
@@ -19,7 +22,7 @@ namespace Todo.testing.View
         private TodoData TestTodoData = new TodoData
         {
             Title = "Title",
-            Status = "Completed",
+            Status = Completed,
             CurrentTags = new()
         };
 

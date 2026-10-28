@@ -14,12 +14,14 @@ namespace Todo.model.Services
         IListService ListService;
         ITagService TagService;
         ITodoService TodoService;
+        IStatusService StatusService;
 
-        public ImportService(IListService listService, ITagService tagService, ITodoService todoService)
+        public ImportService(IListService listService, ITagService tagService, ITodoService todoService, IStatusService statusService)
         {
             ListService = listService;
             TagService = tagService;
             TodoService = todoService;
+            StatusService = statusService;
         }
 
         //interface
@@ -104,14 +106,27 @@ namespace Todo.model.Services
         private void copyList(TodoList fromList, int toListId)
         {
             List<TodoTag> allTags = TagService.GetAll();
+            List<Status> statusOptions = StatusService.GetStatusOptions();
             foreach (TodoItem item in fromList.Items)
             {
                 if (!SanitizeItem(item))
                     continue;
                 item.SetTags(UseExistingTags(item.Tags, allTags));
+                Status status = UseExistingStatus(item.Status, statusOptions);
+                item.SetTodoStatus(status);
                 item.ListId = toListId;
                 TodoService.Add(item);
             }
+        }
+
+        private Status UseExistingStatus(Status itemStatus, List<Status> statusOptions)
+        {
+            Status status = statusOptions.Find(status => status.Id == itemStatus.Id);
+            if (status == null)
+            {
+                status = new Status(itemStatus.Title);
+            }
+            return status;
         }
 
         /// <summary>
@@ -126,7 +141,7 @@ namespace Todo.model.Services
             if (item.Title.Length > 40)
                 item.SetTodoTitle(item.Title.Substring(0, 40));
             if (item.Status == null)
-                item.SetTodoStatus("");
+                item.SetTodoStatus(new Status(""));
             if (item.Description == null)
                 item.SetDescription("");
             if (item.Tags == null)
