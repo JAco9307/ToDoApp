@@ -8,7 +8,7 @@ public class TodoItemTests
     [TestMethod]
     public void TodoItem_ShouldBeTheCorrectTitle()
     {
-        TodoItem todoItem = new TodoItem("Test Title");
+        TodoItem todoItem = new TodoItem("Test Title", new Status(""));
 
         Assert.IsNotNull(todoItem.Title);
         Assert.AreEqual("Test Title", todoItem.Title);
@@ -17,7 +17,7 @@ public class TodoItemTests
     [TestMethod]
     public void TodoItem_TitleCanBeChanged()
     {
-        TodoItem todoItem = new TodoItem("Old Title");
+        TodoItem todoItem = new TodoItem("Old Title", new Status(""));
         todoItem.SetTodoTitle("New Title");
 
         Assert.IsNotNull(todoItem.Title);

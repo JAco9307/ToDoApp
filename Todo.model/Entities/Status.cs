@@ -10,6 +10,12 @@ public class Status
     {
         Title = title;
     }
+
+    public Status(string title, int order)
+    {
+        Title = title;
+        Order = order;
+    }
     public override string ToString()
     {
         return Title;

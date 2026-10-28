@@ -12,7 +12,7 @@ namespace Todo.testing.View
         {
             TodoOptions ops = new TodoOptions
             {
-                Status = ["a", "b"],
+                Status = [new StatusData("a",0), new StatusData("b",1)],
                 ListNames = ["1"],
                 Tags = new()
             };

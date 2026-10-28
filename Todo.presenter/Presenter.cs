@@ -19,13 +19,13 @@ namespace Todo.presenter
         private readonly ITagService _tagService;
         private readonly IStatusService _statusService;
         private int _currentListId;
-        //private List<Status> _statusOptions;
-        public Presenter(ITodoView view, ITodoService todoService, IListService listService, ITagService tagService)
+        public Presenter(ITodoView view, ITodoService todoService, IListService listService, ITagService tagService, IStatusService statusService)
         {
             _view = view;
             _todoService = todoService;
             _listService = listService;
             _tagService = tagService;
+            _statusService = statusService;
             _currentListId = 1;
         }
         public Presenter(ITodoView view)
@@ -336,8 +336,10 @@ namespace Todo.presenter
     {
         List<Status> statusOptions = _statusService.GetStatusOptions();
         if (statusOptions == null) return;
-            
-        int index = statusOptions.FindIndex(status => status == todoItem.Status);
+
+        statusOptions.Contains(todoItem.Status);
+        
+        int index = statusOptions.FindIndex(status => status.Title == todoItem.Status.Title);
             
         todoItem.SetTodoStatus(statusOptions[(index + 1) % statusOptions.Count]);
             
