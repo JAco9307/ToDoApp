@@ -1,8 +1,10 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Syncfusion.Blazor;
 using System.Drawing;
 using Todo.utility;
 using Todo.utility.Interfaces;
 using Todo.WebView.Components;
+using Todo.WebView.Components.Pages;
 
 public class TodoWebView : ITodoView
 {
@@ -10,8 +12,9 @@ public class TodoWebView : ITodoView
     public static void Main(string[] args) { }
     List<Action> actions = []; 
     Action<string>? listSelect;
-
     Action<int>? editAction;
+
+    Home? home;
     Func<int, string>? cycleStatusAction;
     public void SetUpEvents(List<Action> _actions, Action<string> _listSelect)
     {
@@ -21,6 +24,7 @@ public class TodoWebView : ITodoView
 
     public TodoData ShowEditTodoDialog(ContextData context, TodoData currentData, bool IsNew)
     {
+        home?.popupRef?.Show(currentData);
         throw new NotImplementedException();
     }
 
@@ -63,6 +67,7 @@ public class TodoWebView : ITodoView
             .AddInteractiveServerComponents();
         builder.Services.AddSingleton<TodoWebView>(this);
         builder.Services.AddSingleton<ITodoView>(this);
+        builder.Services.AddSyncfusionBlazor();
 
         var app = builder.Build();
 
@@ -99,6 +104,12 @@ public class TodoWebView : ITodoView
             todo.Status = cycleStatusAction(i);
             todoDatas[i] = todo;
         }
+    }
+
+    public void Edit(int id, Home _home)
+    {
+        home = _home;
+        editAction(id);
     }
 }
 

@@ -12,6 +12,8 @@
 
 	<ItemGroup>
 	  <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="10.0.14" />
+	  <PackageReference Include="Syncfusion.Blazor.Popups" Version="35.1.42" />
+	  <PackageReference Include="Syncfusion.Blazor.Themes" Version="35.1.42" />
 	</ItemGroup>
 
 	<ItemGroup>

@@ -10,6 +10,7 @@ namespace Todo.WebView.Components.Pages
     {
         [Inject]
         public TodoWebView MainView { get; set; } = default!;
+        public EditDialog? popupRef;
 
         [Inject]
         NavigationManager _navigationManager { get; set; } = default!;
@@ -27,10 +28,15 @@ namespace Todo.WebView.Components.Pages
             return MainView.todoDatas.ToArray();
         }
 
-        public void CycleStatus(int id)
+        private void CycleStatus(int id)
         {
             MainView.CycleAction(id);
             _navigationManager.NavigateTo("/", true);
+        }
+
+        private void ShowEdit(int id)
+        {
+            popupRef.Show(TodoDatas[id]);
         }
     }
 }

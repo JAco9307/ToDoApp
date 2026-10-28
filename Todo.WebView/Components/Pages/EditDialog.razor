@@ -1,0 +1,43 @@
+﻿<SfDialog Width="250px" ShowCloseIcon="true" @ref="DlgRef" Visible= "false">
+    <DialogTemplates>
+        <Header> Edit Todo </Header>
+        <Content>This is a standard dialog with footer buttons</Content>
+    </DialogTemplates>
+    <DialogButtons>
+        <DialogButton Content="Save" IsPrimary="true" OnClick="@OnOkClick" />
+        <DialogButton Content="Delete" OnClick="@OnDeleteClick" style="color:red" />
+    </DialogButtons>
+</SfDialog>
+
+@code
+{
+    public SfDialog DlgRef;
+
+    [Inject]
+    public TodoWebView MainView { get; set; } = default!;
+
+
+    private TodoData Todo;
+    private TodoData OriginalTodo;
+
+
+    public void Show(TodoData _todo)
+    {
+        Todo = _todo;
+        OriginalTodo = _todo;
+        DlgRef.ShowAsync();
+    }
+
+    private void OnOkClick()
+    {
+        DlgRef.HideAsync();
+    }
+
+    private void OnDeleteClick()
+    {
+        DlgRef.HideAsync();
+
+
+    }
+    
+}

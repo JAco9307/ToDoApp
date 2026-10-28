@@ -1,6 +1,5 @@
 ﻿@page "/"
 @rendermode InteractiveServer
-@using Todo.utility
 
 <PageTitle>Home</PageTitle>
 
@@ -88,10 +87,10 @@
                 <span>
                     <button @onclick="() => CycleStatus(TodoDatas.IndexOf(todo))">@todo.Status</button>
                     @todo.Title
-                    <button>Edit</button>
+                    <button @onclick="() => ShowEdit(TodoDatas.IndexOf(todo))">Edit</button>
                 </span>
             </div>
         }
     </section>
-
+    <EditDialog @ref="popupRef" />
 </main>
