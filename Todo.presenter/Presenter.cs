@@ -84,8 +84,7 @@ namespace Todo.presenter
             foreach (TodoViewItem item in todoViewItems)
             {
                 item.TodoLabel.Click += delegate { EditTodo(TodoList[item.id], item.id); };
-                item.CycleStatus.Click += delegate { CycleStatus(TodoList[item.id], item); };
-                item.CycleStatus.Click += delegate { UpdateView(); };
+                item.CycleStatus.Click += delegate { CycleStatus(TodoList[item.id], item); UpdateView(); };
             }
         }
 
