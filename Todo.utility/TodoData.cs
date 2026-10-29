@@ -10,7 +10,7 @@ namespace Todo.utility
     public struct TodoData
     {
         public string? Title;
-        public string Status;
+        public StatusData Status;
         public string ListTitle;
         public string Description;
 

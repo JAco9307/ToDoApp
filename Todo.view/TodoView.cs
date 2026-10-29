@@ -56,7 +56,7 @@ namespace Todo.view
         }
 
         //interface
-        public void UpdateActiveViewList(List<TodoData> todoDatas, Action<int> editAction, Func<int, string> cycleStatusAction)
+        public void UpdateActiveViewList(List<TodoData> todoDatas, Action<int> editAction, Func<int, StatusData> cycleStatusAction)
         {
             Invoke(() => flowLayout.Controls.Clear());
             List<TodoViewItem> controls = [];
@@ -71,7 +71,7 @@ namespace Todo.view
                 };
                 newTodo.CycleStatus.Click += delegate
                 {
-                    newTodo.CycleStatus.Text = cycleStatusAction(newTodo.id);
+                    newTodo.CycleStatus.Text = cycleStatusAction(newTodo.id).Title;
                 };
 
             }

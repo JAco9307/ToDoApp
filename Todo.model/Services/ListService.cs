@@ -75,7 +75,7 @@ namespace Todo.model.Services
         //interface
         public List<string> GetNames()
         {
-            List<string> output = _repository.GetListNames();
+            List<string> output = _todoLists.Select(item => item.Title).ToList();
             if (output.Count == 0 && _todoLists.Count == 0)
             {
                 _repository.AddList("New List");

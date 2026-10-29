@@ -9,10 +9,12 @@ namespace Todo.utility
     /// </summary>
     public struct TodoOptions
     {
-        public List<string> Status;
+        public List<StatusData> Status;
         public List<string> ListNames;
-        public Dictionary<string, string> ListNameChanges;
-        public List<(string, Color)> Tags;
+        public Dictionary<string,string> ListNameChanges;
+        public List<(string,Color)> Tags;
+        public bool CreateExport;
+        public string ImportFilePath;
 
     }
 }

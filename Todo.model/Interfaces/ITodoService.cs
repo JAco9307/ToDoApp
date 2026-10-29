@@ -25,11 +25,5 @@ namespace Todo.model.Interfaces
         /// Updates all entities in database
         /// </summary>
         public void UpdateDb();
-
-        /// <summary>
-        /// Gets the status options.
-        /// </summary>
-        /// <returns>The status list result.</returns>
-        public StatusList GetStatusOptions();
     }
 }

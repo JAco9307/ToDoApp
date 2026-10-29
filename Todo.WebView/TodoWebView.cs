@@ -13,7 +13,7 @@ public class TodoWebView : ITodoView
     Action<int>? editAction;
 
     public Home? home;
-    Func<int, string>? cycleStatusAction;
+    Func<int, StatusData>? cycleStatusAction;
     public void SetUpEvents(List<Action> _actions, Action<string> _listSelect)
     {
         actions = _actions;
@@ -92,12 +92,12 @@ public class TodoWebView : ITodoView
 
     private WebApplication? _app;
 
-    public void UpdateActiveViewList(List<TodoData> _todoDatas, Action<int> _editAction, Func<int, string> _cycleStatusAction)
+    public void UpdateActiveViewList(List<TodoData> _todoDatas, Action<int> _editAction, Func<int, StatusData> _cycleStatusAction)
     {
         todoDatas = _todoDatas;
         editAction = _editAction;
         cycleStatusAction = _cycleStatusAction;
-        home?.Refresh();
+        //home?.Refresh();
     }
 
     public void UpdateComboboxLists(List<string> lists, string selectList)

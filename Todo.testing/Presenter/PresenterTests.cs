@@ -21,11 +21,14 @@ namespace Todo.testing.presenter
             calledDelete = true;
         }
 
+<<<<<<< HEAD
         public StatusList GetStatusOptions()
         {
             return new();
         }
 
+=======
+>>>>>>> main
         public void UpdateDb()
         {
         }
@@ -103,6 +106,7 @@ namespace Todo.testing.presenter
         }
 
         public void UpdateComboboxLists(List<string> lists, string selectList)
+<<<<<<< HEAD
         {
         }
 
@@ -127,7 +131,42 @@ namespace Todo.testing.presenter
         }
 
         public void RemoveOptions(List<TodoTag> newTags)
+=======
+>>>>>>> main
         {
+        }
+    }
+    public class mockTagService : ITagService
+    {
+        public void AddOptions(List<TodoTag> newTags)
+        {
+        }
+
+        public List<TodoTag> GetAll()
+        {
+            return [];
+        }
+
+        public void RemoveOptions(List<TodoTag> newTags)
+        {
+        }
+    }
+
+    public class mockStatusService() : IStatusService
+    {
+        public void AddOptions(List<Status> statusToAdd)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteOptions(List<Status> statusToDelete)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Status> GetStatusOptions()
+        {
+            return new List<Status> { new Status("Not Started",0), new Status("In Progress",1), new Status("Completed",2)};
         }
     }
 
@@ -138,6 +177,10 @@ namespace Todo.testing.presenter
         ITodoService _Todoservice = new mockTodoService();
         IListService _Listservice = new mockListService();
         ITagService _TagService = new mockTagService();
+<<<<<<< HEAD
+=======
+        private IStatusService _statusService = new mockStatusService();
+>>>>>>> main
 
         [TestInitialize]
         public void Init()
@@ -152,7 +195,11 @@ namespace Todo.testing.presenter
         public void StartUp_StateUnderTest_ExpectedBehavior()
         {
             // Arrange
+<<<<<<< HEAD
             var presenter = new Presenter(_view, _Todoservice, _Listservice, _TagService);
+=======
+            var presenter = new Presenter(_view, _Todoservice, _Listservice, _TagService, _statusService);
+>>>>>>> main
 
             try
             {
@@ -170,9 +217,13 @@ namespace Todo.testing.presenter
         public void UpdateView_StateUnderTest_ExpectedBehavior()
         {
             // Arrange
+<<<<<<< HEAD
             var presenter = new Presenter(_view, _Todoservice, _Listservice, _TagService);
 
             presenter.StatusOptions = new();
+=======
+            var presenter = new Presenter(_view, _Todoservice, _Listservice, _TagService, _statusService);
+>>>>>>> main
 
             presenter.UpdateView();
 
@@ -202,9 +253,14 @@ namespace Todo.testing.presenter
         public void DeleteTodo_StateUnderTest_ExpectedBehavior()
         {
             // Arrange
+<<<<<<< HEAD
             var presenter = new Presenter(_view, _Todoservice, _Listservice, _TagService);
             TodoItem todoItem = new("test");
             presenter.StatusOptions = new();
+=======
+            var presenter = new Presenter(_view, _Todoservice, _Listservice, _TagService, _statusService);
+            TodoItem todoItem = new("test", new Status(""));
+>>>>>>> main
 
             // Act
             presenter.DeleteTodo(todoItem);
@@ -216,6 +272,7 @@ namespace Todo.testing.presenter
         [TestMethod]
         public void CycleStatus_StateUnderTest_()
         {
+<<<<<<< HEAD
             var presenter = new Presenter(_view, _Todoservice, _Listservice, _TagService);
             presenter.StatusOptions = new();
             TodoItem todoItem = new("test");
@@ -226,6 +283,27 @@ namespace Todo.testing.presenter
             Assert.AreEqual("In Progress", todoItem.Status);
             presenter.CycleStatus(0);
             Assert.AreEqual("Completed", todoItem.Status);
+=======
+            var presenter = new Presenter(_view, _Todoservice, _Listservice, _TagService, _statusService);
+            Status status = _statusService.GetStatusOptions()[0];
+            TodoItem todoItem = new("test", status);
+            TodoData todoData = new TodoData
+            {
+                Title = "test",
+                Status = new StatusData(status.Title,status.Order),
+                ListTitle = "x",
+                Description = "x",
+                ToBeDeleted = false,
+                CurrentTags = []
+            };
+            TodoViewItem item = new(todoData);
+
+            Assert.AreEqual("Not Started", todoItem.Status.Title);
+            presenter.CycleStatus(todoItem, item);
+            Assert.AreEqual("In Progress", todoItem.Status.Title);
+            presenter.CycleStatus(todoItem, item);
+            Assert.AreEqual("Completed", todoItem.Status.Title);
+>>>>>>> main
         }
     }
 }

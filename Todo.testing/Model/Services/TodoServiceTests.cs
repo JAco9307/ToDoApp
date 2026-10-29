@@ -33,7 +33,7 @@ public class TodoServiceTests
             return _todoList;
         }
 
-        public StatusList? GetStatusOptions()
+        public List<Status> GetStatusOptions()
         {
             return null;
         }
@@ -78,6 +78,27 @@ public class TodoServiceTests
         {
             throw new NotImplementedException();
         }
+
+        public void AddStatusOptions(List<Status> statusToAdd)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteStatusOptions(List<Status> statusToDelete)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public ListService Listservice = new ListService();
+    public TodoService Todoservice = new TodoService();
+
+    [TestInitialize]
+    public void initial() 
+    {
+        var testrepo = new TestTodoRepository();
+        Listservice = new ListService(testrepo);
+        Todoservice = new TodoService(testrepo);
     }
 
     public ListService Listservice = new ListService();
@@ -101,7 +122,7 @@ public class TodoServiceTests
     [TestMethod]
     public void Add_ShouldAddTodoItemToListZero()
     {
-        TodoItem todoItem = new TodoItem("Test Title");
+        TodoItem todoItem = new TodoItem("Test Title", new Status(""));
 
         Listservice.Get(0);
 
@@ -114,8 +135,8 @@ public class TodoServiceTests
     [TestMethod]
     public void Add_ShouldAddMultipleTodoItemsToTheSameList()
     {
-        TodoItem todoItem1 = new TodoItem("Test Title");
-        TodoItem todoItem2 = new TodoItem("Second Test Title");
+        TodoItem todoItem1 = new TodoItem("Test Title", new Status(""));
+        TodoItem todoItem2 = new TodoItem("Second Test Title", new Status(""));
 
         Listservice.Get(0);
 
@@ -130,8 +151,8 @@ public class TodoServiceTests
     [TestMethod]
     public void Delete_ShouldRemoveItemFromTodoList()
     {
-        TodoItem todoItem1 = new TodoItem("Test Title");
-        TodoItem todoItem2 = new TodoItem("Second Test Title");
+        TodoItem todoItem1 = new TodoItem("Test Title", new Status(""));
+        TodoItem todoItem2 = new TodoItem("Second Test Title", new Status(""));
 
         Listservice.Get(0);
 
@@ -148,8 +169,8 @@ public class TodoServiceTests
     [TestMethod]
     public void GetTodoList_ShouldReturnTheCorrectList()
     {
-        TodoItem todoItem1 = new TodoItem("Test Title");
-        TodoItem todoItem2 = new TodoItem("Second Test Title");
+        TodoItem todoItem1 = new TodoItem("Test Title", new Status(""));
+        TodoItem todoItem2 = new TodoItem("Second Test Title", new Status(""));
 
         Listservice.Get(0);
 
@@ -167,8 +188,8 @@ public class TodoServiceTests
     [TestMethod]
     public void GetTodoList_ShouldReturnFromRepositoryIfNotInMemory()
     {
-        TodoItem todoItem1 = new TodoItem("Test Title");
-        TodoItem todoItem2 = new TodoItem("Second Test Title");
+        TodoItem todoItem1 = new TodoItem("Test Title", new Status(""));
+        TodoItem todoItem2 = new TodoItem("Second Test Title", new Status(""));
 
         Listservice.Get(0);
 

@@ -7,10 +7,17 @@ namespace Todo.view.OptionsItems
 {
     public partial class StatusOptions : UserControl, IOption
     {
+
         public StatusOptions(TodoOptions currentOptions)
         {
             InitializeComponent();
-            statusBox.Items.AddRange(currentOptions.Status.ToArray());
+            List<StatusData> statusOptions = currentOptions.Status;
+            statusOptions.Sort(StatusData.CompareByStatus);
+            foreach (var statusData in statusOptions)
+            {
+                statusBox.Items.Add(statusData);
+            }
+            
         }
 
         public TodoOptions Save(TodoOptions currentOptions)
@@ -18,7 +25,15 @@ namespace Todo.view.OptionsItems
             if (statusBox.Items.Count == 0) return currentOptions;
             try
             {
-                List<string> result = statusBox.Items.Cast<string>().ToList();
+                List<StatusData> result = new List<StatusData>();
+                for (var index = 0; index < statusBox.Items.Count; index++)
+                {
+                    var statusBoxItem = statusBox.Items[index];
+                    StatusData currentStatusData = (StatusData)statusBoxItem;
+                    currentStatusData.Order = index;
+                    result.Add(currentStatusData);
+                }
+
                 currentOptions.Status = result;
             }
             catch (Exception ex)
@@ -44,14 +59,16 @@ namespace Todo.view.OptionsItems
 
             if (result == DialogResult.OK)
             {
-                statusBox.Items.Add(inputDialog.text);
+                statusBox.Items.Add(new StatusData(inputDialog.text, statusBox.Items.Count));
             }
         }
 
         private void renameButton_Click(object sender, EventArgs e)
         {
             if (statusBox.SelectedItem == null) return;
-            var inputDialog = new TextInputDialog("Status name:", statusBox.SelectedItem.ToString() ?? "ERROR");
+            
+            StatusData selectedStatusData = (StatusData)statusBox.SelectedItem;
+            var inputDialog = new TextInputDialog("Status name:", selectedStatusData.Title ?? "ERROR");
             var result = inputDialog.ShowDialog();
 
             if (result != DialogResult.OK) return;
@@ -64,9 +81,10 @@ namespace Todo.view.OptionsItems
                 return;
             }
 
-            statusBox.Items.Remove(statusBox.SelectedItem);
-            statusBox.Items.Add(inputDialog.text);
-
+            selectedStatusData.Title = inputDialog.text;
+            int index = statusBox.SelectedIndex;
+            statusBox.Items.RemoveAt(index);
+            statusBox.Items.Insert(index, selectedStatusData);
         }
 
         private void removeButton_Click(object sender, EventArgs e)
@@ -97,7 +115,7 @@ namespace Todo.view.OptionsItems
 
             (statusBox.Items[index], statusBox.Items[newIndex]) =
                 (statusBox.Items[newIndex], statusBox.Items[index]);
-
+            
             statusBox.SelectedIndex = newIndex;
         }
     }

@@ -10,7 +10,7 @@
         /// <param name="todoDatas">>List of todoData to used to generate TodoViewItems</param>
         /// <param name="editAction">The edit action.</param>
         /// <param name="cycleStatusAction">The cycle status action.</param>
-        public void UpdateActiveViewList(List<TodoData> todoDatas, Action<int> editAction, Func<int, string> cycleStatusAction);
+        public void UpdateActiveViewList(List<TodoData> todoDatas, Action<int> editAction, Func<int, StatusData> cycleStatusAction);
 
         /// <summary>
         /// Start the form in a thread.

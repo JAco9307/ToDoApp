@@ -9,7 +9,7 @@ public class TodoDbContext : DbContext
 
     public DbSet<TodoItem> TodoItems { get; set; }
     public DbSet<TodoList> TodoLists { get; set; }
-    public DbSet<StatusList> TodoStatusOptions { get; set; }
+    public DbSet<Status> TodoStatus { get; set; }
     public DbSet<TodoTag> TodoTags { get; set; }
 
     /// <summary>
@@ -31,12 +31,6 @@ public class TodoDbContext : DbContext
         modelBuilder.Entity<TodoList>().HasKey(todoList => todoList.Id);
         //Specifies one-to-many relationship between TodoList and TodoItem
         modelBuilder.Entity<TodoList>().HasMany(todoList => todoList.Items).WithOne().HasForeignKey(todoItem => todoItem.ListId).IsRequired();
-        modelBuilder.Entity<StatusList>().HasKey(Status => Status.Id);
-        modelBuilder.Entity<StatusList>()
-            .Property(Status => Status.options)
-            .HasConversion(
-                status => string.Join(',', status),
-                status => status.Split(',', StringSplitOptions.RemoveEmptyEntries).ToList());
 
         modelBuilder.Entity<TodoItem>().HasMany(todoItem => todoItem.Tags).WithMany();
         modelBuilder.Entity<TodoTag>().Property(tag => tag.Color).HasConversion(color => color.ToArgb(), value => Color.FromArgb(value));
@@ -46,5 +40,10 @@ public class TodoDbContext : DbContext
                 new { Id = -2, Title = "Important", Color = Color.Yellow },
                 new { Id = -3, Title = "Other", Color = Color.Blue }
          );
+        modelBuilder.Entity<Status>().HasData(
+                new { Id = -3, Title = "Not Started", Order = 1 },
+                new { Id = -2, Title = "In Progress", Order = 2 },
+                new { Id = -1, Title = "Completed", Order = 3 }
+        );
     }
 }
