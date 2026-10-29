@@ -1,6 +1,4 @@
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Syncfusion.Blazor;
-using System.Drawing;
 using Todo.utility;
 using Todo.utility.Interfaces;
 using Todo.WebView.Components;
@@ -10,11 +8,11 @@ public class TodoWebView : ITodoView
 {
     public List<TodoData>? todoDatas;
     public static void Main(string[] args) { }
-    List<Action> actions = []; 
+    List<Action> actions = [];
     Action<string>? listSelect;
     Action<int>? editAction;
 
-    Home? home;
+    public Home? home;
     Func<int, string>? cycleStatusAction;
     public void SetUpEvents(List<Action> _actions, Action<string> _listSelect)
     {
@@ -24,13 +22,22 @@ public class TodoWebView : ITodoView
 
     public TodoData ShowEditTodoDialog(ContextData context, TodoData currentData, bool IsNew)
     {
-        home?.popupRef?.Show(currentData);
-        throw new NotImplementedException();
+        if (home == null || home.popupRef == null) throw new NullReferenceException();
+        EditDialog editDialog = home.popupRef;
+        editDialog.Show(currentData, context);
+        editDialog.closeEvent.WaitOne();
+        if (!editDialog.Todo.Equals(currentData))
+            home.Refresh();
+        return editDialog.Todo;
     }
 
     public TodoOptions ShowOptionsMenu(TodoOptions currentOptions)
     {
-        throw new NotImplementedException();
+        if (home == null || home.optionsRef == null) throw new NullReferenceException();
+        OptionsDialog optionsDialog = home.optionsRef;
+        optionsDialog.Show(currentOptions);
+        optionsDialog.closeEvent.WaitOne();
+        return optionsDialog.Options;
     }
 
     public void StartUp()
@@ -90,13 +97,16 @@ public class TodoWebView : ITodoView
         todoDatas = _todoDatas;
         editAction = _editAction;
         cycleStatusAction = _cycleStatusAction;
+        home?.Refresh();
     }
 
     public void UpdateComboboxLists(List<string> lists, string selectList)
     {
+        home?.ListNames = lists;
+        home?.SelectedList = selectList;
     }
 
-    public void CycleAction(int i) 
+    public void CycleAction(int i)
     {
         if (cycleStatusAction != null && todoDatas != null)
         {
@@ -106,10 +116,31 @@ public class TodoWebView : ITodoView
         }
     }
 
-    public void Edit(int id, Home _home)
+    public void Edit(int id)
     {
-        home = _home;
-        editAction(id);
+        if (editAction != null)
+            editAction(id);
+    }
+
+    public void NewTodo()
+    {
+        if (actions[0] != null)
+            actions[0]();
+    }
+
+    public void OpenOptions()
+    {
+        if (actions[1] != null)
+            actions[1]();
+    }
+
+    public void UpdateComboboxLists()
+    {
+        actions[3]();
+    }
+    public void UpdateComboboxListSelection(string name)
+    {
+        listSelect(name);
     }
 }
 

@@ -1,0 +1,62 @@
+﻿<SfDialog Width="500px" @ref="DlgRef" Visible="false">
+    <DialogTemplates>
+        <Header> Options </Header>
+    </DialogTemplates>
+    <content>Statuses:</content>
+    <SfListView DataSource="@Options.Status">
+    </SfListView>
+    <content>Lists:</content>
+    <SfListView DataSource="@Options.ListNames">
+    </SfListView>
+    <content>Tags:</content>
+    <SfListView TValue="(string, Color)" DataSource="@Options.Tags">
+        <ListViewTemplates TValue="(string, Color)">
+            <Template>
+                @{
+                    var item = ((string, Color))context;
+                }
+                <div class="e-list-wrapper">
+                    <span class="e-list-content"
+                          style="background-color: @ColorTranslator.ToHtml(item.Item2)">
+                        @item.Item1
+                    </span>
+                </div>
+            </Template>
+        </ListViewTemplates>
+    </SfListView>
+    <DialogButtons>
+        <DialogButton Content="Save" IsPrimary="true" OnClick="@OnOkClick" />
+        <DialogButton Content="Cancel" OnClick="@Close" />
+    </DialogButtons>
+</SfDialog>
+
+@code
+{
+    public SfDialog DlgRef;
+    private DropDownMenuItems dropdown;
+
+    [Inject]
+    public TodoWebView MainView { get; set; } = default!;
+
+    public EventWaitHandle closeEvent = new(false, EventResetMode.ManualReset);
+
+    public TodoOptions Options;
+
+    public void Show(TodoOptions _options)
+    {
+        closeEvent.Reset();
+        Options = _options;
+        DlgRef.ShowAsync();
+    }
+
+    private void OnOkClick()
+    {
+        Close();
+    }
+
+    private void Close()
+    {
+        closeEvent.Set();
+        DlgRef.HideAsync();
+    }
+}

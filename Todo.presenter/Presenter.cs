@@ -63,7 +63,8 @@ namespace Todo.presenter
             {
                 CreateTodo,
                 UpdateOptions,
-                UpdateView
+                UpdateView,
+                UpdateLists
             };
             Action<string> selector = UpdateSelectedList;
 

@@ -1,43 +1,85 @@
-﻿<SfDialog Width="250px" ShowCloseIcon="true" @ref="DlgRef" Visible= "false">
+﻿
+
+<SfDialog Width="250px" @ref="DlgRef" Visible="false">
     <DialogTemplates>
         <Header> Edit Todo </Header>
-        <Content>This is a standard dialog with footer buttons</Content>
     </DialogTemplates>
+    <content>Title:</content>
+    <SfTextBox @bind-Value="@Todo.Title" MaxLenght="40"></SfTextBox>
+    <content>Description:</content>
+    <SfTextArea @bind-Value="@Todo.Description"></SfTextArea>
+    <content>Todo item is on list:</content>
+    <SfDropDownButton>
+        <DropDownMenuItems>
+        @foreach(var item in context.ListNames)
+        {
+            <DropDownMenuItem Text="@item"></DropDownMenuItem>
+        }
+        </DropDownMenuItems>
+    </SfDropDownButton>
+    <content>Tags:</content>
+    <SfListView TValue="(string, Color)" DataSource="@Todo.CurrentTags">
+        <ListViewTemplates TValue="(string, Color)">
+            <Template>
+                @{
+                    var item = ((string, Color))context;
+                }
+                <div class="e-list-wrapper">
+                    <span class="e-list-content"
+                          style="background-color: @ColorTranslator.ToHtml(item.Item2)">
+                        @item.Item1
+                    </span>
+                </div>
+            </Template>
+        </ListViewTemplates>
+    </SfListView>
     <DialogButtons>
         <DialogButton Content="Save" IsPrimary="true" OnClick="@OnOkClick" />
-        <DialogButton Content="Delete" OnClick="@OnDeleteClick" style="color:red" />
+        <DialogButton Content="Cancel" OnClick="@Close" />
+        <DialogButton Content="Delete" OnClick="@OnDeleteClick" style="background-color:red" />
     </DialogButtons>
 </SfDialog>
 
 @code
 {
     public SfDialog DlgRef;
+    private DropDownMenuItems dropdown;
 
     [Inject]
     public TodoWebView MainView { get; set; } = default!;
 
+    public EventWaitHandle closeEvent = new(false, EventResetMode.ManualReset);
 
-    private TodoData Todo;
-    private TodoData OriginalTodo;
+    public TodoData Todo;
+    private ContextData context;
 
-
-    public void Show(TodoData _todo)
+    public void Show(TodoData _todo, ContextData _context)
     {
+        closeEvent.Reset();
         Todo = _todo;
-        OriginalTodo = _todo;
+        context = _context;
         DlgRef.ShowAsync();
     }
 
     private void OnOkClick()
     {
-        DlgRef.HideAsync();
+        Close();
     }
 
     private void OnDeleteClick()
     {
-        DlgRef.HideAsync();
-
-
+        Todo.ToBeDeleted = true;
+        Close();
     }
-    
+
+    private void Close()
+    {
+        closeEvent.Set();
+        DlgRef.HideAsync();
+    }
+
+    private void ItemSelected(MenuEventArgs args)
+    {
+        
+    }
 }
